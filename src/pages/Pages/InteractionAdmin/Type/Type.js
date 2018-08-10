@@ -9,7 +9,7 @@ import {
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { getIaTypes } from './actions';
+import { getIaTypes, addTypeToggle } from './actions';
 import reducer from './reducer';
 import TypeTable from './components/Table';
 import AddType from './components/AddType';
@@ -18,7 +18,6 @@ class IAType extends Component {
 
   state = {
     currentPage: 1,
-    addTypeModalShow: false,
   }
 
   componentDidMount() {
@@ -28,10 +27,10 @@ class IAType extends Component {
   
   render() {
     const { iaType, addTypeToggle } = this.props;
-    const { currentPage, addTypeModalShow } = this.state;
+    const { currentPage } = this.state;
     return (
       <div className="app">
-        <AddType shouldOpen={addTypeModalShow} toggle={addTypeToggle}/>
+        <AddType shouldOpen={iaType && iaType.shouldAddTypeModalOpen} toggle={addTypeToggle}/>
         <IceContainer>
           <Button onClick={addTypeToggle}>新增模版</Button>
         </IceContainer>
@@ -57,6 +56,7 @@ class IAType extends Component {
 
 const mapDispatchToProps = {
   getIaTypes,
+  addTypeToggle,
 };
   
 const mapStateToProps = (state) => {

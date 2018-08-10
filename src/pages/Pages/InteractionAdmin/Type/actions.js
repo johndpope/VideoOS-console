@@ -23,6 +23,8 @@ import {
   GET_IATYPE_REQUEST,
   GET_IATYPE_SUCCESS,
   GET_IATYPE_FAILURE,
+  SHOW_ADDTYPE_MODAL,
+  HIDDEN_ADDTYPE_MODAL,
 } from './constants';
 
 /**
@@ -32,6 +34,22 @@ import {
  *
  * @return {object}    An action object with a type of CHANGE_USERNAME
  */
+let addTypeSwitch = false;
+
+const showAddTypeModal = () => {
+  return {
+    type: SHOW_ADDTYPE_MODAL,
+    shouldOpen: true,
+  }
+};
+
+const hideAddTypeModal = () => {
+  return {
+    type: HIDDEN_ADDTYPE_MODAL,
+    shouldOpen: false,
+  }
+};
+
 const getIaTypesRequest = () => {
   return {
     type: GET_IATYPE_REQUEST,
@@ -78,5 +96,12 @@ export const getIaTypes = (params = {
 };
 
 export const addTypeToggle = () => {
-  
+  return (dispatch) => {
+    addTypeSwitch = !addTypeSwitch;
+    if (addTypeSwitch) {
+      dispatch(showAddTypeModal());
+    } else {
+      dispatch(hideAddTypeModal());
+    }
+  }
 }

@@ -13,6 +13,8 @@ import {
     GET_IATYPE_REQUEST,
     GET_IATYPE_SUCCESS,
     GET_IATYPE_FAILURE,
+    SHOW_ADDTYPE_MODAL,
+    HIDDEN_ADDTYPE_MODAL
   } from './constants';
   
   // The initial state of the login
@@ -34,6 +36,14 @@ import {
         return Object.assign({}, state, {
           isLoading: action.isLoading,
         });
+      case SHOW_ADDTYPE_MODAL:
+        return Object.assign({}, state, {
+          shouldAddTypeModalOpen: action.shouldOpen
+        });
+      case HIDDEN_ADDTYPE_MODAL:
+        return Object.assign({}, state, {
+          shouldAddTypeModalOpen: action.shouldOpen
+        });  
       default:
         return state;
     }
