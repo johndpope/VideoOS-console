@@ -23,6 +23,11 @@ import {
   
   function aaRoleReducer(state = initialState, action) {
     switch(action.type) {
+      case SHOW_ADDROLE_MODAL:
+      case HIDE_ADDROLE_MODAL:
+        return Object.assign({}, state, {
+          shouldAddRoleModalOpen: action.shouldOpen,
+        });
       default:
         return state;    
     }  

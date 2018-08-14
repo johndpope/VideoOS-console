@@ -27,9 +27,15 @@ import {
   HIDDEN_ADDTYPE_MODAL,
   SHOW_DELETETYPE_MODAL,
   HIDE_DELETETYPE_MODAL,
+  ADD_TYPE_REQUEST,
+  ADD_TYPE_SUCCESS,
+  ADD_TYPE_FAILURE,
   DELETE_TYPE_REQUEST,
   DELETE_TYPE_SUCCESS,
   DELETE_TYPE_FAILURE,
+  UPDATE_TYPE_REQUEST,
+  UPDATE_TYPE_SUCCESS,
+  UPDATE_TYPE_FAILURE,
 } from './constants';
 
 /**
@@ -114,6 +120,48 @@ const deleteTypeFailure = () => {
   }
 };
 
+const addTypeRequest = () => {
+  return {
+    type: ADD_TYPE_REQUEST,
+    isLoading: true,
+  }
+};
+
+const addTypeSuccess = () => {
+  return {
+    type: ADD_TYPE_SUCCESS,
+    isLoading: false,
+  }
+};
+
+const addTypeFailure = () => {
+  return {
+    type: ADD_TYPE_FAILURE,
+    isLoading: false,
+  }
+};
+
+const updateTypeRequest = () => {
+  return {
+    type: UPDATE_TYPE_REQUEST,
+    isLoading: true,
+  }
+};
+
+const updateTypeSuccess = () => {
+  return {
+    type: UPDATE_TYPE_SUCCESS,
+    isLoading: false,
+  }
+};
+
+const updateTypeFailure = () => {
+  return {
+    type: UPDATE_TYPE_FAILURE,
+    isLoading: false,
+  }
+};
+
 export const getIaTypes = (params = {
   currentPage: 1,
   pageSize: 20,
@@ -156,10 +204,61 @@ export const deleteTypeToggle = () => {
       dispatch(hideDeleteTypeModal());
     }
   }
-}
+};
 
-export const deleteType = () => {
-  return (dispatch) => {
+export const addType = (params) => {
+  return async (dispatch) => {
+    dispatch(addTypeRequest());
+    try {
+      const response = await api.addType(params);
+      if (response.status === 200 && response.data.resCode === '00') {
+        dispatch(addTypeSuccess(response.data));
+      } else {
+        dispatch(addTypeFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
 
+      return response.data;
+    } catch(error) {
+      dispatch(addTypeFailure(error));
+    }
   }
-}
+};
+
+export const deleteType = (params) => {
+  return async (dispatch) => {
+    dispatch(deleteTypeRequest());
+    try {
+      const response = await api.deleteType(params);
+      if (response.status === 200 && response.data.resCode === '00') {
+        dispatch(deleteTypeSuccess(response.data));
+      } else {
+        dispatch(deleteTypeFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch(error) {
+      dispatch(deleteTypeFailure(error));
+    }
+  }
+};
+
+export const updateType = (params) => {
+  return async (dispatch) => {
+    dispatch(updateTypeRequest());
+    try {
+      const response = await api.updateType(params);
+      if (response.status === 200 && response.data.resCode === '00') {
+        dispatch(updateTypeSuccess(response.data));
+      } else {
+        dispatch(updateTypeFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch(error) {
+      dispatch(updateTypeFailure(error));
+    }
+  }
+};

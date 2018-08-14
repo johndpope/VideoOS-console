@@ -17,6 +17,15 @@ import {
     HIDDEN_ADDTYPE_MODAL,
     SHOW_DELETETYPE_MODAL,
     HIDE_DELETETYPE_MODAL,
+    ADD_TYPE_REQUEST,
+    ADD_TYPE_SUCCESS,
+    ADD_TYPE_FAILURE,
+    DELETE_TYPE_REQUEST,
+    DELETE_TYPE_SUCCESS,
+    DELETE_TYPE_FAILURE,
+    UPDATE_TYPE_REQUEST,
+    UPDATE_TYPE_SUCCESS,
+    UPDATE_TYPE_FAILURE,
   } from './constants';
   
   // The initial state of the login
@@ -39,6 +48,42 @@ import {
       case GET_IATYPE_FAILURE:
         return Object.assign({}, state, {
           isLoading: action.isLoading,
+        });
+      case ADD_TYPE_REQUEST:
+        return Object.assign({}, state, {
+
+        });
+      case ADD_TYPE_SUCCESS:
+        return Object.assign({}, state, {
+          
+        });
+      case ADD_TYPE_FAILURE:
+        return Object.assign({}, state, {
+          
+        });
+      case DELETE_TYPE_REQUEST:
+        return Object.assign({}, state, {
+
+        });
+      case DELETE_TYPE_SUCCESS:
+        return Object.assign({}, state, {
+          
+        });
+      case DELETE_TYPE_FAILURE:
+        return Object.assign({}, state, {
+          
+        });
+      case UPDATE_TYPE_REQUEST:
+        return Object.assign({}, state, {
+
+        });
+      case UPDATE_TYPE_SUCCESS:
+        return Object.assign({}, state, {
+          
+        });
+      case UPDATE_TYPE_FAILURE:
+        return Object.assign({}, state, {
+          
         });
       case SHOW_ADDTYPE_MODAL:
       case HIDDEN_ADDTYPE_MODAL:

@@ -14,15 +14,125 @@
  *        return { type: YOUR_ACTION_CONSTANT, var: var }
  *    }
  */
-
+import { Feedback } from '@icedesign/base';
+import * as api from './api';
 import {
   GET_ACCOUNTS_REQUEST,
   GET_ACCOUNTS_SUCCESS,
   GET_ACCOUNTS_FAIL,
-} from './constants'
+  SHOW_ADDACCOUNT_MODAL,
+  HIDE_ADDACCOUNT_MODAL,
+  ADD_ACCOUNT_REQUEST,
+  ADD_ACCOUNT_SUCCESS,
+  ADD_ACCOUNT_FAIL,
+} from './constants';
+
+let addAccountModalSwitch = false;
+
+const getAccountsRequest = () => {
+  return {
+    type: GET_ACCOUNTS_REQUEST,
+  };
+};
+
+const getAccountsSuccess = () => {
+  return {
+    type: GET_ACCOUNTS_SUCCESS,
+  };
+};
+
+const getAccountsFail = () => {
+  return {
+    type: GET_ACCOUNTS_FAIL,
+  };
+};
+
+const showAddAccountModal = () => {
+  return {
+    type: SHOW_ADDACCOUNT_MODAL,
+    shouldOpen: true,
+  };
+};
+
+const hideAddAccountModal = () => {
+  return {
+    type: HIDE_ADDACCOUNT_MODAL,
+    shouldOpen: false,
+  };
+};
+
+const addAccountRequest = () => {
+  return {
+    type: ADD_ACCOUNT_REQUEST,
+    isLoading: true,
+  };
+};
+
+const addAccountSuccess = (payload) => {
+  return {
+    type: ADD_ACCOUNT_SUCCESS,
+    payload,
+    isLoading: false,
+  };
+};
+
+const addAccountFail = (payload) => {
+  return {
+    type: ADD_ACCOUNT_FAIL,
+    payload,
+    isLoading: false,
+  };
+};
 
 export const getAccounts = (params) => {
-  return (dispatch) => {
-      
+  return async (dispatch) => {
+    dispatch(getAccountsRequest());
+    try {
+      const response = await api.getAaAccounts(params);
+
+      if (response.status === 200 && response.data.resCode === '00') {
+
+        dispatch(getAccountsSuccess(response.data));
+      } else {
+        dispatch(getAccountsFail(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch(error) {
+      dispatch(getAccountsFail(error));
+    } 
   }  
+};
+
+export const addAccountModalToggle = () => {
+  return (dispatch) => {
+    addAccountModalSwitch = !addAccountModalSwitch;
+    if (addAccountModalSwitch) {
+      dispatch(showAddAccountModal());
+    } else {
+      dispatch(hideAddAccountModal());
+    }
+  };
+};
+
+export const addAccount = (params) => {
+  return async (dispatch) => {
+    dispatch(addAccountRequest());
+    try {
+      const response = await api.addAaAccount(params);
+
+      if (response.status === 200 && response.data.resCode === '00') {
+
+        dispatch(addAccountSuccess(response.data));
+      } else {
+        dispatch(addAccountFail(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch(error) {
+      dispatch(addAccountFail(error));
+    }
+  }
 }

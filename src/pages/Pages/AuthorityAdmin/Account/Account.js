@@ -9,9 +9,10 @@ import {
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { getAccounts } from './actions';
+import { getAccounts, addAccountModalToggle, addAccount } from './actions';
 import reducer from './reducer';
 import AccountTable from './components/Table';
+import AddAccount from './components/AddAccount';
 
 class AAAcount extends Component {
 
@@ -23,12 +24,18 @@ class AAAcount extends Component {
   }
   
   render() {
-    const { aaAccount, addAccountToggle } = this.props;
+    const { aaAccount, addAccountModalToggle, addAccount } = this.props;
     const { currentPage } = this.state;
     return (
       <div className="app">
+        <AddAccount 
+          shouldOpen={aaAccount && aaAccount.shouldAddAccountModalOpen} 
+          toggle={addAccountModalToggle}
+          addAccount={addAccount}
+          resMsg={aaAccount.addAccountResErr}
+        />
         <IceContainer>
-          <Button onClick={addAccountToggle}>添加账号</Button>
+          <Button onClick={addAccountModalToggle}>添加账号</Button>
         </IceContainer>
         <IceContainer>
           <AccountTable />
@@ -49,6 +56,8 @@ class AAAcount extends Component {
 
 const mapDispatchToProps = {
   getAccounts,
+  addAccountModalToggle,
+  addAccount,
 };
   
 const mapStateToProps = (state) => {

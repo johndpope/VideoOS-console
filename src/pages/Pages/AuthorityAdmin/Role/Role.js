@@ -9,9 +9,10 @@ import {
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { getRoles } from './actions';
+import { getRoles, addRoleModalToggle } from './actions';
 import reducer from './reducer';
 import RoleTable from './components/Table';
+import AddRole from './components/AddRole';
 
 class AARole extends Component {
 
@@ -23,12 +24,13 @@ class AARole extends Component {
   }
   
   render() {
-    const { aaRole, addRoleToggle } = this.props;
+    const { aaRole, addRoleModalToggle } = this.props;
     const { currentPage } = this.state;
     return (
       <div className="app">
+        <AddRole shouldOpen={aaRole && aaRole.shouldAddRoleModalOpen} toggle={addRoleModalToggle}/>
         <IceContainer>
-          <Button onClick={addRoleToggle}>添加角色</Button>
+          <Button onClick={addRoleModalToggle}>添加角色</Button>
         </IceContainer>
         <IceContainer>
           <RoleTable />
@@ -49,6 +51,7 @@ class AARole extends Component {
 
 const mapDispatchToProps = {
   getRoles,
+  addRoleModalToggle,
 };
   
 const mapStateToProps = (state) => {

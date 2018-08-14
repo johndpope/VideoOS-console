@@ -28,7 +28,9 @@ const AddType = ({shouldOpen, toggle}) => (
               类型导入
             </InputGroupText>
           </InputGroupAddon>
-          <Input type="file" styles={styles.file_ipt} />
+          <Form>
+            <Input type="file" styles={styles.file_ipt} />
+          </Form>
         </InputGroup>
       </Form>
       </ModalBody>
