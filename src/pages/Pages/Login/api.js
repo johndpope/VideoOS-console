@@ -6,8 +6,8 @@ const { OS_API } = config;
 
 export async function login(params) {
   return axios({
-    url: `http://10.66.88.157:18005/video/login`,
+    url: `${OS_API}/login`,
     method: 'post',
     data: params,  
   })  
-}
+};

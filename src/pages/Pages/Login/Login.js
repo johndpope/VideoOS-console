@@ -9,7 +9,7 @@ import {
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { userLogin } from './actions';
+import { userLogin, passwordForgetTip } from './actions';
 import reducer from './reducer';
 
 class Login extends Component {
@@ -41,6 +41,7 @@ class Login extends Component {
   };
 
   render() {
+    const { passwordForgetTip } = this.props;
     return (
       <div className="app flex-row align-items-center">
         <Container>
@@ -81,7 +82,7 @@ class Login extends Component {
                             <Button color="primary" onClick={this.handleSubmit} className="px-4">确认</Button>
                           </Col>
                           <Col xs="6" className="text-right">
-                            <Button color="link" className="px-0">忘记密码?</Button>
+                            <Button color="link" className="px-0" onClick={passwordForgetTip}>忘记密码?</Button>
                           </Col>
                         </Row>
                       </Fragment>
@@ -109,6 +110,7 @@ class Login extends Component {
 
 const mapDispatchToProps = {
   userLogin,
+  passwordForgetTip
 };
 
 const mapStateToProps = (state) => {

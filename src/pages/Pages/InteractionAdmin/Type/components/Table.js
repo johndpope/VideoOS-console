@@ -5,6 +5,7 @@ import { Table, Button } from '@icedesign/base';
 export default class TypeTable extends Component {
 
   renderOperator = (value, index, record) => {
+    const { deleteTypeToggle } = this.props;
     return (
       <div>
         <Button>查看</Button>
@@ -12,7 +13,7 @@ export default class TypeTable extends Component {
         >
           修改
         </Button>
-        <Button>删除</Button>
+        <Button onClick={deleteTypeToggle}>删除</Button>
       </div>
     );
   };  
@@ -36,7 +37,7 @@ export default class TypeTable extends Component {
           <Table.Column title="操作" 
             cell={this.renderOperator}
             lock="right"
-            width={240}
+            width={120}
           />
         </Table>
       </div>  

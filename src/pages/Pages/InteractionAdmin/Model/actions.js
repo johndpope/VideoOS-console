@@ -24,7 +24,11 @@ import {
   GET_IAMODEL_REQUEST,
   GET_IAMODEL_SUCCESS,
   GET_IAMODEL_FAILURE,
+  SHOW_ADDMODEL_MODAL,
+  HIDE_ADDMODEL_MODAL,
 } from './constants';
+
+let addModelSwitch = false;
 
 /**
  * Changes the input field of the form
@@ -33,6 +37,20 @@ import {
  *
  * @return {object}    An action object with a type of CHANGE_USERNAME
  */
+
+const showAddModelModal = () => {
+  return {
+    type: SHOW_ADDMODEL_MODAL,
+    shouldOpen: true,
+  }
+};
+
+const hideAddModelModal = () => {
+  return {
+    type: HIDE_ADDMODEL_MODAL,
+    shouldOpen: false,
+  }
+};
 const getIaModelsRequest = () => {
   return {
     type: GET_IAMODEL_REQUEST,
@@ -79,4 +97,15 @@ export const getIaModels = (params = {
       dispatch(getIaModelsFailure(error));
     }
   };
+};
+
+export const addModelToggle = () => {
+  return (dispatch) => {
+    addModelSwitch = !addModelSwitch;
+    if (addModelSwitch) {
+      dispatch(showAddModelModal());
+    } else {
+      dispatch(hideAddModelModal());
+    }
+  }
 };

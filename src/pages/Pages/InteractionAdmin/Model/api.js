@@ -15,4 +15,38 @@ export async function getIaModels(params) {
     method: 'get',
     data: params,  
   })  
-}
+};
+
+export async function deleteModel(params) {
+  return axios({
+    headers: {
+      token: getAuthority(),
+    },
+    url: `${OS_API}/interactionTemplate/delete`,
+    method: 'post',
+    data: params,
+  })
+};
+
+export async function addModel(params) {
+  return axios({
+    headers: {
+      token: getAuthority(),
+    },
+    url: `${OS_API}/interactionTemplate/confirmAdd`,
+    method: 'post',
+    data: params,
+  })
+};
+
+export async function updateModel(params) {
+  return axios({
+    headers: {
+      token: getAuthority(),
+    },
+    url: `${OS_API}/interactionTemplate/confirmUpdate`,
+    method: 'post',
+    data: params,
+  })
+};
+

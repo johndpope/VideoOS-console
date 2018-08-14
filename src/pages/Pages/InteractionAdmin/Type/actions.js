@@ -25,6 +25,11 @@ import {
   GET_IATYPE_FAILURE,
   SHOW_ADDTYPE_MODAL,
   HIDDEN_ADDTYPE_MODAL,
+  SHOW_DELETETYPE_MODAL,
+  HIDE_DELETETYPE_MODAL,
+  DELETE_TYPE_REQUEST,
+  DELETE_TYPE_SUCCESS,
+  DELETE_TYPE_FAILURE,
 } from './constants';
 
 /**
@@ -35,6 +40,7 @@ import {
  * @return {object}    An action object with a type of CHANGE_USERNAME
  */
 let addTypeSwitch = false;
+let deleteTypeSwitch = false;
 
 const showAddTypeModal = () => {
   return {
@@ -46,6 +52,20 @@ const showAddTypeModal = () => {
 const hideAddTypeModal = () => {
   return {
     type: HIDDEN_ADDTYPE_MODAL,
+    shouldOpen: false,
+  }
+};
+
+const showDeleteTypeModal = () => {
+  return {
+    type: SHOW_DELETETYPE_MODAL,
+    shouldOpen: true,
+  }
+};
+
+const hideDeleteTypeModal = () => {
+  return {
+    type: HIDE_DELETETYPE_MODAL,
     shouldOpen: false,
   }
 };
@@ -71,6 +91,27 @@ const getIaTypesFailure = (payload) => {
     payload,
     isLoading: false,
   };
+};
+
+const deleteTypeRequest = () => {
+  return {
+    type: DELETE_TYPE_REQUEST,
+    isLoading: true,
+  }
+};
+
+const deleteTypeSuccess = () => {
+  return {
+    type: DELETE_TYPE_SUCCESS,
+    isLoading: false,
+  }
+};
+
+const deleteTypeFailure = () => {
+  return {
+    type: DELETE_TYPE_FAILURE,
+    isLoading: false,
+  }
 };
 
 export const getIaTypes = (params = {
@@ -103,5 +144,22 @@ export const addTypeToggle = () => {
     } else {
       dispatch(hideAddTypeModal());
     }
+  }
+};
+
+export const deleteTypeToggle = () => {
+  return (dispatch) => {
+    deleteTypeSwitch = !deleteTypeSwitch;
+    if (deleteTypeSwitch) {
+      dispatch(showDeleteTypeModal());
+    } else {
+      dispatch(hideDeleteTypeModal());
+    }
+  }
+}
+
+export const deleteType = () => {
+  return (dispatch) => {
+
   }
 }

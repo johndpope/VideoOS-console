@@ -14,11 +14,15 @@ import {
     GET_IATYPE_SUCCESS,
     GET_IATYPE_FAILURE,
     SHOW_ADDTYPE_MODAL,
-    HIDDEN_ADDTYPE_MODAL
+    HIDDEN_ADDTYPE_MODAL,
+    SHOW_DELETETYPE_MODAL,
+    HIDE_DELETETYPE_MODAL,
   } from './constants';
   
   // The initial state of the login
-  const initialState = {};
+  const initialState = {
+    currentPage: 1,
+  };
   
   function iaTypeReducer(state = initialState, action) {
     switch (action.type) {
@@ -37,13 +41,15 @@ import {
           isLoading: action.isLoading,
         });
       case SHOW_ADDTYPE_MODAL:
-        return Object.assign({}, state, {
-          shouldAddTypeModalOpen: action.shouldOpen
-        });
       case HIDDEN_ADDTYPE_MODAL:
         return Object.assign({}, state, {
           shouldAddTypeModalOpen: action.shouldOpen
-        });  
+        });
+      case SHOW_DELETETYPE_MODAL:
+      case HIDE_DELETETYPE_MODAL:
+        return Object.assign({}, state, {
+          shouldDeleteTypeModalOpen: action.shouldOpen,
+        }); 
       default:
         return state;
     }

@@ -83,3 +83,9 @@ export const userLogin = (params) => {
     }
   };
 };
+
+export const passwordForgetTip = () => {
+  return (dispatch) => {
+    Feedback.toast.show('请联系管理员');
+  }
+}

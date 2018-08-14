@@ -10,9 +10,10 @@ import {
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { getIaModels } from './actions';
+import { getIaModels, addModelToggle } from './actions';
 import reducer from './reducer';
 import ModalTable from './components/Table';
+import AddModel from './components/AddModel';
 
 class IAModel extends Component {
   
@@ -22,10 +23,12 @@ class IAModel extends Component {
   }
 
   render() {
+    const { iaModel, addModelToggle } = this.props;
     return (
       <div className="app">
+        <AddModel shouldOpen={iaModel && iaModel.shouldAddModelModalOpen} toggle={addModelToggle}/>
         <IceContainer>
-          <Button>新增模版</Button>
+          <Button onClick={addModelToggle}>新增模版</Button>
           <InputGroup className="mb-4">
             <InputGroupAddon addonType="prepend">
               <InputGroupText>
@@ -47,10 +50,11 @@ class IAModel extends Component {
 
 const mapDispatchToProps = {
   getIaModels,
+  addModelToggle,
 };
 
 const mapStateToProps = (state) => {
-  return { modelResult: state.iaModel };
+  return { iaModel: state.iaModel };
 };
 
 const withConnect = connect(
