@@ -49,3 +49,13 @@ export async function updateAaRole(params) {
     data: params,  
   })  
 };
+
+export async function queryAllRoleTypes() {
+  return axios({
+    headers: {
+      token: getAuthority(),
+    },
+    url: `${OS_API}/role/queryAll `,
+    method: 'get',
+  })
+};

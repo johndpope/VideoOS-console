@@ -4,8 +4,10 @@ import { Button } from '@icedesign/base';
 
 import styles from './styles';
 
-const AddType = ({shouldOpen, toggle}) => (
-  <Fragment>
+const AddType = ({shouldOpen, toggle, addType}) => {
+  let interactionTypeName = null;
+  let file = null;
+  return (<Fragment>
     <Modal
       isOpen={shouldOpen}  
       toggle={toggle}
@@ -20,7 +22,9 @@ const AddType = ({shouldOpen, toggle}) => (
               类型名称
             </InputGroupText>
           </InputGroupAddon>
-          <Input type="text" placeholder="请输入名称" />
+          <Input type="text" onChange={e => {
+            interactionTypeName = e.target.value;
+          }} placeholder="请输入名称" />
         </InputGroup>
         <InputGroup className="mb-4">
           <InputGroupAddon addonType="prepend">
@@ -28,17 +32,28 @@ const AddType = ({shouldOpen, toggle}) => (
               类型导入
             </InputGroupText>
           </InputGroupAddon>
-          <Form>
-            <Input type="file" styles={styles.file_ipt} />
-          </Form>
+          <span>
+            <Input 
+              type="file" 
+              styles={styles.file_ipt} 
+              onChange={e => {
+                file = e.target.files && e.target.files[0];
+              }}
+            />
+          </span>
         </InputGroup>
       </Form>
       </ModalBody>
       <ModalFooter>
-        <Button type="primary">确认新增</Button>
+        <Button type="primary" onClick={() => {
+          addType({
+            interactionTypeName,
+            file,
+          })
+        }}>确认新增</Button>
       </ModalFooter>
     </Modal>  
   </Fragment>
-);
+)};
 
 export default AddType;

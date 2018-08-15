@@ -9,7 +9,7 @@ import {
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { getIaTypes, addTypeToggle, deleteTypeToggle } from './actions';
+import { getIaTypes, addTypeToggle, deleteTypeToggle, deleteType, addType } from './actions';
 import reducer from './reducer';
 import TypeTable from './components/Table';
 import AddType from './components/AddType';
@@ -27,12 +27,21 @@ class IAType extends Component {
   }
   
   render() {
-    const { iaType, addTypeToggle, deleteTypeToggle, deleteType } = this.props;
+    const { iaType, addTypeToggle, deleteTypeToggle, deleteType, addType } = this.props;
     const { currentPage } = this.state;
     return (
       <div className="app">
-        <AddType shouldOpen={iaType && iaType.shouldAddTypeModalOpen} toggle={addTypeToggle}/>
-        <DeleteType deleteType={deleteType} shouldOpen={iaType && iaType.shouldDeleteTypeModalOpen} toggle={deleteTypeToggle}/>
+        <AddType 
+          shouldOpen={iaType && iaType.shouldAddTypeModalOpen} 
+          toggle={addTypeToggle}
+          addType={addType}
+        />
+        <DeleteType 
+          deleteType={deleteType} 
+          shouldOpen={iaType && iaType.shouldDeleteTypeModalOpen} 
+          toggle={() => {deleteTypeToggle(iaType.record)}}
+          record={iaType.record}
+        />
         <IceContainer>
           <Button onClick={addTypeToggle}>新增模版</Button>
         </IceContainer>
@@ -41,6 +50,7 @@ class IAType extends Component {
             isLoading={iaType && iaType.isLoading}
             dataSource={iaType && iaType.typeResult}
             deleteTypeToggle={deleteTypeToggle}
+            addTypeToggle={addTypeToggle}
           /> 
           {
             iaType && !iaType.isLoading ? (
@@ -61,6 +71,8 @@ const mapDispatchToProps = {
   getIaTypes,
   addTypeToggle,
   deleteTypeToggle,
+  deleteType,
+  addType,
 };
   
 const mapStateToProps = (state) => {

@@ -5,15 +5,15 @@ import { Table, Button } from '@icedesign/base';
 export default class TypeTable extends Component {
 
   renderOperator = (value, index, record) => {
-    const { deleteTypeToggle } = this.props;
+    const { deleteTypeToggle, addTypeToggle } = this.props;
     return (
       <div>
-        <Button>查看</Button>
-        <Button
+        <Button onClick={() => {addTypeToggle({...record, opType: 'read'})}}>查看</Button>
+        <Button onClick={() => {addTypeToggle({...record, opType: 'update'})}}
         >
           修改
         </Button>
-        <Button onClick={deleteTypeToggle}>删除</Button>
+        <Button onClick={() => {deleteTypeToggle(record)}}>删除</Button>
       </div>
     );
   };  
@@ -42,5 +42,5 @@ export default class TypeTable extends Component {
         </Table>
       </div>  
     )
-  }  
-}
+  }
+};

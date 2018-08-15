@@ -15,6 +15,12 @@ import {
     GET_IAMODEL_FAILURE,
     SHOW_ADDMODEL_MODAL,
     HIDE_ADDMODEL_MODAL,
+    UPLOAD_MODEL_FILE_REQUEST,
+    UPLOAD_MODEL_FILE_SUCCESS,
+    UPLOAD_MODEL_FILE_FAILURE,
+    QUERY_ALL_MODELTYPES_REQUEST,
+    QUERY_ALL_MODELTYPES_SUCCESS,
+    QUERY_ALL_MODELTYPES_FAILURE,
   } from './constants';
   
 // The initial state of the model
@@ -29,9 +35,35 @@ function iaModelReducer(state = initialState, action) {
     case GET_IAMODEL_SUCCESS:
       return Object.assign({}, state, {
         isLoading: action.isLoading,
-        ModelResult: action.payload,
+        modelResult: action.payload.templateInfoList || [],
       });
     case GET_IAMODEL_FAILURE:
+      return Object.assign({}, state, {
+        isLoading: action.isLoading,
+      });
+    case UPLOAD_MODEL_FILE_REQUEST:
+      return Object.assign({}, state, {
+        isLoading: action.isLoading,
+      });
+    case UPLOAD_MODEL_FILE_SUCCESS:
+      return Object.assign({}, state, {
+        uploadModelFileInfo: action.payload,
+        isLoading: action.isLoading,
+      });
+    case UPLOAD_MODEL_FILE_FAILURE:
+      return Object.assign({}, state, {
+        isLoading: action.isLoading,
+      });
+    case QUERY_ALL_MODELTYPES_REQUEST:
+      return Object.assign({}, state, {
+        isLoading: action.isLoading,
+      });
+    case QUERY_ALL_MODELTYPES_SUCCESS:
+      return Object.assign({}, state, {
+        modelTypes: action.payload,
+        isLoading: action.isLoading,
+      });
+    case QUERY_ALL_MODELTYPES_FAILURE:
       return Object.assign({}, state, {
         isLoading: action.isLoading,
       });

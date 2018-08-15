@@ -4,7 +4,7 @@ import { Button } from '@icedesign/base';
 
 import styles from './styles';
 
-const DeleteType = ({shouldOpen, toggle, deleteType}) => (
+const DeleteType = ({shouldOpen, toggle, deleteType, record}) => (
   <Fragment>
     <Modal
       isOpen={shouldOpen}  
@@ -18,7 +18,7 @@ const DeleteType = ({shouldOpen, toggle, deleteType}) => (
       </ModalBody>
       <ModalFooter>
         <Button onClick={toggle}>取消</Button>
-        <Button type="primary" onClick={deleteType}>确认</Button>
+        <Button type="primary" onClick={() => {deleteType(record)}}>确认</Button>
       </ModalFooter>
     </Modal>  
   </Fragment>

@@ -48,10 +48,11 @@ import {
 let addTypeSwitch = false;
 let deleteTypeSwitch = false;
 
-const showAddTypeModal = () => {
+const showAddTypeModal = (record) => {
   return {
     type: SHOW_ADDTYPE_MODAL,
     shouldOpen: true,
+    record,
   }
 };
 
@@ -62,10 +63,11 @@ const hideAddTypeModal = () => {
   }
 };
 
-const showDeleteTypeModal = () => {
+const showDeleteTypeModal = (payload) => {
   return {
     type: SHOW_DELETETYPE_MODAL,
     shouldOpen: true,
+    record: payload,
   }
 };
 
@@ -195,11 +197,11 @@ export const addTypeToggle = () => {
   }
 };
 
-export const deleteTypeToggle = () => {
+export const deleteTypeToggle = (record) => {
   return (dispatch) => {
     deleteTypeSwitch = !deleteTypeSwitch;
     if (deleteTypeSwitch) {
-      dispatch(showDeleteTypeModal());
+      dispatch(showDeleteTypeModal(record));
     } else {
       dispatch(hideDeleteTypeModal());
     }
@@ -213,6 +215,9 @@ export const addType = (params) => {
       const response = await api.addType(params);
       if (response.status === 200 && response.data.resCode === '00') {
         dispatch(addTypeSuccess(response.data));
+        dispatch(addTypeToggle());
+        dispatch(getIaTypes());
+        Feedback.toast.show(response.data && response.data.resMsg);
       } else {
         dispatch(addTypeFailure(response.data));
         Feedback.toast.error(response.data && response.data.resMsg);
@@ -232,6 +237,9 @@ export const deleteType = (params) => {
       const response = await api.deleteType(params);
       if (response.status === 200 && response.data.resCode === '00') {
         dispatch(deleteTypeSuccess(response.data));
+        dispatch(deleteTypeToggle());
+        dispatch(getIaTypes());
+        Feedback.toast.show(response.data && response.data.resMsg);
       } else {
         dispatch(deleteTypeFailure(response.data));
         Feedback.toast.error(response.data && response.data.resMsg);

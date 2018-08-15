@@ -29,13 +29,17 @@ export async function deleteType(params) {
 };
 
 export async function addType(params) {
+  let data = new FormData();
+  for (let key in params) {
+    data.append(key, params[key]);
+  }
   return axios({
     headers: {
       token: getAuthority(),
     },
     url: `${OS_API}/interactionType/add`,
     method: 'post',
-    data: params,
+    data,
   })
 };
 

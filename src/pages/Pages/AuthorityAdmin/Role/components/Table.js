@@ -5,27 +5,34 @@ import { Table, Button } from '@icedesign/base';
 export default class RoleTable extends Component {
 
   renderOperator = (value, index, record) => {
+    const { addRoleModalToggle } = this.props;
     return (
       <div>
-        <a>查看</a>
-        <a
+        <Button onClick={() => {addRoleModalToggle({...record, opType: 'read'})}}>查看</Button>
+        <Button onClick={() => {addRoleModalToggle({...record, opType: 'update'})}}
         >
           修改
-        </a>
-        <a>删除</a>
+        </Button>
+        <Button>删除</Button>
       </div>
     );
   };  
   
   render() {
-    
+    const { dataSource, isLoading } = this.props;
     return (
       <div className="animated fadeIn">
-        <Table>
-          <Table.Column title="序号" dataIndex="" width={120} />  
+        <Table
+          dataSource={ dataSource }
+          hasBorder={false}
+          isLoading={isLoading}
+        >
+          <Table.Column title="序号" width={120} 
+            cell={(value, index, record) => (<span>{Number(index) + 1}</span>)}
+          />  
           <Table.Column title="创建日期" dataIndex="createDate" width={120} />
-          <Table.Column title="账号名称" dataIndex="userName" width={120} />
-          <Table.Column title="角色" dataIndex="roleName" width={120} />
+          <Table.Column title="角色名称" dataIndex="roleName" width={120} />
+          <Table.Column title="权限" dataIndex="roleDesc" width={120} />
           <Table.Column title="操作" 
             cell={this.renderOperator}
             lock="right"

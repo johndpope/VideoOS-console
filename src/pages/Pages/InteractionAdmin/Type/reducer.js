@@ -94,6 +94,7 @@ import {
       case HIDE_DELETETYPE_MODAL:
         return Object.assign({}, state, {
           shouldDeleteTypeModalOpen: action.shouldOpen,
+          record: action.record || {},
         }); 
       default:
         return state;

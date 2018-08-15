@@ -9,7 +9,7 @@ import {
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { getAccounts, addAccountModalToggle, addAccount } from './actions';
+import { getAccounts, addAccountModalToggle, addAccount, queryAllAccountTypes } from './actions';
 import reducer from './reducer';
 import AccountTable from './components/Table';
 import AddAccount from './components/AddAccount';
@@ -21,10 +21,13 @@ class AAAcount extends Component {
   }
 
   componentDidMount() {
+    const { getAccounts, queryAllAccountTypes } = this.props;
+    getAccounts();
+    queryAllAccountTypes();
   }
   
   render() {
-    const { aaAccount, addAccountModalToggle, addAccount } = this.props;
+    const { aaAccount, addAccountModalToggle, addAccount, queryAllAccountTypes } = this.props;
     const { currentPage } = this.state;
     return (
       <div className="app">
@@ -33,12 +36,17 @@ class AAAcount extends Component {
           toggle={addAccountModalToggle}
           addAccount={addAccount}
           resMsg={aaAccount.addAccountResErr}
+          roleTypes={aaAccount.roleTypes || []}
         />
         <IceContainer>
           <Button onClick={addAccountModalToggle}>添加账号</Button>
         </IceContainer>
         <IceContainer>
-          <AccountTable />
+          <AccountTable 
+            isLoading={aaAccount && aaAccount.isLoading}
+            dataSource={aaAccount && aaAccount.accountResult}
+            addAccountModalToggle={addAccountModalToggle}
+          />
           {
             aaAccount && !aaAccount.isLoading ? (
               <Pagination 
@@ -58,6 +66,7 @@ const mapDispatchToProps = {
   getAccounts,
   addAccountModalToggle,
   addAccount,
+  queryAllAccountTypes,
 };
   
 const mapStateToProps = (state) => {

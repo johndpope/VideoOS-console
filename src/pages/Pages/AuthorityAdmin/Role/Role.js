@@ -9,7 +9,7 @@ import {
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { getRoles, addRoleModalToggle } from './actions';
+import { getRoles, addRoleModalToggle, addRole, queryAllRoleTypes } from './actions';
 import reducer from './reducer';
 import RoleTable from './components/Table';
 import AddRole from './components/AddRole';
@@ -21,19 +21,31 @@ class AARole extends Component {
   }
 
   componentDidMount() {
+    const { getRoles, queryAllRoleTypes } = this.props;
+    getRoles();
+    queryAllRoleTypes();
   }
   
   render() {
-    const { aaRole, addRoleModalToggle } = this.props;
+    const { aaRole, addRoleModalToggle, addRole } = this.props;
     const { currentPage } = this.state;
     return (
       <div className="app">
-        <AddRole shouldOpen={aaRole && aaRole.shouldAddRoleModalOpen} toggle={addRoleModalToggle}/>
+        <AddRole 
+          shouldOpen={aaRole && aaRole.shouldAddRoleModalOpen} 
+          toggle={addRoleModalToggle}
+          addRole={addRole}
+          roleTypes={aaRole.roleTypes || []}
+        />
         <IceContainer>
           <Button onClick={addRoleModalToggle}>添加角色</Button>
         </IceContainer>
         <IceContainer>
-          <RoleTable />
+          <RoleTable 
+            isLoading={aaRole && aaRole.isLoading}
+            dataSource={aaRole && aaRole.roleResult}
+            addRoleModalToggle={addRoleModalToggle}
+          />
           {
             aaRole && !aaRole.isLoading ? (
               <Pagination 
@@ -52,6 +64,8 @@ class AARole extends Component {
 const mapDispatchToProps = {
   getRoles,
   addRoleModalToggle,
+  addRole,
+  queryAllRoleTypes,
 };
   
 const mapStateToProps = (state) => {

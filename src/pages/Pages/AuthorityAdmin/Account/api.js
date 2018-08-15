@@ -6,7 +6,10 @@ import { getAuthority } from 'utils/authority';
 
 const { OS_API } = config;
 
-export async function getAaAccounts(params) {
+export async function getAaAccounts(params = {
+  currentPage: 1,
+  pageSize: 20,
+}) {
   return axios({
     headers: {
       token: getAuthority(),
@@ -48,4 +51,14 @@ export async function updateAaAccount(params) {
     method: 'post',
     data: params,  
   })  
+};
+
+export async function queryAllAccountTypes() {
+  return axios({
+    headers: {
+      token: getAuthority(),
+    },
+    url: `${OS_API}/role/queryAll `,
+    method: 'get',
+  })
 };

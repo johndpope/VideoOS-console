@@ -25,6 +25,9 @@ import {
   ADD_ACCOUNT_REQUEST,
   ADD_ACCOUNT_SUCCESS,
   ADD_ACCOUNT_FAIL,
+  QUERY_ALL_ACCOUNTTYPES_REQUEST,
+  QUERY_ALL_ACCOUNTTYPES_SUCCESS,
+  QUERY_ALL_ACCOUNTTYPES_FAILURE,
 } from './constants';
 
 let addAccountModalSwitch = false;
@@ -32,18 +35,22 @@ let addAccountModalSwitch = false;
 const getAccountsRequest = () => {
   return {
     type: GET_ACCOUNTS_REQUEST,
+    isLoading: true,
   };
 };
 
-const getAccountsSuccess = () => {
+const getAccountsSuccess = (payload) => {
   return {
     type: GET_ACCOUNTS_SUCCESS,
+    payload,
+    isLoading: false,
   };
 };
 
 const getAccountsFail = () => {
   return {
     type: GET_ACCOUNTS_FAIL,
+    isLoading: false,
   };
 };
 
@@ -81,6 +88,28 @@ const addAccountFail = (payload) => {
     type: ADD_ACCOUNT_FAIL,
     payload,
     isLoading: false,
+  };
+};
+
+const queryAllAccountTypesRequest = () => {
+  return {
+    type: QUERY_ALL_ACCOUNTTYPES_REQUEST,
+    isLoading: true,
+  };
+};
+
+const queryAllAccountTypesSuccess = (payload) => {
+  return {
+    type: QUERY_ALL_ACCOUNTTYPES_SUCCESS,
+    payload,
+    isLoading: true,
+  };
+};
+
+const queryAllAccountTypesFailure = () => {
+  return {
+    type: QUERY_ALL_ACCOUNTTYPES_FAILURE,
+    isLoading: true,
   };
 };
 
@@ -135,4 +164,25 @@ export const addAccount = (params) => {
       dispatch(addAccountFail(error));
     }
   }
-}
+};
+
+export const queryAllAccountTypes = (params) => {
+  return async (dispatch) => {
+    dispatch(queryAllAccountTypesRequest());
+    try {
+      const response = await api.queryAllAccountTypes(params);
+
+      if (response.status === 200 && response.data.resCode === '00') {
+
+        dispatch(queryAllAccountTypesSuccess(response.data && response.data.roleInfoList));
+      } else {
+        dispatch(queryAllAccountTypesFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch(error) {
+      dispatch(queryAllAccountTypesFailure(error));
+    }
+  }  
+};

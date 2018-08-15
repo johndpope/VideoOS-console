@@ -10,7 +10,7 @@ import {
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { getIaModels, addModelToggle } from './actions';
+import { getIaModels, addModelToggle, addModel, uploadModelFile, queryAllModelTypes, deleteModelToggle } from './actions';
 import reducer from './reducer';
 import ModalTable from './components/Table';
 import AddModel from './components/AddModel';
@@ -18,15 +18,23 @@ import AddModel from './components/AddModel';
 class IAModel extends Component {
   
   componentDidMount() {
-    const { getIaModels } = this.props
-    getIaModels()
+    const { getIaModels, queryAllModelTypes } = this.props
+    getIaModels();
+    queryAllModelTypes();
   }
 
   render() {
-    const { iaModel, addModelToggle } = this.props;
+    const { iaModel, addModelToggle, addModel, uploadModelFile, deleteModelToggle } = this.props;
     return (
       <div className="app">
-        <AddModel shouldOpen={iaModel && iaModel.shouldAddModelModalOpen} toggle={addModelToggle}/>
+        <AddModel 
+          shouldOpen={iaModel && iaModel.shouldAddModelModalOpen} 
+          toggle={addModelToggle}
+          addModel={addModel}
+          uploadModelFile={uploadModelFile}
+          uploadModelFileInfo={iaModel.uploadModelFileInfo || {}}
+          modelTypes={iaModel.modelTypes || []}
+        />
         <IceContainer>
           <Button onClick={addModelToggle}>新增模版</Button>
           <InputGroup className="mb-4">
@@ -42,7 +50,12 @@ class IAModel extends Component {
             </Input>
           </InputGroup>
         </IceContainer>
-        <ModalTable />
+        <ModalTable 
+          isLoading={iaModel && iaModel.isLoading}
+          dataSource={iaModel && iaModel.modelResult}
+          deleteModelToggle={deleteModelToggle}
+          addModelToggle={addModelToggle}
+        />
       </div>   
     ) 
   }  
@@ -51,6 +64,10 @@ class IAModel extends Component {
 const mapDispatchToProps = {
   getIaModels,
   addModelToggle,
+  addModel,
+  uploadModelFile,
+  queryAllModelTypes,
+  deleteModelToggle,
 };
 
 const mapStateToProps = (state) => {

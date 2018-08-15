@@ -26,10 +26,19 @@ import {
   GET_IAMODEL_FAILURE,
   SHOW_ADDMODEL_MODAL,
   HIDE_ADDMODEL_MODAL,
+  ADD_MODEL_REQUEST,
+  ADD_MODEL_SUCCESS,
+  ADD_MODEL_FAILURE,
+  UPLOAD_MODEL_FILE_REQUEST,
+  UPLOAD_MODEL_FILE_SUCCESS,
+  UPLOAD_MODEL_FILE_FAILURE,
+  QUERY_ALL_MODELTYPES_REQUEST,
+  QUERY_ALL_MODELTYPES_SUCCESS,
+  QUERY_ALL_MODELTYPES_FAILURE,
 } from './constants';
 
 let addModelSwitch = false;
-
+let deleteModelSwitch = false;
 /**
  * Changes the input field of the form
  *
@@ -74,10 +83,78 @@ const getIaModelsFailure = (payload) => {
   };
 };
 
+const addModelRequest = (payload) => {
+  return {
+    type: ADD_MODEL_REQUEST,
+    payload,
+    isLoading: true,
+  };
+};
+
+const addModelSuccess = (payload) => {
+  return {
+    type: ADD_MODEL_SUCCESS,
+    payload,
+    isLoading: false,
+  };
+};
+
+const addModelFailure = (payload) => {
+  return {
+    type: ADD_MODEL_FAILURE,
+    payload,
+    isLoading: false,
+  };
+};
+
+const uploadModelFileRequest = () => {
+  return {
+    type: UPLOAD_MODEL_FILE_REQUEST,
+    isLoading: true,
+  }
+};
+
+const uploadModelFileSuccess = (payload) => {
+  return {
+    type: UPLOAD_MODEL_FILE_SUCCESS,
+    payload,
+    isLoading: false,
+  }
+};
+
+const uploadModelFileFailure = () => {
+  return {
+    type: UPLOAD_MODEL_FILE_FAILURE,
+    isLoading: false,
+  }
+};
+
+const queryAllModelTypesRequest = () => {
+  return {
+    type: QUERY_ALL_MODELTYPES_REQUEST,
+    isLoading: true,
+  };
+};
+
+const queryAllModelTypesSuccess = (payload) => {
+  return {
+    type: QUERY_ALL_MODELTYPES_SUCCESS,
+    payload,
+    isLoading: false,
+  };
+};
+
+const queryAllModelTypesFailure = () => {
+  return {
+    type: QUERY_ALL_MODELTYPES_FAILURE,
+    isLoading: false,
+  };
+};
+
 export const getIaModels = (params = {
   currentPage: 1,
   pageSize: 20,
-  interactionTypeId: 0,
+  // interactionTypeId: 0,
 }) => {
   return async (dispatch) => {
     dispatch(getIaModelsRequest());
@@ -108,4 +185,80 @@ export const addModelToggle = () => {
       dispatch(hideAddModelModal());
     }
   }
+};
+
+export const deleteModelToggle = () => {
+  return (dispatch) => {
+    deleteModelSwitch = !deleteModelSwitch;
+    if (deleteModelSwitch) {
+    } else {
+    }
+  }
+};
+
+export const addModel = (params) => {
+  return async (dispatch) => {
+    dispatch(addModelRequest());
+    try {
+      const response = await api.addModel(params);
+
+      if (response.status === 200 && response.data.resCode === '00') {
+
+        dispatch(addModelSuccess(response.data));
+        dispatch(hideAddModelModal());
+        dispatch(getIaModels());
+        Feedback.toast.show(response.data && response.data.resMsg);
+      } else {
+        dispatch(getIaModelsFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch(error) {
+      dispatch(addModelFailure());
+    }
+  };
+};
+
+export const uploadModelFile = (params) => {
+  return async (dispatch) => {
+    dispatch(uploadModelFileRequest());
+    try {
+      const response = await api.uploadModelFile(params);
+
+      if (response.status === 200 && response.data.resCode === '00') {
+
+        dispatch(uploadModelFileSuccess(response.data));
+        Feedback.toast.show(response.data && response.data.resMsg);
+      } else {
+        dispatch(uploadModelFileFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch(error) {
+      dispatch(uploadModelFileFailure(error));
+    }
+  };
+};
+
+export const queryAllModelTypes = (params) => {
+  return async (dispatch) => {
+    dispatch(queryAllModelTypesRequest());
+    try {
+      const response = await api.queryAllModelTypes(params);
+
+      if (response.status === 200 && response.data.resCode === '00') {
+
+        dispatch(queryAllModelTypesSuccess(response.data && response.data.interactionInfoList));
+      } else {
+        dispatch(queryAllModelTypesFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch(error) {
+      dispatch(queryAllModelTypesFailure(error));
+    }
+  };
 };

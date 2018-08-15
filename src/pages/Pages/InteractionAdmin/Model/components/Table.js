@@ -5,23 +5,28 @@ import { Table, Button } from '@icedesign/base';
 export default class ModalTable extends Component {
 
   renderOperator = (value, index, record) => {
+    const { addModelToggle, deleteModelToggle } = this.props;
     return (
       <div>
-        <a>查看</a>
-        <a onClick={this.deleteItem.bind(this, record)}
+        <Button onClick={() => {addModelToggle({...record, opType: 'read'})}}>查看</Button>
+        <Button onClick={() => {addModelToggle({...record, opType: 'update'})}}
         >
           修改
-        </a>
-        <a>删除</a>
+        </Button>
+        <Button onClick={() => {deleteModelToggle(record)}}>删除</Button>
       </div>
     );
   };  
   
   render() {
-    
+    const { dataSource, isLoading } = this.props
     return (
       <div className="animated fadeIn">
-        <Table>
+        <Table
+          dataSource={ dataSource }
+          hasBorder={false}
+          isLoading={isLoading}
+        >
           <Table.Column title="序号" dataIndex="" width={120} />  
           <Table.Column title="创建日期" dataIndex="createDate" width={120} />
           <Table.Column title="模板类型" dataIndex="templateId" width={120} />

@@ -2,7 +2,11 @@ import React, { Fragment } from 'react';
 import { Card, CardBody, Form, InputGroup, InputGroupAddon, InputGroupText, Input, Col, Modal, ModalBody, ModalFooter, ModalHeader, Row, Badge } from 'reactstrap';
 import { Button } from '@icedesign/base';
 
-const AddAccount = ({shouldOpen, toggle, addAccount, resMsg}) => (
+const AddAccount = ({shouldOpen, toggle, addAccount, resMsg, roleTypes}) => {
+  let username = null;
+  let roleId = null;
+  let password = null;
+  return(
   <Fragment>
     <Modal
       isOpen={shouldOpen}  
@@ -17,7 +21,11 @@ const AddAccount = ({shouldOpen, toggle, addAccount, resMsg}) => (
               账号名称
             </InputGroupText>
           </InputGroupAddon>
-          <Input type="text" placeholder="请输入角色名称" />
+          <Input type="text" placeholder="请输入角色名称" 
+            onChange={e => {
+              username = e.target.value;
+            }}
+          />
         </InputGroup>
         <InputGroup className="mb-4">
           <InputGroupAddon addonType="prepend">
@@ -25,10 +33,17 @@ const AddAccount = ({shouldOpen, toggle, addAccount, resMsg}) => (
               角色
             </InputGroupText>
           </InputGroupAddon>
-          <Input type="select">
-            <option>运营人员</option>
-            <option>审核人员</option>
-            <option>开发人员</option>
+          <Input type="select"
+            defaultValue="运营人员"
+            onChange={e => {
+              roleId = e.target.value;
+            }}
+          > 
+            {
+              roleTypes && Array.isArray(roleTypes) && roleTypes.length > 0 && roleTypes.map((rt, idx) => (
+                <option key={idx} value={rt.roleId}>{rt.roleName}</option>
+              ))
+            }
           </Input>
         </InputGroup>
         <InputGroup className="mb-4">
@@ -37,7 +52,11 @@ const AddAccount = ({shouldOpen, toggle, addAccount, resMsg}) => (
               密码
             </InputGroupText>
           </InputGroupAddon>
-          <Input type="text" placeholder="请输入密码" />
+          <Input type="text" placeholder="请输入密码" 
+            onChange={e => {
+              password = e.target.value;
+            }}
+          />
         </InputGroup>
         {
           Boolean(resMsg) ? <Badge color="warning">{resMsg}</Badge> : null
@@ -49,7 +68,9 @@ const AddAccount = ({shouldOpen, toggle, addAccount, resMsg}) => (
           onClick={e => {
             e.preventDefault();
             addAccount({
-
+              username,
+              roleId,
+              password,
             });
           }}
         >
@@ -58,6 +79,6 @@ const AddAccount = ({shouldOpen, toggle, addAccount, resMsg}) => (
       </ModalFooter>
     </Modal>  
   </Fragment>
-);
+)};
 
 export default AddAccount;

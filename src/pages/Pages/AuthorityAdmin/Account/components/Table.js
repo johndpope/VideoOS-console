@@ -5,9 +5,10 @@ import { Table, Button } from '@icedesign/base';
 export default class AccountTable extends Component {
 
   renderOperator = (value, index, record) => {
+    const { addAccountModalToggle } = this.props;
     return (
       <div>
-        <a
+        <a onClick={() => {addAccountModalToggle({...record, opType: 'update'})}}
         >
           修改
         </a>

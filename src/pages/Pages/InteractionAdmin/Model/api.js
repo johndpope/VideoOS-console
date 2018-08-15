@@ -50,3 +50,29 @@ export async function updateModel(params) {
   })
 };
 
+export async function uploadModelFile(params) {
+  let data = new FormData();
+  for (let key in params) {
+    data.append(key, params[key]);
+  }
+  return axios({
+    headers: {
+      token: getAuthority(),
+      contentType: 'multipart/form',
+    },
+    url: `${OS_API}/interactionTemplate/addUpload`,
+    method: 'post',
+    data,
+  })
+};
+
+export async function queryAllModelTypes() {
+  return axios({
+    headers: {
+      token: getAuthority(),
+    },
+    url: `${OS_API}/interactionType/queryAll `,
+    method: 'get',
+  })
+};
+
