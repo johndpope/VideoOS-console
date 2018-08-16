@@ -31,7 +31,10 @@ export default class TypeTable extends Component {
           <Table.Column title="创建日期" dataIndex="createDate" width={120} />
           <Table.Column title="类型名称" dataIndex="interactionTypeName" width={120} />
           <Table.Column title="模板" 
-            cell={() => <Link to="/hd/model">模版列表</Link>}
+            cell={(value, index, record) => <Link to={{
+              pathname: "/hd/model",
+              state: {type: record.interactionTypeId}
+            }} >模版列表</Link>}
             width={120} 
           />
           <Table.Column title="操作" 

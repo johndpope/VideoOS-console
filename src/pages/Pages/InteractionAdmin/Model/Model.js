@@ -18,15 +18,21 @@ class IAModel extends Component {
   }
   
   componentDidMount() {
-    const { getIaModels, queryAllModelTypes } = this.props
-    getIaModels();
+    const { getIaModels, queryAllModelTypes, location } = this.props;
+    const lType = location && location.state && location.state.type;
+    getIaModels({
+      currentPage: 1,
+      pageSize: 20,
+      interactionTypeId: lType,
+    });
     queryAllModelTypes();
   }
 
   render() {
     const { currentPage } = this.state;
-    const { getIaModels, iaModel, addModelToggle, addModel, updateModel, uploadModelFile, deleteModel, deleteModelModalToggle } = this.props;
+    const { getIaModels, iaModel, addModelToggle, addModel, updateModel, uploadModelFile, deleteModel, deleteModelModalToggle, location } = this.props;
     const modelTypes = iaModel.modelTypes || [];
+    const lType = location && location.state && location.state.type;
     return (
       <div className="app">
         <AddModel 
@@ -54,6 +60,7 @@ class IAModel extends Component {
               </InputGroupText>
             </InputGroupAddon>
             <Input type="select" name="type"
+              defaultValue={lType}
               onChange={e => {
                 const params = {
                   currentPage,
