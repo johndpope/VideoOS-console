@@ -35,6 +35,7 @@ class IAType extends Component {
           shouldOpen={iaType && iaType.shouldAddTypeModalOpen} 
           toggle={addTypeToggle}
           addType={addType}
+          record={iaType.record}
         />
         <DeleteType 
           deleteType={deleteType} 

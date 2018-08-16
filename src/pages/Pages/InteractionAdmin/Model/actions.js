@@ -26,6 +26,8 @@ import {
   GET_IAMODEL_FAILURE,
   SHOW_ADDMODEL_MODAL,
   HIDE_ADDMODEL_MODAL,
+  SHOW_DELETEMODEL_MODAL,
+  HIDE_DELETEMODEL_MODAL,
   ADD_MODEL_REQUEST,
   ADD_MODEL_SUCCESS,
   ADD_MODEL_FAILURE,
@@ -50,9 +52,10 @@ let deleteModelSwitch = false;
  * @return {object}    An action object with a type of CHANGE_USERNAME
  */
 
-const showAddModelModal = () => {
+const showAddModelModal = (payload) => {
   return {
     type: SHOW_ADDMODEL_MODAL,
+    payload,
     shouldOpen: true,
   }
 };
@@ -63,6 +66,22 @@ const hideAddModelModal = () => {
     shouldOpen: false,
   }
 };
+
+const showDeleteModelModal = (payload) => {
+  return {
+    type: SHOW_DELETEMODEL_MODAL,
+    payload,
+    shouldOpen: true,
+  }
+};
+
+const hideDeleteModelModal = () => {
+  return {
+    type: HIDE_DELETEMODEL_MODAL,
+    shouldOpen: false,
+  }
+};
+
 const getIaModelsRequest = () => {
   return {
     type: GET_IAMODEL_REQUEST,
@@ -203,22 +222,24 @@ export const getIaModels = (params = {
   };
 };
 
-export const addModelToggle = () => {
+export const addModelToggle = (record) => {
   return (dispatch) => {
     addModelSwitch = !addModelSwitch;
     if (addModelSwitch) {
-      dispatch(showAddModelModal());
+      dispatch(showAddModelModal(record));
     } else {
       dispatch(hideAddModelModal());
     }
   }
 };
 
-export const deleteModelModalToggle = () => {
+export const deleteModelModalToggle = (record) => {
   return (dispatch) => {
     deleteModelSwitch = !deleteModelSwitch;
     if (deleteModelSwitch) {
+      dispatch(showDeleteModelModal(record));
     } else {
+      dispatch(hideDeleteModelModal());
     }
   }
 };

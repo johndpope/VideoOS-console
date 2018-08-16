@@ -41,6 +41,7 @@ class IAModel extends Component {
           uploadModelFile={uploadModelFile}
           uploadModelFileInfo={iaModel.uploadModelFileInfo || {}}
           modelTypes={modelTypes}
+          record={iaModel.record}
         />
         <DeleteModel
           deleteModel={deleteModel} 
@@ -80,7 +81,7 @@ class IAModel extends Component {
         <ModalTable 
           isLoading={iaModel && iaModel.isLoading}
           dataSource={iaModel && iaModel.modelResult}
-          deleteModelToggle={deleteModelToggle}
+          deleteModelModalToggle={deleteModelModalToggle}
           addModelToggle={addModelToggle}
         />
       </div>   

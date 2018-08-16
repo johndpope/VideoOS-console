@@ -60,9 +60,10 @@ const getAccountsFail = () => {
   };
 };
 
-const showAddAccountModal = () => {
+const showAddAccountModal = (payload) => {
   return {
     type: SHOW_ADDACCOUNT_MODAL,
+    payload,
     shouldOpen: true,
   };
 };
@@ -181,11 +182,11 @@ export const getAccounts = (params = {
   }  
 };
 
-export const addAccountModalToggle = () => {
+export const addAccountModalToggle = (record) => {
   return (dispatch) => {
     addAccountModalSwitch = !addAccountModalSwitch;
     if (addAccountModalSwitch) {
-      dispatch(showAddAccountModal());
+      dispatch(showAddAccountModal(record));
     } else {
       dispatch(hideAddAccountModal());
     }
@@ -211,7 +212,7 @@ export const addAccount = (params) => {
 
       if (response.status === 200 && response.data.resCode === '00') {
         dispatch(addAccountSuccess(response.data));
-        dispatch(hideAddAccountModal());
+        dispatch(addAccountModalToggle());
         dispatch(getAccounts());
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {
@@ -234,7 +235,7 @@ export const deleteAccount = (params) => {
 
       if (response.status === 200 && response.data.resCode === '00') {
         dispatch(addAccountSuccess(response.data));
-        dispatch(hideDeleteAccountModal());
+        dispatch(deleteAccountModalToggle());
         dispatch(getAccounts());
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {

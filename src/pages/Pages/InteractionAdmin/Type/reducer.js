@@ -51,43 +51,44 @@ import {
         });
       case ADD_TYPE_REQUEST:
         return Object.assign({}, state, {
-
+          isLoading: action.isLoading,
         });
       case ADD_TYPE_SUCCESS:
         return Object.assign({}, state, {
-          
+          isLoading: action.isLoading,
         });
       case ADD_TYPE_FAILURE:
         return Object.assign({}, state, {
-          
+          isLoading: action.isLoading,
         });
       case DELETE_TYPE_REQUEST:
         return Object.assign({}, state, {
-
+          isLoading: action.isLoading,
         });
       case DELETE_TYPE_SUCCESS:
         return Object.assign({}, state, {
-          
+          isLoading: action.isLoading,
         });
       case DELETE_TYPE_FAILURE:
         return Object.assign({}, state, {
-          
+          isLoading: action.isLoading,
         });
       case UPDATE_TYPE_REQUEST:
         return Object.assign({}, state, {
-
+          isLoading: action.isLoading,
         });
       case UPDATE_TYPE_SUCCESS:
         return Object.assign({}, state, {
-          
+          isLoading: action.isLoading,
         });
       case UPDATE_TYPE_FAILURE:
         return Object.assign({}, state, {
-          
+          isLoading: action.isLoading,
         });
       case SHOW_ADDTYPE_MODAL:
       case HIDDEN_ADDTYPE_MODAL:
         return Object.assign({}, state, {
+          record: action.payload || {},
           shouldAddTypeModalOpen: action.shouldOpen
         });
       case SHOW_DELETETYPE_MODAL:

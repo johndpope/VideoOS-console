@@ -15,6 +15,8 @@ import {
     GET_IAMODEL_FAILURE,
     SHOW_ADDMODEL_MODAL,
     HIDE_ADDMODEL_MODAL,
+    SHOW_DELETEMODEL_MODAL,
+    HIDE_DELETEMODEL_MODAL,
     UPLOAD_MODEL_FILE_REQUEST,
     UPLOAD_MODEL_FILE_SUCCESS,
     UPLOAD_MODEL_FILE_FAILURE,
@@ -70,8 +72,15 @@ function iaModelReducer(state = initialState, action) {
     case SHOW_ADDMODEL_MODAL:
     case HIDE_ADDMODEL_MODAL:
       return Object.assign({}, state, {
+        record: action.payload,
         shouldAddModelModalOpen: action.shouldOpen,
-      })
+      });
+    case SHOW_DELETEMODEL_MODAL:
+    case HIDE_DELETEMODEL_MODAL:
+      return Object.assign({}, state, {
+        record: {interactionTemplateId: action.payload && action.payload.templateId || ''},
+        shouldDeleteModelModalOpen: action.shouldOpen,
+      });
     default:
       return state;
   }

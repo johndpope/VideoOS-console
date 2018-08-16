@@ -38,6 +38,7 @@ class AAAcount extends Component {
           addAccount={addAccount}
           resMsg={aaAccount.addAccountResErr}
           roleTypes={aaAccount.roleTypes || []}
+          record={aaAccount.record}
         />
         <DeleteAccount 
           deleteAccount={deleteAccount} 

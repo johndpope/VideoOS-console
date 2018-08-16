@@ -5,7 +5,7 @@ import { Table, Button } from '@icedesign/base';
 export default class ModalTable extends Component {
 
   renderOperator = (value, index, record) => {
-    const { addModelToggle, deleteModelToggle } = this.props;
+    const { addModelToggle, deleteModelModalToggle } = this.props;
     return (
       <div>
         <Button onClick={() => {addModelToggle({...record, opType: 'read'})}}>查看</Button>
@@ -13,7 +13,7 @@ export default class ModalTable extends Component {
         >
           修改
         </Button>
-        <Button onClick={() => {deleteModelToggle(record)}}>删除</Button>
+        <Button onClick={() => {deleteModelModalToggle(record)}}>删除</Button>
       </div>
     );
   };  

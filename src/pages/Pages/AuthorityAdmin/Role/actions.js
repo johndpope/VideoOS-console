@@ -38,9 +38,10 @@ import {
 let addRoleModalSwitch = false;
 let deleteRoleModalSwitch = false;
 
-const showAddRoleModal = () => {
+const showAddRoleModal = (payload) => {
   return {
     type: SHOW_ADDROLE_MODAL,
+    payload,
     shouldOpen: true,
   }
 };
@@ -52,9 +53,10 @@ const hideAddRoleModal = () => {
   }
 };
 
-const showDeleteRoleModal = () => {
+const showDeleteRoleModal = (payload) => {
   return {
     type: SHOW_DELETEROLE_MODAL,
+    payload,
     shouldOpen: true,
   }
 };
@@ -178,22 +180,22 @@ export const getRoles = (params = {
   }  
 };
 
-export const addRoleModalToggle = () => {
+export const addRoleModalToggle = (record) => {
   return (dispatch) => {
     addRoleModalSwitch = !addRoleModalSwitch;
     if (addRoleModalSwitch) {
-      dispatch(showAddRoleModal());
+      dispatch(showAddRoleModal(record));
     } else {
       dispatch(hideAddRoleModal());
     }
   }
 };
 
-export const deleteRoleModalToggle = () => {
+export const deleteRoleModalToggle = (record) => {
   return (dispatch) => {
     deleteRoleModalSwitch = !deleteRoleModalSwitch;
     if (deleteRoleModalSwitch) {
-      dispatch(showDeleteRoleModal());
+      dispatch(showDeleteRoleModal(record));
     } else {
       dispatch(hideDeleteRoleModal());
     }
@@ -208,7 +210,7 @@ export const addRole = (params) => {
 
       if (response.status === 200 && response.data.resCode === '00') {
         dispatch(addRoleSuccess(response.data));
-        dispatch(hideAddRoleModal());
+        dispatch(addRoleModalToggle());
         dispatch(getRoles());
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {
@@ -231,7 +233,7 @@ export const deleteRole = (params) => {
 
       if (response.status === 200 && response.data.resCode === '00') {
         dispatch(deleteRoleSuccess(response.data));
-        dispatch(hideDeleteRoleModal());
+        dispatch(deleteRoleModalToggle());
         dispatch(getRoles());
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {

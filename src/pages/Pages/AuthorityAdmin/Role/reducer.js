@@ -119,6 +119,7 @@ import {
       case SHOW_ADDROLE_MODAL:
       case HIDE_ADDROLE_MODAL:
         return Object.assign({}, state, {
+          record: action.payload,
           shouldAddRoleModalOpen: action.shouldOpen,
         });
       case SHOW_DELETEROLE_MODAL:

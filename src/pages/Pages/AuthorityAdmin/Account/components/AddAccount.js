@@ -2,17 +2,22 @@ import React, { Fragment } from 'react';
 import { Card, CardBody, Form, InputGroup, InputGroupAddon, InputGroupText, Input, Col, Modal, ModalBody, ModalFooter, ModalHeader, Row, Badge } from 'reactstrap';
 import { Button } from '@icedesign/base';
 
-const AddAccount = ({shouldOpen, toggle, addAccount, resMsg, roleTypes}) => {
+const AddAccount = ({shouldOpen, toggle, addAccount, resMsg, roleTypes, record}) => {
   let username = null;
   let roleId = null;
   let password = null;
+  const { opType } = record || {};
+  const isRead = opType === 'read';
+  const isUpdate = opType === 'update';
   return(
   <Fragment>
     <Modal
       isOpen={shouldOpen}  
       toggle={toggle}
     >
-      <ModalHeader toggle={toggle}>添加账号</ModalHeader>
+      <ModalHeader toggle={toggle}>{
+        isRead ? '账号信息' : (isUpdate ? '账号修改' : '添加账号')
+      }</ModalHeader>
       <ModalBody>
       <Form>
         <InputGroup className="mb-4">
@@ -22,6 +27,8 @@ const AddAccount = ({shouldOpen, toggle, addAccount, resMsg, roleTypes}) => {
             </InputGroupText>
           </InputGroupAddon>
           <Input type="text" placeholder="请输入角色名称" 
+            disabled={isRead ? 'disabled' : false }
+            defaultValue={isRead || isUpdate ? record && record.userName : ''}
             onChange={e => {
               username = e.target.value;
             }}
@@ -34,7 +41,8 @@ const AddAccount = ({shouldOpen, toggle, addAccount, resMsg, roleTypes}) => {
             </InputGroupText>
           </InputGroupAddon>
           <Input type="select"
-            defaultValue="运营人员"
+            disabled={isRead ? 'disabled' : false }
+            defaultValue={isRead || isUpdate ? record && record.roleId : ''}
             onChange={e => {
               roleId = e.target.value;
             }}
@@ -53,6 +61,8 @@ const AddAccount = ({shouldOpen, toggle, addAccount, resMsg, roleTypes}) => {
             </InputGroupText>
           </InputGroupAddon>
           <Input type="text" placeholder="请输入密码" 
+            disabled={isRead ? 'disabled' : false }
+            defaultValue={isRead || isUpdate ? record && record.password : ''}
             onChange={e => {
               password = e.target.value;
             }}

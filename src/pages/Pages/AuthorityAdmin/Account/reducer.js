@@ -90,6 +90,7 @@ function aaAccountReducer(state = initialState, action) {
     case SHOW_ADDACCOUNT_MODAL:
     case HIDE_ADDACCOUNT_MODAL:
       return Object.assign({}, state, {
+        record: action.payload,
         shouldAddAccountModalOpen: action.shouldOpen,
       });
     case SHOW_DELETEACCOUNT_MODAL:

@@ -48,11 +48,11 @@ import {
 let addTypeSwitch = false;
 let deleteTypeSwitch = false;
 
-const showAddTypeModal = (record) => {
+const showAddTypeModal = (payload) => {
   return {
     type: SHOW_ADDTYPE_MODAL,
     shouldOpen: true,
-    record,
+    payload,
   }
 };
 
@@ -67,7 +67,7 @@ const showDeleteTypeModal = (payload) => {
   return {
     type: SHOW_DELETETYPE_MODAL,
     shouldOpen: true,
-    record: payload,
+    payload,
   }
 };
 
@@ -186,11 +186,11 @@ export const getIaTypes = (params = {
   };
 };
 
-export const addTypeToggle = () => {
+export const addTypeToggle = (payload) => {
   return (dispatch) => {
     addTypeSwitch = !addTypeSwitch;
     if (addTypeSwitch) {
-      dispatch(showAddTypeModal());
+      dispatch(showAddTypeModal(payload));
     } else {
       dispatch(hideAddTypeModal());
     }

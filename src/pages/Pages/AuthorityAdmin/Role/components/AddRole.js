@@ -2,16 +2,21 @@ import React, { Fragment } from 'react';
 import { ListGroup, ListGroupItem, Form, FormGroup, InputGroup, InputGroupAddon, InputGroupText, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Col } from 'reactstrap';
 import { Button } from '@icedesign/base';
 
-const AddRole = ({shouldOpen, toggle, addRole, roleAuthorities}) => {
+const AddRole = ({shouldOpen, toggle, addRole, roleAuthorities, record}) => {
   let launchPlanName = null;
   let _roleAuthorities = Object.assign({}, roleAuthorities);
+  const { opType } = record || {};
+  const isRead = opType === 'read';
+  const isUpdate = opType === 'update';
   return (
   <Fragment>
     <Modal
       isOpen={shouldOpen}  
       toggle={toggle}
     >
-      <ModalHeader toggle={toggle}>添加角色</ModalHeader>
+      <ModalHeader toggle={toggle}>{
+        isRead ? '角色信息' : (isUpdate ? '角色修改' : '添加角色')
+      }</ModalHeader>
       <ModalBody>
       <Form
       >
@@ -22,6 +27,8 @@ const AddRole = ({shouldOpen, toggle, addRole, roleAuthorities}) => {
             </InputGroupText>
           </InputGroupAddon>
           <Input type="text" placeholder="请输入角色名称" 
+            disabled={isRead ? 'disabled' : false}
+            defaultValue={isRead || isUpdate ? record && record.roleName : ''}
             onChange={e => {
               launchPlanName = e.target.value;
             }}
@@ -41,6 +48,7 @@ const AddRole = ({shouldOpen, toggle, addRole, roleAuthorities}) => {
               <Col>
                 <Label>
                   <Input type="checkbox"
+                    disabled={isRead ? 'disabled' : false}
                     onChange={e => {
                       _roleAuthorities[key].read = Boolean(e.target.value);
                     }}
@@ -51,6 +59,7 @@ const AddRole = ({shouldOpen, toggle, addRole, roleAuthorities}) => {
               <Col>
                 <Label>
                   <Input type="checkbox"
+                    disabled={isRead ? 'disabled' : false}
                     onChange={e => {
                       _roleAuthorities[key].write = Boolean(e.target.value);
                     }}

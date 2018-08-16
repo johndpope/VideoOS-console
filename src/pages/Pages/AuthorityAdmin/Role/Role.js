@@ -37,6 +37,7 @@ class AARole extends Component {
           toggle={addRoleModalToggle}
           addRole={addRole}
           roleAuthorities={aaRole.roleAuthorities || []}
+          record={aaRole.record}
         />
         <DeleteRole 
           deleteRole={deleteRole} 
