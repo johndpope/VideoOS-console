@@ -9,10 +9,11 @@ import {
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { getRoles, addRoleModalToggle, addRole, queryAllRoleTypes } from './actions';
+import { getRoles, addRoleModalToggle, addRole, queryAllRoleTypes, deleteRoleModalToggle, deleteRole } from './actions';
 import reducer from './reducer';
 import RoleTable from './components/Table';
 import AddRole from './components/AddRole';
+import DeleteRole from './components/DeleteRole';
 
 class AARole extends Component {
 
@@ -27,7 +28,7 @@ class AARole extends Component {
   }
   
   render() {
-    const { aaRole, addRoleModalToggle, addRole } = this.props;
+    const { aaRole, addRoleModalToggle, addRole, deleteRoleModalToggle, deleteRole } = this.props;
     const { currentPage } = this.state;
     return (
       <div className="app">
@@ -37,6 +38,12 @@ class AARole extends Component {
           addRole={addRole}
           roleAuthorities={aaRole.roleAuthorities || []}
         />
+        <DeleteRole 
+          deleteRole={deleteRole} 
+          shouldOpen={aaRole && aaRole.shouldDeleteRoleModalOpen} 
+          toggle={() => {deleteRoleModalToggle(aaRole.record)}}
+          record={aaRole.record}
+        />
         <IceContainer>
           <Button onClick={addRoleModalToggle}>添加角色</Button>
         </IceContainer>
@@ -45,6 +52,7 @@ class AARole extends Component {
             isLoading={aaRole && aaRole.isLoading}
             dataSource={aaRole && aaRole.roleResult}
             addRoleModalToggle={addRoleModalToggle}
+            deleteRoleModalToggle={deleteRoleModalToggle}
           />
           {
             aaRole && !aaRole.isLoading ? (
@@ -66,6 +74,8 @@ const mapDispatchToProps = {
   addRoleModalToggle,
   addRole,
   queryAllRoleTypes,
+  deleteRoleModalToggle,
+  deleteRole,
 };
   
 const mapStateToProps = (state) => {

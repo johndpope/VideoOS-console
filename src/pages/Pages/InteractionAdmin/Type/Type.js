@@ -43,7 +43,7 @@ class IAType extends Component {
           record={iaType.record}
         />
         <IceContainer>
-          <Button onClick={addTypeToggle}>新增模版</Button>
+          <Button onClick={addTypeToggle}>新增类型</Button>
         </IceContainer>
         <IceContainer>
           <TypeTable 

@@ -22,6 +22,11 @@ import {
   QUERY_ALL_ACCOUNTTYPES_REQUEST,
   QUERY_ALL_ACCOUNTTYPES_SUCCESS,
   QUERY_ALL_ACCOUNTTYPES_FAILURE,
+  DELETE_ACCOUNT_REQUEST,
+  DELETE_ACCOUNT_SUCCESS,
+  DELETE_ACCOUNT_FAILURE,
+  SHOW_DELETEACCOUNT_MODAL,
+  HIDE_DELETEACCOUNT_MODAL,
 } from './constants';
 import { stat } from 'fs';
 
@@ -46,15 +51,28 @@ function aaAccountReducer(state = initialState, action) {
       });
     case ADD_ACCOUNT_REQUEST:
       return Object.assign({}, state, {
-
+        isLoading: true,
       });
     case ADD_ACCOUNT_SUCCESS:
       return Object.assign({}, state, {
-        
+        isLoading: false,
       });
     case ADD_ACCOUNT_FAIL:
       return Object.assign({}, state, {
         addAccountResErr: action.payload.resMsg,
+        isLoading: false,
+      });
+    case DELETE_ACCOUNT_REQUEST:
+      return Object.assign({}, state, {
+        isLoading: true,
+      });
+    case DELETE_ACCOUNT_SUCCESS:
+      return Object.assign({}, state, {
+        isLoading: false,
+      });
+    case DELETE_ACCOUNT_FAILURE:
+      return Object.assign({}, state, {
+        isLoading: false,
       });
     case QUERY_ALL_ACCOUNTTYPES_REQUEST:
       return Object.assign({}, state, {
@@ -73,6 +91,12 @@ function aaAccountReducer(state = initialState, action) {
     case HIDE_ADDACCOUNT_MODAL:
       return Object.assign({}, state, {
         shouldAddAccountModalOpen: action.shouldOpen,
+      });
+    case SHOW_DELETEACCOUNT_MODAL:
+    case HIDE_DELETEACCOUNT_MODAL:
+      return Object.assign({}, state, {
+        record: {roleId: action.payload && action.payload.roleId || ''},
+        shouldDeleteAccountModalOpen: action.shouldOpen,
       });
     default:
       return state;

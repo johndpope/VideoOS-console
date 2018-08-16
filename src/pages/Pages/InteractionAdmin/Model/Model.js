@@ -10,10 +10,11 @@ import {
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { getIaModels, addModelToggle, addModel, uploadModelFile, queryAllModelTypes, deleteModelToggle } from './actions';
+import { getIaModels, addModelToggle, addModel, uploadModelFile, queryAllModelTypes, deleteModel, deleteModelModalToggle } from './actions';
 import reducer from './reducer';
 import ModalTable from './components/Table';
 import AddModel from './components/AddModel';
+import DeleteModel from './components/DeleteModal';
 
 class IAModel extends Component {
 
@@ -29,7 +30,7 @@ class IAModel extends Component {
 
   render() {
     const { currentPage } = this.state;
-    const { getIaModels, iaModel, addModelToggle, addModel, uploadModelFile, deleteModelToggle } = this.props;
+    const { getIaModels, iaModel, addModelToggle, addModel, uploadModelFile, deleteModelToggle, deleteModel, deleteModelModalToggle } = this.props;
     const modelTypes = iaModel.modelTypes || [];
     return (
       <div className="app">
@@ -40,6 +41,12 @@ class IAModel extends Component {
           uploadModelFile={uploadModelFile}
           uploadModelFileInfo={iaModel.uploadModelFileInfo || {}}
           modelTypes={modelTypes}
+        />
+        <DeleteModel
+          deleteModel={deleteModel} 
+          shouldOpen={iaModel && iaModel.shouldDeleteModelModalOpen} 
+          toggle={() => {deleteModelModalToggle(iaModel.record)}}
+          record={iaModel.record}
         />
         <IceContainer>
           <Button onClick={addModelToggle}>新增模版</Button>
@@ -87,7 +94,8 @@ const mapDispatchToProps = {
   addModel,
   uploadModelFile,
   queryAllModelTypes,
-  deleteModelToggle,
+  deleteModel,
+  deleteModelModalToggle,
 };
 
 const mapStateToProps = (state) => {

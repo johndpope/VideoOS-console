@@ -29,6 +29,9 @@ import {
   ADD_MODEL_REQUEST,
   ADD_MODEL_SUCCESS,
   ADD_MODEL_FAILURE,
+  DELETE_MODEL_REQUEST,
+  DELETE_MODEL_SUCCESS,
+  DELETE_MODEL_FAILURE,
   UPLOAD_MODEL_FILE_REQUEST,
   UPLOAD_MODEL_FILE_SUCCESS,
   UPLOAD_MODEL_FILE_FAILURE,
@@ -102,6 +105,30 @@ const addModelSuccess = (payload) => {
 const addModelFailure = (payload) => {
   return {
     type: ADD_MODEL_FAILURE,
+    payload,
+    isLoading: false,
+  };
+};
+
+const deleteModelRequest = (payload) => {
+  return {
+    type: DELETE_MODEL_REQUEST,
+    payload,
+    isLoading: true,
+  };
+};
+
+const deleteModelSuccess = (payload) => {
+  return {
+    type: DELETE_MODEL_SUCCESS,
+    payload,
+    isLoading: false,
+  };
+};
+
+const deleteModelFailure = (payload) => {
+  return {
+    type: DELETE_MODEL_FAILURE,
     payload,
     isLoading: false,
   };
@@ -187,7 +214,7 @@ export const addModelToggle = () => {
   }
 };
 
-export const deleteModelToggle = () => {
+export const deleteModelModalToggle = () => {
   return (dispatch) => {
     deleteModelSwitch = !deleteModelSwitch;
     if (deleteModelSwitch) {
@@ -209,13 +236,37 @@ export const addModel = (params) => {
         dispatch(getIaModels());
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {
-        dispatch(getIaModelsFailure(response.data));
+        dispatch(addModelFailure(response.data));
         Feedback.toast.error(response.data && response.data.resMsg);
       }
 
       return response.data;
     } catch(error) {
       dispatch(addModelFailure());
+    }
+  };
+};
+
+export const deleteModel = (params) => {
+  return async (dispatch) => {
+    dispatch(deleteModelRequest());
+    try {
+      const response = await api.deleteModel(params);
+
+      if (response.status === 200 && response.data.resCode === '00') {
+
+        dispatch(deleteModelSuccess(response.data));
+        dispatch(hideAddModelModal());
+        dispatch(getIaModels());
+        Feedback.toast.show(response.data && response.data.resMsg);
+      } else {
+        dispatch(deleteModelFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch(error) {
+      dispatch(deleteModelFailure());
     }
   };
 };

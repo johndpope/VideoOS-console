@@ -19,6 +19,14 @@ import {
     QUERY_ALL_ROLETYPES_REQUEST,
     QUERY_ALL_ROLETYPES_SUCCESS,
     QUERY_ALL_ROLETYPES_FAILURE,
+    SHOW_DELETEROLE_MODAL,
+    HIDE_DELETEROLE_MODAL,
+    ADD_ROLE_REQUEST,
+    ADD_ROLE_SUCCESS,
+    ADD_ROLE_FAILURE,
+    DELETE_ROLE_REQUEST,
+    DELETE_ROLE_SUCCESS,
+    DELETE_ROLE_FAILURE,
   } from './constants';
   
   // The initial state of the account
@@ -84,10 +92,40 @@ import {
         return Object.assign({}, state, {
           isLoading: false,
         });
+      case ADD_ROLE_REQUEST:
+        return Object.assign({}, state, {
+          isLoading: true,
+        });
+      case ADD_ROLE_SUCCESS:
+        return Object.assign({}, state, {
+          isLoading: false,
+        });
+      case ADD_ROLE_FAILURE:
+        return Object.assign({}, state, {
+          isLoading: false,
+        });
+      case DELETE_ROLE_REQUEST:
+        return Object.assign({}, state, {
+          isLoading: true,
+        });
+      case DELETE_ROLE_SUCCESS:
+        return Object.assign({}, state, {
+          isLoading: false,
+        });
+      case DELETE_ROLE_FAILURE:
+        return Object.assign({}, state, {
+          isLoading: false,
+        });
       case SHOW_ADDROLE_MODAL:
       case HIDE_ADDROLE_MODAL:
         return Object.assign({}, state, {
           shouldAddRoleModalOpen: action.shouldOpen,
+        });
+      case SHOW_DELETEROLE_MODAL:
+      case HIDE_DELETEROLE_MODAL:
+        return Object.assign({}, state, {
+          record: {roleId: action.payload && action.payload.roleId || ''},
+          shouldDeleteRoleModalOpen: action.shouldOpen,
         });
       default:
         return state;    

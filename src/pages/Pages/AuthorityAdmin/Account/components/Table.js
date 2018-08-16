@@ -5,14 +5,14 @@ import { Table, Button } from '@icedesign/base';
 export default class AccountTable extends Component {
 
   renderOperator = (value, index, record) => {
-    const { addAccountModalToggle } = this.props;
+    const { addAccountModalToggle, deleteAccountModalToggle } = this.props;
     return (
       <div>
         <Button onClick={() => {addAccountModalToggle({...record, opType: 'update'})}}
         >
           修改
         </Button>
-        <Button>删除</Button>
+        <Button onClick={() => {deleteAccountModalToggle(record)}}>删除</Button>
       </div>
     );
   };  

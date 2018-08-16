@@ -28,9 +28,15 @@ import {
   QUERY_ALL_ROLETYPES_REQUEST,
   QUERY_ALL_ROLETYPES_SUCCESS,
   QUERY_ALL_ROLETYPES_FAILURE,
+  SHOW_DELETEROLE_MODAL,
+  HIDE_DELETEROLE_MODAL,
+  DELETE_ROLE_REQUEST,
+  DELETE_ROLE_SUCCESS,
+  DELETE_ROLE_FAILURE,
 } from './constants';
 
 let addRoleModalSwitch = false;
+let deleteRoleModalSwitch = false;
 
 const showAddRoleModal = () => {
   return {
@@ -42,6 +48,20 @@ const showAddRoleModal = () => {
 const hideAddRoleModal = () => {
   return {
     type: HIDE_ADDROLE_MODAL,
+    shouldOpen: false,
+  }
+};
+
+const showDeleteRoleModal = () => {
+  return {
+    type: SHOW_DELETEROLE_MODAL,
+    shouldOpen: true,
+  }
+};
+
+const hideDeleteRoleModal = () => {
+  return {
+    type: HIDE_DELETEROLE_MODAL,
     shouldOpen: false,
   }
 };
@@ -86,6 +106,28 @@ const addRoleSuccess = (payload) => {
 const addRoleFailure = () => {
   return {
     type: ADD_ROLE_FAILURE,
+    isLoading: false,
+  }
+};
+
+const deleteRoleRequest = () => {
+  return {
+    type: DELETE_ROLE_REQUEST,
+    isLoading: true,
+  }
+};
+
+const deleteRoleSuccess = (payload) => {
+  return {
+    type: DELETE_ROLE_SUCCESS,
+    payload,
+    isLoading: false,
+  }
+};
+
+const deleteRoleFailure = () => {
+  return {
+    type: DELETE_ROLE_FAILURE,
     isLoading: false,
   }
 };
@@ -147,6 +189,17 @@ export const addRoleModalToggle = () => {
   }
 };
 
+export const deleteRoleModalToggle = () => {
+  return (dispatch) => {
+    deleteRoleModalSwitch = !deleteRoleModalSwitch;
+    if (deleteRoleModalSwitch) {
+      dispatch(showDeleteRoleModal());
+    } else {
+      dispatch(hideDeleteRoleModal());
+    }
+  }
+};
+
 export const addRole = (params) => {
   return async (dispatch) => {
     dispatch(addRoleRequest());
@@ -154,8 +207,10 @@ export const addRole = (params) => {
       const response = await api.addAaRole(params);
 
       if (response.status === 200 && response.data.resCode === '00') {
-
         dispatch(addRoleSuccess(response.data));
+        dispatch(hideAddRoleModal());
+        dispatch(getRoles());
+        Feedback.toast.show(response.data && response.data.resMsg);
       } else {
         dispatch(addRoleFailure(response.data));
         Feedback.toast.error(response.data && response.data.resMsg);
@@ -164,6 +219,29 @@ export const addRole = (params) => {
       return response.data;
     } catch(error) {
       dispatch(addRoleFailure(error));
+    }
+  };
+};
+
+export const deleteRole = (params) => {
+  return async (dispatch) => {
+    dispatch(deleteRoleRequest());
+    try {
+      const response = await api.deleteAaRole(params);
+
+      if (response.status === 200 && response.data.resCode === '00') {
+        dispatch(deleteRoleSuccess(response.data));
+        dispatch(hideDeleteRoleModal());
+        dispatch(getRoles());
+        Feedback.toast.show(response.data && response.data.resMsg);
+      } else {
+        dispatch(deleteRoleFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch(error) {
+      dispatch(deleteRoleFailure(error));
     }
   };
 };

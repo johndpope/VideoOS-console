@@ -5,7 +5,7 @@ import { Table, Button } from '@icedesign/base';
 export default class RoleTable extends Component {
 
   renderOperator = (value, index, record) => {
-    const { addRoleModalToggle } = this.props;
+    const { addRoleModalToggle, deleteRoleModalToggle } = this.props;
     return (
       <div>
         <Button onClick={() => {addRoleModalToggle({...record, opType: 'read'})}}>查看</Button>
@@ -13,7 +13,7 @@ export default class RoleTable extends Component {
         >
           修改
         </Button>
-        <Button>删除</Button>
+        <Button onClick={() => {deleteRoleModalToggle(record)}}>删除</Button>
       </div>
     );
   };  

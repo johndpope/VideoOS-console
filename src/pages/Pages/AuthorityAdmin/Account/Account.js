@@ -9,10 +9,11 @@ import {
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { getAccounts, addAccountModalToggle, addAccount, queryAllAccountTypes } from './actions';
+import { getAccounts, addAccountModalToggle, addAccount, queryAllAccountTypes, deleteAccount, deleteAccountModalToggle } from './actions';
 import reducer from './reducer';
 import AccountTable from './components/Table';
 import AddAccount from './components/AddAccount';
+import DeleteAccount from './components/DeleteAccount';
 
 class AAAcount extends Component {
 
@@ -27,7 +28,7 @@ class AAAcount extends Component {
   }
   
   render() {
-    const { aaAccount, addAccountModalToggle, addAccount, queryAllAccountTypes } = this.props;
+    const { aaAccount, addAccountModalToggle, addAccount, deleteAccount, deleteAccountModalToggle } = this.props;
     const { currentPage } = this.state;
     return (
       <div className="app">
@@ -38,6 +39,12 @@ class AAAcount extends Component {
           resMsg={aaAccount.addAccountResErr}
           roleTypes={aaAccount.roleTypes || []}
         />
+        <DeleteAccount 
+          deleteAccount={deleteAccount} 
+          shouldOpen={aaAccount && aaAccount.shouldDeleteAccountModalOpen} 
+          toggle={() => {deleteAccountModalToggle(aaAccount.record)}}
+          record={aaAccount.record}
+        />
         <IceContainer>
           <Button onClick={addAccountModalToggle}>添加账号</Button>
         </IceContainer>
@@ -46,6 +53,7 @@ class AAAcount extends Component {
             isLoading={aaAccount && aaAccount.isLoading}
             dataSource={aaAccount && aaAccount.accountResult}
             addAccountModalToggle={addAccountModalToggle}
+            deleteAccountModalToggle={deleteAccountModalToggle}
           />
           {
             aaAccount && !aaAccount.isLoading ? (
@@ -67,6 +75,8 @@ const mapDispatchToProps = {
   addAccountModalToggle,
   addAccount,
   queryAllAccountTypes,
+  deleteAccount,
+  deleteAccountModalToggle,
 };
   
 const mapStateToProps = (state) => {
