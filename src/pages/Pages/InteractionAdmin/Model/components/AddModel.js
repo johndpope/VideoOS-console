@@ -25,7 +25,6 @@ const AddModel = ({shouldOpen, toggle, addModel, uploadModelFile, uploadModelFil
             onChange={e => {
               interactionTypeId = e.target.value;
             }}
-            defaultValue="云图"
           >
             {
               modelTypes && Array.isArray(modelTypes) && modelTypes.length > 0 && modelTypes.map((mt, idx) => (

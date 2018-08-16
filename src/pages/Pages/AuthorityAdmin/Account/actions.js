@@ -113,7 +113,10 @@ const queryAllAccountTypesFailure = () => {
   };
 };
 
-export const getAccounts = (params) => {
+export const getAccounts = (params = {
+  currentPage: 1,
+  pageSize: 20,
+}) => {
   return async (dispatch) => {
     dispatch(getAccountsRequest());
     try {
@@ -152,8 +155,10 @@ export const addAccount = (params) => {
       const response = await api.addAaAccount(params);
 
       if (response.status === 200 && response.data.resCode === '00') {
-
         dispatch(addAccountSuccess(response.data));
+        dispatch(hideAddAccountModal());
+        dispatch(getAccounts());
+        Feedback.toast.show(response.data && response.data.resMsg);
       } else {
         dispatch(addAccountFail(response.data));
         Feedback.toast.error(response.data && response.data.resMsg);

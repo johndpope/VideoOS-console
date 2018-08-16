@@ -27,7 +27,9 @@ export default class ModalTable extends Component {
           hasBorder={false}
           isLoading={isLoading}
         >
-          <Table.Column title="序号" dataIndex="" width={120} />  
+          <Table.Column title="序号" width={120} 
+            cell={(value, index, record) => (<span>{index}</span>)}
+          />  
           <Table.Column title="创建日期" dataIndex="createDate" width={120} />
           <Table.Column title="模板类型" dataIndex="templateId" width={120} />
           <Table.Column title="模板名称" dataIndex="templateName" width={120} />

@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { Container } from 'reactstrap';
-
+import { createHashHistory } from 'history';
 import {
-  AppAside,
   AppBreadcrumb,
-  AppFooter,
   AppHeader,
   AppSidebar,
   AppSidebarFooter,
@@ -14,6 +12,7 @@ import {
   AppSidebarMinimizer,
   AppSidebarNav,
 } from '@coreui/react';
+import { getAuthority } from 'utils/authority';
 // sidebar nav config
 import menuConfig from '../../menuConfig';
 // routes config
@@ -21,8 +20,14 @@ import routerConfig from '../../routerConfig';
 import DefaultFooter from './DefaultFooter';
 import DefaultHeader from './DefaultHeader';
 
+const history = createHashHistory();
+
 class DefaultLayout extends Component {
   render() {
+    const isAuthorized = getAuthority();
+    if (!Boolean(isAuthorized)) {
+      history.push('/login');
+    }
     return (
       <div className="app">
         <AppHeader fixed>

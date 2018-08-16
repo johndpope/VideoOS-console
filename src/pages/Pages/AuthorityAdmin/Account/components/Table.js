@@ -8,21 +8,27 @@ export default class AccountTable extends Component {
     const { addAccountModalToggle } = this.props;
     return (
       <div>
-        <a onClick={() => {addAccountModalToggle({...record, opType: 'update'})}}
+        <Button onClick={() => {addAccountModalToggle({...record, opType: 'update'})}}
         >
           修改
-        </a>
-        <a>删除</a>
+        </Button>
+        <Button>删除</Button>
       </div>
     );
   };  
   
   render() {
-    
+    const { dataSource, isLoading } = this.props;
     return (
       <div className="animated fadeIn">
-        <Table>
-          <Table.Column title="序号" dataIndex="" width={120} />  
+        <Table
+          dataSource={ dataSource }
+          hasBorder={false}
+          isLoading={isLoading}
+        >
+          <Table.Column title="序号" width={120} 
+            cell={(value, index, record) => (<span>{index}</span>)}
+          />  
           <Table.Column title="创建日期" dataIndex="createDate" width={120} />
           <Table.Column title="账号名称" dataIndex="userName" width={120} />
           <Table.Column title="角色" dataIndex="roleName" width={120} />

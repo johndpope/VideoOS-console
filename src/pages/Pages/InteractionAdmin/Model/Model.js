@@ -16,6 +16,10 @@ import ModalTable from './components/Table';
 import AddModel from './components/AddModel';
 
 class IAModel extends Component {
+
+  state = {
+    currentPage: 1,
+  }
   
   componentDidMount() {
     const { getIaModels, queryAllModelTypes } = this.props
@@ -24,7 +28,9 @@ class IAModel extends Component {
   }
 
   render() {
-    const { iaModel, addModelToggle, addModel, uploadModelFile, deleteModelToggle } = this.props;
+    const { currentPage } = this.state;
+    const { getIaModels, iaModel, addModelToggle, addModel, uploadModelFile, deleteModelToggle } = this.props;
+    const modelTypes = iaModel.modelTypes || [];
     return (
       <div className="app">
         <AddModel 
@@ -33,7 +39,7 @@ class IAModel extends Component {
           addModel={addModel}
           uploadModelFile={uploadModelFile}
           uploadModelFileInfo={iaModel.uploadModelFileInfo || {}}
-          modelTypes={iaModel.modelTypes || []}
+          modelTypes={modelTypes}
         />
         <IceContainer>
           <Button onClick={addModelToggle}>新增模版</Button>
@@ -43,10 +49,24 @@ class IAModel extends Component {
                 类型：
               </InputGroupText>
             </InputGroupAddon>
-            <Input type="select" name="type">
-              <option value="">全部</option>
-              <option value="">云图</option>
-              <option value="">中插</option>
+            <Input type="select" name="type"
+              onChange={e => {
+                const params = {
+                  currentPage,
+                  pageSize: 20,
+                };
+                if (e.target.value !== '-1') {
+                  params.interactionTypeId = e.target.value;
+                }
+                getIaModels(params)
+              }}
+            >
+              <option value="-1">全部</option>
+            {
+              modelTypes && Array.isArray(modelTypes) && modelTypes.length > 0 && modelTypes.map((mt, idx) => (
+                <option key={idx} value={mt.interactionId}>{mt.interactionTypeName}</option>
+              ))
+            }
             </Input>
           </InputGroup>
         </IceContainer>
