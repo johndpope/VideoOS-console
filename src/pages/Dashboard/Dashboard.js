@@ -9,7 +9,7 @@ class Dashboard extends Component {
   render() {
     return (
       <div className="animated fadeIn">
-        默认展示
+        <p>欢迎👏</p>
       </div>
     );
   }

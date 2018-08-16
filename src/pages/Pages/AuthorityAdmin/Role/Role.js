@@ -35,7 +35,7 @@ class AARole extends Component {
           shouldOpen={aaRole && aaRole.shouldAddRoleModalOpen} 
           toggle={addRoleModalToggle}
           addRole={addRole}
-          roleTypes={aaRole.roleTypes || []}
+          roleAuthorities={aaRole.roleAuthorities || []}
         />
         <IceContainer>
           <Button onClick={addRoleModalToggle}>添加角色</Button>

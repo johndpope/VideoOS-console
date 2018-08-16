@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
-import { Card, CardBody, Form, InputGroup, InputGroupAddon, InputGroupText, Input, Col, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap';
+import { ListGroup, ListGroupItem, Form, FormGroup, InputGroup, InputGroupAddon, InputGroupText, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Col } from 'reactstrap';
 import { Button } from '@icedesign/base';
 
-const AddRole = ({shouldOpen, toggle, addRole}) => {
+const AddRole = ({shouldOpen, toggle, addRole, roleAuthorities}) => {
   let launchPlanName = null;
-  let nodeIdList = [];
+  let _roleAuthorities = Object.assign({}, roleAuthorities);
   return (
   <Fragment>
     <Modal
@@ -34,13 +34,42 @@ const AddRole = ({shouldOpen, toggle, addRole}) => {
             </InputGroupText>
           </InputGroupAddon>
         </InputGroup>
+        {
+          _roleAuthorities && Object.keys(_roleAuthorities).map((key, idx) => (
+            <FormGroup key={idx} row>
+              <Col>{key}</Col>
+              <Col>
+                <Label>
+                  <Input type="checkbox"
+                    onChange={e => {
+                      _roleAuthorities[key].read = Boolean(e.target.value);
+                    }}
+                  />
+                  可读
+                </Label> 
+              </Col>
+              <Col>
+                <Label>
+                  <Input type="checkbox"
+                    onChange={e => {
+                      _roleAuthorities[key].write = Boolean(e.target.value);
+                    }}
+                  />
+                  可写
+                </Label> 
+              </Col>        
+            </FormGroup>
+          ))
+        }
       </Form>
       </ModalBody>
       <ModalFooter>
         <Button type="primary" onClick={() => {
           addRole({
             launchPlanName,
-            nodeIdList,
+            nodeIdList: Object.keys(_roleAuthorities).filter(key => {
+              return _roleAuthorities[key].read || _roleAuthorities[key].write
+            }),
           });
         }}>确认添加</Button>
       </ModalFooter>

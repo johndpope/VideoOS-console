@@ -22,7 +22,38 @@ import {
   } from './constants';
   
   // The initial state of the account
-  const initialState = {};
+  const initialState = {
+    roleAuthorities: {
+        '类型管理': {
+          read: false,
+          write: false,
+        },
+        '模板管理': {
+          read: false,
+          write: false,
+        },
+        '投放计划管理': {
+          read: false,
+          write: false,
+        },
+        '投放素材管理': {
+          read: false,
+          write: false,
+        },
+        '投放审核管理': {
+          read: false,
+          write: false,
+        },
+        'license管理': {
+          read: false,
+          write: false,
+        },
+        '数据信息管理': {
+          read: false,
+          write: false,
+        }
+      },
+  };
   
   function aaRoleReducer(state = initialState, action) {
     switch(action.type) {
