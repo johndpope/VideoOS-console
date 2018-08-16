@@ -31,7 +31,6 @@ import {
   SHOW_DELETEACCOUNT_MODAL,
   HIDE_DELETEACCOUNT_MODAL,
 } from './constants';
-import { stat } from 'fs';
 
 // The initial state of the account
 const initialState = {};

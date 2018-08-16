@@ -15,7 +15,6 @@
  *    }
  */
 
-import { push } from 'react-router-redux';
 import { Feedback } from '@icedesign/base';
 import * as api from './api';
 // import { reloadAuthorized } from 'utils/Authorized';

@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { ListGroup, ListGroupItem, Form, FormGroup, InputGroup, InputGroupAddon, InputGroupText, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Col } from 'reactstrap';
+import { Form, FormGroup, InputGroup, InputGroupAddon, InputGroupText, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Col } from 'reactstrap';
 import { Button } from '@icedesign/base';
 
 const AddRole = ({shouldOpen, toggle, addRole, updateRole, roleAuthorities, record}) => {

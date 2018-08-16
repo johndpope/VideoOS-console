@@ -1,12 +1,7 @@
-import React, { Component, Fragment } from 'react';
-import { Card, CardBody, CardGroup, Col, Container, InputGroup, InputGroupAddon, InputGroupText, Input, Row } from 'reactstrap';
+import React, { Component } from 'react';
+import { InputGroup, InputGroupAddon, InputGroupText, Input } from 'reactstrap';
 import { Button } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
-import {
-  FormBinderWrapper,
-  FormBinder,
-  FormError,
-} from '@icedesign/form-binder';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';

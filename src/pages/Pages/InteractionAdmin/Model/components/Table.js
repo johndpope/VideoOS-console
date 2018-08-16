@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Row, Col, FormGroup, InputGroup, InputGroupAddon, InputGroupText, Input, Label } from 'reactstrap';
 import { Table, Button } from '@icedesign/base';
 
 export default class ModalTable extends Component {

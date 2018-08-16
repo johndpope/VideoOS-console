@@ -40,7 +40,6 @@ import {
 
 let addAccountModalSwitch = false;
 let deleteAccountModalSwitch = false;
-let updateAccountModalSwitch = false;
 
 const getAccountsRequest = () => {
   return {

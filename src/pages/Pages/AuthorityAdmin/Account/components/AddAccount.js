@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Card, CardBody, Form, InputGroup, InputGroupAddon, InputGroupText, Input, Col, Modal, ModalBody, ModalFooter, ModalHeader, Row, Badge } from 'reactstrap';
+import { Form, InputGroup, InputGroupAddon, InputGroupText, Input, Modal, ModalBody, ModalFooter, ModalHeader, Badge } from 'reactstrap';
 import { Button } from '@icedesign/base';
 
 const AddAccount = ({shouldOpen, toggle, addAccount, updateAccount, resMsg, roleTypes, record}) => {

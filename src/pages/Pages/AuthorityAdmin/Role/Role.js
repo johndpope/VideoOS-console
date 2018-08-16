@@ -1,11 +1,6 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Button, Pagination } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
-import {
-  FormBinderWrapper,
-  FormBinder,
-  FormError,
-} from '@icedesign/form-binder';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';

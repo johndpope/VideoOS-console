@@ -4,7 +4,6 @@ import { Input } from '@icedesign/base';
 import {
   FormBinderWrapper,
   FormBinder,
-  FormError,
 } from '@icedesign/form-binder';
 import { connect } from 'react-redux';
 import { compose } from 'redux';

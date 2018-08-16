@@ -17,7 +17,7 @@ import { getAuthority } from 'utils/authority';
 import menuConfig from '../../menuConfig';
 // routes config
 import routerConfig from '../../routerConfig';
-import DefaultFooter from './DefaultFooter';
+// import DefaultFooter from './DefaultFooter';
 import DefaultHeader from './DefaultHeader';
 
 const history = createHashHistory();
