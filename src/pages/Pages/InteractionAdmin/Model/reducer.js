@@ -17,6 +17,15 @@ import {
     HIDE_ADDMODEL_MODAL,
     SHOW_DELETEMODEL_MODAL,
     HIDE_DELETEMODEL_MODAL,
+    ADD_MODEL_REQUEST,
+    ADD_MODEL_SUCCESS,
+    ADD_MODEL_FAILURE,
+    DELETE_MODEL_REQUEST,
+    DELETE_MODEL_SUCCESS,
+    DELETE_MODEL_FAILURE,
+    UPDATE_MODEL_REQUEST,
+    UPDATE_MODEL_SUCCESS,
+    UPDATE_MODEL_FAILURE,
     UPLOAD_MODEL_FILE_REQUEST,
     UPLOAD_MODEL_FILE_SUCCESS,
     UPLOAD_MODEL_FILE_FAILURE,
@@ -55,6 +64,42 @@ function iaModelReducer(state = initialState, action) {
     case UPLOAD_MODEL_FILE_FAILURE:
       return Object.assign({}, state, {
         isLoading: action.isLoading,
+      });
+    case ADD_MODEL_REQUEST:
+      return Object.assign({}, state, {
+        isLoading: true,
+      });
+    case ADD_MODEL_SUCCESS:
+      return Object.assign({}, state, {
+        isLoading: false,
+      });
+    case ADD_MODEL_FAILURE:
+      return Object.assign({}, state, {
+        isLoading: false,
+      });
+    case UPDATE_MODEL_REQUEST:
+      return Object.assign({}, state, {
+        isLoading: true,
+      });
+    case UPDATE_MODEL_SUCCESS:
+      return Object.assign({}, state, {
+        isLoading: false,
+      });
+    case UPDATE_MODEL_FAILURE:
+      return Object.assign({}, state, {
+        isLoading: false,
+      });
+    case DELETE_MODEL_REQUEST:
+      return Object.assign({}, state, {
+        isLoading: true,
+      });
+    case DELETE_MODEL_SUCCESS:
+      return Object.assign({}, state, {
+        isLoading: false,
+      });
+    case DELETE_MODEL_FAILURE:
+      return Object.assign({}, state, {
+        isLoading: false,
       });
     case QUERY_ALL_MODELTYPES_REQUEST:
       return Object.assign({}, state, {

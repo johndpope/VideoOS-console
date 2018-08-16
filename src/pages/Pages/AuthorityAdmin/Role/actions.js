@@ -25,14 +25,17 @@ import {
   ADD_ROLE_REQUEST,
   ADD_ROLE_SUCCESS,
   ADD_ROLE_FAILURE,
+  UPDATE_ROLE_REQUEST,
+  UPDATE_ROLE_SUCCESS,
+  UPDATE_ROLE_FAILURE,
+  DELETE_ROLE_REQUEST,
+  DELETE_ROLE_SUCCESS,
+  DELETE_ROLE_FAILURE,
   QUERY_ALL_ROLETYPES_REQUEST,
   QUERY_ALL_ROLETYPES_SUCCESS,
   QUERY_ALL_ROLETYPES_FAILURE,
   SHOW_DELETEROLE_MODAL,
   HIDE_DELETEROLE_MODAL,
-  DELETE_ROLE_REQUEST,
-  DELETE_ROLE_SUCCESS,
-  DELETE_ROLE_FAILURE,
 } from './constants';
 
 let addRoleModalSwitch = false;
@@ -108,6 +111,28 @@ const addRoleSuccess = (payload) => {
 const addRoleFailure = () => {
   return {
     type: ADD_ROLE_FAILURE,
+    isLoading: false,
+  }
+};
+
+const updateRoleRequest = () => {
+  return {
+    type: UPDATE_ROLE_REQUEST,
+    isLoading: true,
+  }
+};
+
+const updateRoleSuccess = (payload) => {
+  return {
+    type: UPDATE_ROLE_SUCCESS,
+    payload,
+    isLoading: false,
+  }
+};
+
+const updateRoleFailure = () => {
+  return {
+    type: UPDATE_ROLE_FAILURE,
     isLoading: false,
   }
 };
@@ -221,6 +246,29 @@ export const addRole = (params) => {
       return response.data;
     } catch(error) {
       dispatch(addRoleFailure(error));
+    }
+  };
+};
+
+export const updateRole = (params) => {
+  return async (dispatch) => {
+    dispatch(updateRoleRequest());
+    try {
+      const response = await api.updateAaRole(params);
+
+      if (response.status === 200 && response.data.resCode === '00') {
+        dispatch(updateRoleSuccess(response.data));
+        dispatch(addRoleModalToggle());
+        dispatch(getRoles());
+        Feedback.toast.show(response.data && response.data.resMsg);
+      } else {
+        dispatch(updateRoleFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch(error) {
+      dispatch(updateRoleFailure(error));
     }
   };
 };

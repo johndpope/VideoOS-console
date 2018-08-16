@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { ListGroup, ListGroupItem, Form, FormGroup, InputGroup, InputGroupAddon, InputGroupText, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Col } from 'reactstrap';
 import { Button } from '@icedesign/base';
 
-const AddRole = ({shouldOpen, toggle, addRole, roleAuthorities, record}) => {
+const AddRole = ({shouldOpen, toggle, addRole, updateRole, roleAuthorities, record}) => {
   let launchPlanName = null;
   let _roleAuthorities = Object.assign({}, roleAuthorities);
   const { opType } = record || {};
@@ -74,13 +74,23 @@ const AddRole = ({shouldOpen, toggle, addRole, roleAuthorities, record}) => {
       </ModalBody>
       <ModalFooter>
         <Button type="primary" onClick={() => {
-          addRole({
-            launchPlanName,
-            nodeIdList: Object.keys(_roleAuthorities).filter(key => {
-              return _roleAuthorities[key].read || _roleAuthorities[key].write
-            }),
-          });
-        }}>确认添加</Button>
+          if (isUpdate) {
+            updateRole({
+              roleId: record && record.roleId || '',
+              roleName: launchPlanName,
+              nodeIdList: Object.keys(_roleAuthorities).filter(key => {
+                return _roleAuthorities[key].read || _roleAuthorities[key].write
+              }),
+            });
+          } else {
+            addRole({
+              launchPlanName,
+              nodeIdList: Object.keys(_roleAuthorities).filter(key => {
+                return _roleAuthorities[key].read || _roleAuthorities[key].write
+              }),
+            });
+          }
+        }}>{isUpdate ? '确认修改' : '确认添加'}</Button>
       </ModalFooter>
     </Modal>  
   </Fragment>

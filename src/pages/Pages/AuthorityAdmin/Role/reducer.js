@@ -24,6 +24,9 @@ import {
     ADD_ROLE_REQUEST,
     ADD_ROLE_SUCCESS,
     ADD_ROLE_FAILURE,
+    UPDATE_ROLE_REQUEST,
+    UPDATE_ROLE_SUCCESS,
+    UPDATE_ROLE_FAILURE,
     DELETE_ROLE_REQUEST,
     DELETE_ROLE_SUCCESS,
     DELETE_ROLE_FAILURE,
@@ -101,6 +104,18 @@ import {
           isLoading: false,
         });
       case ADD_ROLE_FAILURE:
+        return Object.assign({}, state, {
+          isLoading: false,
+        });
+      case UPDATE_ROLE_REQUEST:
+        return Object.assign({}, state, {
+          isLoading: true,
+        });
+      case UPDATE_ROLE_SUCCESS:
+        return Object.assign({}, state, {
+          isLoading: false,
+        });
+      case UPDATE_ROLE_FAILURE:
         return Object.assign({}, state, {
           isLoading: false,
         });

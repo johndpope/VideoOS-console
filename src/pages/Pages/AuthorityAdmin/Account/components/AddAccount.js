@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Card, CardBody, Form, InputGroup, InputGroupAddon, InputGroupText, Input, Col, Modal, ModalBody, ModalFooter, ModalHeader, Row, Badge } from 'reactstrap';
 import { Button } from '@icedesign/base';
 
-const AddAccount = ({shouldOpen, toggle, addAccount, resMsg, roleTypes, record}) => {
+const AddAccount = ({shouldOpen, toggle, addAccount, updateAccount, resMsg, roleTypes, record}) => {
   let username = null;
   let roleId = null;
   let password = null;
@@ -77,14 +77,25 @@ const AddAccount = ({shouldOpen, toggle, addAccount, resMsg, roleTypes, record})
         <Button type="primary"
           onClick={e => {
             e.preventDefault();
-            addAccount({
-              username,
-              roleId,
-              password,
-            });
+            if (isUpdate) {
+              updateAccount({
+                username,
+                roleId,
+                password,
+                userId: record && record.userId,
+              });
+            } else {
+              addAccount({
+                username,
+                roleId,
+                password,
+              });
+            }
           }}
         >
-          确认添加
+          {
+            isUpdate ? '确认修改' : '确认添加'
+          }
         </Button>
       </ModalFooter>
     </Modal>  

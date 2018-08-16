@@ -34,6 +34,9 @@ import {
   DELETE_MODEL_REQUEST,
   DELETE_MODEL_SUCCESS,
   DELETE_MODEL_FAILURE,
+  UPDATE_MODEL_REQUEST,
+  UPDATE_MODEL_SUCCESS,
+  UPDATE_MODEL_FAILURE,
   UPLOAD_MODEL_FILE_REQUEST,
   UPLOAD_MODEL_FILE_SUCCESS,
   UPLOAD_MODEL_FILE_FAILURE,
@@ -124,6 +127,30 @@ const addModelSuccess = (payload) => {
 const addModelFailure = (payload) => {
   return {
     type: ADD_MODEL_FAILURE,
+    payload,
+    isLoading: false,
+  };
+};
+
+const updateModelRequest = (payload) => {
+  return {
+    type: UPDATE_MODEL_REQUEST,
+    payload,
+    isLoading: true,
+  };
+};
+
+const updateModelSuccess = (payload) => {
+  return {
+    type: UPDATE_MODEL_SUCCESS,
+    payload,
+    isLoading: false,
+  };
+};
+
+const updateModelFailure = (payload) => {
+  return {
+    type: UPDATE_MODEL_FAILURE,
     payload,
     isLoading: false,
   };
@@ -264,6 +291,30 @@ export const addModel = (params) => {
       return response.data;
     } catch(error) {
       dispatch(addModelFailure());
+    }
+  };
+};
+
+export const updateModel = (params) => {
+  return async (dispatch) => {
+    dispatch(updateModelRequest());
+    try {
+      const response = await api.updateModel(params);
+
+      if (response.status === 200 && response.data.resCode === '00') {
+
+        dispatch(updateModelSuccess(response.data));
+        dispatch(hideAddModelModal());
+        dispatch(getIaModels());
+        Feedback.toast.show(response.data && response.data.resMsg);
+      } else {
+        dispatch(updateModelFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch(error) {
+      dispatch(updateModelFailure());
     }
   };
 };

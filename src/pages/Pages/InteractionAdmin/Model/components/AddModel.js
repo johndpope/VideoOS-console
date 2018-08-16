@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Card, CardBody, Form, InputGroup, InputGroupAddon, InputGroupText, Input, Col, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap';
 import { Button } from '@icedesign/base';
 
-const AddModel = ({shouldOpen, toggle, addModel, uploadModelFile, uploadModelFileInfo, modelTypes, record}) => {
+const AddModel = ({shouldOpen, toggle, addModel, updateModel, uploadModelFile, uploadModelFileInfo, modelTypes, record}) => {
   let interactionTypeId = null;
   let interactionTemplateName = null;
   const { opType } = record || {};
@@ -88,12 +88,21 @@ const AddModel = ({shouldOpen, toggle, addModel, uploadModelFile, uploadModelFil
       <ModalFooter>
         <Button onClick={toggle}>取消</Button>
         <Button type="primary" onClick={() => {
-          addModel({
-            interactionTypeId,
-            interactionTemplateName,
-            ...uploadModelFileInfo,
-          });
-        }}>确认新增</Button>
+          if (isUpdate) {
+            updateModel({
+              interactionTemplateId: record && record.interactionTemplateId,
+              interactionTypeId,
+              interactionTemplateName,
+              ...uploadModelFileInfo,
+            });
+          } else {
+            addModel({
+              interactionTypeId,
+              interactionTemplateName,
+              ...uploadModelFileInfo,
+            });
+          }
+        }}>{ isUpdate ? '确认修改' : '确认新增'}</Button>
       </ModalFooter>
     </Modal>  
   </Fragment>

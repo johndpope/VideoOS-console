@@ -25,18 +25,22 @@ import {
   ADD_ACCOUNT_REQUEST,
   ADD_ACCOUNT_SUCCESS,
   ADD_ACCOUNT_FAIL,
-  QUERY_ALL_ACCOUNTTYPES_REQUEST,
-  QUERY_ALL_ACCOUNTTYPES_SUCCESS,
-  QUERY_ALL_ACCOUNTTYPES_FAILURE,
+  UPDATE_ACCOUNT_REQUEST,
+  UPDATE_ACCOUNT_SUCCESS,
+  UPDATE_ACCOUNT_FAILURE,
   DELETE_ACCOUNT_REQUEST,
   DELETE_ACCOUNT_SUCCESS,
   DELETE_ACCOUNT_FAILURE,
+  QUERY_ALL_ACCOUNTTYPES_REQUEST,
+  QUERY_ALL_ACCOUNTTYPES_SUCCESS,
+  QUERY_ALL_ACCOUNTTYPES_FAILURE,
   SHOW_DELETEACCOUNT_MODAL,
   HIDE_DELETEACCOUNT_MODAL,
 } from './constants';
 
 let addAccountModalSwitch = false;
 let deleteAccountModalSwitch = false;
+let updateAccountModalSwitch = false;
 
 const getAccountsRequest = () => {
   return {
@@ -108,6 +112,29 @@ const addAccountSuccess = (payload) => {
 const addAccountFail = (payload) => {
   return {
     type: ADD_ACCOUNT_FAIL,
+    payload,
+    isLoading: false,
+  };
+};
+
+const updateAccountRequest = () => {
+  return {
+    type: UPDATE_ACCOUNT_REQUEST,
+    isLoading: true,
+  };
+};
+
+const updateAccountSuccess = (payload) => {
+  return {
+    type: UPDATE_ACCOUNT_SUCCESS,
+    payload,
+    isLoading: false,
+  };
+};
+
+const updateAccountFail = (payload) => {
+  return {
+    type: UPDATE_ACCOUNT_FAILURE,
     payload,
     isLoading: false,
   };
@@ -227,25 +254,48 @@ export const addAccount = (params) => {
   }
 };
 
-export const deleteAccount = (params) => {
+export const updateAccount = (params) => {
   return async (dispatch) => {
-    dispatch(addAccountRequest());
+    dispatch(updateAccountRequest());
     try {
-      const response = await api.deleteAaAccount(params);
+      const response = await api.updateAaAccount(params);
 
       if (response.status === 200 && response.data.resCode === '00') {
-        dispatch(addAccountSuccess(response.data));
-        dispatch(deleteAccountModalToggle());
+        dispatch(updateAccountSuccess(response.data));
+        dispatch(addAccountModalToggle());
         dispatch(getAccounts());
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {
-        dispatch(addAccountFail(response.data));
+        dispatch(updateAccountFail(response.data));
         Feedback.toast.error(response.data && response.data.resMsg);
       }
 
       return response.data;
     } catch(error) {
-      dispatch(addAccountFail(error));
+      dispatch(updateAccountFail(error));
+    }
+  }
+};
+
+export const deleteAccount = (params) => {
+  return async (dispatch) => {
+    dispatch(deleteAccountRequest());
+    try {
+      const response = await api.deleteAaAccount(params);
+
+      if (response.status === 200 && response.data.resCode === '00') {
+        dispatch(deleteAccountSuccess(response.data));
+        dispatch(deleteAccountModalToggle());
+        dispatch(getAccounts());
+        Feedback.toast.show(response.data && response.data.resMsg);
+      } else {
+        dispatch(deleteAccountFail(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch(error) {
+      dispatch(deleteAccountFail(error));
     }
   }
 };

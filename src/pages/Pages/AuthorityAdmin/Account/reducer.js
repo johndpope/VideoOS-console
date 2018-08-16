@@ -19,12 +19,15 @@ import {
   ADD_ACCOUNT_REQUEST,
   ADD_ACCOUNT_SUCCESS,
   ADD_ACCOUNT_FAIL,
-  QUERY_ALL_ACCOUNTTYPES_REQUEST,
-  QUERY_ALL_ACCOUNTTYPES_SUCCESS,
-  QUERY_ALL_ACCOUNTTYPES_FAILURE,
+  UPDATE_ACCOUNT_REQUEST,
+  UPDATE_ACCOUNT_SUCCESS,
+  UPDATE_ACCOUNT_FAILURE,
   DELETE_ACCOUNT_REQUEST,
   DELETE_ACCOUNT_SUCCESS,
   DELETE_ACCOUNT_FAILURE,
+  QUERY_ALL_ACCOUNTTYPES_REQUEST,
+  QUERY_ALL_ACCOUNTTYPES_SUCCESS,
+  QUERY_ALL_ACCOUNTTYPES_FAILURE,
   SHOW_DELETEACCOUNT_MODAL,
   HIDE_DELETEACCOUNT_MODAL,
 } from './constants';
@@ -60,6 +63,18 @@ function aaAccountReducer(state = initialState, action) {
     case ADD_ACCOUNT_FAIL:
       return Object.assign({}, state, {
         addAccountResErr: action.payload.resMsg,
+        isLoading: false,
+      });
+    case UPDATE_ACCOUNT_REQUEST:
+      return Object.assign({}, state, {
+        isLoading: true,
+      });
+    case UPDATE_ACCOUNT_SUCCESS:
+      return Object.assign({}, state, {
+        isLoading: false,
+      });
+    case UPDATE_ACCOUNT_FAILURE:
+      return Object.assign({}, state, {
         isLoading: false,
       });
     case DELETE_ACCOUNT_REQUEST:

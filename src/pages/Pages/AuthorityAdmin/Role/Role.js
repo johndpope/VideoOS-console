@@ -9,7 +9,7 @@ import {
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { getRoles, addRoleModalToggle, addRole, queryAllRoleTypes, deleteRoleModalToggle, deleteRole } from './actions';
+import { getRoles, addRoleModalToggle, addRole, queryAllRoleTypes, deleteRoleModalToggle, deleteRole, updateRole } from './actions';
 import reducer from './reducer';
 import RoleTable from './components/Table';
 import AddRole from './components/AddRole';
@@ -28,7 +28,7 @@ class AARole extends Component {
   }
   
   render() {
-    const { aaRole, addRoleModalToggle, addRole, deleteRoleModalToggle, deleteRole } = this.props;
+    const { aaRole, addRoleModalToggle, addRole, deleteRoleModalToggle, deleteRole, updateRole } = this.props;
     const { currentPage } = this.state;
     return (
       <div className="app">
@@ -36,6 +36,7 @@ class AARole extends Component {
           shouldOpen={aaRole && aaRole.shouldAddRoleModalOpen} 
           toggle={addRoleModalToggle}
           addRole={addRole}
+          updateRole={updateRole}
           roleAuthorities={aaRole.roleAuthorities || []}
           record={aaRole.record}
         />
@@ -77,6 +78,7 @@ const mapDispatchToProps = {
   queryAllRoleTypes,
   deleteRoleModalToggle,
   deleteRole,
+  updateRole,
 };
   
 const mapStateToProps = (state) => {

@@ -10,7 +10,7 @@ import {
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { getIaModels, addModelToggle, addModel, uploadModelFile, queryAllModelTypes, deleteModel, deleteModelModalToggle } from './actions';
+import { getIaModels, addModelToggle, addModel, uploadModelFile, queryAllModelTypes, deleteModel, deleteModelModalToggle, updateModel } from './actions';
 import reducer from './reducer';
 import ModalTable from './components/Table';
 import AddModel from './components/AddModel';
@@ -30,7 +30,7 @@ class IAModel extends Component {
 
   render() {
     const { currentPage } = this.state;
-    const { getIaModels, iaModel, addModelToggle, addModel, uploadModelFile, deleteModelToggle, deleteModel, deleteModelModalToggle } = this.props;
+    const { getIaModels, iaModel, addModelToggle, addModel, updateModel, uploadModelFile, deleteModel, deleteModelModalToggle } = this.props;
     const modelTypes = iaModel.modelTypes || [];
     return (
       <div className="app">
@@ -38,6 +38,7 @@ class IAModel extends Component {
           shouldOpen={iaModel && iaModel.shouldAddModelModalOpen} 
           toggle={addModelToggle}
           addModel={addModel}
+          updateModel={updateModel}
           uploadModelFile={uploadModelFile}
           uploadModelFileInfo={iaModel.uploadModelFileInfo || {}}
           modelTypes={modelTypes}
@@ -97,6 +98,7 @@ const mapDispatchToProps = {
   queryAllModelTypes,
   deleteModel,
   deleteModelModalToggle,
+  updateModel,
 };
 
 const mapStateToProps = (state) => {

@@ -4,7 +4,7 @@ import { Button } from '@icedesign/base';
 
 import styles from './styles';
 
-const AddType = ({shouldOpen, toggle, addType, record}) => {
+const AddType = ({shouldOpen, toggle, addType, updateType, record}) => {
   let interactionTypeName = null;
   let file = null;
   const { opType } = record || {};
@@ -31,7 +31,7 @@ const AddType = ({shouldOpen, toggle, addType, record}) => {
           </InputGroupAddon>
           <Input type="text" 
             disabled={isRead ? 'disabled' : false}
-            defaultValue={isRead ? record && record.interactionTypeName : ''}
+            defaultValue={isRead || isUpdate ? record && record.interactionTypeName : ''}
             onChange={e => {
               interactionTypeName = e.target.value;
             }} 
@@ -77,11 +77,19 @@ const AddType = ({shouldOpen, toggle, addType, record}) => {
       </ModalBody>
       <ModalFooter>
         <Button type="primary" onClick={() => {
-          addType({
-            interactionTypeName,
-            file,
-          })
-        }}>确认新增</Button>
+          if (isUpdate) {
+            updateType({
+              interactionTypeId: record && record.interactionTypeId,
+              interactionTypeName,
+              file,
+            });
+          } else {
+            addType({
+              interactionTypeName,
+              file,
+            });
+          }
+        }}>{ isUpdate ? '确认修改' : '确认新增'}</Button>
       </ModalFooter>
     </Modal>  
   </Fragment>

@@ -9,7 +9,7 @@ import {
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { getAccounts, addAccountModalToggle, addAccount, queryAllAccountTypes, deleteAccount, deleteAccountModalToggle } from './actions';
+import { getAccounts, addAccountModalToggle, addAccount, updateAccount, queryAllAccountTypes, deleteAccount, deleteAccountModalToggle } from './actions';
 import reducer from './reducer';
 import AccountTable from './components/Table';
 import AddAccount from './components/AddAccount';
@@ -28,7 +28,7 @@ class AAAcount extends Component {
   }
   
   render() {
-    const { aaAccount, addAccountModalToggle, addAccount, deleteAccount, deleteAccountModalToggle } = this.props;
+    const { aaAccount, addAccountModalToggle, addAccount, updateAccount, deleteAccount, deleteAccountModalToggle } = this.props;
     const { currentPage } = this.state;
     return (
       <div className="app">
@@ -36,6 +36,7 @@ class AAAcount extends Component {
           shouldOpen={aaAccount && aaAccount.shouldAddAccountModalOpen} 
           toggle={addAccountModalToggle}
           addAccount={addAccount}
+          updateAccount={updateAccount}
           resMsg={aaAccount.addAccountResErr}
           roleTypes={aaAccount.roleTypes || []}
           record={aaAccount.record}
@@ -78,6 +79,7 @@ const mapDispatchToProps = {
   queryAllAccountTypes,
   deleteAccount,
   deleteAccountModalToggle,
+  updateAccount,
 };
   
 const mapStateToProps = (state) => {

@@ -9,7 +9,7 @@ import {
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { getIaTypes, addTypeToggle, deleteTypeToggle, deleteType, addType } from './actions';
+import { getIaTypes, addTypeToggle, deleteTypeToggle, deleteType, addType, updateType } from './actions';
 import reducer from './reducer';
 import TypeTable from './components/Table';
 import AddType from './components/AddType';
@@ -27,7 +27,7 @@ class IAType extends Component {
   }
   
   render() {
-    const { iaType, addTypeToggle, deleteTypeToggle, deleteType, addType } = this.props;
+    const { iaType, addTypeToggle, deleteTypeToggle, deleteType, addType, updateType } = this.props;
     const { currentPage } = this.state;
     return (
       <div className="app">
@@ -35,6 +35,7 @@ class IAType extends Component {
           shouldOpen={iaType && iaType.shouldAddTypeModalOpen} 
           toggle={addTypeToggle}
           addType={addType}
+          updateType={updateType}
           record={iaType.record}
         />
         <DeleteType 
@@ -74,6 +75,7 @@ const mapDispatchToProps = {
   deleteTypeToggle,
   deleteType,
   addType,
+  updateType,
 };
   
 const mapStateToProps = (state) => {
