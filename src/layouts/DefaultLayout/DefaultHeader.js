@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import { Badge, DropdownItem, DropdownMenu, DropdownToggle, Nav } from 'reactstrap';
 import PropTypes from 'prop-types';
 
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import injectReducer from 'utils/injectReducer';
 import { AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
+import { userLogout } from './actions';
+import reducer from './reducer';
 import logo from '../../assets/img/brand/logo.svg';
 import sygnet from '../../assets/img/brand/sygnet.svg';
 
@@ -15,7 +20,7 @@ const defaultProps = {};
 class DefaultHeader extends Component {
   render() {
     // eslint-disable-next-line
-    const { children, ...attributes } = this.props;
+    const { userLogout, children, ...attributes } = this.props;
 
     return (
       <React.Fragment>
@@ -31,7 +36,7 @@ class DefaultHeader extends Component {
               <img src="assets/img/avatars/6.jpg" className="img-avatar" alt="admin" />
             </DropdownToggle>
             <DropdownMenu right style={{ right: 'auto' }}>
-              <DropdownItem><i className="fa fa-lock" /> 退出</DropdownItem>
+              <DropdownItem onClick={userLogout}><i className="fa fa-lock" /> 退出</DropdownItem>
             </DropdownMenu>
           </AppHeaderDropdown>
         </Nav>
@@ -41,7 +46,25 @@ class DefaultHeader extends Component {
   }
 }
 
+const mapDispatchToProps = {
+  userLogout,
+};
+  
+const mapStateToProps = (state) => {
+  return {};
+};
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps
+);
+
+const withReducer = injectReducer({ key: 'header', reducer });
+
 DefaultHeader.propTypes = propTypes;
 DefaultHeader.defaultProps = defaultProps;
 
-export default DefaultHeader;
+export default compose(
+  withReducer,
+  withConnect
+)(DefaultHeader);
