@@ -83,13 +83,15 @@ const AddType = ({shouldOpen, toggle, addType, updateType, record}) => {
               interactionTypeName,
               file,
             });
+          } else if(isRead) {
+            toggle && toggle();
           } else {
             addType({
               interactionTypeName,
               file,
             });
           }
-        }}>{ isUpdate ? '确认修改' : '确认新增'}</Button>
+        }}>{ isUpdate ? '确认修改' : (isRead ? '确认' : '确认新增')}</Button>
       </ModalFooter>
     </Modal>  
   </Fragment>

@@ -95,6 +95,8 @@ const AddModel = ({shouldOpen, toggle, addModel, updateModel, uploadModelFile, u
               interactionTemplateName,
               ...uploadModelFileInfo,
             });
+          } else if(isRead) {
+            toggle && toggle();
           } else {
             addModel({
               interactionTypeId,
@@ -102,7 +104,7 @@ const AddModel = ({shouldOpen, toggle, addModel, updateModel, uploadModelFile, u
               ...uploadModelFileInfo,
             });
           }
-        }}>{ isUpdate ? '确认修改' : '确认新增'}</Button>
+        }}>{ isUpdate ? '确认修改' : (isRead ? '确认' : '确认新增')}</Button>
       </ModalFooter>
     </Modal>  
   </Fragment>

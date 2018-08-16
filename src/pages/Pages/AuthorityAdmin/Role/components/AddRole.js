@@ -82,6 +82,8 @@ const AddRole = ({shouldOpen, toggle, addRole, updateRole, roleAuthorities, reco
                 return _roleAuthorities[key].read || _roleAuthorities[key].write
               }),
             });
+          } else if (isRead) {
+            toggle && toggle();
           } else {
             addRole({
               launchPlanName,
@@ -90,7 +92,7 @@ const AddRole = ({shouldOpen, toggle, addRole, updateRole, roleAuthorities, reco
               }),
             });
           }
-        }}>{isUpdate ? '确认修改' : '确认添加'}</Button>
+        }}>{isUpdate ? '确认修改' : (isRead ? '确认' : '确认添加')}</Button>
       </ModalFooter>
     </Modal>  
   </Fragment>

@@ -84,6 +84,8 @@ const AddAccount = ({shouldOpen, toggle, addAccount, updateAccount, resMsg, role
                 password,
                 userId: record && record.userId,
               });
+            } else if (isRead) {
+              toggle && toggle();
             } else {
               addAccount({
                 username,
@@ -94,7 +96,7 @@ const AddAccount = ({shouldOpen, toggle, addAccount, updateAccount, resMsg, role
           }}
         >
           {
-            isUpdate ? '确认修改' : '确认添加'
+            isUpdate ? '确认修改' : (isRead ? '确认' : '确认添加')
           }
         </Button>
       </ModalFooter>
