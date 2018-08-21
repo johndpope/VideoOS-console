@@ -5,6 +5,8 @@ import IAModel from 'Pages/InteractionAdmin/Model';
 import IAType from 'Pages/InteractionAdmin/Type';
 import AAAccount from 'Pages/AuthorityAdmin/Account';
 import AARole from 'Pages/AuthorityAdmin/Role';
+import AdMaterial from 'Pages/Ads/Material';
+import AdPlan from 'Pages/Ads/Plan';
 
 const routerConfig = [
   {
@@ -33,7 +35,20 @@ const routerConfig = [
     path: '/qx/role',
     name: '角色管理',
     component: AARole
-  },
+  }, {
+    path: '/tf',
+    exact: true,
+    name: '投放管理',
+    component: AdPlan
+  }, {
+    path: '/tf/plan',
+    name: '投放计划管理',
+    component: AdPlan
+  }, {
+    path: '/tf/material',
+    name: '投放素材管理',
+    component: AdMaterial,
+  }
 ];
 
 export default routerConfig;

@@ -26,6 +26,9 @@ import {
     UPDATE_TYPE_REQUEST,
     UPDATE_TYPE_SUCCESS,
     UPDATE_TYPE_FAILURE,
+    GET_IATYPE_BYID_REQUEST,
+    GET_IATYPE_BYID_SUCCESS,
+    GET_IATYPE_BYID_FAILURE,
   } from './constants';
   
   // The initial state of the login
@@ -46,6 +49,19 @@ import {
           total: action.payload.totalRecord
         });
       case GET_IATYPE_FAILURE:
+        return Object.assign({}, state, {
+          isLoading: action.isLoading,
+        });
+      case GET_IATYPE_BYID_REQUEST:
+        return Object.assign({}, state, {
+          isLoading: action.isLoading,
+        });
+      case GET_IATYPE_BYID_SUCCESS:
+        return Object.assign({}, state, {
+          isLoading: action.isLoading,
+          record: action.payload,
+        });
+      case GET_IATYPE_BYID_FAILURE:
         return Object.assign({}, state, {
           isLoading: action.isLoading,
         });
@@ -96,7 +112,7 @@ import {
         return Object.assign({}, state, {
           shouldDeleteTypeModalOpen: action.shouldOpen,
           record: action.record || {},
-        }); 
+        });
       default:
         return state;
     }

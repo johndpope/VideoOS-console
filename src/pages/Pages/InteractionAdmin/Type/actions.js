@@ -35,6 +35,9 @@ import {
   UPDATE_TYPE_REQUEST,
   UPDATE_TYPE_SUCCESS,
   UPDATE_TYPE_FAILURE,
+  GET_IATYPE_BYID_REQUEST,
+  GET_IATYPE_BYID_SUCCESS,
+  GET_IATYPE_BYID_FAILURE,
 } from './constants';
 
 /**
@@ -95,6 +98,29 @@ const getIaTypesSuccess = (payload) => {
 const getIaTypesFailure = (payload) => {
   return {
     type: GET_IATYPE_FAILURE,
+    payload,
+    isLoading: false,
+  };
+};
+
+const getIaTypeByIdRequest = () => {
+  return {
+    type: GET_IATYPE_BYID_REQUEST,
+    isLoading: true,
+  };
+};
+
+const getIaTypeByIdSuccess = (payload) => {
+  return {
+    type: GET_IATYPE_BYID_SUCCESS,
+    payload,
+    isLoading: false,
+  };
+};
+
+const getIaTypeByIdFailure = (payload) => {
+  return {
+    type: GET_IATYPE_BYID_FAILURE,
     payload,
     isLoading: false,
   };
@@ -181,6 +207,28 @@ export const getIaTypes = (params = {
       return response.data;
     } catch (error) {
       dispatch(getIaTypesFailure(error));
+    }
+  };
+};
+
+export const getIaTypeById = (params = {
+  currentPage: 1,
+  pageSize: 20,
+}) => {
+  return async (dispatch) => {
+    dispatch(getIaTypeByIdRequest());
+    try {
+      const response = await api.getIaTypeById(params);
+      if (response.status === 200 && response.data.resCode === '00') {
+        dispatch(getIaTypeByIdSuccess(response.data));
+      } else {
+        dispatch(getIaTypeByIdFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch (error) {
+      dispatch(getIaTypeByIdFailure(error));
     }
   };
 };

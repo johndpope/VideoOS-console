@@ -1,0 +1,7 @@
+{
+    "name": "Plan",
+    "version": "0.0.0",
+    "private": true,
+    "main": "./Plan.js"
+  }
+  

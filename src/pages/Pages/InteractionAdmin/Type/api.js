@@ -13,7 +13,16 @@ export async function getIaTypes(params) {
     },
     url: `${OS_API}/interactionType/queryByPage?${qs.stringify(params)}`,
     method: 'get',
-    data: params,  
+  })  
+};
+
+export async function getIaTypeById(params) {
+  return axios({
+    headers: {
+      token: getAuthority(),
+    },
+    url: `${OS_API}/interactionType/query?${qs.stringify(params)}`,
+    method: 'get',
   })  
 };
 

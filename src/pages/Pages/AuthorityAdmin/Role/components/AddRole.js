@@ -47,7 +47,8 @@ const AddRole = ({shouldOpen, toggle, addRole, updateRole, roleAuthorities, reco
               <Col>{key}</Col>
               <Col>
                 <Label>
-                  <Input type="checkbox"
+                  <Input type="radio"
+                    name={`ckb_${idx}`}
                     disabled={isRead ? 'disabled' : false}
                     onChange={e => {
                       _roleAuthorities[key].read = Boolean(e.target.value);
@@ -58,7 +59,8 @@ const AddRole = ({shouldOpen, toggle, addRole, updateRole, roleAuthorities, reco
               </Col>
               <Col>
                 <Label>
-                  <Input type="checkbox"
+                  <Input type="radio"
+                    name={`ckb_${idx}`}
                     disabled={isRead ? 'disabled' : false}
                     onChange={e => {
                       _roleAuthorities[key].write = Boolean(e.target.value);

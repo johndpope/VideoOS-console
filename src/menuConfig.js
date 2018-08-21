@@ -30,6 +30,19 @@ const defaultMenuConfig = {
           path: '/qx/role'
         },
       ]
+    }, {
+      name: '投放管理',
+      path: 'tf',
+      icon: 'icon-bank',
+      children: [
+        {
+          name: '投放计划管理',
+          path: '/tf/plan'
+        }, {
+          name: '投放素材管理',
+          path: '/tf/material'
+        },
+      ]
     },
   ],
 };

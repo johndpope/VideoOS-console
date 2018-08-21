@@ -30,9 +30,15 @@ const AddType = ({shouldOpen, toggle, addType, updateType, record}) => {
             </InputGroupText>
           </InputGroupAddon>
           <Input type="text" 
+            maxLength={10}
             disabled={isRead ? 'disabled' : false}
             defaultValue={isRead || isUpdate ? record && record.interactionTypeName : ''}
             onChange={e => {
+              const { value } = e.target;
+              if (value && value.length > 10) {
+                
+                return;
+              }
               interactionTypeName = e.target.value;
             }} 
             placeholder="请输入名称" 
@@ -64,6 +70,7 @@ const AddType = ({shouldOpen, toggle, addType, updateType, record}) => {
               <span>
                 <Input 
                   type="file" 
+                  accept="*.txt"
                   styles={styles.file_ipt} 
                   onChange={e => {
                     file = e.target.files && e.target.files[0];

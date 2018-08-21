@@ -54,19 +54,30 @@ const AddAccount = ({shouldOpen, toggle, addAccount, updateAccount, resMsg, role
             }
           </Input>
         </InputGroup>
-        <InputGroup className="mb-4">
+        <InputGroup className="mb-4" style={{alignItems: 'center'}}>
           <InputGroupAddon addonType="prepend">
             <InputGroupText>
               密码
             </InputGroupText>
           </InputGroupAddon>
           <Input type="text" placeholder="请输入密码" 
+            id="account_password"
             disabled={isRead ? 'disabled' : false }
+            type="password"
             defaultValue={isRead || isUpdate ? record && record.password : ''}
             onChange={e => {
               password = e.target.value;
             }}
           />
+          {
+            isUpdate ? (
+              <Button onClick={() => {
+                if (document && document.getElementById('account_password')) {
+                  document.getElementById('account_password').value = '';
+                }
+              }}>重置</Button>
+            ) : null
+          }
         </InputGroup>
         {
           Boolean(resMsg) ? <Badge color="warning">{resMsg}</Badge> : null
