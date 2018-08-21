@@ -25,7 +25,8 @@ module.exports = function override(config) {
     ...config.resolve.alias,
     'config': `${__dirname}/src/config/${process.env.OS_ENV || 'dev'}`,
     'utils': `${__dirname}/src/utils`,
-    'Pages': `${__dirname}/src/pages/Pages`
+    'Pages': `${__dirname}/src/pages/Pages`,
+    'schemas': `${__dirname}/src/schemas`,
   }
 
   config = rewireSass(config);

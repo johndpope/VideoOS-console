@@ -10,6 +10,8 @@
  *   return state.set('yourStateVariable', true);
  */
 import {
+  SHOW_ADD_MATERIAL,
+  HIDE_ADD_MATERIAL,
   SHOW_NEW_MATERIAL_DROPDOWN,
   HIDE_NEW_MATERIAL_DROPDOWN,
   GET_AD_METERIALS_REQUEST,
@@ -34,6 +36,14 @@ const initialState = {};
 
 function adMaterialReducer(state = initialState, action) {
   switch(action.type) {
+    case SHOW_ADD_MATERIAL:
+      return Object.assign({}, state, {
+        shouldAddMaterialOpen: action.shouldOpen,
+      });
+    case HIDE_ADD_MATERIAL:
+      return Object.assign({}, state, {
+        shouldAddMaterialOpen: action.shouldOpen,
+      });
     case SHOW_NEW_MATERIAL_DROPDOWN:
       return Object.assign({}, state, {
         shouldNewMaterialDropDownOpen: action.shouldOpen,

@@ -8,6 +8,7 @@ import injectReducer from 'utils/injectReducer';
 import { addMaterialToggle, newMaterialDropDownToggle } from './actions';
 import reducer from './reducer';
 import MaterialTable from './components/Table';
+import AddMaterial from './components/AddModal';
 
 class AdMaterial extends Component {
 
@@ -22,6 +23,10 @@ class AdMaterial extends Component {
     const { adMaterial, addMaterialToggle, newMaterialDropDownToggle, deleteMaterialModalToggle } = this.props;
     return (
       <div className="app">
+        <AddMaterial 
+          toggle={addMaterialToggle}
+          shouldOpen={adMaterial && adMaterial.shouldAddMaterialOpen}
+        />
         <IceContainer style={{overflow: 'visible'}}>
           <Dropdown isOpen={adMaterial && adMaterial.shouldNewMaterialDropDownOpen}
             toggle={newMaterialDropDownToggle}
@@ -30,10 +35,18 @@ class AdMaterial extends Component {
               新增素材
             </DropdownToggle>
             <DropdownMenu>
-              <DropdownItem header onClick={addMaterialToggle}>云图</DropdownItem>
-              <DropdownItem onClick={addMaterialToggle}>中插</DropdownItem>
-              <DropdownItem onClick={addMaterialToggle}>气泡</DropdownItem>
-              <DropdownItem onClick={addMaterialToggle}>红包</DropdownItem>
+              <DropdownItem onClick={() => {
+                addMaterialToggle({whickKind: 'YUN_TU'})
+              }}>云图</DropdownItem>
+              <DropdownItem onClick={() => {
+                addMaterialToggle({whickKind: 'ZHONG_CHA'})
+              }}>中插</DropdownItem>
+              <DropdownItem onClick={() => {
+                addMaterialToggle({whickKind: 'QI_PAO'})
+              }}>气泡</DropdownItem>
+              <DropdownItem onClick={() => {
+                addMaterialToggle({whickKind: 'HONG_BAO'})
+              }}>红包</DropdownItem>
             </DropdownMenu>
           </Dropdown>
         </IceContainer>

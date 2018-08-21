@@ -57,9 +57,10 @@ const hideNewMaterialDropDown = () => {
   }
 };
 
-const showAddMaterial = () => {
+const showAddMaterial = (payload) => {
   return {
     type: SHOW_ADD_MATERIAL,
+    payload,
     shouldOpen: true,
   }
 };
@@ -272,11 +273,11 @@ export const getAdMaterials = (params = {
     };
   };
 
-export const addMaterialToggle = () => {
+export const addMaterialToggle = (payload) => {
   return (dispatch) => {
     addMaterialSwitch = !addMaterialSwitch;
     if (addMaterialSwitch) {
-      dispatch(showAddMaterial());
+      dispatch(showAddMaterial(payload));
     } else {
       dispatch(hideAddMaterial());
     }

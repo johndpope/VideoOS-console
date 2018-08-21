@@ -1,0 +1,77 @@
+{
+  "title": "",
+  "type": "object",
+  "required": ["popular_point_title", "avatar"],
+  "properties": {
+    "material_name": {
+      "title": "素材名称",  
+      "type": "string"  
+    },
+    "material_type": {
+      "title": "素材类型",  
+      "type": "string",
+      "default": "请选择",
+      "enum": [
+        "云图",
+        "中插",
+        "红包",
+        "投票"
+      ],
+      "enumNames": [
+        "云图",
+        "中插",
+        "红包",
+        "投票"  
+      ]  
+    },
+    "material_model": {
+      "title": "素材模板",
+      "type": "string",
+      "enum": [
+        "请选择"  
+      ],
+      "enumNames": [
+        "请选择"  
+      ]
+    },
+    "popular_point_title": {
+      "type": "string",
+      "title": "热点标题",
+      "default": ""  
+    },
+    "avatar": {
+      "type": "string",
+      "format": "data-url",
+      "title": "图片"
+    },
+    "show_ad_sign": {
+      "type": "boolean",
+      "title": "广告标识是否可见"  
+    },
+    "show_close_btn": {
+      "type": "boolean",
+      "title": "关闭按钮是否可见"  
+    },
+    "monitorLinks": {
+      "type": "array",
+      "title": "点击监控链接",
+      "minItems": 1,
+      "items": {
+        "type": "string"  
+      }  
+    },
+    "exposureLinks": {
+      "type": "array",
+      "title": "曝光监控链接",
+      "minItems": 1,
+      "items": {
+        "type": "string"  
+      }  
+    },
+    "target_link": {
+      "type": "string",
+      "title": "跳转外链链接",
+      "default": ""  
+    }
+  }  
+}

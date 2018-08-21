@@ -1,6 +1,11 @@
 import React, { Fragment } from 'react';
-import { Form, InputGroup, InputGroupAddon, InputGroupText, Input, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import Form from "react-jsonschema-form";
+import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { Button } from '@icedesign/base';
+import yuntuSchema from 'schemas/yuntu.json';
+import zhongchaSchema from 'schemas/zhongcha.json';
+import hongbaoSchema from 'schemas/hongbao.json';
+import toupiaoSchema from 'schemas/toupiao.json';
 
 const AddMaterial = ({shouldOpen, toggle, addMaterial, updateMaterial, uploadMaterialFile, uploadMaterialFileInfo, modelTypes, record}) => {
   let interactionTypeId = null;
@@ -15,74 +20,21 @@ const AddMaterial = ({shouldOpen, toggle, addMaterial, updateMaterial, uploadMat
       toggle={toggle}
     >
       <ModalHeader toggle={toggle}>{
-        isRead ? '模板信息' : (isUpdate ? '模板修改' : '新增模版')
+        isRead ? '素材信息' : (isUpdate ? '素材修改' : '新增素材')
       }</ModalHeader>
       <ModalBody>
       <Form
-      >
-        <InputGroup className="mb-4">
-          <InputGroupAddon addonType="prepend">
-            <InputGroupText>
-              模版类型
-            </InputGroupText>
-          </InputGroupAddon>
-          <Input type="select"
-            disabled={isRead ? 'disabled' : false}
-            defaultValue={isRead || isUpdate ? record && record.interactionTypeId : ''}
-            onChange={e => {
-              interactionTypeId = e.target.value;
-            }}
-          >
-            {
-              modelTypes && Array.isArray(modelTypes) && modelTypes.length > 0 && modelTypes.map((mt, idx) => (
-                <option key={idx} value={mt.interactionId}>{mt.interactionTypeName}</option>
-              ))
+        schema={toupiaoSchema}
+        uiSchema={{
+          "monitorLinks": {
+            "items": {
+              "ui:emptyValue": ""
             }
-          </Input>
-        </InputGroup>
-        <InputGroup className="mb-4">
-          <InputGroupAddon addonType="prepend">
-            <InputGroupText>
-              模版名称
-            </InputGroupText>
-          </InputGroupAddon>
-          <Input type="text" placeholder="请输入模版名称" 
-            disabled={isRead ? 'disabled' : false}
-            defaultValue={isRead || isUpdate ? record && record.interactionTypeName : ''}
-            onChange={e => {
-              interactionTemplateName = e.target.value;
-            }}
-          />
-        </InputGroup>
-        {
-          isRead ? (
-            <InputGroup className="mb-4">
-              <InputGroupAddon addonType="prepend">
-                <InputGroupText>
-                  模版文件
-                </InputGroupText>
-              </InputGroupAddon>
-              <span>
-                <a href="">待BE开发</a>
-              </span>
-            </InputGroup>
-          ) : (
-            <InputGroup className="mb-4">
-              <InputGroupAddon addonType="prepend">
-                <InputGroupText>
-                  模版上传
-                </InputGroupText>
-              </InputGroupAddon>
-              <span>
-                <Input type="file" onChange={e => {
-                  const { files } = e.target;
-                  uploadMaterialFile({file: files && files[0]});
-                }}/>
-              </span>
-            </InputGroup>
-          )
-        }
-        
+          }
+        }}
+      >
+        <div>
+        </div>
       </Form>
       </ModalBody>
       <ModalFooter>
