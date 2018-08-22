@@ -328,7 +328,7 @@ export const deleteModel = (params) => {
       if (response.status === 200 && response.data.resCode === '00') {
 
         dispatch(deleteModelSuccess(response.data));
-        dispatch(hideAddModelModal());
+        dispatch(deleteModelModalToggle());
         dispatch(getIaModels());
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {

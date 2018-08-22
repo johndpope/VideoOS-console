@@ -45,7 +45,7 @@ class IAType extends Component {
         <IceContainer>
           <TypeTable 
             isLoading={iaType && iaType.isLoading}
-            dataSource={iaType && iaType.typeResult}
+            dataSource={iaType && iaType.typeResult || []}
             deleteTypeToggle={deleteTypeToggle}
             addTypeToggle={addTypeToggle}
           /> 

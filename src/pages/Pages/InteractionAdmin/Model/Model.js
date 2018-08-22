@@ -83,7 +83,7 @@ class IAModel extends Component {
         </IceContainer>
         <ModalTable 
           isLoading={iaModel && iaModel.isLoading}
-          dataSource={iaModel && iaModel.modelResult}
+          dataSource={iaModel && iaModel.modelResult || []}
           deleteModelModalToggle={deleteModelModalToggle}
           addModelToggle={addModelToggle}
         />

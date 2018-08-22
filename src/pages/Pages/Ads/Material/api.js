@@ -80,3 +80,19 @@ export async function updateMaterial(params) {
     data: params,
   })
 };
+
+export async function addMaterialFile(params) {
+  let data = new FormData();
+  for (let key in params) {
+    data.append(key, params[key]);
+  }
+  return axios({
+    headers: {
+      token: getAuthority(),
+      contentType: 'multipart/form',
+    },
+    url: `${OS_API}/creative/addUpload`,
+    method: 'post',
+    data,
+  });
+};

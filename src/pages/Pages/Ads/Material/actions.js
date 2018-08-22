@@ -29,6 +29,12 @@ import {
   GET_AD_METERIAL_BYID_REQUEST,
   GET_AD_METERIAL_BYID_SUCCESS,
   GET_AD_METERIAL_BYID_FAILURE,
+  GET_IATYPE_BYID_REQUEST,
+  GET_IATYPE_BYID_SUCCESS,
+  GET_IATYPE_BYID_FAILURE,
+  QUERY_ALL_MODELTYPES_REQUEST,
+  QUERY_ALL_MODELTYPES_SUCCESS,
+  QUERY_ALL_MODELTYPES_FAILURE,
   ADD_METERIAL_REQUEST,
   ADD_METERIAL_SUCCESS,
   ADD_METERIAL_FAILURE,
@@ -38,6 +44,10 @@ import {
   DELETE_METERIAL_REQUEST,
   DELETE_METERIAL_SUCCESS,
   DELETE_METERIAL_FAILURE,
+  ADD_MATERIAL_FILE_REQUEST,
+  ADD_MATERIAL_FILE_SUCCESS,
+  ADD_MATERIAL_FILE_FAILURE,
+  UPDATE_FORM_SCHEMA,
 } from './constants';
 
 let newMaterialDropDownSwitch = false;
@@ -89,6 +99,51 @@ const getAdMaterialsSuccess = () => {
 const getAdMaterialsFailure = () => {
   return {
     type: GET_AD_METERIALS_FAILURE,
+    isLoading: false,
+  };
+};
+
+const queryAllModelTypesRequest = () => {
+  return {
+    type: QUERY_ALL_MODELTYPES_REQUEST,
+    isLoading: true,
+  };
+};
+
+const getIaTypeByIdRequest = () => {
+  return {
+    type: GET_IATYPE_BYID_REQUEST,
+    isLoading: true,
+  };
+};
+
+const getIaTypeByIdSuccess = (payload) => {
+  return {
+    type: GET_IATYPE_BYID_SUCCESS,
+    payload,
+    isLoading: false,
+  };
+};
+
+const getIaTypeByIdFailure = (payload) => {
+  return {
+    type: GET_IATYPE_BYID_FAILURE,
+    payload,
+    isLoading: false,
+  };
+};
+
+const queryAllModelTypesSuccess = (payload) => {
+  return {
+    type: QUERY_ALL_MODELTYPES_SUCCESS,
+    payload,
+    isLoading: false,
+  };
+};
+
+const queryAllModelTypesFailure = () => {
+  return {
+    type: QUERY_ALL_MODELTYPES_FAILURE,
     isLoading: false,
   };
 };
@@ -177,6 +232,27 @@ const deleteMaterialFailure = () => {
   };
 };
 
+const addMaterialFileRequest = () => {
+  return {
+    type: ADD_MATERIAL_FILE_REQUEST,
+    isLoading: true,
+  }
+};
+
+const addMaterialFileSuccess = () => {
+  return {
+    type: ADD_MATERIAL_FILE_SUCCESS,
+    isLoading: false,
+  }
+};
+
+const addMaterialFileFailure = () => {
+  return {
+    type: ADD_MATERIAL_FILE_FAILURE,
+    isLoading: false,
+  }
+};
+
 export const getAdMaterials = (params = {
     currentPage: 1,
     pageSize: 20,
@@ -197,6 +273,47 @@ export const getAdMaterials = (params = {
         return response.data;
       } catch (error) {
         dispatch(getAdMaterialsFailure(error));
+      }
+    };
+  };
+
+  export const queryAllModelTypes = (params) => {
+    return async (dispatch) => {
+      dispatch(queryAllModelTypesRequest());
+      try {
+        const response = await api.queryAllModelTypes(params);
+  
+        if (response.status === 200 && response.data.resCode === '00') {
+  
+          dispatch(queryAllModelTypesSuccess(response.data && response.data.interactionInfoList));
+        } else {
+          dispatch(queryAllModelTypesFailure(response.data));
+          Feedback.toast.error(response.data && response.data.resMsg);
+        }
+  
+        return response.data;
+      } catch(error) {
+        dispatch(queryAllModelTypesFailure(error));
+      }
+    };
+  };
+
+  export const getIaTypeById = (params) => {
+    return async (dispatch) => {
+      dispatch(getIaTypeByIdRequest());
+      try {
+        const response = await api.getIaTypeById(params);
+        if (response.status === 200 && response.data.resCode === '00') {
+          dispatch(getIaTypeByIdSuccess(response.data && response.data.configInfo && JSON.parse(response.data.configInfo)));
+          dispatch(updateFormSchema(params));
+        } else {
+          dispatch(getIaTypeByIdFailure(response.data));
+          Feedback.toast.error(response.data && response.data.resMsg);
+        }
+  
+        return response.data;
+      } catch (error) {
+        dispatch(getIaTypeByIdFailure(error));
       }
     };
   };
@@ -277,6 +394,7 @@ export const addMaterialToggle = (payload) => {
   return (dispatch) => {
     addMaterialSwitch = !addMaterialSwitch;
     if (addMaterialSwitch) {
+      dispatch(getIaTypeById({interactionId: payload && payload.interactionTypeId, interactionTypeName: payload.interactionTypeName}));
       dispatch(showAddMaterial(payload));
     } else {
       dispatch(hideAddMaterial());
@@ -292,6 +410,35 @@ export const newMaterialDropDownToggle = () => {
     } else {
       dispatch(hideNewMaterialDropDown());
     }
+  };
+};
+
+export const addMaterialFile = (params) => {
+  return async (dispatch) => {
+    dispatch(addMaterialFileRequest());
+    try {
+      const response = await api.addMaterialFile(params);
+
+      if (response.status === 200 && response.data.resCode === '00') {
+
+        dispatch(addMaterialFileSuccess({...response.data, _type: params && params.type}));
+        Feedback.toast.show(response.data && response.data.resMsg);
+      } else {
+        dispatch(addMaterialFileFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch(error) {
+      dispatch(addMaterialFileFailure());
+    }
+  };
+};
+
+export const updateFormSchema = (payload) => {
+  return {
+    type: UPDATE_FORM_SCHEMA,
+    payload,
   };
 };
     

@@ -5,7 +5,7 @@ import IceContainer from '@icedesign/container';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { addMaterialToggle, newMaterialDropDownToggle } from './actions';
+import { addMaterialToggle, addMaterial, newMaterialDropDownToggle, queryAllModelTypes, addMaterialFile } from './actions';
 import reducer from './reducer';
 import MaterialTable from './components/Table';
 import AddMaterial from './components/AddModal';
@@ -17,15 +17,22 @@ class AdMaterial extends Component {
   }
   
   componentDidMount() {
+    const { queryAllModelTypes } = this.props;
+    queryAllModelTypes();
   }
 
   render() {
-    const { adMaterial, addMaterialToggle, newMaterialDropDownToggle, deleteMaterialModalToggle } = this.props;
+    const { adMaterial, addMaterialToggle, addMaterial, newMaterialDropDownToggle, deleteMaterialModalToggle, addMaterialFile } = this.props;
+    const modelTypes = adMaterial.modelTypes || [];
     return (
       <div className="app">
         <AddMaterial 
           toggle={addMaterialToggle}
+          materialSchema={adMaterial && adMaterial.materialSchema}
+          formData={adMaterial && adMaterial.formData}
           shouldOpen={adMaterial && adMaterial.shouldAddMaterialOpen}
+          addMaterialFile={addMaterialFile}
+          addMaterial={addMaterial}
         />
         <IceContainer style={{overflow: 'visible'}}>
           <Dropdown isOpen={adMaterial && adMaterial.shouldNewMaterialDropDownOpen}
@@ -35,18 +42,13 @@ class AdMaterial extends Component {
               新增素材
             </DropdownToggle>
             <DropdownMenu>
-              <DropdownItem onClick={() => {
-                addMaterialToggle({whickKind: 'YUN_TU'})
-              }}>云图</DropdownItem>
-              <DropdownItem onClick={() => {
-                addMaterialToggle({whickKind: 'ZHONG_CHA'})
-              }}>中插</DropdownItem>
-              <DropdownItem onClick={() => {
-                addMaterialToggle({whickKind: 'QI_PAO'})
-              }}>气泡</DropdownItem>
-              <DropdownItem onClick={() => {
-                addMaterialToggle({whickKind: 'HONG_BAO'})
-              }}>红包</DropdownItem>
+              {
+                modelTypes && Array.isArray(modelTypes) && modelTypes.length > 0 && modelTypes.map((mt, idx) => (
+                  <DropdownItem key={idx} onClick={() => {
+                    addMaterialToggle({interactionTypeId: mt.interactionId, interactionTypeName: mt.interactionTypeName})
+                  }}>{mt.interactionTypeName}</DropdownItem>
+                ))
+              }
             </DropdownMenu>
           </Dropdown>
         </IceContainer>
@@ -64,6 +66,9 @@ class AdMaterial extends Component {
 const mapDispatchToProps = {
   newMaterialDropDownToggle,
   addMaterialToggle,
+  queryAllModelTypes,
+  addMaterialFile,
+  addMaterial,
 };
 
 const mapStateToProps = (state) => {

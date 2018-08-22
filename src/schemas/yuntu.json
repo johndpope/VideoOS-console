@@ -3,11 +3,11 @@
   "type": "object",
   "required": ["popular_point_title", "avatar"],
   "properties": {
-    "material_name": {
+    "creativeName": {
       "title": "素材名称",  
       "type": "string"  
     },
-    "material_type": {
+    "interactionTypeId": {
       "title": "素材类型",  
       "type": "string",
       "default": "请选择",
@@ -24,7 +24,7 @@
         "投票"  
       ]  
     },
-    "material_model": {
+    "interactionTemplateId": {
       "title": "素材模板",
       "type": "string",
       "enum": [
