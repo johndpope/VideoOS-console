@@ -28,6 +28,26 @@ export const getAdMaterialInfo = (params) => {
   });  
 };
 
+export async function getIaTypeById(params) {
+  return axios({
+    headers: {
+      token: getAuthority(),
+    },
+    url: `${OS_API}/interactionType/query?${qs.stringify(params)}`,
+    method: 'get',
+  })  
+};
+
+export async function queryAllModelTypes() {
+  return axios({
+    headers: {
+      token: getAuthority(),
+    },
+    url: `${OS_API}/interactionType/queryAll `,
+    method: 'get',
+  })
+};
+
 export async function deleteMaterial(params) {
   return axios({
     headers: {
