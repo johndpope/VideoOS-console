@@ -54,7 +54,7 @@ class AdMaterial extends Component {
         </IceContainer>
         <MaterialTable 
           isLoading={adMaterial && adMaterial.isLoading}
-          dataSource={adMaterial && adMaterial.materialResult}
+          dataSource={adMaterial && adMaterial.materialResult || []}
           deleteMaterialModalToggle={deleteMaterialModalToggle}
           addMaterialToggle={addMaterialToggle}
         />

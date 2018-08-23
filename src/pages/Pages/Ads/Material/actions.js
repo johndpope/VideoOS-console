@@ -417,7 +417,7 @@ export const addMaterialFile = (params) => {
   return async (dispatch) => {
     dispatch(addMaterialFileRequest());
     try {
-      const response = await api.addMaterialFile(params);
+      const response = await api.addMaterialFile({file: params && params.file });
 
       if (response.status === 200 && response.data.resCode === '00') {
 

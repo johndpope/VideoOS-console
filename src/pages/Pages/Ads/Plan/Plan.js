@@ -41,7 +41,7 @@ class AdPlan extends Component {
         </IceContainer>
         <PlanTable 
           isLoading={adPlan && adPlan.isLoading}
-          dataSource={adPlan && adPlan.planResult}
+          dataSource={adPlan && adPlan.planResult || []}
           deletePlanModalToggle={deletePlanModalToggle}
           addPlanToggle={addPlanToggle}
         />

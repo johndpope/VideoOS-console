@@ -49,6 +49,11 @@ const uiSchema = ({addMaterialFile}) => {
           />
         )
       }
+    },
+    exposureLinks: {
+      "ui:options": {
+        "orderable": false
+      } 
     }
   };  
 };
