@@ -4,7 +4,7 @@ import { Modal, ModalBody, ModalFooter, ModalHeader, Input } from 'reactstrap';
 import { Button } from '@icedesign/base';
 import uiSchema from 'schemas/uiSchema';
 
-const AddMaterial = ({shouldOpen, toggle, addMaterial, updateMaterial, formData, uploadMaterialFileInfo, record, materialSchema, addMaterialFile}) => {
+const AddMaterial = ({shouldOpen, toggle, creativeIdList, addMaterial, updateMaterial, formData, saveFormData, record, materialSchema, addMaterialFile}) => {
   const { opType } = record || {};
   const isRead = opType === 'read';
   const isUpdate = opType === 'update';
@@ -24,14 +24,18 @@ const AddMaterial = ({shouldOpen, toggle, addMaterial, updateMaterial, formData,
               formData={formData}
               schema={materialSchema}
               uiSchema={uiSchema({addMaterialFile})}
+              onChange={({formData}) => {
+                saveFormData(formData);
+              }}
               onSubmit={({formData}) => {
+                debugger;
                 if (isUpdate) {
                   updateMaterial({
                     creativeName: formData.creativeName,
                     interactionTypeId: formData.interactionTypeId,
                     interactionTemplateId: formData.interactionTemplateId,
                     creativeContent: JSON.stringify(formData),
-                    creativeIdList: [],
+                    creativeIdList,
                   });
                 } else if(isRead) {
                   toggle && toggle();
@@ -41,7 +45,7 @@ const AddMaterial = ({shouldOpen, toggle, addMaterial, updateMaterial, formData,
                     interactionTypeId: formData.interactionTypeId,
                     interactionTemplateId: formData.interactionTemplateId,
                     creativeContent: JSON.stringify(formData),
-                    creativeIdList: [],
+                    creativeIdList,
                   });
                 }
               }}

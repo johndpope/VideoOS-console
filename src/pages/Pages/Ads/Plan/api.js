@@ -11,7 +11,7 @@ export const getAdPlans = (params) => {
     headers: {
         token: getAuthority(),
     },
-    url: `${OS_API}/launchPlan/queryByPage?${qs.stringify(params)}`,
+    url: `${OS_API}/launchplan/queryByPage?${qs.stringify(params)}`,
     method: 'get',
     data: params,  
   });  
@@ -22,7 +22,7 @@ export const getAdPlanInfo = (params) => {
     headers: {
         token: getAuthority(),
     },
-    url: `${OS_API}/launchPlan/queryDetail?${qs.stringify(params)}`,
+    url: `${OS_API}/launchplan/queryDetail?${qs.stringify(params)}`,
     method: 'get',
     data: params,  
   });  
@@ -33,7 +33,7 @@ export async function deletePlan(params) {
     headers: {
     token: getAuthority(),
     },
-    url: `${OS_API}/launchPlan/delete`,
+    url: `${OS_API}/launchplan/delete`,
     method: 'post',
     data: params,
   })
@@ -44,7 +44,7 @@ export async function addPlan(params) {
     headers: {
     token: getAuthority(),
     },
-    url: `${OS_API}/launchPlan/add`,
+    url: `${OS_API}/launchplan/add`,
     method: 'post',
     data: params,
   })
@@ -55,8 +55,18 @@ export async function updatePlan(params) {
     headers: {
     token: getAuthority(),
     },
-    url: `${OS_API}/launchPlan/modify`,
+    url: `${OS_API}/launchplan/modify`,
     method: 'post',
     data: params,
+  })
+};
+
+export async function queryAllModelTypes() {
+  return axios({
+    headers: {
+      token: getAuthority(),
+    },
+    url: `${OS_API}/interactionType/queryAll `,
+    method: 'get',
   })
 };

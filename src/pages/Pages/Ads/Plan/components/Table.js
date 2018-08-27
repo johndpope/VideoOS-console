@@ -54,7 +54,6 @@ export default class PlanTable extends Component {
           />
           <Table.Column title="操作" 
             cell={this.renderOperator}
-            lock="right"
             width={120}
           />
         </Table>

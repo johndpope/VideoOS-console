@@ -21,6 +21,8 @@ import * as api from './api';
 import {
   SHOW_ADD_MATERIAL,
   HIDE_ADD_MATERIAL,
+  SHOW_DELETE_MATERIAL_MODAL,
+  HIDE_DELETE_MATERIAL_MODAL,
   SHOW_NEW_MATERIAL_DROPDOWN,
   HIDE_NEW_MATERIAL_DROPDOWN,
   GET_AD_METERIALS_REQUEST,
@@ -47,11 +49,12 @@ import {
   ADD_MATERIAL_FILE_REQUEST,
   ADD_MATERIAL_FILE_SUCCESS,
   ADD_MATERIAL_FILE_FAILURE,
-  UPDATE_FORM_SCHEMA,
+  SAVE_FORM_DATA,
 } from './constants';
 
 let newMaterialDropDownSwitch = false;
 let addMaterialSwitch = false;
+let deleteMaterialModalSwitch = false;
 
 const showNewMaterialDropDown = () => {
   return {
@@ -82,6 +85,21 @@ const hideAddMaterial = () => {
   }
 };
 
+const showDeleteMaterialModal = (payload) => {
+  return {
+    type: SHOW_DELETE_MATERIAL_MODAL,
+    payload,
+    shouldOpen: true,
+  }
+};
+
+const hideDeleteMaterialModal = () => {
+  return {
+    type: HIDE_DELETE_MATERIAL_MODAL,
+    shouldOpen: false,
+  }
+};
+
 const getAdMaterialsRequest = () => {
   return {
     type: GET_AD_METERIALS_REQUEST,
@@ -89,10 +107,11 @@ const getAdMaterialsRequest = () => {
   };
 };
 
-const getAdMaterialsSuccess = () => {
+const getAdMaterialsSuccess = (payload) => {
   return {
     type: GET_AD_METERIALS_SUCCESS,
     isLoading: false,
+    payload,
   };
 };
 
@@ -239,10 +258,11 @@ const addMaterialFileRequest = () => {
   }
 };
 
-const addMaterialFileSuccess = () => {
+const addMaterialFileSuccess = (payload) => {
   return {
     type: ADD_MATERIAL_FILE_SUCCESS,
     isLoading: false,
+    payload,
   }
 };
 
@@ -301,11 +321,32 @@ export const getAdMaterials = (params = {
   export const getIaTypeById = (params) => {
     return async (dispatch) => {
       dispatch(getIaTypeByIdRequest());
+      dispatch(saveFormData({
+        interactionTypeId: params && params.interactionId,
+      }));
       try {
-        const response = await api.getIaTypeById(params);
-        if (response.status === 200 && response.data.resCode === '00') {
-          dispatch(getIaTypeByIdSuccess(response.data && response.data.configInfo && JSON.parse(response.data.configInfo)));
-          dispatch(updateFormSchema(params));
+
+        const response = await Promise.all([
+          api.getIaTypeById(params),
+          api.getIaModels({
+            currentPage: 1,
+            pageSize: 20,
+            // interactionTypeId: params && params.interactionId,
+          })
+        ]);
+        if (response[1] && response[1].status === 200 && response[1].data.resCode === '00') {
+          let template = response[0] && response[0].data && response[0].data.configInfo && JSON.parse(response[0].data.configInfo);
+          const { templateInfoList } = response[1].data;
+          template.properties.interactionTemplateId.enumNames = [];
+          template.properties.interactionTemplateId.enum = [];
+          Array.isArray(templateInfoList) && templateInfoList.forEach(ti => {
+            template.properties.interactionTemplateId.enumNames.push(ti.templateName);
+            template.properties.interactionTemplateId.enum.push(ti.templateId);
+          });
+          template.properties.interactionTypeId.enum = [params.interactionId];
+          template.properties.interactionTypeId.enumNames = [params.interactionTypeName];
+          dispatch(getIaTypeByIdSuccess(template));
+          // dispatch(updateFormSchema(params));
         } else {
           dispatch(getIaTypeByIdFailure(response.data));
           Feedback.toast.error(response.data && response.data.resMsg);
@@ -327,7 +368,7 @@ export const getAdMaterials = (params = {
         if (response.status === 200 && response.data.resCode === '00') {
   
           dispatch(addMaterialSuccess(response.data));
-          // dispatch(hideAddModelModal());
+          dispatch(addMaterialToggle());
           dispatch(getAdMaterials());
           Feedback.toast.show(response.data && response.data.resMsg);
         } else {
@@ -394,13 +435,24 @@ export const addMaterialToggle = (payload) => {
   return (dispatch) => {
     addMaterialSwitch = !addMaterialSwitch;
     if (addMaterialSwitch) {
-      dispatch(getIaTypeById({interactionId: payload && payload.interactionTypeId, interactionTypeName: payload.interactionTypeName}));
+      dispatch(getIaTypeById({interactionId: payload && payload.interactionTypeId || payload.interactionId, interactionTypeName: payload.interactionTypeName}));
       dispatch(showAddMaterial(payload));
     } else {
       dispatch(hideAddMaterial());
     }
   };
 };  
+
+export const deleteMaterialModalToggle = (payload) => {
+  return (dispatch) => {
+    deleteMaterialModalSwitch = !deleteMaterialModalSwitch;
+    if (deleteMaterialModalSwitch) {
+      dispatch(showDeleteMaterialModal(payload));
+    } else {
+      dispatch(hideDeleteMaterialModal());
+    }
+  };
+};
 
 export const newMaterialDropDownToggle = () => {
   return (dispatch) => {
@@ -435,9 +487,9 @@ export const addMaterialFile = (params) => {
   };
 };
 
-export const updateFormSchema = (payload) => {
+export const saveFormData = (payload) => {
   return {
-    type: UPDATE_FORM_SCHEMA,
+    type: SAVE_FORM_DATA,
     payload,
   };
 };

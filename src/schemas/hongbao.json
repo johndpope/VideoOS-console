@@ -9,28 +9,18 @@
       },
       "interactionTypeId": {
         "title": "素材类型",  
-        "type": "string",
+        "type": "integer",
         "enum": [
-          "云图",
-          "中插",
-          "红包",
-          "投票"
         ],
         "enumNames": [
-          "云图",
-          "中插",
-          "红包",
-          "投票"  
         ]  
       },
       "interactionTemplateId": {
         "title": "素材模板",  
-        "type": "string",
-        "enum": [
-          "请选择"   
+        "type": "integer",
+        "enum": [ 
         ],
         "enumNames": [
-          "请选择"  
         ]  
       },
       "popular_point_title": {

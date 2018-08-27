@@ -37,6 +37,9 @@ import {
   DELETE_PLAN_REQUEST,
   DELETE_PLAN_SUCCESS,
   DELETE_PLAN_FAILURE,
+  QUERY_ALL_MODELTYPES_REQUEST,
+  QUERY_ALL_MODELTYPES_SUCCESS,
+  QUERY_ALL_MODELTYPES_FAILURE,
 } from './constants';
 
 let newPlanDropDownSwitch = false;
@@ -77,10 +80,11 @@ const getAdPlansRequest = () => {
     };
   };
   
-  const getAdPlansSuccess = () => {
+  const getAdPlansSuccess = (payload) => {
     return {
       type: GET_AD_PLANS_SUCCESS,
       isLoading: false,
+      payload,
     };
   };
   
@@ -175,26 +179,48 @@ const getAdPlansRequest = () => {
     };
   };
 
+  const queryAllModelTypesRequest = () => {
+    return {
+      type: QUERY_ALL_MODELTYPES_REQUEST,
+      isLoading: true,
+    };
+  };
+  
+  const queryAllModelTypesSuccess = (payload) => {
+    return {
+      type: QUERY_ALL_MODELTYPES_SUCCESS,
+      payload,
+      isLoading: false,
+    };
+  };
+  
+  const queryAllModelTypesFailure = () => {
+    return {
+      type: QUERY_ALL_MODELTYPES_FAILURE,
+      isLoading: false,
+    };
+  };
+
 export const getAdPlans = (params = {
   currentPage: 1,
   pageSize: 20,
 }) => {
   return async (dispatch) => {
-    dispatch(getAdPlanByIdRequest());
+    dispatch(getAdPlansFailure());
     try {
       const response = await api.getAdPlans(params);
 
       if (response.status === 200 && response.data.resCode === '00') {
 
-        dispatch(getAdPlanByIdSuccess(response.data));
+        dispatch(getAdPlansSuccess(response.data));
       } else {
-        dispatch(getAdPlanByIdFailure(response.data));
+        dispatch(getAdPlansFailure(response.data));
         Feedback.toast.error(response.data && response.data.resMsg);
       }
 
       return response.data;
     } catch (error) {
-      dispatch(getAdPlanByIdFailure(error));
+      dispatch(getAdPlansFailure(error));
     }
   };
 };
@@ -271,7 +297,7 @@ export const deletePlan = (params) => {
   };
 };
 
-export const addPlanToggle = () => {
+export const addPlanModalToggle = () => {
   return (dispatch) => {
     addPlanSwitch = !addPlanSwitch;
     if (addPlanSwitch) {
@@ -289,6 +315,27 @@ export const newPlanDropDownToggle = () => {
       dispatch(showNewPlanDropDown());
     } else {
       dispatch(hideNewPlanDropDown());
+    }
+  };
+};
+
+export const queryAllModelTypes = (params) => {
+  return async (dispatch) => {
+    dispatch(queryAllModelTypesRequest());
+    try {
+      const response = await api.queryAllModelTypes(params);
+
+      if (response.status === 200 && response.data.resCode === '00') {
+
+        dispatch(queryAllModelTypesSuccess(response.data && response.data.interactionInfoList));
+      } else {
+        dispatch(queryAllModelTypesFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch(error) {
+      dispatch(queryAllModelTypesFailure(error));
     }
   };
 };

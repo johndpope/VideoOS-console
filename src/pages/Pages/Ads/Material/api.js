@@ -96,3 +96,17 @@ export async function addMaterialFile(params) {
     data,
   });
 };
+
+export async function getIaModels(params = {
+  currentPage: 1,
+  pageSize: 20,
+}) {
+  return axios({
+    headers: {
+      token: getAuthority(),
+    },
+    url: `${OS_API}/interactionTemplate/queryByPage?${qs.stringify(params)}`,
+    method: 'get',
+    data: params,  
+  })  
+};

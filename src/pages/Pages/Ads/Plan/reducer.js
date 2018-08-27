@@ -29,6 +29,9 @@ import {
   DELETE_PLAN_REQUEST,
   DELETE_PLAN_SUCCESS,
   DELETE_PLAN_FAILURE,
+  QUERY_ALL_MODELTYPES_REQUEST,
+  QUERY_ALL_MODELTYPES_SUCCESS,
+  QUERY_ALL_MODELTYPES_FAILURE,
 } from './constants';
 // The initial state of the plan
 const initialState = {};
@@ -49,6 +52,7 @@ function adPlanReducer(state = initialState, action) {
       });
     case GET_AD_PLANS_SUCCESS:
       return Object.assign({}, state, {
+        planResult: action.payload.launchPlanList || [],
         isLoading: action.isLoading,  
       });
     case GET_AD_PLANS_FAILURE:
@@ -102,6 +106,19 @@ function adPlanReducer(state = initialState, action) {
     case DELETE_PLAN_FAILURE:
       return Object.assign({}, state, {
         isLoading: action.isLoading,  
+      });
+    case QUERY_ALL_MODELTYPES_REQUEST:
+      return Object.assign({}, state, {
+        isLoading: action.isLoading,
+      });
+    case QUERY_ALL_MODELTYPES_SUCCESS:
+      return Object.assign({}, state, {
+        modelTypes: action.payload,
+        isLoading: action.isLoading,
+      });
+    case QUERY_ALL_MODELTYPES_FAILURE:
+      return Object.assign({}, state, {
+        isLoading: action.isLoading,
       });
     default:
       return state;  

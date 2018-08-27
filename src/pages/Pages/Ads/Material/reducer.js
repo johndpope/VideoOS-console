@@ -12,6 +12,8 @@
 import {
   SHOW_ADD_MATERIAL,
   HIDE_ADD_MATERIAL,
+  SHOW_DELETE_MATERIAL_MODAL,
+  HIDE_DELETE_MATERIAL_MODAL,
   SHOW_NEW_MATERIAL_DROPDOWN,
   HIDE_NEW_MATERIAL_DROPDOWN,
   GET_AD_METERIALS_REQUEST,
@@ -38,23 +40,27 @@ import {
   ADD_MATERIAL_FILE_REQUEST,
   ADD_MATERIAL_FILE_SUCCESS,
   ADD_MATERIAL_FILE_FAILURE,
-  UPDATE_FORM_SCHEMA,
+  SAVE_FORM_DATA,
 } from './constants';
 
 // The initial state of the material
 const initialState = {
   formData: {},
+  creativeIdList: [],
 };
 
 function adMaterialReducer(state = initialState, action) {
   switch(action.type) {
     case SHOW_ADD_MATERIAL:
-      return Object.assign({}, state, {
-        shouldAddMaterialOpen: action.shouldOpen,
-      });
     case HIDE_ADD_MATERIAL:
       return Object.assign({}, state, {
         shouldAddMaterialOpen: action.shouldOpen,
+      });
+    case SHOW_DELETE_MATERIAL_MODAL:
+    case HIDE_DELETE_MATERIAL_MODAL:
+      return Object.assign({}, state, {
+        record: {creativeId: action.payload && action.payload.creativeId || ''},
+        shouldDeleteMaterialOpen: action.shouldOpen,
       });
     case SHOW_NEW_MATERIAL_DROPDOWN:
       return Object.assign({}, state, {
@@ -70,6 +76,7 @@ function adMaterialReducer(state = initialState, action) {
       });
     case GET_AD_METERIALS_SUCCESS:
       return Object.assign({}, state, {
+        materialResult: action.payload.creativeInfoList || [],
         isLoading: action.isLoading,  
       });
     case GET_AD_METERIALS_FAILURE:
@@ -155,28 +162,19 @@ function adMaterialReducer(state = initialState, action) {
         isLoading: action.isLoading,  
       });
     case ADD_MATERIAL_FILE_SUCCESS:
-      return Object.assign({}, state, {
-        isLoading: action.isLoading,  
-        addMaterialFileInfo: action.payload,
-      });
+      if (action && action.payload._type) {
+        // state.formData[action.payload._type] = action.payload.fileUrl;
+        if (Array.isArray(state.creativeIdList) && state.creativeIdList.indexOf(action.payload.creativeFileId) === -1) {
+          state.creativeIdList.push(action.payload.creativeFileId);
+        }
+      }
+      return Object.assign({}, state);
     case ADD_MATERIAL_FILE_FAILURE:
       return Object.assign({}, state, {
         isLoading: action.isLoading,  
       });
-    case UPDATE_FORM_SCHEMA:
-      if (state && state.materialSchema) {
-        delete state.materialSchema.properties.interactionTypeId.enum;
-        delete state.materialSchema.properties.interactionTypeId.enumNames;
-        state.materialSchema.properties.interactionTypeId.anyOf = [
-          {
-            type: 'number',
-            title: action.payload.interactionTypeName,
-            enum: [
-              action.payload.interactionTypeId,
-            ]
-          }
-        ];
-      }
+    case SAVE_FORM_DATA:
+      state.formData = action.payload;
       return Object.assign({}, state);
     default:
       return state;

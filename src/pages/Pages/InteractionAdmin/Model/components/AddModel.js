@@ -3,7 +3,7 @@ import { Form, InputGroup, InputGroupAddon, InputGroupText, Input, Modal, ModalB
 import { Button } from '@icedesign/base';
 
 const AddModel = ({shouldOpen, toggle, addModel, updateModel, uploadModelFile, uploadModelFileInfo, modelTypes, record}) => {
-  let interactionTypeId = null;
+  let interactionTypeId = modelTypes && modelTypes[0] && modelTypes[0].interactionId || null;
   let interactionTemplateName = null;
   const { opType } = record || {};
   const isRead = opType === 'read';

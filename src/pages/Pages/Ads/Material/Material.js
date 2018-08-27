@@ -5,10 +5,11 @@ import IceContainer from '@icedesign/container';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { addMaterialToggle, addMaterial, newMaterialDropDownToggle, queryAllModelTypes, addMaterialFile } from './actions';
+import { getAdMaterials, addMaterialToggle, addMaterial, deleteMaterial, newMaterialDropDownToggle, deleteMaterialModalToggle, queryAllModelTypes, addMaterialFile, saveFormData } from './actions';
 import reducer from './reducer';
 import MaterialTable from './components/Table';
 import AddMaterial from './components/AddModal';
+import DeleteMaterial from './components/DeleteModal';
 
 class AdMaterial extends Component {
 
@@ -17,12 +18,14 @@ class AdMaterial extends Component {
   }
   
   componentDidMount() {
-    const { queryAllModelTypes } = this.props;
+    const { queryAllModelTypes, getAdMaterials } = this.props;
     queryAllModelTypes();
+    getAdMaterials();
+
   }
 
   render() {
-    const { adMaterial, addMaterialToggle, addMaterial, newMaterialDropDownToggle, deleteMaterialModalToggle, addMaterialFile } = this.props;
+    const { adMaterial, addMaterialToggle, addMaterial, deleteMaterial, newMaterialDropDownToggle, deleteMaterialModalToggle, addMaterialFile, saveFormData } = this.props;
     const modelTypes = adMaterial.modelTypes || [];
     return (
       <div className="app">
@@ -33,6 +36,15 @@ class AdMaterial extends Component {
           shouldOpen={adMaterial && adMaterial.shouldAddMaterialOpen}
           addMaterialFile={addMaterialFile}
           addMaterial={addMaterial}
+          adMaterial={adMaterial}
+          saveFormData={saveFormData}
+          creativeIdList={adMaterial && adMaterial.creativeIdList}
+        />
+        <DeleteMaterial 
+          deleteMaterial={deleteMaterial}
+          toggle={deleteMaterialModalToggle}
+          shouldOpen={adMaterial && adMaterial.shouldDeleteMaterialOpen}
+          record={adMaterial && adMaterial.record}
         />
         <IceContainer style={{overflow: 'visible'}}>
           <Dropdown isOpen={adMaterial && adMaterial.shouldNewMaterialDropDownOpen}
@@ -65,10 +77,14 @@ class AdMaterial extends Component {
 
 const mapDispatchToProps = {
   newMaterialDropDownToggle,
+  deleteMaterialModalToggle,
   addMaterialToggle,
   queryAllModelTypes,
   addMaterialFile,
   addMaterial,
+  saveFormData,
+  getAdMaterials,
+  deleteMaterial,
 };
 
 const mapStateToProps = (state) => {

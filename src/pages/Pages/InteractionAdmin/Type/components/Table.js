@@ -39,7 +39,6 @@ export default class TypeTable extends Component {
           />
           <Table.Column title="操作" 
             cell={this.renderOperator}
-            lock="right"
             width={120}
           />
         </Table>

@@ -34,7 +34,6 @@ export default class RoleTable extends Component {
           <Table.Column title="权限" dataIndex="roleDesc" width={120} />
           <Table.Column title="操作" 
             cell={this.renderOperator}
-            lock="right"
             width={120}
           />
         </Table>

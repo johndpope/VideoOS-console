@@ -34,7 +34,6 @@ export default class ModalTable extends Component {
           <Table.Column title="模板名称" dataIndex="templateName" width={120} />
           <Table.Column title="操作" 
             cell={this.renderOperator}
-            lock="right"
             width={120}
           />
         </Table>

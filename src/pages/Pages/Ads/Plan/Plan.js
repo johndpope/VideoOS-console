@@ -5,7 +5,7 @@ import IceContainer from '@icedesign/container';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { addPlanToggle, newPlanDropDownToggle } from './actions';
+import { addPlanModalToggle, newPlanDropDownToggle, getAdPlans, queryAllModelTypes } from './actions';
 import reducer from './reducer';
 import PlanTable from './components/Table';
 
@@ -16,10 +16,14 @@ class AdPlan extends Component {
   }
   
   componentDidMount() {
+    const { getAdPlans,queryAllModelTypes } = this.props;
+    getAdPlans();
+    queryAllModelTypes();
   }
 
   render() {
-    const { adPlan, addPlanToggle, newPlanDropDownToggle, deletePlanModalToggle } = this.props;
+    const { adPlan, addPlanModalToggle, newPlanDropDownToggle, deletePlanModalToggle } = this.props;
+    const modelTypes = adPlan.modelTypes || [];
     return (
       <div className="app">
         <IceContainer style={{overflow: 'visible'}}>
@@ -30,12 +34,13 @@ class AdPlan extends Component {
               新增投放计划
             </DropdownToggle>
             <DropdownMenu>
-              <DropdownItem header onClick={addPlanToggle}>云图</DropdownItem>
-              <DropdownItem onClick={addPlanToggle}>中插</DropdownItem>
-              <DropdownItem onClick={addPlanToggle}>气泡</DropdownItem>
-              <DropdownItem onClick={addPlanToggle}>红包</DropdownItem>
-              <DropdownItem onClick={addPlanToggle}>卡牌</DropdownItem>
-              <DropdownItem onClick={addPlanToggle}>投票</DropdownItem>
+              {
+                modelTypes && Array.isArray(modelTypes) && modelTypes.length > 0 && modelTypes.map((mt, idx) => (
+                  <DropdownItem key={idx} onClick={() => {
+                    addPlanModalToggle({interactionTypeId: mt.interactionId, interactionTypeName: mt.interactionTypeName})
+                  }}>{mt.interactionTypeName}</DropdownItem>
+                ))
+              }
             </DropdownMenu>
           </Dropdown>
         </IceContainer>
@@ -43,7 +48,7 @@ class AdPlan extends Component {
           isLoading={adPlan && adPlan.isLoading}
           dataSource={adPlan && adPlan.planResult || []}
           deletePlanModalToggle={deletePlanModalToggle}
-          addPlanToggle={addPlanToggle}
+          addPlanModalToggle={addPlanModalToggle}
         />
       </div>   
     ) 
@@ -52,7 +57,9 @@ class AdPlan extends Component {
 
 const mapDispatchToProps = {
   newPlanDropDownToggle,
-  addPlanToggle,
+  addPlanModalToggle,
+  getAdPlans,
+  queryAllModelTypes,
 };
 
 const mapStateToProps = (state) => {

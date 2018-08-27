@@ -33,7 +33,6 @@ export default class AccountTable extends Component {
           <Table.Column title="角色" dataIndex="roleName" width={120} />
           <Table.Column title="操作" 
             cell={this.renderOperator}
-            lock="right"
             width={120}
           />
         </Table>
