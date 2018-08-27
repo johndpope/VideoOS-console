@@ -62,10 +62,11 @@ const hideNewPlanDropDown = () => {
   }
 };
 
-const showAddPlan = () => {
+const showAddPlan = (payload) => {
   return {
     type: SHOW_ADD_PLAN,
     shouldOpen: true,
+    payload,
   }
 };
 
@@ -315,11 +316,11 @@ export const deletePlan = (params) => {
   };
 };
 
-export const addPlanModalToggle = () => {
+export const addPlanModalToggle = (payload) => {
   return (dispatch) => {
     addPlanSwitch = !addPlanSwitch;
     if (addPlanSwitch) {
-      dispatch(showAddPlan());
+      dispatch(showAddPlan(payload));
     } else {
       dispatch(hideAddPlan());
     }

@@ -40,6 +40,12 @@ const initialState = {};
 
 function adPlanReducer(state = initialState, action) {
   switch(action.type) {
+    case SHOW_ADD_PLAN:
+    case HIDE_ADD_PLAN:
+      return Object.assign({}, state, {
+        record: action.payload,
+        shouldAddPlanModalOpen: action.shouldOpen,
+      });
     case SHOW_NEW_PLAN_DROPDOWN:
       return Object.assign({}, state, {
         shouldNewPlanDropDownOpen: action.shouldOpen,

@@ -23,7 +23,7 @@ const AddMaterial = ({shouldOpen, toggle, creativeIdList, addMaterial, updateMat
             <Form
               formData={formData}
               schema={materialSchema}
-              uiSchema={uiSchema({addMaterialFile})}
+              uiSchema={uiSchema(isRead ? {...addMaterialFile, "ui:disabled": ["*"], 'ui:options': {disabled: true}} : {addMaterialFile})}
               onChange={({formData}) => {
                 saveFormData(formData);
               }}
