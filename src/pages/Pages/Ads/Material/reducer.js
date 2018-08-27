@@ -41,6 +41,9 @@ import {
   ADD_MATERIAL_FILE_SUCCESS,
   ADD_MATERIAL_FILE_FAILURE,
   SAVE_FORM_DATA,
+  GET_MATERIAL_INFO_REQUEST,
+  GET_MATERIAL_INFO_SUCCESS,
+  GET_MATERIAL_INFO_FAILURE,
 } from './constants';
 
 // The initial state of the material
@@ -80,6 +83,20 @@ function adMaterialReducer(state = initialState, action) {
         isLoading: action.isLoading,  
       });
     case GET_AD_METERIALS_FAILURE:
+      return Object.assign({}, state, {
+        isLoading: action.isLoading,  
+      });
+    case GET_MATERIAL_INFO_SUCCESS:
+      state.formData = action.payload || {};
+      return Object.assign({}, state, {
+        isLoading: action.isLoading,  
+      });
+    case GET_MATERIAL_INFO_REQUEST:
+      return Object.assign({}, state, {
+        materialResult: action.payload.creativeInfoList || [],
+        isLoading: action.isLoading,  
+      });
+    case GET_MATERIAL_INFO_FAILURE:
       return Object.assign({}, state, {
         isLoading: action.isLoading,  
       });

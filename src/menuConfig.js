@@ -18,19 +18,6 @@ const defaultMenuConfig = {
         }
       ]
     }, {
-      name: '权限管理',
-      path: 'qx',
-      icon: 'icon-user',
-      children: [
-        {
-          name: '账号管理',
-          path: '/qx/account'
-        }, {
-          name: '角色管理',
-          path: '/qx/role'
-        },
-      ]
-    }, {
       name: '投放管理',
       path: 'tf',
       icon: 'icon-bank',
@@ -41,6 +28,19 @@ const defaultMenuConfig = {
         }, {
           name: '投放素材管理',
           path: '/tf/material'
+        },
+      ]
+    }, {
+      name: '权限管理',
+      path: 'qx',
+      icon: 'icon-user',
+      children: [
+        {
+          name: '账号管理',
+          path: '/qx/account'
+        }, {
+          name: '角色管理',
+          path: '/qx/role'
         },
       ]
     },

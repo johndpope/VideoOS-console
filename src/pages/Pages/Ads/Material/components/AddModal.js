@@ -28,7 +28,6 @@ const AddMaterial = ({shouldOpen, toggle, creativeIdList, addMaterial, updateMat
                 saveFormData(formData);
               }}
               onSubmit={({formData}) => {
-                debugger;
                 if (isUpdate) {
                   updateMaterial({
                     creativeName: formData.creativeName,

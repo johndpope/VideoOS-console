@@ -27,12 +27,12 @@ export default class PlanTable extends Component {
           isLoading={isLoading}
         >
           <Table.Column title="序号" width={120} 
-            cell={(value, index, record) => (<span>{index}</span>)}
+            cell={(value, index, record) => (<span>{index + 1}</span>)}
           />  
           <Table.Column title="新增投放时间" dataIndex="createDate" width={120} />
           <Table.Column title="投放名称" dataIndex="launchName" width={120} />
           <Table.Column title="投放素材名称" dataIndex="creativeName" width={120} />
-          <Table.Column title="投放类型" dataIndex="interactionTypeId" width={120} />
+          <Table.Column title="投放类型" dataIndex="interactionTypeName" width={120} />
           <Table.Column title="投放状态" dataIndex="lauchStatus" width={120} 
             cell={(value) => {
                 if (value === 0) {

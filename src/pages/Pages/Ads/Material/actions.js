@@ -50,6 +50,9 @@ import {
   ADD_MATERIAL_FILE_SUCCESS,
   ADD_MATERIAL_FILE_FAILURE,
   SAVE_FORM_DATA,
+  GET_MATERIAL_INFO_REQUEST,
+  GET_MATERIAL_INFO_SUCCESS,
+  GET_MATERIAL_INFO_FAILURE,
 } from './constants';
 
 let newMaterialDropDownSwitch = false;
@@ -122,10 +125,25 @@ const getAdMaterialsFailure = () => {
   };
 };
 
-const queryAllModelTypesRequest = () => {
+const getAdMaterialInfoRequest = () => {
   return {
-    type: QUERY_ALL_MODELTYPES_REQUEST,
+    type: GET_MATERIAL_INFO_REQUEST,
     isLoading: true,
+  };
+};
+
+const getAdMaterialInfoSuccess = (payload) => {
+  return {
+    type: GET_MATERIAL_INFO_SUCCESS,
+    isLoading: false,
+    payload,
+  };
+};
+
+const getAdMaterialInfoFailure = () => {
+  return {
+    type: GET_MATERIAL_INFO_FAILURE,
+    isLoading: false,
   };
 };
 
@@ -149,6 +167,13 @@ const getIaTypeByIdFailure = (payload) => {
     type: GET_IATYPE_BYID_FAILURE,
     payload,
     isLoading: false,
+  };
+};
+
+const queryAllModelTypesRequest = () => {
+  return {
+    type: QUERY_ALL_MODELTYPES_REQUEST,
+    isLoading: true,
   };
 };
 
@@ -416,7 +441,7 @@ export const getAdMaterials = (params = {
         if (response.status === 200 && response.data.resCode === '00') {
   
           dispatch(deleteMaterialSuccess(response.data));
-          // dispatch(hideAddModelModal());
+          dispatch(deleteMaterialModalToggle());
           dispatch(getAdMaterials());
           Feedback.toast.show(response.data && response.data.resMsg);
         } else {
@@ -434,6 +459,9 @@ export const getAdMaterials = (params = {
 export const addMaterialToggle = (payload) => {
   return (dispatch) => {
     addMaterialSwitch = !addMaterialSwitch;
+    if (payload && ['read', 'update'].indexOf(payload.opType) !== -1) {
+      dispatch(getAdMaterialInfo({creativeId: payload && payload.creativeId}));
+    }
     if (addMaterialSwitch) {
       dispatch(getIaTypeById({interactionId: payload && payload.interactionTypeId || payload.interactionId, interactionTypeName: payload.interactionTypeName}));
       dispatch(showAddMaterial(payload));
@@ -492,5 +520,26 @@ export const saveFormData = (payload) => {
     type: SAVE_FORM_DATA,
     payload,
   };
+};
+
+export const getAdMaterialInfo = (params) => {
+  return async (dispatch) => {
+    dispatch(getAdMaterialsRequest());
+    try {
+      const response = await api.getAdMaterialInfo(params);
+
+      if (response.status === 200 && response.data.resCode === '00') {
+
+        dispatch(getAdMaterialInfoSuccess(response.data && response.data.creativeContent && JSON.parse(response.data.creativeContent)) || {});
+      } else {
+        dispatch(getAdMaterialInfoFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch (error) {
+      dispatch(getAdMaterialInfoFailure(error));
+    };
+  }
 };
     
