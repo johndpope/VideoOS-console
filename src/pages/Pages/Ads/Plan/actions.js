@@ -20,6 +20,8 @@ import * as api from './api';
 import {
   SHOW_ADD_PLAN,
   HIDE_ADD_PLAN,
+  SHOW_DELETE_PLAN,
+  HIDE_DELETE_PLAN,
   SHOW_NEW_PLAN_DROPDOWN,
   HIDE_NEW_PLAN_DROPDOWN,
   GET_AD_PLANS_REQUEST,
@@ -44,6 +46,7 @@ import {
 
 let newPlanDropDownSwitch = false;
 let addPlanSwitch = false;
+let deletePlanSwitch = false;
 
 const showNewPlanDropDown = () => {
   return {
@@ -69,6 +72,21 @@ const showAddPlan = () => {
 const hideAddPlan = () => {
   return {
     type: HIDE_ADD_PLAN,
+    shouldOpen: false,
+  }
+};
+
+const showDeletePlan = (payload) => {
+  return {
+    type: SHOW_DELETE_PLAN,
+    shouldOpen: true,
+    payload,
+  }
+};
+
+const hideDeletePlan = () => {
+  return {
+    type: HIDE_DELETE_PLAN,
     shouldOpen: false,
   }
 };
@@ -304,6 +322,17 @@ export const addPlanModalToggle = () => {
       dispatch(showAddPlan());
     } else {
       dispatch(hideAddPlan());
+    }
+  };
+};  
+
+export const deletePlanModalToggle = () => {
+  return (dispatch) => {
+    deletePlanSwitch = !deletePlanSwitch;
+    if (deletePlanSwitch) {
+      dispatch(showDeletePlan());
+    } else {
+      dispatch(hideDeletePlan());
     }
   };
 };  

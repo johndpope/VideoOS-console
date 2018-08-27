@@ -12,6 +12,8 @@
 import {
   SHOW_ADD_PLAN,
   HIDE_ADD_PLAN,
+  SHOW_DELETE_PLAN,
+  HIDE_DELETE_PLAN,
   SHOW_NEW_PLAN_DROPDOWN,
   HIDE_NEW_PLAN_DROPDOWN,
   GET_AD_PLANS_REQUEST,
@@ -119,6 +121,12 @@ function adPlanReducer(state = initialState, action) {
     case QUERY_ALL_MODELTYPES_FAILURE:
       return Object.assign({}, state, {
         isLoading: action.isLoading,
+      });
+    case SHOW_DELETE_PLAN:
+    case HIDE_DELETE_PLAN:
+      return Object.assign({}, state, {
+        record: action.payload,
+        shouldDeletePlanModalOpen: action.shouldOpen,
       });
     default:
       return state;  
