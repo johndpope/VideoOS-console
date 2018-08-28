@@ -1,9 +1,11 @@
 import React, { Fragment } from 'react';
 import { Form, InputGroup, InputGroupAddon, InputGroupText, Input, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { Button } from '@icedesign/base';
-import uiSchema from 'schemas/uiSchema';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+import 'react-datepicker/dist/react-datepicker.css';
 
-const AddMaterial = ({shouldOpen, toggle, creativeIdList, addPlan, updatePlan, formData, setFormData, record, materialTypes}) => {
+const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setFormData, record, materialTypes}) => {
   const { opType } = record || {};
   const isRead = opType === 'read';
   const isUpdate = opType === 'update';
@@ -40,7 +42,7 @@ const AddMaterial = ({shouldOpen, toggle, creativeIdList, addPlan, updatePlan, f
           <Input type="text"
             disabled
             readOnly
-            defaultValue={isRead || isUpdate ? formData && formData.interactionTypeName : ''}
+            defaultValue={formData && formData.interactionTypeName || ''}
           />
         </InputGroup>
         <InputGroup className="mb-4">
@@ -58,7 +60,7 @@ const AddMaterial = ({shouldOpen, toggle, creativeIdList, addPlan, updatePlan, f
           >
             {
               materialTypes && Array.isArray(materialTypes) && materialTypes.length > 0 && materialTypes.map((mt, idx) => (
-                <option key={idx} value={mt.interactionId}>{mt.interactionTypeName}</option>
+                <option key={idx} value={mt.creativeId}>{mt.creativeName}</option>
               ))
             }
           </Input>
@@ -105,13 +107,34 @@ const AddMaterial = ({shouldOpen, toggle, creativeIdList, addPlan, updatePlan, f
                     投放日期
                   </InputGroupText>
                 </InputGroupAddon>
-                <Input type="text" placeholder="请输入模版名称" 
-                  disabled={isRead ? 'disabled' : false}
-                  defaultValue={isRead || isUpdate ? formData && formData.launchVideoId : ''}
-                  onChange={e => {
-                    setFormData({launchVideoId: e.target.value});
-                  }}
+                <DatePicker 
+                  selectsStart
+                  onChange={e => {}}
+                  placeholderText='请选择开始日期'
                 />
+                <DatePicker 
+                  selectsEnd
+                  onChange={e => {}}
+                  placeholderText='请选择结束日期'
+                />
+              </InputGroup>
+              <InputGroup className="mb-4">
+                <InputGroupAddon addonType="prepend">
+                  <InputGroupText>
+                    投放时间
+                  </InputGroupText>
+                </InputGroupAddon>
+                <DatePicker 
+                  showTimeSelect
+                  showTimeSelectOnly
+                  timeIntervals={5}
+                  dateFormat="LT"
+                  timeCaption="Time"
+                  isClearable={true}
+                  onChange={e => {}}
+                  placeholderText='请添加投放时间'
+                />
+                <Button>+</Button>
               </InputGroup>
               <InputGroup className="mb-4">
                 <InputGroupAddon addonType="prepend">

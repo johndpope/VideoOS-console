@@ -70,3 +70,14 @@ export async function queryAllModelTypes() {
     method: 'get',
   })
 };
+
+export const getAdMaterials = (params) => {
+  return axios({
+    headers: {
+        token: getAuthority(),
+    },
+    url: `${OS_API}/creative/queryByPage?${qs.stringify(params)}`,
+    method: 'get',
+    data: params,  
+  });  
+};

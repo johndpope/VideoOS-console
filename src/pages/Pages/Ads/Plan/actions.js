@@ -43,6 +43,9 @@ import {
   QUERY_ALL_MODELTYPES_SUCCESS,
   QUERY_ALL_MODELTYPES_FAILURE,
   SET_FORM_DATA,
+  GET_AD_METERIALS_REQUEST,
+  GET_AD_METERIALS_SUCCESS,
+  GET_AD_METERIALS_FAILURE,
 } from './constants';
 
 let newPlanDropDownSwitch = false;
@@ -221,6 +224,28 @@ const getAdPlansRequest = () => {
     };
   };
 
+  const getAdMaterialsRequest = () => {
+    return {
+      type: GET_AD_METERIALS_REQUEST,
+      isLoading: true,
+    };
+  };
+  
+  const getAdMaterialsSuccess = (payload) => {
+    return {
+      type: GET_AD_METERIALS_SUCCESS,
+      isLoading: false,
+      payload,
+    };
+  };
+  
+  const getAdMaterialsFailure = () => {
+    return {
+      type: GET_AD_METERIALS_FAILURE,
+      isLoading: false,
+    };
+  };
+
 export const getAdPlans = (params = {
   currentPage: 1,
   pageSize: 20,
@@ -321,8 +346,11 @@ export const addPlanModalToggle = (payload) => {
   return (dispatch) => {
     addPlanSwitch = !addPlanSwitch;
     if (addPlanSwitch) {
+      dispatch(getAdMaterials());
+      dispatch(setFormData(payload));
       dispatch(showAddPlan(payload));
     } else {
+      dispatch(setFormData({}));
       dispatch(hideAddPlan());
     }
   };
@@ -376,5 +404,29 @@ export const setFormData = (payload) => {
     type: SET_FORM_DATA,
     payload,
   }
+};
+
+export const getAdMaterials = (params = {
+  currentPage: 1,
+  pageSize: 20,
+}) => {
+  return async (dispatch) => {
+    dispatch(getAdMaterialsRequest());
+    try {
+      const response = await api.getAdMaterials(params);
+
+      if (response.status === 200 && response.data.resCode === '00') {
+
+        dispatch(getAdMaterialsSuccess(response.data));
+      } else {
+        dispatch(getAdMaterialsFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch (error) {
+      dispatch(getAdMaterialsFailure(error));
+    }
+  };
 };
   

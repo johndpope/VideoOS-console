@@ -34,6 +34,7 @@ class AdPlan extends Component {
           addPlan={addPlan}
           setFormData={setFormData}
           formData={adPlan && adPlan.formData}
+          materialTypes={adPlan && adPlan.materialTypes}
         />
         <DeletePlan 
           toggle={deletePlanModalToggle}

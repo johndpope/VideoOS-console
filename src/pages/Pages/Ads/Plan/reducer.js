@@ -35,6 +35,9 @@ import {
   QUERY_ALL_MODELTYPES_SUCCESS,
   QUERY_ALL_MODELTYPES_FAILURE,
   SET_FORM_DATA,
+  GET_AD_METERIALS_REQUEST,
+  GET_AD_METERIALS_SUCCESS,
+  GET_AD_METERIALS_FAILURE,
 } from './constants';
 // The initial state of the plan
 const initialState = {
@@ -145,6 +148,19 @@ function adPlanReducer(state = initialState, action) {
         });
       }
       return Object.assign({}, state);
+    case GET_AD_METERIALS_REQUEST:
+      return Object.assign({}, state, {
+        isLoading: action.isLoading,
+      });
+    case GET_AD_METERIALS_SUCCESS:
+      return Object.assign({}, state, {
+        isLoading: action.isLoading,
+        materialTypes: action.payload.creativeInfoList || [],
+      });
+    case GET_AD_METERIALS_FAILURE:
+      return Object.assign({}, state, {
+        isLoading: action.isLoading,
+      });
     default:
       return state;  
   }
