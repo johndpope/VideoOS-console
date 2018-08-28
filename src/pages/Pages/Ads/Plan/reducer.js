@@ -34,9 +34,12 @@ import {
   QUERY_ALL_MODELTYPES_REQUEST,
   QUERY_ALL_MODELTYPES_SUCCESS,
   QUERY_ALL_MODELTYPES_FAILURE,
+  SET_FORM_DATA,
 } from './constants';
 // The initial state of the plan
-const initialState = {};
+const initialState = {
+  formData: {},
+};
 
 function adPlanReducer(state = initialState, action) {
   switch(action.type) {
@@ -134,6 +137,14 @@ function adPlanReducer(state = initialState, action) {
         record: action.payload,
         shouldDeletePlanModalOpen: action.shouldOpen,
       });
+    case SET_FORM_DATA:
+      const payload = action.payload;
+      if (typeof payload === 'object') {
+        Object.keys(payload).forEach(key => {
+          state.formData[key] = payload[key];
+        });
+      }
+      return Object.assign({}, state);
     default:
       return state;  
   }

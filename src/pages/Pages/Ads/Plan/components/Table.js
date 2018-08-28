@@ -4,11 +4,11 @@ import { Table, Button } from '@icedesign/base';
 export default class PlanTable extends Component {
 
   renderOperator = (value, index, record) => {
-    const { addPlanToggle, deletePlanModalToggle } = this.props;
+    const { addPlanModalToggle, deletePlanModalToggle } = this.props;
     return (
       <div>
-        <Button onClick={() => {addPlanToggle({...record, opType: 'read'})}}>查看</Button>
-        <Button onClick={() => {addPlanToggle({...record, opType: 'update'})}}
+        <Button onClick={() => {addPlanModalToggle({...record, opType: 'read'})}}>查看</Button>
+        <Button onClick={() => {addPlanModalToggle({...record, opType: 'update'})}}
         >
           修改
         </Button>

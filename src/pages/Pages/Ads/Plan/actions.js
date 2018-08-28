@@ -42,6 +42,7 @@ import {
   QUERY_ALL_MODELTYPES_REQUEST,
   QUERY_ALL_MODELTYPES_SUCCESS,
   QUERY_ALL_MODELTYPES_FAILURE,
+  SET_FORM_DATA,
 } from './constants';
 
 let newPlanDropDownSwitch = false;
@@ -368,5 +369,12 @@ export const queryAllModelTypes = (params) => {
       dispatch(queryAllModelTypesFailure(error));
     }
   };
+};
+
+export const setFormData = (payload) => {
+  return {
+    type: SET_FORM_DATA,
+    payload,
+  }
 };
   
