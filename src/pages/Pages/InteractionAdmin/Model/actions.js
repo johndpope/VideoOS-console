@@ -17,6 +17,7 @@
 
 import { push } from 'react-router-redux';
 import { Feedback } from '@icedesign/base';
+import saveFile from 'utils/saveFile';
 import * as api from './api';
 import { setAuthority } from 'utils/authority';
 // import { reloadAuthorized } from 'utils/Authorized';
@@ -43,7 +44,13 @@ import {
   QUERY_ALL_MODELTYPES_REQUEST,
   QUERY_ALL_MODELTYPES_SUCCESS,
   QUERY_ALL_MODELTYPES_FAILURE,
+  GET_MODEL_INFO_BYID_REQUEST,
+  GET_MODEL_INFO_BYID_SUCCESS,
+  GET_MODEL_INFO_BYID_FAILURE,
   SET_FORM_DATA,
+  DOWNLOAD_MODEL_TEMPLATE_FILE_REQUEST,
+  DOWNLOAD_MODEL_TEMPLATE_FILE_FAILURE,
+  DOWNLOAD_MODEL_TEMPLATE_FILE_SUCCESS,
 } from './constants';
 
 let addModelSwitch = false;
@@ -104,6 +111,29 @@ const getIaModelsSuccess = (payload) => {
 const getIaModelsFailure = (payload) => {
   return {
     type: GET_IAMODEL_FAILURE,
+    payload,
+    isLoading: false,
+  };
+};
+
+const getModelInfoByIdRequest = () => {
+  return {
+    type: GET_MODEL_INFO_BYID_REQUEST,
+    isLoading: true,
+  };
+};
+
+const getModelInfoByIdSuccess = (payload) => {
+  return {
+    type: GET_MODEL_INFO_BYID_SUCCESS,
+    payload,
+    isLoading: false,
+  };
+};
+
+const getModelInfoByIdFailure = (payload) => {
+  return {
+    type: GET_MODEL_INFO_BYID_FAILURE,
     payload,
     isLoading: false,
   };
@@ -225,6 +255,28 @@ const queryAllModelTypesFailure = () => {
   };
 };
 
+const downloadModelTemplateFileRequest = () => {
+  return {
+    type: DOWNLOAD_MODEL_TEMPLATE_FILE_REQUEST,
+    isLoading: true,
+  };
+};
+
+const downloadModelTemplateFileSuccess = (payload) => {
+  return {
+    type: DOWNLOAD_MODEL_TEMPLATE_FILE_SUCCESS,
+    isLoading: true,
+    payload,
+  };
+};
+
+const downloadModelTemplateFileFailure = () => {
+  return {
+    type: DOWNLOAD_MODEL_TEMPLATE_FILE_FAILURE,
+    isLoading: true,
+  };
+};
+
 export const getIaModels = (params = {
   currentPage: 1,
   pageSize: 20,
@@ -254,6 +306,7 @@ export const addModelToggle = (record) => {
   return (dispatch) => {
     addModelSwitch = !addModelSwitch;
     if (addModelSwitch) {
+      dispatch(getModelInfoById({templateId: record && record.templateId}));
       dispatch(setFormData(record));
       dispatch(showAddModelModal(record));
     } else {
@@ -394,4 +447,46 @@ export const setFormData = (payload) => {
     type: SET_FORM_DATA,
     payload,
   }
-}
+};
+
+export const getModelInfoById = (params) => {
+  return async (dispatch) => {
+    dispatch(getModelInfoByIdRequest());
+    try {
+      const response = await api.getModelInfoById(params);
+
+      if (response.status === 200 && response.data.resCode === '00') {
+
+        dispatch(getModelInfoByIdSuccess(response.data));
+      } else {
+        dispatch(getModelInfoByIdFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch (error) {
+      dispatch(getModelInfoByIdFailure(error));
+    }
+  };
+};
+
+export const downloadModelTemplateFile = (params) => {
+  return async (dispatch) => {
+    dispatch(downloadModelTemplateFileRequest());
+    try {
+      const response = await api.downloadModelTemplateFile(params);
+
+      if (response.status === 200) {
+        saveFile(response.data, 'text/latex', '模版文件.lua')
+        dispatch(downloadModelTemplateFileSuccess(response.data));
+      } else {
+        dispatch(downloadModelTemplateFileFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch (error) {
+      dispatch(downloadModelTemplateFileFailure(error));
+    }
+  };
+};

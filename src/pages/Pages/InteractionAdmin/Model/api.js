@@ -13,7 +13,6 @@ export async function getIaModels(params) {
     },
     url: `${OS_API}/interactionTemplate/queryByPage?${qs.stringify(params)}`,
     method: 'get',
-    data: params,  
   })  
 };
 
@@ -76,3 +75,23 @@ export async function queryAllModelTypes() {
   })
 };
 
+export async function getModelInfoById(params) {
+  return axios({
+    headers: {
+      token: getAuthority(),
+    },
+    url: `${OS_API}/template/queryDetail?${qs.stringify(params)}`,
+    method: 'get',
+  });
+};
+
+export async function downloadModelTemplateFile(params) {
+  return axios({
+    headers: {
+      token: getAuthority(),
+    },
+    url: `${OS_API}/template/download`,
+    method: 'post',
+    data: params,
+  })
+};

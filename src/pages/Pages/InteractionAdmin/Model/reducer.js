@@ -33,6 +33,9 @@ import {
     QUERY_ALL_MODELTYPES_SUCCESS,
     QUERY_ALL_MODELTYPES_FAILURE,
     SET_FORM_DATA,
+    GET_MODEL_INFO_BYID_REQUEST,
+    GET_MODEL_INFO_BYID_SUCCESS,
+    GET_MODEL_INFO_BYID_FAILURE,
   } from './constants';
   
 // The initial state of the model
@@ -137,6 +140,19 @@ function iaModelReducer(state = initialState, action) {
         });
       }
       return Object.assign({}, state);
+    case GET_MODEL_INFO_BYID_REQUEST:
+      return Object.assign({}, state, {
+        isLoading: action.isLoading,
+      });
+    case GET_MODEL_INFO_BYID_SUCCESS:
+      return Object.assign({}, state, {
+        isLoading: action.isLoading,
+        modelInfo: action.payload,
+      });
+    case GET_MODEL_INFO_BYID_FAILURE:
+      return Object.assign({}, state, {
+        isLoading: action.isLoading,
+      });
     default:
       return state;
   }

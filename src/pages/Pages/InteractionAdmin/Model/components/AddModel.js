@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Form, InputGroup, InputGroupAddon, InputGroupText, Input, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { Button } from '@icedesign/base';
 
-const AddModel = ({shouldOpen, toggle, addModel, updateModel, uploadModelFile, uploadModelFileInfo, modelTypes, record, setFormData, formData}) => {
+const AddModel = ({shouldOpen, toggle, addModel, updateModel, uploadModelFile, uploadModelFileInfo, modelTypes, record, setFormData, formData, downloadModelTemplateFile}) => {
 
   const { opType } = record || {};
   const isRead = opType === 'read';
@@ -62,7 +62,9 @@ const AddModel = ({shouldOpen, toggle, addModel, updateModel, uploadModelFile, u
                 </InputGroupText>
               </InputGroupAddon>
               <span>
-                <a href="">待BE开发</a>
+                <Button onClick={() => {
+                  downloadModelTemplateFile({templateId: record.templateId})
+                }}>点击下载</Button>
               </span>
             </InputGroup>
           ) : (
