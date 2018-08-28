@@ -19,11 +19,13 @@ import { Feedback } from '@icedesign/base';
 // import { logout } from './api';
 import { setAuthority } from 'utils/authority';
 // import { reloadAuthorized } from 'utils/Authorized';
-// import {
-//   USER_LOGOUT_REQUEST,
-//   USER_LOGOUT_SUCCESS,
-//   USER_LOGOUT_FAILURE,
-// } from './constants';
+import {
+  // USER_LOGOUT_REQUEST,
+  // USER_LOGOUT_SUCCESS,
+  // USER_LOGOUT_FAILURE,
+  SHOW_PASSWORD_RESET_MODEL,
+  HIDE_PASSWORD_RESET_MODEL,
+} from './constants';
 
 /**
  * Changes the input field of the form
@@ -34,6 +36,8 @@ import { setAuthority } from 'utils/authority';
  */
 
 const history = createHashHistory();
+
+let resetPasswordModalSwitch = false;
 
 // const userLogoutRequest = () => {
 //   return {
@@ -58,6 +62,20 @@ const history = createHashHistory();
 //   };
 // };
 
+const showPasswordResetModal = () => {
+  return {
+    type: SHOW_PASSWORD_RESET_MODEL,
+    shouldOpen: true,
+  }
+};
+
+const hidePasswordResetModal = () => {
+  return {
+    type: HIDE_PASSWORD_RESET_MODEL,
+    shouldOpen: false,
+  }
+};
+
 export const userLogout = (params) => {
   return (dispatch) => {
     setAuthority('');
@@ -66,3 +84,14 @@ export const userLogout = (params) => {
 
   };
 };
+
+export const resetPasswordModalToggle = () => {
+  return (dispatch) => {
+    resetPasswordModalSwitch = !resetPasswordModalSwitch;
+    if (resetPasswordModalSwitch) {
+      dispatch(showPasswordResetModal());
+    } else {
+      dispatch(hidePasswordResetModal());
+    }
+  }
+}

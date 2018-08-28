@@ -13,6 +13,8 @@ import {
     USER_LOGOUT_REQUEST,
     USER_LOGOUT_SUCCESS,
     USER_LOGOUT_FAILURE,
+    SHOW_PASSWORD_RESET_MODEL,
+    HIDE_PASSWORD_RESET_MODEL,
   } from './constants';
   
   // The initial state of the login
@@ -31,6 +33,11 @@ import {
       case USER_LOGOUT_FAILURE:
         return Object.assign({}, state, {
           isLoading: action.isLoading,
+        });
+      case SHOW_PASSWORD_RESET_MODEL:
+      case HIDE_PASSWORD_RESET_MODEL:  
+        return Object.assign({}, state, {
+          shouldPasswordResetModalOpen: action.shouldOpen,
         });
       default:
         return state;
