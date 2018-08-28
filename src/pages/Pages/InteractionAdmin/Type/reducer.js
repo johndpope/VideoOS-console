@@ -29,11 +29,13 @@ import {
     GET_IATYPE_BYID_REQUEST,
     GET_IATYPE_BYID_SUCCESS,
     GET_IATYPE_BYID_FAILURE,
+    SET_FORM_DATA,
   } from './constants';
   
   // The initial state of the login
   const initialState = {
     currentPage: 1,
+    formData: {},
   };
   
   function iaTypeReducer(state = initialState, action) {
@@ -113,6 +115,14 @@ import {
           shouldDeleteTypeModalOpen: action.shouldOpen,
           record: action.payload || {},
         });
+      case SET_FORM_DATA:
+        const payload = action.payload;
+        if (typeof payload === 'object') {
+          Object.keys(payload).forEach(key => {
+            state.formData[key] = payload[key];
+          });
+        }
+        return Object.assign({}, state);  
       default:
         return state;
     }

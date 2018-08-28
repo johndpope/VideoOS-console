@@ -4,8 +4,8 @@ import { Button } from '@icedesign/base';
 
 import styles from './styles';
 
-const AddType = ({shouldOpen, toggle, addType, updateType, record}) => {
-  let interactionTypeName = null;
+const AddType = ({shouldOpen, toggle, addType, updateType, record, setFormData, formData}) => {
+
   let file = null;
   const { opType } = record || {};
   const isRead = opType === 'read';
@@ -32,14 +32,16 @@ const AddType = ({shouldOpen, toggle, addType, updateType, record}) => {
           <Input type="text" 
             maxLength={10}
             disabled={isRead ? 'disabled' : false}
-            defaultValue={isRead || isUpdate ? record && record.interactionTypeName : ''}
+            defaultValue={isRead || isUpdate ? formData && formData.interactionTypeName : ''}
             onChange={e => {
               const { value } = e.target;
               if (value && value.length > 10) {
                 
                 return;
               }
-              interactionTypeName = e.target.value;
+              setFormData({
+                interactionTypeName: e.target.value
+              });
             }} 
             placeholder="请输入名称" 
           />
@@ -56,7 +58,7 @@ const AddType = ({shouldOpen, toggle, addType, updateType, record}) => {
                 <Input 
                   disabled
                   type="textarea" 
-                  value={record && record.configInfo || ''}
+                  value={formData && formData.configInfo || ''}
                 />
               </span>
             </InputGroup>
@@ -73,7 +75,9 @@ const AddType = ({shouldOpen, toggle, addType, updateType, record}) => {
                   accept="*.txt"
                   styles={styles.file_ipt} 
                   onChange={e => {
-                    file = e.target.files && e.target.files[0];
+                    setFormData({
+                      file: e.target.files && e.target.files[0]
+                    })
                   }}
                 />
               </span>
@@ -87,16 +91,12 @@ const AddType = ({shouldOpen, toggle, addType, updateType, record}) => {
           if (isUpdate) {
             updateType({
               interactionTypeId: record && record.interactionTypeId,
-              interactionTypeName,
-              file,
+              ...formData,
             });
           } else if(isRead) {
             toggle && toggle();
           } else {
-            addType({
-              interactionTypeName,
-              file,
-            });
+            addType(formData);
           }
         }}>{ isUpdate ? '确认修改' : (isRead ? '确认' : '确认新增')}</Button>
       </ModalFooter>

@@ -38,6 +38,7 @@ import {
   GET_IATYPE_BYID_REQUEST,
   GET_IATYPE_BYID_SUCCESS,
   GET_IATYPE_BYID_FAILURE,
+  SET_FORM_DATA,
 } from './constants';
 
 /**
@@ -237,8 +238,10 @@ export const addTypeToggle = (payload) => {
   return (dispatch) => {
     addTypeSwitch = !addTypeSwitch;
     if (addTypeSwitch) {
+      dispatch(setFormData(payload));
       dispatch(showAddTypeModal(payload));
     } else {
+      dispatch(setFormData({}));
       dispatch(hideAddTypeModal());
     }
   }
@@ -315,5 +318,12 @@ export const updateType = (params) => {
     } catch(error) {
       dispatch(updateTypeFailure(error));
     }
+  }
+};
+
+export const setFormData = (payload) => {
+  return {
+    type: SET_FORM_DATA,
+    payload,
   }
 };

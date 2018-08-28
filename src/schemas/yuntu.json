@@ -1,7 +1,7 @@
 {
   "title": "",
   "type": "object",
-  "required": ["popular_point_title", "avatar"],
+  "required": ["popular_point_title"],
   "properties": {
     "creativeName": {
       "title": "素材名称",  
@@ -11,28 +11,14 @@
       "title": "素材类型",  
       "type": "string",
       "default": "请选择",
-      "enum": [
-        "云图",
-        "中插",
-        "红包",
-        "投票"
-      ],
-      "enumNames": [
-        "云图",
-        "中插",
-        "红包",
-        "投票"  
-      ]  
+      "enum": [],
+      "enumNames": []  
     },
     "interactionTemplateId": {
       "title": "素材模板",
       "type": "string",
-      "enum": [
-        "请选择"  
-      ],
-      "enumNames": [
-        "请选择"  
-      ]
+      "enum": [],
+      "enumNames": []
     },
     "popular_point_title": {
       "type": "string",

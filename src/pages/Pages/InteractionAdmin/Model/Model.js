@@ -5,7 +5,7 @@ import IceContainer from '@icedesign/container';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { getIaModels, addModelToggle, addModel, uploadModelFile, queryAllModelTypes, deleteModel, deleteModelModalToggle, updateModel } from './actions';
+import { getIaModels, addModelToggle, addModel, uploadModelFile, queryAllModelTypes, deleteModel, deleteModelModalToggle, updateModel, setFormData } from './actions';
 import reducer from './reducer';
 import ModalTable from './components/Table';
 import AddModel from './components/AddModel';
@@ -30,20 +30,22 @@ class IAModel extends Component {
 
   render() {
     const { currentPage } = this.state;
-    const { getIaModels, iaModel, addModelToggle, addModel, updateModel, uploadModelFile, deleteModel, deleteModelModalToggle, location } = this.props;
+    const { getIaModels, iaModel, addModelToggle, addModel, updateModel, uploadModelFile, deleteModel, deleteModelModalToggle, location, setFormData } = this.props;
     const modelTypes = iaModel.modelTypes || [];
     const lType = location && location.state && location.state.type;
     return (
       <div className="app">
         <AddModel 
           shouldOpen={iaModel && iaModel.shouldAddModelModalOpen} 
-          toggle={addModelToggle}
+          toggle={() => addModelToggle({})}
           addModel={addModel}
           updateModel={updateModel}
           uploadModelFile={uploadModelFile}
           uploadModelFileInfo={iaModel.uploadModelFileInfo || {}}
           modelTypes={modelTypes}
-          record={iaModel.record}
+          record={iaModel && iaModel.record}
+          setFormData={setFormData}
+          formData={iaModel && iaModel.formData}
         />
         <DeleteModel
           deleteModel={deleteModel} 
@@ -52,7 +54,7 @@ class IAModel extends Component {
           record={iaModel.record}
         />
         <IceContainer>
-          <Button onClick={addModelToggle}>新增模版</Button>
+          <Button onClick={() => addModelToggle({})}>新增模版</Button>
           <InputGroup className="mb-4">
             <InputGroupAddon addonType="prepend">
               <InputGroupText>
@@ -101,6 +103,7 @@ const mapDispatchToProps = {
   deleteModel,
   deleteModelModalToggle,
   updateModel,
+  setFormData,
 };
 
 const mapStateToProps = (state) => {

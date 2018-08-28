@@ -2,9 +2,8 @@ import React, { Fragment } from 'react';
 import { Form, InputGroup, InputGroupAddon, InputGroupText, Input, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { Button } from '@icedesign/base';
 
-const AddModel = ({shouldOpen, toggle, addModel, updateModel, uploadModelFile, uploadModelFileInfo, modelTypes, record}) => {
-  let interactionTypeId = modelTypes && modelTypes[0] && modelTypes[0].interactionId || null;
-  let interactionTemplateName = null;
+const AddModel = ({shouldOpen, toggle, addModel, updateModel, uploadModelFile, uploadModelFileInfo, modelTypes, record, setFormData, formData}) => {
+
   const { opType } = record || {};
   const isRead = opType === 'read';
   const isUpdate = opType === 'update';
@@ -28,9 +27,9 @@ const AddModel = ({shouldOpen, toggle, addModel, updateModel, uploadModelFile, u
           </InputGroupAddon>
           <Input type="select"
             disabled={isRead ? 'disabled' : false}
-            defaultValue={isRead || isUpdate ? record && record.interactionTypeId : ''}
+            defaultValue={isRead || isUpdate ? formData && formData.interactionTypeId : ''}
             onChange={e => {
-              interactionTypeId = e.target.value;
+              setFormData({interactionTypeId: e.target.value});
             }}
           >
             {
@@ -48,9 +47,9 @@ const AddModel = ({shouldOpen, toggle, addModel, updateModel, uploadModelFile, u
           </InputGroupAddon>
           <Input type="text" placeholder="请输入模版名称" 
             disabled={isRead ? 'disabled' : false}
-            defaultValue={isRead || isUpdate ? record && record.interactionTypeName : ''}
+            defaultValue={isRead || isUpdate ? formData && formData.interactionTypeName : ''}
             onChange={e => {
-              interactionTemplateName = e.target.value;
+              setFormData({interactionTemplateName: e.target.value});
             }}
           />
         </InputGroup>
@@ -91,16 +90,14 @@ const AddModel = ({shouldOpen, toggle, addModel, updateModel, uploadModelFile, u
           if (isUpdate) {
             updateModel({
               interactionTemplateId: record && record.interactionTemplateId,
-              interactionTypeId,
-              interactionTemplateName,
+              ...formData,
               ...uploadModelFileInfo,
             });
           } else if(isRead) {
             toggle && toggle();
           } else {
             addModel({
-              interactionTypeId,
-              interactionTemplateName,
+              ...formData,
               ...uploadModelFileInfo,
             });
           }

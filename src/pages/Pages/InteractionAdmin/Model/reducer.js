@@ -32,10 +32,13 @@ import {
     QUERY_ALL_MODELTYPES_REQUEST,
     QUERY_ALL_MODELTYPES_SUCCESS,
     QUERY_ALL_MODELTYPES_FAILURE,
+    SET_FORM_DATA,
   } from './constants';
   
 // The initial state of the model
-const initialState = {};
+const initialState = {
+  formData: {}
+};
 
 function iaModelReducer(state = initialState, action) {
   switch (action.type) {
@@ -126,6 +129,14 @@ function iaModelReducer(state = initialState, action) {
         record: {interactionTemplateId: action.payload && action.payload.templateId || ''},
         shouldDeleteModelModalOpen: action.shouldOpen,
       });
+    case SET_FORM_DATA:
+      const payload = action.payload;
+      if (typeof payload === 'object') {
+        Object.keys(payload).forEach(key => {
+          state.formData[key] = payload[key];
+        });
+      }
+      return Object.assign({}, state);
     default:
       return state;
   }

@@ -43,6 +43,7 @@ import {
   QUERY_ALL_MODELTYPES_REQUEST,
   QUERY_ALL_MODELTYPES_SUCCESS,
   QUERY_ALL_MODELTYPES_FAILURE,
+  SET_FORM_DATA,
 } from './constants';
 
 let addModelSwitch = false;
@@ -253,8 +254,10 @@ export const addModelToggle = (record) => {
   return (dispatch) => {
     addModelSwitch = !addModelSwitch;
     if (addModelSwitch) {
+      dispatch(setFormData(record));
       dispatch(showAddModelModal(record));
     } else {
+      dispatch(setFormData({}));
       dispatch(hideAddModelModal());
     }
   }
@@ -385,3 +388,10 @@ export const queryAllModelTypes = (params) => {
     }
   };
 };
+
+export const setFormData = (payload) => {
+  return {
+    type: SET_FORM_DATA,
+    payload,
+  }
+}

@@ -14,6 +14,18 @@ const uiSchema = ({addMaterialFile}) => {
         "ui:emptyValue": ""
       }
     },
+    avatar: {
+      "ui:widget": (props) => {  
+        return (
+          <Input 
+            type="file"
+            onChange={(e) => {
+              addMaterialFile({file: e.target.files[0], type: 'avatar'});
+            }}
+          />
+        )
+      }
+    },
     display_img: {
       "ui:widget": (props) => {  
         return (
