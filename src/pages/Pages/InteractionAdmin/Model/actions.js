@@ -306,7 +306,9 @@ export const addModelToggle = (record) => {
   return (dispatch) => {
     addModelSwitch = !addModelSwitch;
     if (addModelSwitch) {
-      dispatch(getModelInfoById({templateId: record && record.templateId}));
+      if (record && record.opType) {
+        dispatch(getModelInfoById({templateId: record && record.templateId}));
+      }
       dispatch(setFormData(record));
       dispatch(showAddModelModal(record));
     } else {
