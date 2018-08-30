@@ -58,6 +58,7 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
               setFormData({creativeId: e.target.value});
             }}
           >
+            <option value='default'>请选择</option>
             {
               materialTypes && Array.isArray(materialTypes) && materialTypes.length > 0 && materialTypes.map((mt, idx) => (
                 <option key={idx} value={mt.creativeId}>{mt.creativeName}</option>
@@ -89,7 +90,6 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
             disabled={isRead ? 'disabled' : false}
             defaultValue={isRead || isUpdate ? formData && `${formData.launchTimeType}` : ''}
             onChange={e => {
-              debugger
               setFormData({launchTimeType: e.target.value});
             }}
           >
@@ -100,7 +100,7 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
           </Input>
         </InputGroup>
         {
-          formData && formData.launchTimeType && formData.launchTimeType !== 'default' ? (
+          formData && formData.launchTimeType !== 'default' ? (
             <Fragment>
               <InputGroup className="mb-4">
                 <InputGroupAddon addonType="prepend">
@@ -171,6 +171,7 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
                     setFormData({launchLenTime: e.target.value});
                   }}
                 >
+                  <option value='default'>请选择</option>
                   <option value='10'>10秒</option>
                   <option value='20'>20秒</option>
                   <option value='30'>30秒</option>
