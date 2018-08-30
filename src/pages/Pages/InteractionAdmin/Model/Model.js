@@ -92,11 +92,13 @@ class IAModel extends Component {
         />
         {
           iaModel && !iaModel.isLoading ? (
+            <div style={{display: 'flex', flexDirection: 'row-reverse', padding: '10px 0'}}>
             <Pagination 
               total={iaModel.total}
               current={currentPage || 1}
               pageSize={iaModel.pageSize || 20}
             />
+            </div>
           ) : null
         }
       </div>   

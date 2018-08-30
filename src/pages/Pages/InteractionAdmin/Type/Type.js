@@ -53,11 +53,13 @@ class IAType extends Component {
           /> 
           {
             iaType && !iaType.isLoading ? (
+              <div style={{display: 'flex', flexDirection: 'row-reverse', padding: '10px 0'}}>
               <Pagination 
                 total={iaType.total}
                 current={currentPage}
                 pageSize={iaType.pageSize || 20}
               />
+              </div>
             ) : null
           }
         </IceContainer>

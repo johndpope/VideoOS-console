@@ -53,11 +53,13 @@ class AARole extends Component {
           />
           {
             aaRole && !aaRole.isLoading ? (
+              <div style={{display: 'flex', flexDirection: 'row-reverse', padding: '10px 0'}}>
               <Pagination 
                 total={aaRole.total}
                 current={currentPage}
                 pageSize={aaRole.pageSize || 20}
               />
+              </div>
             ) : null
           }
         </IceContainer>

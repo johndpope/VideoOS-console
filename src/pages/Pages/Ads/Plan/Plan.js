@@ -70,11 +70,13 @@ class AdPlan extends Component {
         />
         {
           adPlan && !adPlan.isLoading ? (
-            <Pagination 
-              total={adPlan.total}
-              current={adPlan.currentPage || 1}
-              pageSize={adPlan.pageSize || 20}
-            />
+            <div style={{display: 'flex', flexDirection: 'row-reverse', padding: '10px 0'}}>
+              <Pagination 
+                total={adPlan.total}
+                current={adPlan.currentPage || 1}
+                pageSize={adPlan.pageSize || 20}
+              />
+            </div>
           ) : null
         }
       </div>   

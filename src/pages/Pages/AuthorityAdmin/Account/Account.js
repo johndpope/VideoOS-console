@@ -54,11 +54,13 @@ class AAAcount extends Component {
           />
           {
             aaAccount && !aaAccount.isLoading ? (
+              <div style={{display: 'flex', flexDirection: 'row-reverse', padding: '10px 0'}}>
               <Pagination 
                 total={aaAccount.total}
                 current={currentPage}
                 pageSize={aaAccount.pageSize || 20}
               />
+              </div>
             ) : null
           }
         </IceContainer>
