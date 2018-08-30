@@ -18,7 +18,7 @@
 import { push } from 'react-router-redux';
 import { Feedback } from '@icedesign/base';
 import { login } from './api';
-import { setAuthority } from 'utils/authority';
+import { setAuthority, setUserInfoLocal } from 'utils/authority';
 // import { reloadAuthorized } from 'utils/Authorized';
 import {
   USER_LOGIN_REQUEST,
@@ -69,6 +69,7 @@ export const userLogin = (params) => {
       const response = await login(params);
 
       if (response.status === 200 && response.data.resCode === '00') {
+        setUserInfoLocal(response.data);
         setAuthority(response.data && response.data.token);
         dispatch(userLoginSuccess(response.data));
         dispatch(push('/'));

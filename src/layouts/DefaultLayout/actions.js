@@ -14,9 +14,10 @@
  *        return { type: YOUR_ACTION_CONSTANT, var: var }
  *    }
  */
+import { push } from 'react-router-redux';
 import { createHashHistory } from 'history';
 import { Feedback } from '@icedesign/base';
-// import { logout } from './api';
+import * as api from './api';
 import { setAuthority } from 'utils/authority';
 // import { reloadAuthorized } from 'utils/Authorized';
 import {
@@ -25,6 +26,9 @@ import {
   // USER_LOGOUT_FAILURE,
   SHOW_PASSWORD_RESET_MODEL,
   HIDE_PASSWORD_RESET_MODEL,
+  RESET_PASSWORD_REQUEST,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAILURE,
 } from './constants';
 
 /**
@@ -76,6 +80,27 @@ const hidePasswordResetModal = () => {
   }
 };
 
+const resetPasswordRequest = () => {
+  return {
+    type: RESET_PASSWORD_REQUEST,
+    isLoading: true,
+  }
+};
+
+const resetPasswordSuccess = () => {
+  return {
+    type: RESET_PASSWORD_SUCCESS,
+    isLoading: true,
+  }
+};
+
+const resetPasswordFailure = () => {
+  return {
+    type: RESET_PASSWORD_FAILURE,
+    isLoading: true,
+  }
+};
+
 export const userLogout = (params) => {
   return (dispatch) => {
     setAuthority('');
@@ -94,4 +119,26 @@ export const resetPasswordModalToggle = () => {
       dispatch(hidePasswordResetModal());
     }
   }
-}
+};
+
+export const resetPassword = (params) => {
+  return (dispatch) => {
+    try{
+      dispatch(resetPasswordRequest());
+      const response = api.resetPassword(params);
+      if (response.status === 200 && response.data.resCode === '00') {
+        dispatch(resetPasswordSuccess());
+        Feedback.toast.show(response.data && response.data.resMsg);
+        push('/');
+      } else {
+        dispatch(resetPasswordFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch(error) {
+      dispatch(resetPasswordFailure(error));
+    }
+    
+  };
+};

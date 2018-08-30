@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
 import { AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
-import { userLogout, resetPasswordModalToggle } from './actions';
+import { userLogout, resetPasswordModalToggle, resetPassword } from './actions';
 import reducer from './reducer';
 import logo from '../../assets/img/brand/logo.svg';
 import sygnet from '../../assets/img/brand/sygnet.svg';
@@ -21,13 +21,14 @@ const defaultProps = {};
 class DefaultHeader extends Component {
   render() {
     // eslint-disable-next-line
-    const { dHeader, resetPasswordModalToggle, userLogout, children, ...attributes } = this.props;
+    const { dHeader, resetPasswordModalToggle, userLogout, resetPassword, children, ...attributes } = this.props;
 
     return (
       <React.Fragment>
         <PasswordReset 
           toggle={resetPasswordModalToggle}
           shouldOpen={dHeader && dHeader.shouldPasswordResetModalOpen}
+          resetPassword={resetPassword}
         />
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
         <AppNavbarBrand
@@ -55,10 +56,13 @@ class DefaultHeader extends Component {
 const mapDispatchToProps = {
   userLogout,
   resetPasswordModalToggle,
+  resetPassword,
 };
   
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    dHeader: state.dHeader,
+  };
 };
 
 const withConnect = connect(
