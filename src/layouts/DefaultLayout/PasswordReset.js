@@ -51,12 +51,12 @@ const PasswordReset = ({shouldOpen, toggle, resetPassword}) => {
           }
           const userInfo = getUserInfoLocal();
           const { username, roleId, userId } = userInfo;
-          resetPassword(
+          resetPassword({
             password,
             username,
             roleId,
             userId,
-          );
+          });
         }}>确认</Button>
       </ModalFooter>
     </Modal>  

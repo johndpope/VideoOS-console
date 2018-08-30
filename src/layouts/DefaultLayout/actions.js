@@ -18,7 +18,7 @@ import { push } from 'react-router-redux';
 import { createHashHistory } from 'history';
 import { Feedback } from '@icedesign/base';
 import * as api from './api';
-import { setAuthority } from 'utils/authority';
+import { setAuthority, setUserInfoLocal } from 'utils/authority';
 // import { reloadAuthorized } from 'utils/Authorized';
 import {
   // USER_LOGOUT_REQUEST,
@@ -122,14 +122,17 @@ export const resetPasswordModalToggle = () => {
 };
 
 export const resetPassword = (params) => {
-  return (dispatch) => {
+  return async (dispatch) => {
     try{
       dispatch(resetPasswordRequest());
-      const response = api.resetPassword(params);
+      const response = await api.resetPassword(params);
       if (response.status === 200 && response.data.resCode === '00') {
+        setAuthority('');
+        setUserInfoLocal('');
         dispatch(resetPasswordSuccess());
+        dispatch(resetPasswordModalToggle());
         Feedback.toast.show(response.data && response.data.resMsg);
-        push('/');
+        dispatch(push('/'));
       } else {
         dispatch(resetPasswordFailure(response.data));
         Feedback.toast.error(response.data && response.data.resMsg);
