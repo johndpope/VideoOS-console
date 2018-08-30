@@ -33,21 +33,18 @@ export default class PlanTable extends Component {
           <Table.Column title="投放名称" dataIndex="launchName" width={120} />
           <Table.Column title="投放素材名称" dataIndex="creativeName" width={120} />
           <Table.Column title="投放类型" dataIndex="interactionTypeName" width={120} />
-          <Table.Column title="投放状态" dataIndex="lauchStatus" width={120} 
+          <Table.Column title="投放状态" dataIndex="launchStatus" width={120} 
             cell={(value) => {
                 if (value === 0) {
-                  return (<span>待审核</span>)  
+                  return (<span>审核不通过</span>)  
                 }  
                 if (value === 1) {
-                  return (<span>审核中</span>)  
+                  return (<span>审核通过</span>)  
                 }  
                 if (value === 2) {
-                  return (<span>审核失败</span>)  
+                  return (<span>待审核</span>)  
                 }  
                 if (value === 3) {
-                  return (<span>投放中</span>)  
-                }  
-                if (value === 4) {
                   return (<span>关闭</span>)  
                 } 
               }}
