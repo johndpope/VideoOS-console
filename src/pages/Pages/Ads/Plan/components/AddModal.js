@@ -108,13 +108,32 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
                   </InputGroupText>
                 </InputGroupAddon>
                 <DatePicker 
+                  locale='cn-gb'
+                  selected={formData && formData.launchDateStart}
+                  startDate={formData && formData.launchDateStart}
+                  endDate={formData && formData.launchDateEnd}
+                  minDate={moment()}
                   selectsStart
-                  onChange={e => {}}
+                  onChange={e => {
+                    if (formData.launchDateEnd && e.valueOf() >= formData.launchDateEnd.valueOf()) {
+                      setFormData({launchDateEnd: e});
+                    }
+                    setFormData({launchDateStart: e});
+                  }}
                   placeholderText='请选择开始日期'
                 />
                 <DatePicker 
+                  selected={formData && formData.launchDateEnd}
+                  startDate={formData && formData.launchDateStart}
+                  endDate={formData && formData.launchDateEnd}
+                  minDate={moment()}
                   selectsEnd
-                  onChange={e => {}}
+                  onChange={e => {
+                    if (formData.launchDateStart && e.valueOf() <= formData.launchDateStart.valueOf()) {
+                      setFormData({launchDateStart: e});
+                    }
+                    setFormData({launchDateEnd: e});
+                  }}
                   placeholderText='请选择结束日期'
                 />
               </InputGroup>
@@ -125,16 +144,18 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
                   </InputGroupText>
                 </InputGroupAddon>
                 <DatePicker 
+                  selected={formData && formData.launchTime}
                   showTimeSelect
                   showTimeSelectOnly
                   timeIntervals={5}
                   dateFormat="LT"
                   timeCaption="Time"
                   isClearable={true}
-                  onChange={e => {}}
+                  onChange={e => {
+                    setFormData({launchTime: e});
+                  }}
                   placeholderText='请添加投放时间'
                 />
-                <Button>+</Button>
               </InputGroup>
               <InputGroup className="mb-4">
                 <InputGroupAddon addonType="prepend">
@@ -170,8 +191,7 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
           } else if(isRead) {
             toggle && toggle();
           } else {
-            addPlan({
-            });
+            addPlan(formData);
           }
         }}>{ isUpdate ? '确认修改' : (isRead ? '确认' : '确认新增')}</Button>
       </ModalFooter>

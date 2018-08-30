@@ -274,7 +274,11 @@ export const addPlan = (params) => {
   return async (dispatch) => {
     dispatch(addPlanRequest());
     try {
-      const response = await api.addPlan(params);
+      const _params = Object.assign({}, params);
+      _params.launchDateStart = _params.launchDateStart.toString();
+      _params.launchDateEnd = _params.launchDateEnd.toString();
+      _params.launchTime = `${_params.launchTime.hour()}:${_params.launchTime.minutes() < 10 ? ('0' + _params.launchTime.minutes()) : _params.launchTime.minutes()}`
+      const response = await api.addPlan(_params);
 
       if (response.status === 200 && response.data.resCode === '00') {
 

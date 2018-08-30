@@ -33,7 +33,7 @@ export async function deletePlan(params) {
     headers: {
     token: getAuthority(),
     },
-    url: `${OS_API}/launchplan/delete`,
+    url: `${OS_API}/launchplan/offline`,
     method: 'post',
     data: params,
   })

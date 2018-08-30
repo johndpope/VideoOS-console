@@ -12,7 +12,7 @@ export default class PlanTable extends Component {
         >
           修改
         </Button>
-        <Button onClick={() => {deletePlanModalToggle(record)}}>删除</Button>
+        <Button onClick={() => {deletePlanModalToggle(record)}}>下线</Button>
       </div>
     );
   };  

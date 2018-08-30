@@ -143,9 +143,13 @@ function adPlanReducer(state = initialState, action) {
     case SET_FORM_DATA:
       const payload = action.payload;
       if (typeof payload === 'object') {
-        Object.keys(payload).forEach(key => {
-          state.formData[key] = payload[key];
-        });
+        if (Object.keys(payload).length === 0) {
+          state.formData = payload;
+        } else {
+          Object.keys(payload).forEach(key => {
+            state.formData[key] = payload[key];
+          });
+        }
       }
       return Object.assign({}, state);
     case GET_AD_METERIALS_REQUEST:
