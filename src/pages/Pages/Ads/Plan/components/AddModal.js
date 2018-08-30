@@ -87,8 +87,9 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
           </InputGroupAddon>
           <Input type="select"
             disabled={isRead ? 'disabled' : false}
-            defaultValue={isRead || isUpdate ? formData && formData.launchTimeType : ''}
+            defaultValue={isRead || isUpdate ? formData && `${formData.launchTimeType}` : ''}
             onChange={e => {
+              debugger
               setFormData({launchTimeType: e.target.value});
             }}
           >
@@ -165,9 +166,9 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
                 </InputGroupAddon>
                 <Input type="select"
                   disabled={isRead ? 'disabled' : false}
-                  defaultValue={isRead || isUpdate ? formData && formData.launchTimeType : ''}
+                  defaultValue={isRead || isUpdate ? formData && formData.launchLenTime : ''}
                   onChange={e => {
-                    setFormData({launchTimeType: e.target.value});
+                    setFormData({launchLenTime: e.target.value});
                   }}
                 >
                   <option value='10'>10秒</option>
