@@ -5,7 +5,7 @@ import IceContainer from '@icedesign/container';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { addPlanModalToggle, newPlanDropDownToggle, getAdPlans, queryAllModelTypes, deletePlanModalToggle, addPlan, deletePlan, setFormData } from './actions';
+import { addPlanModalToggle, newPlanDropDownToggle, getAdPlans, queryAllModelTypes, deletePlanModalToggle, addPlan, deletePlan, updatePlan, setFormData } from './actions';
 import reducer from './reducer';
 import PlanTable from './components/Table';
 import AddPlan from './components/AddModal';
@@ -24,7 +24,7 @@ class AdPlan extends Component {
   }
 
   render() {
-    const { adPlan, addPlanModalToggle, newPlanDropDownToggle, deletePlanModalToggle, addPlan, deletePlan, setFormData } = this.props;
+    const { adPlan, addPlanModalToggle, newPlanDropDownToggle, deletePlanModalToggle, addPlan, deletePlan, updatePlan, setFormData } = this.props;
     const modelTypes = adPlan.modelTypes || [];
     return (
       <div className="app">
@@ -32,6 +32,7 @@ class AdPlan extends Component {
           toggle={() => addPlanModalToggle({})}
           shouldOpen={adPlan && adPlan.shouldAddPlanModalOpen}
           addPlan={addPlan}
+          updatePlan={updatePlan}
           setFormData={setFormData}
           formData={adPlan && adPlan.formData}
           materialTypes={adPlan && adPlan.materialTypes}
@@ -89,6 +90,7 @@ const mapDispatchToProps = {
   deletePlanModalToggle,
   deletePlan,
   addPlan,
+  updatePlan,
   setFormData,
 };
 
