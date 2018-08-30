@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { InputGroup, InputGroupAddon, InputGroupText, Input } from 'reactstrap';
-import { Button } from '@icedesign/base';
+import { Button, Pagination } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -90,6 +90,15 @@ class IAModel extends Component {
           deleteModelModalToggle={deleteModelModalToggle}
           addModelToggle={addModelToggle}
         />
+        {
+          iaModel && !iaModel.isLoading ? (
+            <Pagination 
+              total={iaModel.total}
+              current={currentPage || 1}
+              pageSize={iaModel.pageSize || 20}
+            />
+          ) : null
+        }
       </div>   
     ) 
   }  

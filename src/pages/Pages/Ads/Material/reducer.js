@@ -79,6 +79,7 @@ function adMaterialReducer(state = initialState, action) {
       });
     case GET_AD_METERIALS_SUCCESS:
       return Object.assign({}, state, {
+        total: action.payload.totalRecord || 0,
         materialResult: action.payload.creativeInfoList || [],
         isLoading: action.isLoading,  
       });

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
-import { Button } from '@icedesign/base';
+import { Pagination } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -67,6 +67,15 @@ class AdPlan extends Component {
           deletePlanModalToggle={deletePlanModalToggle}
           addPlanModalToggle={addPlanModalToggle}
         />
+        {
+          adPlan && !adPlan.isLoading ? (
+            <Pagination 
+              total={adPlan.total}
+              current={adPlan.currentPage || 1}
+              pageSize={adPlan.pageSize || 20}
+            />
+          ) : null
+        }
       </div>   
     ) 
   }  

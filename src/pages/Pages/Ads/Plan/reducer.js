@@ -67,6 +67,7 @@ function adPlanReducer(state = initialState, action) {
       });
     case GET_AD_PLANS_SUCCESS:
       return Object.assign({}, state, {
+        total: action.payload.totalRecord || 0,
         planResult: action.payload.launchPlanList || [],
         isLoading: action.isLoading,  
       });

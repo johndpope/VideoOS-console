@@ -40,7 +40,8 @@ import {
   
 // The initial state of the model
 const initialState = {
-  formData: {}
+  formData: {},
+  pageSize: 20,
 };
 
 function iaModelReducer(state = initialState, action) {
@@ -52,6 +53,7 @@ function iaModelReducer(state = initialState, action) {
     case GET_IAMODEL_SUCCESS:
       return Object.assign({}, state, {
         isLoading: action.isLoading,
+        total: action.payload.totalRecord || 0,
         modelResult: action.payload.templateInfoList || [],
       });
     case GET_IAMODEL_FAILURE:
