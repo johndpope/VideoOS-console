@@ -186,8 +186,7 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
         <Button onClick={toggle}>取消</Button>
         <Button type="primary" onClick={() => {
           if (isUpdate) {
-            updatePlan({
-            });
+            updatePlan(formData);
           } else if(isRead) {
             toggle && toggle();
           } else {
