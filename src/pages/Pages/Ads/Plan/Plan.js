@@ -35,11 +35,13 @@ class AdPlan extends Component {
           setFormData={setFormData}
           formData={adPlan && adPlan.formData}
           materialTypes={adPlan && adPlan.materialTypes}
+          record={adPlan && adPlan.record}
         />
         <DeletePlan 
           toggle={deletePlanModalToggle}
           shouldOpen={adPlan && adPlan.shouldDeletePlanModalOpen}
           deletePlan={deletePlan}
+          record={adPlan && adPlan.record}
         />
         <IceContainer style={{overflow: 'visible'}}>
           <Dropdown isOpen={adPlan && adPlan.shouldNewPlanDropDownOpen}

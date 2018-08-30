@@ -8,10 +8,10 @@ const DeletePlan = ({shouldOpen, toggle, deletePlan, record}) => (
       isOpen={shouldOpen}  
       toggle={toggle}
     >
-      <ModalHeader toggle={toggle}>关闭投放计划</ModalHeader>
+      <ModalHeader toggle={toggle}>下线投放计划</ModalHeader>
       <ModalBody>
         <p>
-          确定关闭投放计划
+          确定下线投放计划
         </p>  
       </ModalBody>
       <ModalFooter>

@@ -46,6 +46,9 @@ import {
   GET_AD_METERIALS_REQUEST,
   GET_AD_METERIALS_SUCCESS,
   GET_AD_METERIALS_FAILURE,
+  GET_PLAN_INFO_REQUEST,
+  GET_PLAN_INFO_SUCCESS,
+  GET_PLAN_INFO_FAILURE,
 } from './constants';
 
 let newPlanDropDownSwitch = false;
@@ -125,10 +128,11 @@ const getAdPlansRequest = () => {
     };
   };
   
-  const getAdPlanByIdSuccess = () => {
+  const getAdPlanByIdSuccess = (payload) => {
     return {
       type: GET_AD_PLAN_BYID_SUCCESS,
       isLoading: false,
+      payload,
     };
   };
     
@@ -283,7 +287,7 @@ export const addPlan = (params) => {
       if (response.status === 200 && response.data.resCode === '00') {
 
         dispatch(addPlanSuccess(response.data));
-        // dispatch(hideAddModelModal());
+        dispatch(addPlanModalToggle());
         dispatch(getAdPlans());
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {
@@ -307,7 +311,7 @@ export const updatePlan = (params) => {
       if (response.status === 200 && response.data.resCode === '00') {
 
         dispatch(updatePlanSuccess(response.data));
-        // dispatch(hideAddModelModal());
+        dispatch(addPlanModalToggle());
         dispatch(getAdPlans());
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {
@@ -331,7 +335,7 @@ export const deletePlan = (params) => {
       if (response.status === 200 && response.data.resCode === '00') {
 
         dispatch(deletePlanSuccess(response.data));
-        // dispatch(hideAddModelModal());
+        dispatch(deletePlanModalToggle());
         dispatch(getAdPlans());
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {
@@ -350,6 +354,9 @@ export const addPlanModalToggle = (payload) => {
   return (dispatch) => {
     addPlanSwitch = !addPlanSwitch;
     if (addPlanSwitch) {
+      if (payload && payload.opType) {
+        dispatch(getAdPlanInfo({launchPlan: payload && payload.launchPlanId}));
+      }
       dispatch(getAdMaterials());
       dispatch(setFormData(payload));
       dispatch(showAddPlan(payload));
@@ -360,11 +367,11 @@ export const addPlanModalToggle = (payload) => {
   };
 };  
 
-export const deletePlanModalToggle = () => {
+export const deletePlanModalToggle = (payload) => {
   return (dispatch) => {
     deletePlanSwitch = !deletePlanSwitch;
     if (deletePlanSwitch) {
-      dispatch(showDeletePlan());
+      dispatch(showDeletePlan(payload));
     } else {
       dispatch(hideDeletePlan());
     }
@@ -430,6 +437,27 @@ export const getAdMaterials = (params = {
       return response.data;
     } catch (error) {
       dispatch(getAdMaterialsFailure(error));
+    }
+  };
+};
+
+export const getAdPlanInfo = (params) => {
+  return async (dispatch) => {
+    dispatch(getAdPlanByIdRequest());
+    try {
+      const response = await api.getAdPlanInfo(params);
+
+      if (response.status === 200 && response.data.resCode === '00') {
+
+        dispatch(getAdPlanByIdSuccess(response.data));
+      } else {
+        dispatch(getAdPlanByIdFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch (error) {
+      dispatch(getAdPlanByIdFailure(error));
     }
   };
 };

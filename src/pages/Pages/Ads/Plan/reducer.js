@@ -9,6 +9,7 @@
  * case YOUR_ACTION_CONSTANT:
  *   return state.set('yourStateVariable', true);
  */
+import moment from 'moment';
 import {
   SHOW_ADD_PLAN,
   HIDE_ADD_PLAN,
@@ -78,7 +79,12 @@ function adPlanReducer(state = initialState, action) {
         isLoading: action.isLoading,  
       });
     case GET_AD_PLAN_BYID_SUCCESS:
+      const _payload = action.payload;
+      _payload.launchDateStart = moment(_payload.launchDateStart);
+      _payload.launchDateEnd = moment(_payload.launchDateEnd);
+      _payload.launchTime = moment(`2014-01-01 ${_payload.launchTime}`);
       return Object.assign({}, state, {
+        formData: _payload,
         isLoading: action.isLoading,  
       });
     case GET_AD_PLAN_BYID_FAILURE:
