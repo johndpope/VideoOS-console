@@ -16,7 +16,7 @@ const DeleteType = ({shouldOpen, toggle, deleteType, record}) => (
       </ModalBody>
       <ModalFooter>
         <Button onClick={toggle}>取消</Button>
-        <Button type="primary" onClick={() => {deleteType(record)}}>确认</Button>
+        <Button type="primary" onClick={() => {deleteType({interactionTypeName: record && record.interactionTypeName})}}>确认</Button>
       </ModalFooter>
     </Modal>  
   </Fragment>
