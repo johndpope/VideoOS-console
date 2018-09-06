@@ -34,6 +34,7 @@ class IAType extends Component {
           record={iaType.record}
           setFormData={setFormData}
           formData={iaType && iaType.formData}
+          configInfo={iaType && iaType.configInfo}
         />
         <DeleteType 
           deleteType={deleteType} 

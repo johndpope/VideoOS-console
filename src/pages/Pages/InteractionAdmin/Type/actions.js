@@ -212,10 +212,7 @@ export const getIaTypes = (params = {
   };
 };
 
-export const getIaTypeById = (params = {
-  currentPage: 1,
-  pageSize: 20,
-}) => {
+export const getIaTypeById = (params) => {
   return async (dispatch) => {
     dispatch(getIaTypeByIdRequest());
     try {
@@ -238,6 +235,9 @@ export const addTypeToggle = (payload) => {
   return (dispatch) => {
     addTypeSwitch = !addTypeSwitch;
     if (addTypeSwitch) {
+      if (payload && payload.opType) {
+        dispatch(getIaTypeById({interactionId: payload.interactionTypeId}));
+      }
       dispatch(setFormData(payload));
       dispatch(showAddTypeModal(payload));
     } else {

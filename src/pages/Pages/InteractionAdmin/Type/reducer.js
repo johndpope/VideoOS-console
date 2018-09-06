@@ -61,7 +61,7 @@ import {
       case GET_IATYPE_BYID_SUCCESS:
         return Object.assign({}, state, {
           isLoading: action.isLoading,
-          record: action.payload,
+          configInfo: action.payload && action.payload.configInfo,
         });
       case GET_IATYPE_BYID_FAILURE:
         return Object.assign({}, state, {

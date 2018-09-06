@@ -4,7 +4,7 @@ import { Button } from '@icedesign/base';
 
 import styles from './styles';
 
-const AddType = ({shouldOpen, toggle, addType, updateType, record, setFormData, formData}) => {
+const AddType = ({shouldOpen, toggle, addType, updateType, record, setFormData, formData, configInfo}) => {
 
   let file = null;
   const { opType } = record || {};
@@ -54,11 +54,12 @@ const AddType = ({shouldOpen, toggle, addType, updateType, record, setFormData, 
                   配置信息
                 </InputGroupText>
               </InputGroupAddon>
-              <span>
+              <span style={{display: 'table-cell', flex: 1}}>
                 <Input 
                   disabled
+                  style={{minHeight: '240px'}}
                   type="textarea" 
-                  value={formData && formData.configInfo || ''}
+                  value={configInfo || ''}
                 />
               </span>
             </InputGroup>

@@ -100,7 +100,7 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
           </Input>
         </InputGroup>
         {
-          formData && formData.launchTimeType !== 'default' ? (
+          formData && formData.launchTimeType && formData.launchTimeType !== 'default' ? (
             <Fragment>
               <InputGroup className="mb-4">
                 <InputGroupAddon addonType="prepend">

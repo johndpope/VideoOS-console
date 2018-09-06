@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import Form from "react-jsonschema-form";
-import { Modal, ModalBody, ModalFooter, ModalHeader, Input } from 'reactstrap';
+import { Modal, ModalBody, ModalHeader } from 'reactstrap';
 import { Button } from '@icedesign/base';
 import uiSchema from 'schemas/uiSchema';
 
@@ -45,6 +45,8 @@ const AddMaterial = ({shouldOpen, toggle, creativeIdList, addMaterial, updateMat
                     interactionTemplateId: formData.interactionTemplateId,
                     creativeContent: JSON.stringify(formData),
                     creativeIdList,
+                    interactionTypeName: materialSchema && materialSchema.interactionTypeId && materialSchema.interactionTypeId.enumNames && materialSchema.interactionTypeId.enumNames[0],
+                    interactionTemplateName: materialSchema && materialSchema.interactionTemplateId && materialSchema.interactionTemplateId.enumNames && materialSchema.interactionTemplateId.enumNames[materialSchema.interactionTemplateId.enum.indexof(formData.interactionTemplateId)],
                   });
                 }
               }}
