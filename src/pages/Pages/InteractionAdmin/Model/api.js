@@ -95,3 +95,19 @@ export async function downloadModelTemplateFile(params) {
     data: params,
   })
 };
+
+export async function updateModelFile(params) {
+  let data = new FormData();
+  for (let key in params) {
+    data.append(key, params[key]);
+  }
+  return axios({
+    headers: {
+      token: getAuthority(),
+      contentType: 'multipart/form',
+    },
+    url: `${OS_API}/interactionTemplate/updateUpload`,
+    method: 'post',
+    data,
+  });
+};

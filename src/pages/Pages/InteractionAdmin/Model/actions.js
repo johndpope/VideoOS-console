@@ -51,6 +51,9 @@ import {
   DOWNLOAD_MODEL_TEMPLATE_FILE_REQUEST,
   DOWNLOAD_MODEL_TEMPLATE_FILE_FAILURE,
   DOWNLOAD_MODEL_TEMPLATE_FILE_SUCCESS,
+  UPDATE_MODEL_FILE_REQUEST,
+  UPDATE_MODEL_FILE_SUCCESS,
+  UPDATE_MODEL_FILE_FAILURE,
 } from './constants';
 
 let addModelSwitch = false;
@@ -277,6 +280,28 @@ const downloadModelTemplateFileFailure = () => {
   };
 };
 
+const updateModelFileRequest = () => {
+  return {
+    type: UPDATE_MODEL_FILE_REQUEST,
+    isLoading: true,
+  }
+};
+
+const updateModelFileSuccess = (payload) => {
+  return {
+    type: UPDATE_MODEL_FILE_SUCCESS,
+    isLoading: false,
+    payload,
+  }
+};
+
+const updateModelFileFailure = () => {
+  return {
+    type: UPDATE_MODEL_FILE_FAILURE,
+    isLoading: false,
+  }
+};
+
 export const getIaModels = (params = {
   currentPage: 1,
   pageSize: 20,
@@ -489,6 +514,28 @@ export const downloadModelTemplateFile = (params) => {
       return response.data;
     } catch (error) {
       dispatch(downloadModelTemplateFileFailure(error));
+    }
+  };
+};
+
+export const updateModelFile = (params) => {
+  return async (dispatch) => {
+    dispatch(updateModelFileRequest());
+    try {
+      const response = await api.updateModelFile(params);
+
+      if (response.status === 200 && response.data.resCode === '00') {
+
+        dispatch(updateModelFileSuccess(response.data));
+        Feedback.toast.show(response.data && response.data.resMsg);
+      } else {
+        dispatch(updateModelFileFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch(error) {
+      dispatch(updateModelFileFailure(error));
     }
   };
 };

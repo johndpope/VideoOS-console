@@ -36,6 +36,9 @@ import {
     GET_MODEL_INFO_BYID_REQUEST,
     GET_MODEL_INFO_BYID_SUCCESS,
     GET_MODEL_INFO_BYID_FAILURE,
+    UPDATE_MODEL_FILE_REQUEST,
+    UPDATE_MODEL_FILE_SUCCESS,
+    UPDATE_MODEL_FILE_FAILURE,
   } from './constants';
   
 // The initial state of the model
@@ -155,6 +158,22 @@ function iaModelReducer(state = initialState, action) {
       return Object.assign({}, state, {
         isLoading: action.isLoading,
       });
+    case UPDATE_MODEL_FILE_REQUEST:
+      return {
+        ...state,
+        isLoading: action.isLoading,
+      };
+    case UPDATE_MODEL_FILE_SUCCESS:
+      return {
+        ...state,
+        isLoading: action.isLoading,
+        uploadModelFileInfo: action.payload,
+      };
+    case UPDATE_MODEL_FILE_FAILURE:
+      return {
+        ...state,
+        isLoading: action.isLoading,
+      };
     default:
       return state;
   }

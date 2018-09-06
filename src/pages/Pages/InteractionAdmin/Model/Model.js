@@ -5,7 +5,7 @@ import IceContainer from '@icedesign/container';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { getIaModels, addModelToggle, addModel, uploadModelFile, queryAllModelTypes, deleteModel, deleteModelModalToggle, updateModel, setFormData, downloadModelTemplateFile } from './actions';
+import { getIaModels, addModelToggle, addModel, uploadModelFile, queryAllModelTypes, deleteModel, deleteModelModalToggle, updateModel, setFormData, downloadModelTemplateFile, updateModelFile } from './actions';
 import reducer from './reducer';
 import ModalTable from './components/Table';
 import AddModel from './components/AddModel';
@@ -30,7 +30,7 @@ class IAModel extends Component {
 
   render() {
     const { currentPage } = this.state;
-    const { getIaModels, iaModel, addModelToggle, addModel, updateModel, uploadModelFile, deleteModel, deleteModelModalToggle, location, setFormData, downloadModelTemplateFile } = this.props;
+    const { getIaModels, iaModel, addModelToggle, addModel, updateModel, uploadModelFile, deleteModel, deleteModelModalToggle, location, setFormData, downloadModelTemplateFile, updateModelFile } = this.props;
     const modelTypes = iaModel.modelTypes || [];
     const lType = location && location.state && location.state.type;
     return (
@@ -47,6 +47,7 @@ class IAModel extends Component {
           setFormData={setFormData}
           formData={iaModel && iaModel.formData}
           downloadModelTemplateFile={downloadModelTemplateFile}
+          updateModelFile={updateModelFile}
         />
         <DeleteModel
           deleteModel={deleteModel} 
@@ -117,6 +118,7 @@ const mapDispatchToProps = {
   updateModel,
   setFormData,
   downloadModelTemplateFile,
+  updateModelFile,
 };
 
 const mapStateToProps = (state) => {

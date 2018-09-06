@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Form, InputGroup, InputGroupAddon, InputGroupText, Input, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { Button } from '@icedesign/base';
 
-const AddModel = ({shouldOpen, toggle, addModel, updateModel, uploadModelFile, uploadModelFileInfo, modelTypes, record, setFormData, formData, downloadModelTemplateFile}) => {
+const AddModel = ({shouldOpen, toggle, addModel, updateModel, uploadModelFile, uploadModelFileInfo, modelTypes, record, setFormData, formData, downloadModelTemplateFile, updateModelFile}) => {
 
   const { opType } = record || {};
   const isRead = opType === 'read';
@@ -63,7 +63,7 @@ const AddModel = ({shouldOpen, toggle, addModel, updateModel, uploadModelFile, u
               </InputGroupAddon>
               <span>
                 <Button onClick={() => {
-                  downloadModelTemplateFile({templateId: record.templateId})
+                  downloadModelTemplateFile({templateId: record && record.templateId})
                 }}>点击下载</Button>
               </span>
             </InputGroup>
@@ -77,7 +77,11 @@ const AddModel = ({shouldOpen, toggle, addModel, updateModel, uploadModelFile, u
               <span>
                 <Input type="file" onChange={e => {
                   const { files } = e.target;
-                  uploadModelFile({file: files && files[0]});
+                  if (isUpdate) {
+                    updateModelFile({templateId: record && record.templateId, file: files && files[0]});
+                  } else {
+                    uploadModelFile({file: files && files[0]});
+                  }
                 }}/>
               </span>
             </InputGroup>
@@ -91,7 +95,7 @@ const AddModel = ({shouldOpen, toggle, addModel, updateModel, uploadModelFile, u
         <Button type="primary" onClick={() => {
           if (isUpdate) {
             updateModel({
-              interactionTemplateId: record && record.interactionTemplateId,
+              interactionTemplateId: record && record.templateId,
               ...formData,
               ...uploadModelFileInfo,
             });
