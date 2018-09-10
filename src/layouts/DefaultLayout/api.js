@@ -1,4 +1,5 @@
 import axios from 'axios';
+import qs from 'querystring';
 
 import config from 'config';
 import { getAuthority } from 'utils/authority';
@@ -22,4 +23,12 @@ export async function resetPassword(params) {
     method: 'post',
     data: params,  
   });
+};
+
+export async function isTokenValid(params) {
+  return axios({
+    url: `${OS_API}/token/isTokenValid?${qs.stringify(params)}`,
+    method: 'post',
+    data: params,  
+  })  
 };

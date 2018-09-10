@@ -31,6 +31,7 @@ const history = createHashHistory();
 const store = configureStore(initialState, history);
 
 class App extends Component {
+
   render() {
     return (
       <Provider store={store}>

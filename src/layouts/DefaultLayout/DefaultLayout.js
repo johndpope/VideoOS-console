@@ -19,6 +19,7 @@ import menuConfig from '../../menuConfig';
 import routerConfig from '../../routerConfig';
 // import DefaultFooter from './DefaultFooter';
 import DefaultHeader from './DefaultHeader';
+import Welcome from './Welcome';
 
 const history = createHashHistory();
 
@@ -28,6 +29,7 @@ class DefaultLayout extends Component {
     if (!Boolean(isAuthorized)) {
       history.push('/login');
     }
+    const { pathname } = this.props.location;
     return (
       <div className="app">
         <AppHeader fixed>
@@ -41,7 +43,11 @@ class DefaultLayout extends Component {
             <AppSidebarFooter />
             <AppSidebarMinimizer />
           </AppSidebar>
-          <main className="main">
+          <main className="main"> 
+            {
+              pathname === '/home' ? <Welcome /> : null
+            }
+            
             <AppBreadcrumb appRoutes={routerConfig} />
             <Container fluid>
               <Switch>
@@ -56,7 +62,7 @@ class DefaultLayout extends Component {
                     />
                   ) : null;
                 })}
-                <Redirect from="/" to="/hd/type" />
+                <Redirect from="/" to="/home" />
               </Switch>
             </Container>
           </main>

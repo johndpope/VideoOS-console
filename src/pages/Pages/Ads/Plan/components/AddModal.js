@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { Form, InputGroup, InputGroupAddon, InputGroupText, Input, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import { Button } from '@icedesign/base';
+import { Button, Icon } from '@icedesign/base';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -9,6 +9,8 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
   const { opType } = record || {};
   const isRead = opType === 'read';
   const isUpdate = opType === 'update';
+  let launchTimes = formData && formData.launchTime && formData.launchTime.split(',') || [];
+
   return (
   <Fragment>
     <Modal
@@ -100,7 +102,7 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
           </Input>
         </InputGroup>
         {
-          formData && formData.launchTimeType && formData.launchTimeType !== 'default' ? (
+          formData && formData.launchTimeType && formData.launchTimeType === '2' ? (
             <Fragment>
               <InputGroup className="mb-4">
                 <InputGroupAddon addonType="prepend">
@@ -153,11 +155,24 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
                   timeCaption="Time"
                   isClearable={true}
                   onChange={e => {
-                    setFormData({launchTime: e});
+                    setFormData({launchTime: e.toString()});
                   }}
                   placeholderText='请添加投放时间'
                 />
+                <Button>
+                  <Icon type="add"></Icon>
+                </Button>
               </InputGroup>
+              {
+                launchTimes && launchTimes.length > 0 && launchTimes.map((lt, idx) =>(
+                  <div key={idx}>
+                    <span>{lt}</span>
+                    <Button>
+                      <Icon type="delete"></Icon>
+                    </Button>
+                  </div>
+                ))
+              }
               <InputGroup className="mb-4">
                 <InputGroupAddon addonType="prepend">
                   <InputGroupText>

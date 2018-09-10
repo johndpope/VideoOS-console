@@ -27,7 +27,7 @@ export default class ModalTable extends Component {
           isLoading={isLoading}
         >
           <Table.Column title="序号" width={120} 
-            cell={(value, index, record) => (<span>{index}</span>)}
+            cell={(value, index, record) => (<span>{index +1}</span>)}
           />  
           <Table.Column title="创建日期" dataIndex="createDate" width={120} />
           <Table.Column title="模板类型" dataIndex="interactionTypeName" width={120} />

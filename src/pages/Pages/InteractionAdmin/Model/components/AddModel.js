@@ -47,7 +47,7 @@ const AddModel = ({shouldOpen, toggle, addModel, updateModel, uploadModelFile, u
           </InputGroupAddon>
           <Input type="text" placeholder="请输入模版名称" 
             disabled={isRead ? 'disabled' : false}
-            defaultValue={isRead || isUpdate ? formData && formData.interactionTypeName : ''}
+            defaultValue={isRead || isUpdate ? formData && formData.templateName : ''}
             onChange={e => {
               setFormData({interactionTemplateName: e.target.value});
             }}
