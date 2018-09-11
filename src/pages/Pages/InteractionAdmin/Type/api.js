@@ -56,6 +56,7 @@ export async function updateType(params) {
   return axios({
     headers: {
       token: getAuthority(),
+      contentType: 'multipart/form-data',
     },
     url: `${OS_API}/interactionType/modify`,
     method: 'post',
