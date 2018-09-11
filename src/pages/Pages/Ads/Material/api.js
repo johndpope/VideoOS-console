@@ -89,7 +89,7 @@ export async function addMaterialFile(params) {
   return axios({
     headers: {
       token: getAuthority(),
-      contentType: 'multipart/form',
+      'Content-Type': 'multipart/form',
     },
     url: `${OS_API}/creative/addUpload`,
     method: 'post',

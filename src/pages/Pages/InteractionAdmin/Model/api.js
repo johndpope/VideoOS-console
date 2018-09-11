@@ -57,7 +57,7 @@ export async function uploadModelFile(params) {
   return axios({
     headers: {
       token: getAuthority(),
-      contentType: 'multipart/form',
+      'Content-Type': 'multipart/form',
     },
     url: `${OS_API}/interactionTemplate/addUpload`,
     method: 'post',
@@ -104,7 +104,7 @@ export async function updateModelFile(params) {
   return axios({
     headers: {
       token: getAuthority(),
-      contentType: 'multipart/form',
+      'Content-Type': 'multipart/form',
     },
     url: `${OS_API}/interactionTemplate/updateUpload`,
     method: 'post',
