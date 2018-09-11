@@ -40,6 +40,7 @@ import {
     UPDATE_MODEL_FILE_SUCCESS,
     UPDATE_MODEL_FILE_FAILURE,
     SET_CURRENT_PAGE,
+    SET_FILE_IPT_STATE,
   } from './constants';
   
 // The initial state of the model
@@ -177,6 +178,8 @@ function iaModelReducer(state = initialState, action) {
       };
     case SET_CURRENT_PAGE:
       return {...state, currentPage: action.payload.currentPage};
+    case SET_FILE_IPT_STATE:
+      return {...state, showFileIpt: action.payload.showFileIpt};
     default:
       return state;
   }

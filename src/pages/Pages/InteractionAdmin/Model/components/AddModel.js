@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Form, InputGroup, InputGroupAddon, InputGroupText, Input, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { Button } from '@icedesign/base';
 
-const AddModel = ({shouldOpen, toggle, addModel, updateModel, uploadModelFile, uploadModelFileInfo, modelTypes, record, setFormData, formData, downloadModelTemplateFile, updateModelFile}) => {
+const AddModel = ({shouldOpen, toggle, addModel, updateModel, uploadModelFile, uploadModelFileInfo, modelTypes, record, setFormData, formData, downloadModelTemplateFile, updateModelFile, setFileIptState, modelInfo, showFileIpt}) => {
 
   const { opType } = record || {};
   const isRead = opType === 'read';
@@ -75,15 +75,27 @@ const AddModel = ({shouldOpen, toggle, addModel, updateModel, uploadModelFile, u
                 </InputGroupText>
               </InputGroupAddon>
               <span>
-                <Input type="file" onChange={e => {
-                  const { files } = e.target;
-                  setFormData({templateFileSourceName: files && files[0].name});
-                  if (isUpdate) {
-                    updateModelFile({templateId: record && record.templateId, file: files && files[0]});
-                  } else {
-                    uploadModelFile({file: files && files[0]});
-                  }
-                }}/>
+                {
+                  !(formData && formData.compressFileName || showFileIpt) && (modelInfo && modelInfo.templateFileSourceName) ? (
+                    <Button
+                      onClick={() => {
+                        setFileIptState({showFileIpt: true});
+                      }}
+                    >
+                      <span>{modelInfo.templateFileSourceName}</span>
+                      <span>{`    x`}</span>
+                    </Button>
+                  ) : <Input type="file" onChange={e => {
+                    const { files } = e.target;
+                    setFormData({templateFileSourceName: files && files[0].name});
+                    if (isUpdate) {
+                      updateModelFile({templateId: record && record.templateId, file: files && files[0]});
+                    } else {
+                      uploadModelFile({file: files && files[0]});
+                    }
+                  }}/>
+                }
+                
               </span>
             </InputGroup>
           )

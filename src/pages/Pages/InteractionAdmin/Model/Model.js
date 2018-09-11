@@ -5,7 +5,7 @@ import IceContainer from '@icedesign/container';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { getIaModels, addModelToggle, addModel, uploadModelFile, queryAllModelTypes, deleteModel, deleteModelModalToggle, updateModel, setFormData, downloadModelTemplateFile, updateModelFile, setCurrentPage } from './actions';
+import { getIaModels, addModelToggle, addModel, uploadModelFile, queryAllModelTypes, deleteModel, deleteModelModalToggle, updateModel, setFormData, downloadModelTemplateFile, updateModelFile, setCurrentPage, setFileIptState } from './actions';
 import reducer from './reducer';
 import ModalTable from './components/Table';
 import AddModel from './components/AddModel';
@@ -32,7 +32,7 @@ class IAModel extends Component {
   }
 
   render() {
-    const { getIaModels, iaModel, addModelToggle, addModel, updateModel, uploadModelFile, deleteModel, deleteModelModalToggle, location, setFormData, downloadModelTemplateFile, updateModelFile, setCurrentPage } = this.props;
+    const { getIaModels, iaModel, addModelToggle, addModel, updateModel, uploadModelFile, deleteModel, deleteModelModalToggle, location, setFormData, downloadModelTemplateFile, updateModelFile, setCurrentPage, setFileIptState } = this.props;
     const modelTypes = iaModel.modelTypes || [];
     const lType = location && location.state && location.state.type;
     return (
@@ -48,8 +48,11 @@ class IAModel extends Component {
           record={iaModel && iaModel.record}
           setFormData={setFormData}
           formData={iaModel && iaModel.formData}
+          modelInfo={iaModel && iaModel.modelInfo}
+          showFileIpt={iaModel && iaModel.showFileIpt}
           downloadModelTemplateFile={downloadModelTemplateFile}
           updateModelFile={updateModelFile}
+          setFileIptState={setFileIptState}
         />
         <DeleteModel
           deleteModel={deleteModel} 
@@ -135,6 +138,7 @@ const mapDispatchToProps = {
   downloadModelTemplateFile,
   updateModelFile,
   setCurrentPage,
+  setFileIptState,
 };
 
 const mapStateToProps = (state) => {

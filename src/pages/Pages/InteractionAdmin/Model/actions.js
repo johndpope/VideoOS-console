@@ -55,6 +55,7 @@ import {
   UPDATE_MODEL_FILE_SUCCESS,
   UPDATE_MODEL_FILE_FAILURE,
   SET_CURRENT_PAGE,
+  SET_FILE_IPT_STATE,
 } from './constants';
 
 let addModelSwitch = false;
@@ -539,6 +540,13 @@ export const updateModelFile = (params) => {
       dispatch(updateModelFileFailure(error));
     }
   };
+};
+
+export const setFileIptState = (payload) => {
+  return {
+    type: SET_FILE_IPT_STATE,
+    payload,
+  }
 };
 
 export const setCurrentPage = (payload) => {
