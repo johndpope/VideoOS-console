@@ -2,12 +2,12 @@ import React, { Fragment } from 'react';
 import { Form, FormGroup, InputGroup, InputGroupAddon, InputGroupText, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Col } from 'reactstrap';
 import { Button } from '@icedesign/base';
 
-const AddRole = ({shouldOpen, toggle, addRole, updateRole, roleAuthorities, record}) => {
-  let launchPlanName = null;
-  let _roleAuthorities = Object.assign({}, roleAuthorities);
+const AddRole = ({shouldOpen, toggle, addRole, updateRole, roleAuthorities, record, formData, setFormData}) => {
+  let launchPlanName = formData && formData.launchPlanName || null;
   const { opType } = record || {};
   const isRead = opType === 'read';
   const isUpdate = opType === 'update';
+  let _roleAuthorities = formData && formData._roleAuthorities || {};
   return (
   <Fragment>
     <Modal
@@ -30,7 +30,7 @@ const AddRole = ({shouldOpen, toggle, addRole, updateRole, roleAuthorities, reco
             disabled={isRead ? 'disabled' : false}
             defaultValue={isRead || isUpdate ? record && record.roleName : ''}
             onChange={e => {
-              launchPlanName = e.target.value;
+              setFormData({launchPlanName: e.target.value});
             }}
           />
         </InputGroup>
@@ -42,7 +42,7 @@ const AddRole = ({shouldOpen, toggle, addRole, updateRole, roleAuthorities, reco
           </InputGroupAddon>
         </InputGroup>
         {
-          _roleAuthorities && Object.keys(_roleAuthorities).map((key, idx) => (
+          roleAuthorities && Object.keys(roleAuthorities).map((key, idx) => (
             <FormGroup key={idx} row>
               <Col>{key}</Col>
               <Col>
@@ -54,7 +54,11 @@ const AddRole = ({shouldOpen, toggle, addRole, updateRole, roleAuthorities, reco
                     id={`ckb_${idx}_read`}
                     disabled={isRead ? 'disabled' : false}
                     onChange={e => {
-                      _roleAuthorities[key].read = Boolean(e.target.value);
+                      _roleAuthorities[key] = {
+                        read: true,
+                        write: false,
+                      };
+                      setFormData({_roleAuthorities});
                     }}
                   />
               </Col>
@@ -67,7 +71,11 @@ const AddRole = ({shouldOpen, toggle, addRole, updateRole, roleAuthorities, reco
                     id={`ckb_${idx}_write`}
                     disabled={isRead ? 'disabled' : false}
                     onChange={e => {
-                      _roleAuthorities[key].write = Boolean(e.target.value);
+                      _roleAuthorities[key] = {
+                        read: false,
+                        write: true,
+                      };
+                      setFormData({_roleAuthorities});
                     }}
                   />
               </Col>        
@@ -89,10 +97,15 @@ const AddRole = ({shouldOpen, toggle, addRole, updateRole, roleAuthorities, reco
           } else if (isRead) {
             toggle && toggle();
           } else {
+
             addRole({
               launchPlanName,
-              nodeIdList: Object.keys(_roleAuthorities).filter(key => {
-                return _roleAuthorities[key].read || _roleAuthorities[key].write
+              nodeIdList: Object.keys(_roleAuthorities).map(key => {
+                if (_roleAuthorities[key].read) {
+                  return roleAuthorities[key].read;
+                } else if (_roleAuthorities[key].write) {
+                  return roleAuthorities[key].write;
+                }
               }),
             });
           }

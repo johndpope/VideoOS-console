@@ -37,6 +37,7 @@ import {
   SHOW_DELETEROLE_MODAL,
   HIDE_DELETEROLE_MODAL,
   SET_CURRENT_PAGE,
+  SET_FORM_DATA,
 } from './constants';
 
 let addRoleModalSwitch = false;
@@ -321,6 +322,13 @@ export const queryAllRoleTypes = (params) => {
 export const setCurrentPage = (payload) => {
   return {
     type: SET_CURRENT_PAGE,
+    payload,
+  }
+};
+
+export const setFormData = (payload) => {
+  return {
+    type: SET_FORM_DATA,
     payload,
   }
 };

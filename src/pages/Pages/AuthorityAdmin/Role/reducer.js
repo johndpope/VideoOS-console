@@ -31,38 +31,40 @@ import {
     DELETE_ROLE_SUCCESS,
     DELETE_ROLE_FAILURE,
     SET_CURRENT_PAGE,
+    SET_FORM_DATA,
   } from './constants';
   
   // The initial state of the account
   const initialState = {
+    formData: {},
     roleAuthorities: {
         '类型管理': {
-          read: false,
-          write: false,
+          read: 13,
+          write: 11,
         },
         '模板管理': {
-          read: false,
-          write: false,
+          read: 14,
+          write: 12,
         },
         '投放计划管理': {
-          read: false,
-          write: false,
+          read: 24,
+          write: 21,
         },
         '投放素材管理': {
-          read: false,
-          write: false,
+          read: 25,
+          write: 22,
         },
         '投放审核管理': {
-          read: false,
-          write: false,
+          read: 26,
+          write: 23,
         },
         'license管理': {
-          read: false,
-          write: false,
+          read: 32,
+          write: 31,
         },
         '数据信息管理': {
-          read: false,
-          write: false,
+          read: 42,
+          write: 41,
         }
       },
   };
@@ -146,6 +148,18 @@ import {
         });
       case SET_CURRENT_PAGE:
         return {...state, currentPage: action.payload.currentPage};
+      case SET_FORM_DATA:
+        const payload = action.payload;
+        if (typeof payload === 'object') {
+          if (Object.keys(payload).length === 0) {
+            state.formData = payload;
+          } else {
+            Object.keys(payload).forEach(key => {
+              state.formData[key] = payload[key];
+            });
+          }
+        }
+        return Object.assign({}, state);  
       default:
         return state;    
     }  

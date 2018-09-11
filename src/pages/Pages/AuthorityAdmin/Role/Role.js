@@ -4,7 +4,7 @@ import IceContainer from '@icedesign/container';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { getRoles, addRoleModalToggle, addRole, queryAllRoleTypes, deleteRoleModalToggle, deleteRole, updateRole, setCurrentPage } from './actions';
+import { getRoles, addRoleModalToggle, addRole, queryAllRoleTypes, deleteRoleModalToggle, deleteRole, updateRole, setCurrentPage, setFormData } from './actions';
 import reducer from './reducer';
 import RoleTable from './components/Table';
 import AddRole from './components/AddRole';
@@ -19,7 +19,7 @@ class AARole extends Component {
   }
   
   render() {
-    const { aaRole, addRoleModalToggle, addRole, deleteRoleModalToggle, deleteRole, updateRole, getRoles, setCurrentPage } = this.props;
+    const { aaRole, addRoleModalToggle, addRole, deleteRoleModalToggle, deleteRole, updateRole, getRoles, setCurrentPage, setFormData } = this.props;
     return (
       <div className="app">
         <AddRole 
@@ -27,8 +27,10 @@ class AARole extends Component {
           toggle={addRoleModalToggle}
           addRole={addRole}
           updateRole={updateRole}
-          roleAuthorities={aaRole.roleAuthorities || []}
+          roleAuthorities={aaRole && aaRole.roleAuthorities || []}
+          formData= {aaRole && aaRole.formData}
           record={aaRole.record}
+          setFormData={setFormData}
         />
         <DeleteRole 
           deleteRole={deleteRole} 
@@ -79,6 +81,7 @@ const mapDispatchToProps = {
   deleteRole,
   updateRole,
   setCurrentPage,
+  setFormData,
 };
   
 const mapStateToProps = (state) => {

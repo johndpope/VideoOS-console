@@ -47,6 +47,7 @@ const AddAccount = ({shouldOpen, toggle, addAccount, updateAccount, resMsg, role
               roleId = e.target.value;
             }}
           > 
+            <option value='default'>请选择</option>
             {
               roleTypes && Array.isArray(roleTypes) && roleTypes.length > 0 && roleTypes.map((rt, idx) => (
                 <option key={idx} value={rt.roleId}>{rt.roleName}</option>
