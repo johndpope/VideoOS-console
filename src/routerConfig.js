@@ -7,6 +7,7 @@ import AAAccount from 'Pages/AuthorityAdmin/Account';
 import AARole from 'Pages/AuthorityAdmin/Role';
 import AdMaterial from 'Pages/Ads/Material';
 import AdPlan from 'Pages/Ads/Plan';
+import License from 'Pages/License';
 
 const routerConfig = [
   {
@@ -48,6 +49,10 @@ const routerConfig = [
     path: '/tf/material',
     name: '投放素材管理',
     component: AdMaterial,
+  }, {
+    path: '/zs',
+    name: 'license申请',
+    component: License,
   }
 ];
 

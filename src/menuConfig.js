@@ -31,6 +31,11 @@ const defaultMenuConfig = {
         },
       ]
     }, {
+      name: 'license申请',
+      path: 'zs',
+      icon: 'icon-book',
+      external: true,
+    }, {
       name: '权限管理',
       path: 'qx',
       icon: 'icon-user',
