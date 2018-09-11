@@ -339,6 +339,7 @@ export const addModelToggle = (record) => {
       dispatch(setFormData(record));
       dispatch(showAddModelModal(record));
     } else {
+      dispatch(setFileIptState({showFileIpt: false}));
       dispatch(setFormData({}));
       dispatch(hideAddModelModal());
     }
