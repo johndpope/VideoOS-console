@@ -5,7 +5,7 @@ import IceContainer from '@icedesign/container';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { getAdMaterials, addMaterialToggle, addMaterial, deleteMaterial, newMaterialDropDownToggle, deleteMaterialModalToggle, queryAllModelTypes, addMaterialFile, saveFormData } from './actions';
+import { getAdMaterials, addMaterialToggle, addMaterial, deleteMaterial, newMaterialDropDownToggle, deleteMaterialModalToggle, queryAllModelTypes, addMaterialFile, saveFormData, setCurrentPage } from './actions';
 import reducer from './reducer';
 import MaterialTable from './components/Table';
 import AddMaterial from './components/AddModal';
@@ -25,7 +25,7 @@ class AdMaterial extends Component {
   }
 
   render() {
-    const { adMaterial, addMaterialToggle, addMaterial, deleteMaterial, newMaterialDropDownToggle, deleteMaterialModalToggle, addMaterialFile, saveFormData } = this.props;
+    const { adMaterial, addMaterialToggle, addMaterial, deleteMaterial, newMaterialDropDownToggle, deleteMaterialModalToggle, addMaterialFile, saveFormData, getAdMaterials, setCurrentPage } = this.props;
     const modelTypes = adMaterial.modelTypes || [];
     return (
       <div className="app">
@@ -77,6 +77,13 @@ class AdMaterial extends Component {
               total={adMaterial.total}
               current={adMaterial.currentPage || 1}
               pageSize={adMaterial.pageSize || 20}
+              onChange={(currentPage) => {
+                setCurrentPage({currentPage});
+                getAdMaterials({
+                  currentPage,
+                  pageSize: 20,
+                })
+              }}
             />
             </div>
           ) : null
@@ -96,6 +103,7 @@ const mapDispatchToProps = {
   saveFormData,
   getAdMaterials,
   deleteMaterial,
+  setCurrentPage,
 };
 
 const mapStateToProps = (state) => {

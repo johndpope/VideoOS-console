@@ -5,7 +5,7 @@ import IceContainer from '@icedesign/container';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { getIaModels, addModelToggle, addModel, uploadModelFile, queryAllModelTypes, deleteModel, deleteModelModalToggle, updateModel, setFormData, downloadModelTemplateFile, updateModelFile } from './actions';
+import { getIaModels, addModelToggle, addModel, uploadModelFile, queryAllModelTypes, deleteModel, deleteModelModalToggle, updateModel, setFormData, downloadModelTemplateFile, updateModelFile, setCurrentPage } from './actions';
 import reducer from './reducer';
 import ModalTable from './components/Table';
 import AddModel from './components/AddModel';
@@ -18,12 +18,12 @@ class IAModel extends Component {
   }
   
   componentDidMount() {
-    const { getIaModels, queryAllModelTypes, location } = this.props;
-    const lType = location && location.state && location.state.type;
     const options = {
       currentPage: 1,
       pageSize: 20,
     };
+    const { getIaModels, queryAllModelTypes, location } = this.props;
+    const lType = location && location.state && location.state.type;
     if (lType) {
       options.interactionTypeId = lType;
     }
@@ -32,8 +32,7 @@ class IAModel extends Component {
   }
 
   render() {
-    const { currentPage } = this.state;
-    const { getIaModels, iaModel, addModelToggle, addModel, updateModel, uploadModelFile, deleteModel, deleteModelModalToggle, location, setFormData, downloadModelTemplateFile, updateModelFile } = this.props;
+    const { getIaModels, iaModel, addModelToggle, addModel, updateModel, uploadModelFile, deleteModel, deleteModelModalToggle, location, setFormData, downloadModelTemplateFile, updateModelFile, setCurrentPage } = this.props;
     const modelTypes = iaModel.modelTypes || [];
     const lType = location && location.state && location.state.type;
     return (
@@ -70,7 +69,7 @@ class IAModel extends Component {
               defaultValue={lType}
               onChange={e => {
                 const params = {
-                  currentPage,
+                  currentPage: iaModel.currentPage || 1,
                   pageSize: 20,
                 };
                 if (e.target.value !== '-1') {
@@ -99,8 +98,21 @@ class IAModel extends Component {
             <div style={{display: 'flex', flexDirection: 'row-reverse', padding: '10px 0'}}>
             <Pagination 
               total={iaModel.total}
-              current={currentPage || 1}
+              current={iaModel.currentPage || 1}
               pageSize={iaModel.pageSize || 20}
+              onChange={(currentPage) => {
+                const options = {
+                  currentPage,
+                  pageSize: 20,
+                };
+                const { location } = this.props;
+                const lType = location && location.state && location.state.type;
+                if (lType) {
+                  options.interactionTypeId = lType;
+                }
+                setCurrentPage({currentPage});
+                getIaModels(options);
+              }}
             />
             </div>
           ) : null
@@ -122,6 +134,7 @@ const mapDispatchToProps = {
   setFormData,
   downloadModelTemplateFile,
   updateModelFile,
+  setCurrentPage,
 };
 
 const mapStateToProps = (state) => {

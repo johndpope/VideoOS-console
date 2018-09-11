@@ -39,6 +39,8 @@ import {
   GET_IATYPE_BYID_SUCCESS,
   GET_IATYPE_BYID_FAILURE,
   SET_FORM_DATA,
+  SET_FILE_IPT_STATE,
+  SET_CURRENT_PAGE,
 } from './constants';
 
 /**
@@ -241,6 +243,7 @@ export const addTypeToggle = (payload) => {
       dispatch(setFormData(payload));
       dispatch(showAddTypeModal(payload));
     } else {
+      dispatch(setFileIptState({showFileIpt: false}));
       dispatch(setFormData({}));
       dispatch(hideAddTypeModal());
     }
@@ -324,6 +327,20 @@ export const updateType = (params) => {
 export const setFormData = (payload) => {
   return {
     type: SET_FORM_DATA,
+    payload,
+  }
+};
+
+export const setFileIptState = (payload) => {
+  return {
+    type: SET_FILE_IPT_STATE,
+    payload,
+  }
+};
+
+export const setCurrentPage = (payload) => {
+  return {
+    type: SET_CURRENT_PAGE,
     payload,
   }
 };

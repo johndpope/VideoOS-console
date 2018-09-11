@@ -36,6 +36,7 @@ import {
   QUERY_ALL_ROLETYPES_FAILURE,
   SHOW_DELETEROLE_MODAL,
   HIDE_DELETEROLE_MODAL,
+  SET_CURRENT_PAGE,
 } from './constants';
 
 let addRoleModalSwitch = false;
@@ -315,4 +316,11 @@ export const queryAllRoleTypes = (params) => {
       dispatch(queryAllRoleTypesFailure(error));
     }
   }  
+};
+
+export const setCurrentPage = (payload) => {
+  return {
+    type: SET_CURRENT_PAGE,
+    payload,
+  }
 };

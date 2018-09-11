@@ -4,17 +4,13 @@ import IceContainer from '@icedesign/container';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { getAccounts, addAccountModalToggle, addAccount, updateAccount, queryAllAccountTypes, deleteAccount, deleteAccountModalToggle } from './actions';
+import { getAccounts, addAccountModalToggle, addAccount, updateAccount, queryAllAccountTypes, deleteAccount, deleteAccountModalToggle, setCurrentPage } from './actions';
 import reducer from './reducer';
 import AccountTable from './components/Table';
 import AddAccount from './components/AddAccount';
 import DeleteAccount from './components/DeleteAccount';
 
 class AAAcount extends Component {
-
-  state = {
-    currentPage: 1,
-  }
 
   componentDidMount() {
     const { getAccounts, queryAllAccountTypes } = this.props;
@@ -23,8 +19,7 @@ class AAAcount extends Component {
   }
   
   render() {
-    const { aaAccount, addAccountModalToggle, addAccount, updateAccount, deleteAccount, deleteAccountModalToggle } = this.props;
-    const { currentPage } = this.state;
+    const { aaAccount, addAccountModalToggle, addAccount, updateAccount, deleteAccount, deleteAccountModalToggle, getAccounts, setCurrentPage } = this.props;
     return (
       <div className="app">
         <AddAccount 
@@ -57,8 +52,15 @@ class AAAcount extends Component {
               <div style={{display: 'flex', flexDirection: 'row-reverse', padding: '10px 0'}}>
               <Pagination 
                 total={aaAccount.total}
-                current={currentPage}
+                current={aaAccount.currentPage || 1}
                 pageSize={aaAccount.pageSize || 20}
+                onChange={(currentPage) => {
+                  setCurrentPage({currentPage});
+                  getAccounts({
+                    currentPage,
+                    pageSize: 20,
+                  })
+                }}
               />
               </div>
             ) : null
@@ -77,6 +79,7 @@ const mapDispatchToProps = {
   deleteAccount,
   deleteAccountModalToggle,
   updateAccount,
+  setCurrentPage,
 };
   
 const mapStateToProps = (state) => {

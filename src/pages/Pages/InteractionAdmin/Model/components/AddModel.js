@@ -77,6 +77,7 @@ const AddModel = ({shouldOpen, toggle, addModel, updateModel, uploadModelFile, u
               <span>
                 <Input type="file" onChange={e => {
                   const { files } = e.target;
+                  setFormData({templateFileSourceName: files && files[0].name});
                   if (isUpdate) {
                     updateModelFile({templateId: record && record.templateId, file: files && files[0]});
                   } else {

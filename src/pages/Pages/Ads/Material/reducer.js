@@ -44,6 +44,7 @@ import {
   GET_MATERIAL_INFO_REQUEST,
   GET_MATERIAL_INFO_SUCCESS,
   GET_MATERIAL_INFO_FAILURE,
+  SET_CURRENT_PAGE,
 } from './constants';
 
 // The initial state of the material
@@ -194,6 +195,8 @@ function adMaterialReducer(state = initialState, action) {
     case SAVE_FORM_DATA:
       state.formData = action.payload;
       return Object.assign({}, state);
+    case SET_CURRENT_PAGE:
+      return {...state, currentPage: action.payload.currentPage};
     default:
       return state;
   }

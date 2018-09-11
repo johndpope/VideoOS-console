@@ -4,7 +4,7 @@ import IceContainer from '@icedesign/container';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { getIaTypes, addTypeToggle, deleteTypeToggle, deleteType, addType, updateType, setFormData } from './actions';
+import { getIaTypes, addTypeToggle, deleteTypeToggle, deleteType, addType, updateType, setFormData, setFileIptState, setCurrentPage } from './actions';
 import reducer from './reducer';
 import TypeTable from './components/Table';
 import AddType from './components/AddType';
@@ -12,18 +12,13 @@ import DeleteType from './components/DeleteType';
 
 class IAType extends Component {
 
-  state = {
-    currentPage: 1,
-  }
-
   componentDidMount() {
     const { getIaTypes } = this.props
     getIaTypes()
   }
   
   render() {
-    const { iaType, addTypeToggle, deleteTypeToggle, deleteType, addType, updateType, setFormData } = this.props;
-    const { currentPage } = this.state;
+    const { iaType, addTypeToggle, deleteTypeToggle, deleteType, addType, updateType, setFormData, setFileIptState, getIaTypes, setCurrentPage } = this.props;
     return (
       <div className="app">
         <AddType 
@@ -33,8 +28,11 @@ class IAType extends Component {
           updateType={updateType}
           record={iaType.record}
           setFormData={setFormData}
+          setFileIptState={setFileIptState}
           formData={iaType && iaType.formData}
           configInfo={iaType && iaType.configInfo}
+          fileName={iaType && iaType.fileName}
+          showFileIpt={iaType && iaType.showFileIpt}
         />
         <DeleteType 
           deleteType={deleteType} 
@@ -57,8 +55,17 @@ class IAType extends Component {
               <div style={{display: 'flex', flexDirection: 'row-reverse', padding: '10px 0'}}>
               <Pagination 
                 total={iaType.total}
-                current={currentPage}
+                current={iaType.currentPage || 1}
                 pageSize={iaType.pageSize || 20}
+                onChange={(currentPage) => {
+                  setCurrentPage({
+                    currentPage,
+                  });
+                  getIaTypes({
+                    currentPage,
+                    pageSize: 20,
+                  })
+                }}
               />
               </div>
             ) : null
@@ -77,6 +84,8 @@ const mapDispatchToProps = {
   addType,
   updateType,
   setFormData,
+  setFileIptState,
+  setCurrentPage,
 };
   
 const mapStateToProps = (state) => {

@@ -30,6 +30,8 @@ import {
     GET_IATYPE_BYID_SUCCESS,
     GET_IATYPE_BYID_FAILURE,
     SET_FORM_DATA,
+    SET_FILE_IPT_STATE,
+    SET_CURRENT_PAGE,
   } from './constants';
   
   // The initial state of the login
@@ -62,6 +64,7 @@ import {
         return Object.assign({}, state, {
           isLoading: action.isLoading,
           configInfo: action.payload && action.payload.configInfo,
+          fileName: action.payload && action.payload.fileName,
         });
       case GET_IATYPE_BYID_FAILURE:
         return Object.assign({}, state, {
@@ -122,7 +125,11 @@ import {
             state.formData[key] = payload[key];
           });
         }
-        return Object.assign({}, state);  
+        return Object.assign({}, state); 
+      case SET_FILE_IPT_STATE:
+        return {...state, showFileIpt: action.payload.showFileIpt};
+      case SET_CURRENT_PAGE:
+        return {...state, currentPage: action.payload.currentPage};
       default:
         return state;
     }

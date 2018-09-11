@@ -39,6 +39,7 @@ import {
     UPDATE_MODEL_FILE_REQUEST,
     UPDATE_MODEL_FILE_SUCCESS,
     UPDATE_MODEL_FILE_FAILURE,
+    SET_CURRENT_PAGE,
   } from './constants';
   
 // The initial state of the model
@@ -174,6 +175,8 @@ function iaModelReducer(state = initialState, action) {
         ...state,
         isLoading: action.isLoading,
       };
+    case SET_CURRENT_PAGE:
+      return {...state, currentPage: action.payload.currentPage};
     default:
       return state;
   }

@@ -54,6 +54,7 @@ import {
   UPDATE_MODEL_FILE_REQUEST,
   UPDATE_MODEL_FILE_SUCCESS,
   UPDATE_MODEL_FILE_FAILURE,
+  SET_CURRENT_PAGE,
 } from './constants';
 
 let addModelSwitch = false;
@@ -538,4 +539,11 @@ export const updateModelFile = (params) => {
       dispatch(updateModelFileFailure(error));
     }
   };
+};
+
+export const setCurrentPage = (payload) => {
+  return {
+    type: SET_CURRENT_PAGE,
+    payload,
+  }
 };

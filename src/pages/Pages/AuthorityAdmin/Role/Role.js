@@ -4,17 +4,13 @@ import IceContainer from '@icedesign/container';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { getRoles, addRoleModalToggle, addRole, queryAllRoleTypes, deleteRoleModalToggle, deleteRole, updateRole } from './actions';
+import { getRoles, addRoleModalToggle, addRole, queryAllRoleTypes, deleteRoleModalToggle, deleteRole, updateRole, setCurrentPage } from './actions';
 import reducer from './reducer';
 import RoleTable from './components/Table';
 import AddRole from './components/AddRole';
 import DeleteRole from './components/DeleteRole';
 
 class AARole extends Component {
-
-  state = {
-    currentPage: 1,
-  }
 
   componentDidMount() {
     const { getRoles, queryAllRoleTypes } = this.props;
@@ -23,8 +19,7 @@ class AARole extends Component {
   }
   
   render() {
-    const { aaRole, addRoleModalToggle, addRole, deleteRoleModalToggle, deleteRole, updateRole } = this.props;
-    const { currentPage } = this.state;
+    const { aaRole, addRoleModalToggle, addRole, deleteRoleModalToggle, deleteRole, updateRole, getRoles, setCurrentPage } = this.props;
     return (
       <div className="app">
         <AddRole 
@@ -56,8 +51,15 @@ class AARole extends Component {
               <div style={{display: 'flex', flexDirection: 'row-reverse', padding: '10px 0'}}>
               <Pagination 
                 total={aaRole.total}
-                current={currentPage}
+                current={aaRole.currentPage || 1}
                 pageSize={aaRole.pageSize || 20}
+                onChange={(currentPage) => {
+                  setCurrentPage({currentPage});
+                  getRoles({
+                    currentPage,
+                    pageSize: 20,
+                  })
+                }}
               />
               </div>
             ) : null
@@ -76,6 +78,7 @@ const mapDispatchToProps = {
   deleteRoleModalToggle,
   deleteRole,
   updateRole,
+  setCurrentPage,
 };
   
 const mapStateToProps = (state) => {

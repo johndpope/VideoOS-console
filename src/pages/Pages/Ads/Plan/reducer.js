@@ -39,6 +39,7 @@ import {
   GET_AD_METERIALS_REQUEST,
   GET_AD_METERIALS_SUCCESS,
   GET_AD_METERIALS_FAILURE,
+  SET_CURRENT_PAGE,
 } from './constants';
 // The initial state of the plan
 const initialState = {
@@ -172,6 +173,8 @@ function adPlanReducer(state = initialState, action) {
       return Object.assign({}, state, {
         isLoading: action.isLoading,
       });
+    case SET_CURRENT_PAGE:
+      return {...state, currentPage: action.payload.currentPage};
     default:
       return state;  
   }

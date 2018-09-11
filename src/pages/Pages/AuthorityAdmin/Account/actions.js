@@ -36,6 +36,7 @@ import {
   QUERY_ALL_ACCOUNTTYPES_FAILURE,
   SHOW_DELETEACCOUNT_MODAL,
   HIDE_DELETEACCOUNT_MODAL,
+  SET_CURRENT_PAGE,
 } from './constants';
 
 let addAccountModalSwitch = false;
@@ -318,4 +319,11 @@ export const queryAllAccountTypes = (params) => {
       dispatch(queryAllAccountTypesFailure(error));
     }
   }  
+};
+
+export const setCurrentPage = (payload) => {
+  return {
+    type: SET_CURRENT_PAGE,
+    payload,
+  }
 };

@@ -30,6 +30,7 @@ import {
     DELETE_ROLE_REQUEST,
     DELETE_ROLE_SUCCESS,
     DELETE_ROLE_FAILURE,
+    SET_CURRENT_PAGE,
   } from './constants';
   
   // The initial state of the account
@@ -143,6 +144,8 @@ import {
           record: {roleId: action.payload && action.payload.roleId || ''},
           shouldDeleteRoleModalOpen: action.shouldOpen,
         });
+      case SET_CURRENT_PAGE:
+        return {...state, currentPage: action.payload.currentPage};
       default:
         return state;    
     }  

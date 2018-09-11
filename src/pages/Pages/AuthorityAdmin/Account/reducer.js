@@ -30,6 +30,7 @@ import {
   QUERY_ALL_ACCOUNTTYPES_FAILURE,
   SHOW_DELETEACCOUNT_MODAL,
   HIDE_DELETEACCOUNT_MODAL,
+  SET_CURRENT_PAGE,
 } from './constants';
 
 // The initial state of the account
@@ -113,6 +114,8 @@ function aaAccountReducer(state = initialState, action) {
         record: {roleId: action.payload && action.payload.roleId || ''},
         shouldDeleteAccountModalOpen: action.shouldOpen,
       });
+    case SET_CURRENT_PAGE:
+      return {...state, currentPage: action.payload.currentPage};
     default:
       return state;
   }  

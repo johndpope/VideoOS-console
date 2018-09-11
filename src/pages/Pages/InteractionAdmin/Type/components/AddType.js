@@ -1,12 +1,11 @@
 import React, { Fragment } from 'react';
 import { Form, InputGroup, InputGroupAddon, InputGroupText, Input, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import { Button } from '@icedesign/base';
+import { Button, Icon } from '@icedesign/base';
 
 import styles from './styles';
 
-const AddType = ({shouldOpen, toggle, addType, updateType, record, setFormData, formData, configInfo}) => {
+const AddType = ({shouldOpen, toggle, addType, updateType, record, setFormData, setFileIptState, formData, configInfo, fileName, showFileIpt}) => {
 
-  let file = null;
   const { opType } = record || {};
   const isRead = opType === 'read';
   const isUpdate = opType === 'update';
@@ -71,16 +70,27 @@ const AddType = ({shouldOpen, toggle, addType, updateType, record, setFormData, 
                 </InputGroupText>
               </InputGroupAddon>
               <span>
-                <Input 
-                  type="file" 
-                  accept="*.txt"
-                  styles={styles.file_ipt} 
-                  onChange={e => {
-                    setFormData({
-                      file: e.target.files && e.target.files[0]
-                    })
-                  }}
-                />
+                {
+                  !(formData && formData.file || showFileIpt) && fileName ? (
+                    <Button
+                      onClick={() => {
+                        setFileIptState({showFileIpt: true});
+                      }}
+                    >
+                      <span>{fileName}</span>
+                      <span>{`    x`}</span>
+                    </Button>
+                  ) : <Input 
+                    type="file" 
+                    accept="*.txt"
+                    styles={styles.file_ipt} 
+                    onChange={e => {
+                      setFormData({
+                        file: e.target.files && e.target.files[0]
+                      })
+                    }}
+                  />
+                }
               </span>
             </InputGroup>
           )

@@ -5,7 +5,7 @@ import IceContainer from '@icedesign/container';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
-import { addPlanModalToggle, newPlanDropDownToggle, getAdPlans, queryAllModelTypes, deletePlanModalToggle, addPlan, deletePlan, updatePlan, setFormData } from './actions';
+import { addPlanModalToggle, newPlanDropDownToggle, getAdPlans, queryAllModelTypes, deletePlanModalToggle, addPlan, deletePlan, updatePlan, setFormData, setCurrentPage } from './actions';
 import reducer from './reducer';
 import PlanTable from './components/Table';
 import AddPlan from './components/AddModal';
@@ -24,7 +24,7 @@ class AdPlan extends Component {
   }
 
   render() {
-    const { adPlan, addPlanModalToggle, newPlanDropDownToggle, deletePlanModalToggle, addPlan, deletePlan, updatePlan, setFormData } = this.props;
+    const { adPlan, addPlanModalToggle, newPlanDropDownToggle, deletePlanModalToggle, addPlan, deletePlan, updatePlan, setFormData, getAdPlans, setCurrentPage } = this.props;
     const modelTypes = adPlan.modelTypes || [];
     return (
       <div className="app">
@@ -75,6 +75,15 @@ class AdPlan extends Component {
                 total={adPlan.total}
                 current={adPlan.currentPage || 1}
                 pageSize={adPlan.pageSize || 20}
+                onChange={(currentPage) => {
+                  setCurrentPage({
+                    currentPage,
+                  });
+                  getAdPlans({
+                    currentPage,
+                    pageSize: 20,
+                  });
+                }}
               />
             </div>
           ) : null
@@ -94,6 +103,7 @@ const mapDispatchToProps = {
   addPlan,
   updatePlan,
   setFormData,
+  setCurrentPage,
 };
 
 const mapStateToProps = (state) => {

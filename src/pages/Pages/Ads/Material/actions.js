@@ -53,6 +53,7 @@ import {
   GET_MATERIAL_INFO_REQUEST,
   GET_MATERIAL_INFO_SUCCESS,
   GET_MATERIAL_INFO_FAILURE,
+  SET_CURRENT_PAGE,
 } from './constants';
 
 let newMaterialDropDownSwitch = false;
@@ -540,6 +541,13 @@ export const getAdMaterialInfo = (params) => {
     } catch (error) {
       dispatch(getAdMaterialInfoFailure(error));
     };
+  }
+};
+
+export const setCurrentPage = (payload) => {
+  return {
+    type: SET_CURRENT_PAGE,
+    payload,
   }
 };
     
