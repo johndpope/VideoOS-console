@@ -46,28 +46,30 @@ const AddRole = ({shouldOpen, toggle, addRole, updateRole, roleAuthorities, reco
             <FormGroup key={idx} row>
               <Col>{key}</Col>
               <Col>
-                <Label>
+                <Label htmlFor={`ckb_${idx}_read`}>
+                  可读
+                </Label> 
                   <Input type="radio"
                     name={`ckb_${idx}`}
+                    id={`ckb_${idx}_read`}
                     disabled={isRead ? 'disabled' : false}
                     onChange={e => {
                       _roleAuthorities[key].read = Boolean(e.target.value);
                     }}
                   />
-                  可读
-                </Label> 
               </Col>
               <Col>
-                <Label>
+                <Label htmlFor={`ckb_${idx}_write`}>
+                  可写
+                </Label> 
                   <Input type="radio"
                     name={`ckb_${idx}`}
+                    id={`ckb_${idx}_write`}
                     disabled={isRead ? 'disabled' : false}
                     onChange={e => {
                       _roleAuthorities[key].write = Boolean(e.target.value);
                     }}
                   />
-                  可写
-                </Label> 
               </Col>        
             </FormGroup>
           ))
