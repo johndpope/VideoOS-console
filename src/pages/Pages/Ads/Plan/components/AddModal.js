@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Form, InputGroup, InputGroupAddon, InputGroupText, Input, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { Row, Col, InputGroup, InputGroupAddon, InputGroupText, Input, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { Button, Icon } from '@icedesign/base';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
@@ -9,7 +9,7 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
   const { opType } = record || {};
   const isRead = opType === 'read';
   const isUpdate = opType === 'update';
-  let launchTimes = null;
+  let launchTimes = formData && formData.launchTimes || [];
 
   return (
   <Fragment>
@@ -146,7 +146,59 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
                     投放时间
                   </InputGroupText>
                 </InputGroupAddon>
+                <span style={{
+                  flex: '1 1 auto',
+                  marginLeft: '8px',
+                  width: '1%',
+                  float: 'left'
+                }}>
+                  <Row>
+                    <Col md='2'>
+                      <Input 
+                        onChange={e => {
+                          setFormData({
+                            v_minutes: e.target.value,
+                          })
+                        }}
+                      />
+                    </Col>
+                    <Col md='1'>分</Col>
+                    <Col md='2'>
+                      <Input 
+                        onChange={e => {
+                          setFormData({
+                            v_seconds: e.target.value,
+                          })
+                        }}
+                      />
+                    </Col>
+                    <Col md='1'>秒</Col>
+                    <Col md='1'>
+                      <Button onClick={() => {
+                        if (!launchTimes.includes(`${formData.v_minutes}:${formData.v_seconds}`)) {
+                          launchTimes.push(`${formData.v_minutes}:${formData.v_seconds}`);
+                          setFormData({launchTimes});
+                        }
+                      }}>
+                        <Icon type="add"></Icon>
+                      </Button>
+                    </Col>
+                  </Row>
+                </span>
               </InputGroup>
+              {
+                launchTimes && launchTimes.length > 0 && launchTimes.map((lt, idx) =>(
+                  <div key={idx}>
+                    <span>{lt}</span>
+                    <Button onClick={() => {
+                      launchTimes.splice(idx, 1);
+                      setFormData({launchTimes});
+                    }}>
+                      <Icon type="delete"></Icon>
+                    </Button>
+                  </div>
+                ))
+              }
               <InputGroup className="mb-4">
                 <InputGroupAddon addonType="prepend">
                   <InputGroupText>
@@ -246,6 +298,7 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
                   </InputGroupText>
                 </InputGroupAddon>
                 <DatePicker 
+                  selected={formData && formData.launchTime}
                   showTimeSelect
                   showTimeSelectOnly
                   timeIntervals={5}
@@ -253,11 +306,16 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
                   timeCaption="Time"
                   isClearable={true}
                   onChange={e => {
-                    setFormData({launchTime: e.toString()});
+                    setFormData({launchTime: e});
                   }}
                   placeholderText='请添加投放时间'
                 />
-                <Button>
+                <Button onClick={() => {
+                  if (!launchTimes.includes(formData.launchTime.toString())) {
+                    launchTimes.push(formData.launchTime.toString());
+                    setFormData({launchTimes});
+                  }
+                }}>
                   <Icon type="add"></Icon>
                 </Button>
               </InputGroup>
@@ -265,7 +323,10 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
                 launchTimes && launchTimes.length > 0 && launchTimes.map((lt, idx) =>(
                   <div key={idx}>
                     <span>{lt}</span>
-                    <Button>
+                    <Button onClick={() => {
+                      launchTimes.splice(idx, 1);
+                      setFormData({launchTimes});
+                    }}>
                       <Icon type="delete"></Icon>
                     </Button>
                   </div>
