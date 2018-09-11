@@ -280,9 +280,18 @@ export const addPlan = (params) => {
     dispatch(addPlanRequest());
     try {
       const _params = Object.assign({}, params);
-      _params.launchDateStart = _params.launchDateStart.toString();
-      _params.launchDateEnd = _params.launchDateEnd.toString();
-      _params.launchTime = `${_params.launchTime.hour()}:${_params.launchTime.minutes() < 10 ? ('0' + _params.launchTime.minutes()) : _params.launchTime.minutes()}`
+      if (_params.launchTimeType === '0') {
+
+      }
+      if (_params.launchTimeType === '1') {
+        
+      }
+      if (_params.launchTimeType === '2') {
+        _params.launchDateStart = _params.launchDateStart.toString();
+        _params.launchDateEnd = _params.launchDateEnd.toString();
+        _params.launchTime = `${_params.launchTime.hour()}:${_params.launchTime.minutes() < 10 ? ('0' + _params.launchTime.minutes()) : _params.launchTime.minutes()}`
+      }
+      
       const response = await api.addPlan(_params);
 
       if (response.status === 200 && response.data.resCode === '00') {
@@ -356,7 +365,7 @@ export const addPlanModalToggle = (payload) => {
     addPlanSwitch = !addPlanSwitch;
     if (addPlanSwitch) {
       if (payload && payload.opType) {
-        dispatch(getAdPlanInfo({launchPlan: payload && payload.launchPlanId}));
+        dispatch(getAdPlanInfo({launchPlanId: payload && payload.launchPlanId}));
       }
       dispatch(getAdMaterials());
       dispatch(setFormData(payload));

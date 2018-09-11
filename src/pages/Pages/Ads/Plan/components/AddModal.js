@@ -9,7 +9,7 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
   const { opType } = record || {};
   const isRead = opType === 'read';
   const isUpdate = opType === 'update';
-  let launchTimes = formData && formData.launchTime && formData.launchTime.split(',') || [];
+  let launchTimes = null;
 
   return (
   <Fragment>
@@ -101,6 +101,105 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
             <option value='2'>北京时间</option>
           </Input>
         </InputGroup>
+        {
+          formData && formData.launchTimeType && formData.launchTimeType === '0' ? (
+            <Fragment>
+              <InputGroup className="mb-4">
+                <InputGroupAddon addonType="prepend">
+                  <InputGroupText>
+                    投放日期
+                  </InputGroupText>
+                </InputGroupAddon>
+                <DatePicker 
+                  locale='cn-gb'
+                  selected={formData && formData.launchDateStart}
+                  startDate={formData && formData.launchDateStart}
+                  endDate={formData && formData.launchDateEnd}
+                  minDate={moment()}
+                  selectsStart
+                  onChange={e => {
+                    if (formData.launchDateEnd && e.valueOf() >= formData.launchDateEnd.valueOf()) {
+                      setFormData({launchDateEnd: e});
+                    }
+                    setFormData({launchDateStart: e});
+                  }}
+                  placeholderText='请选择开始日期'
+                />
+                <DatePicker 
+                  selected={formData && formData.launchDateEnd}
+                  startDate={formData && formData.launchDateStart}
+                  endDate={formData && formData.launchDateEnd}
+                  minDate={moment()}
+                  selectsEnd
+                  onChange={e => {
+                    if (formData.launchDateStart && e.valueOf() <= formData.launchDateStart.valueOf()) {
+                      setFormData({launchDateStart: e});
+                    }
+                    setFormData({launchDateEnd: e});
+                  }}
+                  placeholderText='请选择结束日期'
+                />
+              </InputGroup>
+              <InputGroup className="mb-4">
+                <InputGroupAddon addonType="prepend">
+                  <InputGroupText>
+                    投放时间
+                  </InputGroupText>
+                </InputGroupAddon>
+              </InputGroup>
+              <InputGroup className="mb-4">
+                <InputGroupAddon addonType="prepend">
+                  <InputGroupText>
+                    投放时长
+                  </InputGroupText>
+                </InputGroupAddon>
+                <Input type="select"
+                  disabled={isRead ? 'disabled' : false}
+                  defaultValue={isRead || isUpdate ? formData && formData.launchLenTime : ''}
+                  onChange={e => {
+                    setFormData({launchLenTime: e.target.value});
+                  }}
+                >
+                  <option value='default'>请选择</option>
+                  <option value='10'>10秒</option>
+                  <option value='20'>20秒</option>
+                  <option value='30'>30秒</option>
+                  <option value='60'>60秒</option>
+                  <option value='120'>120秒</option>
+                  <option value='自定义'>自定义</option>
+                </Input>
+              </InputGroup>
+            </Fragment>
+          ) : null
+        }
+        {
+          formData && formData.launchTimeType && formData.launchTimeType === '1' ? (
+            <Fragment>
+              <InputGroup className="mb-4">
+                <InputGroupAddon addonType="prepend">
+                  <InputGroupText>
+                    投放时长
+                  </InputGroupText>
+                </InputGroupAddon>
+                <Input type="select"
+                  disabled={isRead ? 'disabled' : false}
+                  defaultValue={isRead || isUpdate ? formData && formData.launchLenTime : ''}
+                  onChange={e => {
+                    setFormData({launchLenTime: e.target.value});
+                  }}
+                >
+                  <option value='default'>请选择</option>
+                  <option value='10'>10秒</option>
+                  <option value='20'>20秒</option>
+                  <option value='30'>30秒</option>
+                  <option value='60'>60秒</option>
+                  <option value='120'>120秒</option>
+                  <option value='自定义'>自定义</option>
+                </Input>
+              </InputGroup>
+            </Fragment>
+          ) : null
+        }
         {
           formData && formData.launchTimeType && formData.launchTimeType === '2' ? (
             <Fragment>
