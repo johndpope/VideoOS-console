@@ -20,11 +20,14 @@ class IAModel extends Component {
   componentDidMount() {
     const { getIaModels, queryAllModelTypes, location } = this.props;
     const lType = location && location.state && location.state.type;
-    getIaModels({
+    const options = {
       currentPage: 1,
       pageSize: 20,
-      interactionTypeId: lType,
-    });
+    };
+    if (lType) {
+      options.interactionTypeId = lType;
+    }
+    getIaModels(options);
     queryAllModelTypes();
   }
 

@@ -28,7 +28,6 @@ export async function resetPassword(params) {
 export async function isTokenValid(params) {
   return axios({
     url: `${OS_API}/token/isTokenValid?${qs.stringify(params)}`,
-    method: 'post',
-    data: params,  
+    method: 'get',
   })  
 };

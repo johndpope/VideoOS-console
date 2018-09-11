@@ -6,11 +6,11 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import injectReducer from 'utils/injectReducer';
 import { AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
-import { userLogout, resetPasswordModalToggle, resetPassword } from './actions';
+import { userLogout, resetPasswordModalToggle, resetPassword, isTokenValid } from './actions';
 import reducer from './reducer';
 import logo from '../../assets/img/brand/logo.svg';
 import sygnet from '../../assets/img/brand/sygnet.svg';
-import PasswordReset from './PasswordReset'
+import PasswordReset from './PasswordReset';
 
 const propTypes = {
   children: PropTypes.node,
@@ -19,6 +19,12 @@ const propTypes = {
 const defaultProps = {};
 
 class DefaultHeader extends Component {
+
+  componentDidMount() {
+    const { isTokenValid } = this.props;
+    isTokenValid();
+  }
+
   render() {
     // eslint-disable-next-line
     const { dHeader, resetPasswordModalToggle, userLogout, resetPassword, children, ...attributes } = this.props;
@@ -57,6 +63,7 @@ const mapDispatchToProps = {
   userLogout,
   resetPasswordModalToggle,
   resetPassword,
+  isTokenValid,
 };
   
 const mapStateToProps = (state) => {

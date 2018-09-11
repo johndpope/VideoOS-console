@@ -18,7 +18,7 @@ import { push } from 'react-router-redux';
 import { createHashHistory } from 'history';
 import { Feedback } from '@icedesign/base';
 import * as api from './api';
-import { setAuthority, setUserInfoLocal } from 'utils/authority';
+import { getAuthority, setAuthority, setUserInfoLocal } from 'utils/authority';
 // import { reloadAuthorized } from 'utils/Authorized';
 import {
   // USER_LOGOUT_REQUEST,
@@ -143,5 +143,17 @@ export const resetPassword = (params) => {
       dispatch(resetPasswordFailure(error));
     }
     
+  };
+};
+
+export const isTokenValid = () => {
+  return async (dispatch) => {
+    const response = await api.isTokenValid({token: getAuthority()});
+    if (response.status === 200 && response.data.resCode === '00') {
+      if (!response.data.isValid) {
+        setAuthority('');
+        dispatch(push('/login'));
+      }
+    }
   };
 };

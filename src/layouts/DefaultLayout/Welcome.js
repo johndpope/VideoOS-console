@@ -15,7 +15,7 @@ const Welcome = () => (
     <img src={main_bg_txt} 
       style={{
         position: 'absolute',
-        top: '25%',
+        top: '22%',
         left: '50%',
         height: '116px',
         transform: 'translate3d(-50%, 0, 0)'

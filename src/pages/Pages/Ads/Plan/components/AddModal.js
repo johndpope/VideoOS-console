@@ -147,7 +147,6 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
                   </InputGroupText>
                 </InputGroupAddon>
                 <DatePicker 
-                  selected={formData && formData.launchTime}
                   showTimeSelect
                   showTimeSelectOnly
                   timeIntervals={5}
