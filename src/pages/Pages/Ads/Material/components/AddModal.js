@@ -45,6 +45,7 @@ const AddMaterial = ({
               onSubmit={({ formData }) => {
                 if (isUpdate) {
                   updateMaterial({
+                    creativeId: record.creativeId,
                     creativeName: formData.creativeName,
                     interactionTypeId: formData.interactionTypeId,
                     interactionTemplateId: formData.interactionTemplateId,

@@ -98,7 +98,7 @@ function adMaterialReducer(state = initialState, action) {
     case GET_MATERIAL_INFO_SUCCESS:
       state.formData = action.payload || {};
       return Object.assign({}, state, {
-        materialResult: action.payload.creativeInfoList || [],
+        creativeContent: action.payload.creativeContent || [],
         isLoading: action.isLoading
       });
     case GET_MATERIAL_INFO_FAILURE:

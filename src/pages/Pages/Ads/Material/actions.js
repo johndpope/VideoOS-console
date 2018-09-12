@@ -434,7 +434,7 @@ export const updateMaterial = params => {
 
       if (response.status === 200 && response.data.resCode === "00") {
         dispatch(updateMaterialSuccess(response.data));
-        // dispatch(hideAddModelModal());
+        dispatch(addMaterialToggle());
         dispatch(getAdMaterials());
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {
