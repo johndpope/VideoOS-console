@@ -15,11 +15,10 @@
  *    }
  */
 
-import { push } from 'react-router-redux';
-import { Feedback } from '@icedesign/base';
-import saveFile from 'utils/saveFile';
-import * as api from './api';
-import { setAuthority } from 'utils/authority';
+// import { push } from 'react-router-redux';
+import { Feedback } from "@icedesign/base";
+import saveFile from "utils/saveFile";
+import * as api from "./api";
 // import { reloadAuthorized } from 'utils/Authorized';
 import {
   GET_IAMODEL_REQUEST,
@@ -55,8 +54,8 @@ import {
   UPDATE_MODEL_FILE_SUCCESS,
   UPDATE_MODEL_FILE_FAILURE,
   SET_CURRENT_PAGE,
-  SET_FILE_IPT_STATE,
-} from './constants';
+  SET_FILE_IPT_STATE
+} from "./constants";
 
 let addModelSwitch = false;
 let deleteModelSwitch = false;
@@ -68,254 +67,255 @@ let deleteModelSwitch = false;
  * @return {object}    An action object with a type of CHANGE_USERNAME
  */
 
-const showAddModelModal = (payload) => {
+const showAddModelModal = payload => {
   return {
     type: SHOW_ADDMODEL_MODAL,
     payload,
-    shouldOpen: true,
-  }
+    shouldOpen: true
+  };
 };
 
 const hideAddModelModal = () => {
   return {
     type: HIDE_ADDMODEL_MODAL,
-    shouldOpen: false,
-  }
+    shouldOpen: false
+  };
 };
 
-const showDeleteModelModal = (payload) => {
+const showDeleteModelModal = payload => {
   return {
     type: SHOW_DELETEMODEL_MODAL,
     payload,
-    shouldOpen: true,
-  }
+    shouldOpen: true
+  };
 };
 
 const hideDeleteModelModal = () => {
   return {
     type: HIDE_DELETEMODEL_MODAL,
-    shouldOpen: false,
-  }
+    shouldOpen: false
+  };
 };
 
 const getIaModelsRequest = () => {
   return {
     type: GET_IAMODEL_REQUEST,
-    isLoading: true,
+    isLoading: true
   };
 };
 
-const getIaModelsSuccess = (payload) => {
+const getIaModelsSuccess = payload => {
   return {
     type: GET_IAMODEL_SUCCESS,
     payload,
-    isLoading: false,
+    isLoading: false
   };
 };
 
-const getIaModelsFailure = (payload) => {
+const getIaModelsFailure = payload => {
   return {
     type: GET_IAMODEL_FAILURE,
     payload,
-    isLoading: false,
+    isLoading: false
   };
 };
 
 const getModelInfoByIdRequest = () => {
   return {
     type: GET_MODEL_INFO_BYID_REQUEST,
-    isLoading: true,
+    isLoading: true
   };
 };
 
-const getModelInfoByIdSuccess = (payload) => {
+const getModelInfoByIdSuccess = payload => {
   return {
     type: GET_MODEL_INFO_BYID_SUCCESS,
     payload,
-    isLoading: false,
+    isLoading: false
   };
 };
 
-const getModelInfoByIdFailure = (payload) => {
+const getModelInfoByIdFailure = payload => {
   return {
     type: GET_MODEL_INFO_BYID_FAILURE,
     payload,
-    isLoading: false,
+    isLoading: false
   };
 };
 
-const addModelRequest = (payload) => {
+const addModelRequest = payload => {
   return {
     type: ADD_MODEL_REQUEST,
     payload,
-    isLoading: true,
+    isLoading: true
   };
 };
 
-const addModelSuccess = (payload) => {
+const addModelSuccess = payload => {
   return {
     type: ADD_MODEL_SUCCESS,
     payload,
-    isLoading: false,
+    isLoading: false
   };
 };
 
-const addModelFailure = (payload) => {
+const addModelFailure = payload => {
   return {
     type: ADD_MODEL_FAILURE,
     payload,
-    isLoading: false,
+    isLoading: false
   };
 };
 
-const updateModelRequest = (payload) => {
+const updateModelRequest = payload => {
   return {
     type: UPDATE_MODEL_REQUEST,
     payload,
-    isLoading: true,
+    isLoading: true
   };
 };
 
-const updateModelSuccess = (payload) => {
+const updateModelSuccess = payload => {
   return {
     type: UPDATE_MODEL_SUCCESS,
     payload,
-    isLoading: false,
+    isLoading: false
   };
 };
 
-const updateModelFailure = (payload) => {
+const updateModelFailure = payload => {
   return {
     type: UPDATE_MODEL_FAILURE,
     payload,
-    isLoading: false,
+    isLoading: false
   };
 };
 
-const deleteModelRequest = (payload) => {
+const deleteModelRequest = payload => {
   return {
     type: DELETE_MODEL_REQUEST,
     payload,
-    isLoading: true,
+    isLoading: true
   };
 };
 
-const deleteModelSuccess = (payload) => {
+const deleteModelSuccess = payload => {
   return {
     type: DELETE_MODEL_SUCCESS,
     payload,
-    isLoading: false,
+    isLoading: false
   };
 };
 
-const deleteModelFailure = (payload) => {
+const deleteModelFailure = payload => {
   return {
     type: DELETE_MODEL_FAILURE,
     payload,
-    isLoading: false,
+    isLoading: false
   };
 };
 
 const uploadModelFileRequest = () => {
   return {
     type: UPLOAD_MODEL_FILE_REQUEST,
-    isLoading: true,
-  }
+    isLoading: true
+  };
 };
 
-const uploadModelFileSuccess = (payload) => {
+const uploadModelFileSuccess = payload => {
   return {
     type: UPLOAD_MODEL_FILE_SUCCESS,
     payload,
-    isLoading: false,
-  }
+    isLoading: false
+  };
 };
 
 const uploadModelFileFailure = () => {
   return {
     type: UPLOAD_MODEL_FILE_FAILURE,
-    isLoading: false,
-  }
+    isLoading: false
+  };
 };
 
 const queryAllModelTypesRequest = () => {
   return {
     type: QUERY_ALL_MODELTYPES_REQUEST,
-    isLoading: true,
+    isLoading: true
   };
 };
 
-const queryAllModelTypesSuccess = (payload) => {
+const queryAllModelTypesSuccess = payload => {
   return {
     type: QUERY_ALL_MODELTYPES_SUCCESS,
     payload,
-    isLoading: false,
+    isLoading: false
   };
 };
 
 const queryAllModelTypesFailure = () => {
   return {
     type: QUERY_ALL_MODELTYPES_FAILURE,
-    isLoading: false,
+    isLoading: false
   };
 };
 
 const downloadModelTemplateFileRequest = () => {
   return {
     type: DOWNLOAD_MODEL_TEMPLATE_FILE_REQUEST,
-    isLoading: true,
+    isLoading: true
   };
 };
 
-const downloadModelTemplateFileSuccess = (payload) => {
+const downloadModelTemplateFileSuccess = payload => {
   return {
     type: DOWNLOAD_MODEL_TEMPLATE_FILE_SUCCESS,
     isLoading: true,
-    payload,
+    payload
   };
 };
 
 const downloadModelTemplateFileFailure = () => {
   return {
     type: DOWNLOAD_MODEL_TEMPLATE_FILE_FAILURE,
-    isLoading: true,
+    isLoading: true
   };
 };
 
 const updateModelFileRequest = () => {
   return {
     type: UPDATE_MODEL_FILE_REQUEST,
-    isLoading: true,
-  }
+    isLoading: true
+  };
 };
 
-const updateModelFileSuccess = (payload) => {
+const updateModelFileSuccess = payload => {
   return {
     type: UPDATE_MODEL_FILE_SUCCESS,
     isLoading: false,
-    payload,
-  }
+    payload
+  };
 };
 
 const updateModelFileFailure = () => {
   return {
     type: UPDATE_MODEL_FILE_FAILURE,
-    isLoading: false,
-  }
+    isLoading: false
+  };
 };
 
-export const getIaModels = (params = {
-  currentPage: 1,
-  pageSize: 20,
-  // interactionTypeId: 0,
-}) => {
-  return async (dispatch) => {
+export const getIaModels = (
+  params = {
+    currentPage: 1,
+    pageSize: 20
+    // interactionTypeId: 0,
+  }
+) => {
+  return async dispatch => {
     dispatch(getIaModelsRequest());
     try {
       const response = await api.getIaModels(params);
 
-      if (response.status === 200 && response.data.resCode === '00') {
-
+      if (response.status === 200 && response.data.resCode === "00") {
         dispatch(getIaModelsSuccess(response.data));
       } else {
         dispatch(getIaModelsFailure(response.data));
@@ -329,42 +329,41 @@ export const getIaModels = (params = {
   };
 };
 
-export const addModelToggle = (record) => {
-  return (dispatch) => {
+export const addModelToggle = record => {
+  return dispatch => {
     addModelSwitch = !addModelSwitch;
     if (addModelSwitch) {
       if (record && record.opType) {
-        dispatch(getModelInfoById({templateId: record && record.templateId}));
+        dispatch(getModelInfoById({ templateId: record && record.templateId }));
       }
       dispatch(setFormData(record));
       dispatch(showAddModelModal(record));
     } else {
-      dispatch(setFileIptState({showFileIpt: false}));
+      dispatch(setFileIptState({ showFileIpt: false }));
       dispatch(setFormData({}));
       dispatch(hideAddModelModal());
     }
-  }
+  };
 };
 
-export const deleteModelModalToggle = (record) => {
-  return (dispatch) => {
+export const deleteModelModalToggle = record => {
+  return dispatch => {
     deleteModelSwitch = !deleteModelSwitch;
     if (deleteModelSwitch) {
       dispatch(showDeleteModelModal(record));
     } else {
       dispatch(hideDeleteModelModal());
     }
-  }
+  };
 };
 
-export const addModel = (params) => {
-  return async (dispatch) => {
+export const addModel = params => {
+  return async dispatch => {
     dispatch(addModelRequest());
     try {
       const response = await api.addModel(params);
 
-      if (response.status === 200 && response.data.resCode === '00') {
-
+      if (response.status === 200 && response.data.resCode === "00") {
         dispatch(addModelSuccess(response.data));
         dispatch(hideAddModelModal());
         dispatch(getIaModels());
@@ -375,20 +374,19 @@ export const addModel = (params) => {
       }
 
       return response.data;
-    } catch(error) {
+    } catch (error) {
       dispatch(addModelFailure());
     }
   };
 };
 
-export const updateModel = (params) => {
-  return async (dispatch) => {
+export const updateModel = params => {
+  return async dispatch => {
     dispatch(updateModelRequest());
     try {
       const response = await api.updateModel(params);
 
-      if (response.status === 200 && response.data.resCode === '00') {
-
+      if (response.status === 200 && response.data.resCode === "00") {
         dispatch(updateModelSuccess(response.data));
         dispatch(hideAddModelModal());
         dispatch(getIaModels());
@@ -399,20 +397,19 @@ export const updateModel = (params) => {
       }
 
       return response.data;
-    } catch(error) {
+    } catch (error) {
       dispatch(updateModelFailure());
     }
   };
 };
 
-export const deleteModel = (params) => {
-  return async (dispatch) => {
+export const deleteModel = params => {
+  return async dispatch => {
     dispatch(deleteModelRequest());
     try {
       const response = await api.deleteModel(params);
 
-      if (response.status === 200 && response.data.resCode === '00') {
-
+      if (response.status === 200 && response.data.resCode === "00") {
         dispatch(deleteModelSuccess(response.data));
         dispatch(deleteModelModalToggle());
         dispatch(getIaModels());
@@ -423,20 +420,19 @@ export const deleteModel = (params) => {
       }
 
       return response.data;
-    } catch(error) {
+    } catch (error) {
       dispatch(deleteModelFailure());
     }
   };
 };
 
-export const uploadModelFile = (params) => {
-  return async (dispatch) => {
+export const uploadModelFile = params => {
+  return async dispatch => {
     dispatch(uploadModelFileRequest());
     try {
       const response = await api.uploadModelFile(params);
 
-      if (response.status === 200 && response.data.resCode === '00') {
-
+      if (response.status === 200 && response.data.resCode === "00") {
         dispatch(uploadModelFileSuccess(response.data));
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {
@@ -445,48 +441,50 @@ export const uploadModelFile = (params) => {
       }
 
       return response.data;
-    } catch(error) {
+    } catch (error) {
       dispatch(uploadModelFileFailure(error));
     }
   };
 };
 
-export const queryAllModelTypes = (params) => {
-  return async (dispatch) => {
+export const queryAllModelTypes = params => {
+  return async dispatch => {
     dispatch(queryAllModelTypesRequest());
     try {
       const response = await api.queryAllModelTypes(params);
 
-      if (response.status === 200 && response.data.resCode === '00') {
-
-        dispatch(queryAllModelTypesSuccess(response.data && response.data.interactionInfoList));
+      if (response.status === 200 && response.data.resCode === "00") {
+        dispatch(
+          queryAllModelTypesSuccess(
+            response.data && response.data.interactionInfoList
+          )
+        );
       } else {
         dispatch(queryAllModelTypesFailure(response.data));
         Feedback.toast.error(response.data && response.data.resMsg);
       }
 
       return response.data;
-    } catch(error) {
+    } catch (error) {
       dispatch(queryAllModelTypesFailure(error));
     }
   };
 };
 
-export const setFormData = (payload) => {
+export const setFormData = payload => {
   return {
     type: SET_FORM_DATA,
-    payload,
-  }
+    payload
+  };
 };
 
-export const getModelInfoById = (params) => {
-  return async (dispatch) => {
+export const getModelInfoById = params => {
+  return async dispatch => {
     dispatch(getModelInfoByIdRequest());
     try {
       const response = await api.getModelInfoById(params);
 
-      if (response.status === 200 && response.data.resCode === '00') {
-
+      if (response.status === 200 && response.data.resCode === "00") {
         dispatch(getModelInfoByIdSuccess(response.data));
       } else {
         dispatch(getModelInfoByIdFailure(response.data));
@@ -500,14 +498,14 @@ export const getModelInfoById = (params) => {
   };
 };
 
-export const downloadModelTemplateFile = (params) => {
-  return async (dispatch) => {
+export const downloadModelTemplateFile = params => {
+  return async dispatch => {
     dispatch(downloadModelTemplateFileRequest());
     try {
       const response = await api.downloadModelTemplateFile(params);
 
       if (response.status === 200) {
-        saveFile(response.data, 'text/latex', '模版文件.lua')
+        saveFile(response.data, "text/latex", "模版文件.lua");
         dispatch(downloadModelTemplateFileSuccess(response.data));
       } else {
         dispatch(downloadModelTemplateFileFailure(response.data));
@@ -521,14 +519,13 @@ export const downloadModelTemplateFile = (params) => {
   };
 };
 
-export const updateModelFile = (params) => {
-  return async (dispatch) => {
+export const updateModelFile = params => {
+  return async dispatch => {
     dispatch(updateModelFileRequest());
     try {
       const response = await api.updateModelFile(params);
 
-      if (response.status === 200 && response.data.resCode === '00') {
-
+      if (response.status === 200 && response.data.resCode === "00") {
         dispatch(updateModelFileSuccess(response.data));
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {
@@ -537,22 +534,22 @@ export const updateModelFile = (params) => {
       }
 
       return response.data;
-    } catch(error) {
+    } catch (error) {
       dispatch(updateModelFileFailure(error));
     }
   };
 };
 
-export const setFileIptState = (payload) => {
+export const setFileIptState = payload => {
   return {
     type: SET_FILE_IPT_STATE,
-    payload,
-  }
+    payload
+  };
 };
 
-export const setCurrentPage = (payload) => {
+export const setCurrentPage = payload => {
   return {
     type: SET_CURRENT_PAGE,
-    payload,
-  }
+    payload
+  };
 };

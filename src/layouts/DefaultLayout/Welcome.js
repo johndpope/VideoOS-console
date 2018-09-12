@@ -1,27 +1,29 @@
-import React from 'react';
+import React from "react";
 
-import main_bg from './assets/main_bg.png';
-import main_bg_txt from './assets/main_bg_txt.png';
+import main_bg from "./assets/main_bg.png";
+import main_bg_txt from "./assets/main_bg_txt.png";
 
 const Welcome = () => (
   <div
     style={{
-      position: 'relative',
-      height: '100%',  
+      position: "relative",
+      height: "100%",
       backgroundImage: `url(${main_bg})`,
-      backgroundSize: 'cover'
+      backgroundSize: "cover"
     }}
   >
-    <img src={main_bg_txt} 
+    <img
+      src={main_bg_txt}
       style={{
-        position: 'absolute',
-        top: '22%',
-        left: '50%',
-        height: '116px',
-        transform: 'translate3d(-50%, 0, 0)'
+        position: "absolute",
+        top: "22%",
+        left: "50%",
+        height: "116px",
+        transform: "translate3d(-50%, 0, 0)"
       }}
+      alt=""
     />
-  </div>  
-)
+  </div>
+);
 
 export default Welcome;

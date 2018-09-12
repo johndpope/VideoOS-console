@@ -15,9 +15,9 @@
  *    }
  */
 
-import { push } from 'react-router-redux';
-import { Feedback } from '@icedesign/base';
-import * as api from './api';
+// import { push } from 'react-router-redux';
+import { Feedback } from "@icedesign/base";
+import * as api from "./api";
 import {
   SHOW_ADD_MATERIAL,
   HIDE_ADD_MATERIAL,
@@ -53,8 +53,8 @@ import {
   GET_MATERIAL_INFO_REQUEST,
   GET_MATERIAL_INFO_SUCCESS,
   GET_MATERIAL_INFO_FAILURE,
-  SET_CURRENT_PAGE,
-} from './constants';
+  SET_CURRENT_PAGE
+} from "./constants";
 
 let newMaterialDropDownSwitch = false;
 let addMaterialSwitch = false;
@@ -63,417 +63,440 @@ let deleteMaterialModalSwitch = false;
 const showNewMaterialDropDown = () => {
   return {
     type: SHOW_NEW_MATERIAL_DROPDOWN,
-    shouldOpen: true,
-  }
+    shouldOpen: true
+  };
 };
 
 const hideNewMaterialDropDown = () => {
   return {
     type: HIDE_NEW_MATERIAL_DROPDOWN,
-    shouldOpen: false,
-  }
+    shouldOpen: false
+  };
 };
 
-const showAddMaterial = (payload) => {
+const showAddMaterial = payload => {
   return {
     type: SHOW_ADD_MATERIAL,
     payload,
-    shouldOpen: true,
-  }
+    shouldOpen: true
+  };
 };
 
 const hideAddMaterial = () => {
   return {
     type: HIDE_ADD_MATERIAL,
-    shouldOpen: false,
-  }
+    shouldOpen: false
+  };
 };
 
-const showDeleteMaterialModal = (payload) => {
+const showDeleteMaterialModal = payload => {
   return {
     type: SHOW_DELETE_MATERIAL_MODAL,
     payload,
-    shouldOpen: true,
-  }
+    shouldOpen: true
+  };
 };
 
 const hideDeleteMaterialModal = () => {
   return {
     type: HIDE_DELETE_MATERIAL_MODAL,
-    shouldOpen: false,
-  }
+    shouldOpen: false
+  };
 };
 
 const getAdMaterialsRequest = () => {
   return {
     type: GET_AD_METERIALS_REQUEST,
-    isLoading: true,
+    isLoading: true
   };
 };
 
-const getAdMaterialsSuccess = (payload) => {
+const getAdMaterialsSuccess = payload => {
   return {
     type: GET_AD_METERIALS_SUCCESS,
     isLoading: false,
-    payload,
+    payload
   };
 };
 
 const getAdMaterialsFailure = () => {
   return {
     type: GET_AD_METERIALS_FAILURE,
-    isLoading: false,
+    isLoading: false
   };
 };
 
 const getAdMaterialInfoRequest = () => {
   return {
     type: GET_MATERIAL_INFO_REQUEST,
-    isLoading: true,
+    isLoading: true
   };
 };
 
-const getAdMaterialInfoSuccess = (payload) => {
+const getAdMaterialInfoSuccess = payload => {
   return {
     type: GET_MATERIAL_INFO_SUCCESS,
     isLoading: false,
-    payload,
+    payload
   };
 };
 
 const getAdMaterialInfoFailure = () => {
   return {
     type: GET_MATERIAL_INFO_FAILURE,
-    isLoading: false,
+    isLoading: false
   };
 };
 
 const getIaTypeByIdRequest = () => {
   return {
     type: GET_IATYPE_BYID_REQUEST,
-    isLoading: true,
+    isLoading: true
   };
 };
 
-const getIaTypeByIdSuccess = (payload) => {
+const getIaTypeByIdSuccess = payload => {
   return {
     type: GET_IATYPE_BYID_SUCCESS,
     payload,
-    isLoading: false,
+    isLoading: false
   };
 };
 
-const getIaTypeByIdFailure = (payload) => {
+const getIaTypeByIdFailure = payload => {
   return {
     type: GET_IATYPE_BYID_FAILURE,
     payload,
-    isLoading: false,
+    isLoading: false
   };
 };
 
 const queryAllModelTypesRequest = () => {
   return {
     type: QUERY_ALL_MODELTYPES_REQUEST,
-    isLoading: true,
+    isLoading: true
   };
 };
 
-const queryAllModelTypesSuccess = (payload) => {
+const queryAllModelTypesSuccess = payload => {
   return {
     type: QUERY_ALL_MODELTYPES_SUCCESS,
     payload,
-    isLoading: false,
+    isLoading: false
   };
 };
 
 const queryAllModelTypesFailure = () => {
   return {
     type: QUERY_ALL_MODELTYPES_FAILURE,
-    isLoading: false,
+    isLoading: false
   };
 };
 
 const getAdMaterialByIdRequest = () => {
   return {
     type: GET_AD_METERIAL_BYID_REQUEST,
-    isLoading: true,
+    isLoading: true
   };
 };
 
 const getAdMaterialByIdSuccess = () => {
   return {
     type: GET_AD_METERIAL_BYID_SUCCESS,
-    isLoading: false,
+    isLoading: false
   };
 };
-  
+
 const getAdMaterialByIdFailure = () => {
   return {
     type: GET_AD_METERIAL_BYID_FAILURE,
-    isLoading: false,
+    isLoading: false
   };
 };
 
 const addMaterialRequest = () => {
   return {
     type: ADD_METERIAL_REQUEST,
-    isLoading: true,
+    isLoading: true
   };
 };
 
 const addMaterialSuccess = () => {
   return {
     type: ADD_METERIAL_SUCCESS,
-    isLoading: false,
+    isLoading: false
   };
 };
 
 const addMaterialFailure = () => {
   return {
     type: ADD_METERIAL_FAILURE,
-    isLoading: false,
+    isLoading: false
   };
 };
 
 const updateMaterialRequest = () => {
   return {
     type: UPDATE_METERIAL_REQUEST,
-    isLoading: true,
+    isLoading: true
   };
 };
 
 const updateMaterialSuccess = () => {
   return {
     type: UPDATE_METERIAL_SUCCESS,
-    isLoading: false,
+    isLoading: false
   };
 };
 
 const updateMaterialFailure = () => {
   return {
     type: UPDATE_METERIAL_FAILURE,
-    isLoading: false,
+    isLoading: false
   };
 };
 
 const deleteMaterialRequest = () => {
   return {
     type: DELETE_METERIAL_REQUEST,
-    isLoading: true,
+    isLoading: true
   };
 };
 
 const deleteMaterialSuccess = () => {
   return {
     type: DELETE_METERIAL_SUCCESS,
-    isLoading: false,
+    isLoading: false
   };
 };
 
 const deleteMaterialFailure = () => {
   return {
     type: DELETE_METERIAL_FAILURE,
-    isLoading: false,
+    isLoading: false
   };
 };
 
 const addMaterialFileRequest = () => {
   return {
     type: ADD_MATERIAL_FILE_REQUEST,
-    isLoading: true,
-  }
+    isLoading: true
+  };
 };
 
-const addMaterialFileSuccess = (payload) => {
+const addMaterialFileSuccess = payload => {
   return {
     type: ADD_MATERIAL_FILE_SUCCESS,
     isLoading: false,
-    payload,
-  }
+    payload
+  };
 };
 
 const addMaterialFileFailure = () => {
   return {
     type: ADD_MATERIAL_FILE_FAILURE,
-    isLoading: false,
-  }
+    isLoading: false
+  };
 };
 
-export const getAdMaterials = (params = {
+export const getAdMaterials = (
+  params = {
     currentPage: 1,
-    pageSize: 20,
-  }) => {
-    return async (dispatch) => {
-      dispatch(getAdMaterialsRequest());
-      try {
-        const response = await api.getAdMaterials(params);
-  
-        if (response.status === 200 && response.data.resCode === '00') {
-  
-          dispatch(getAdMaterialsSuccess(response.data));
-        } else {
-          dispatch(getAdMaterialsFailure(response.data));
-          Feedback.toast.error(response.data && response.data.resMsg);
-        }
-  
-        return response.data;
-      } catch (error) {
-        dispatch(getAdMaterialsFailure(error));
+    pageSize: 20
+  }
+) => {
+  return async dispatch => {
+    dispatch(getAdMaterialsRequest());
+    try {
+      const response = await api.getAdMaterials(params);
+
+      if (response.status === 200 && response.data.resCode === "00") {
+        dispatch(getAdMaterialsSuccess(response.data));
+      } else {
+        dispatch(getAdMaterialsFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
       }
-    };
-  };
 
-  export const queryAllModelTypes = (params) => {
-    return async (dispatch) => {
-      dispatch(queryAllModelTypesRequest());
-      try {
-        const response = await api.queryAllModelTypes(params);
-  
-        if (response.status === 200 && response.data.resCode === '00') {
-  
-          dispatch(queryAllModelTypesSuccess(response.data && response.data.interactionInfoList));
-        } else {
-          dispatch(queryAllModelTypesFailure(response.data));
-          Feedback.toast.error(response.data && response.data.resMsg);
-        }
-  
-        return response.data;
-      } catch(error) {
-        dispatch(queryAllModelTypesFailure(error));
+      return response.data;
+    } catch (error) {
+      dispatch(getAdMaterialsFailure(error));
+    }
+  };
+};
+
+export const queryAllModelTypes = params => {
+  return async dispatch => {
+    dispatch(queryAllModelTypesRequest());
+    try {
+      const response = await api.queryAllModelTypes(params);
+
+      if (response.status === 200 && response.data.resCode === "00") {
+        dispatch(
+          queryAllModelTypesSuccess(
+            response.data && response.data.interactionInfoList
+          )
+        );
+      } else {
+        dispatch(queryAllModelTypesFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
       }
-    };
+
+      return response.data;
+    } catch (error) {
+      dispatch(queryAllModelTypesFailure(error));
+    }
   };
+};
 
-  export const getIaTypeById = (params) => {
-    return async (dispatch) => {
-      dispatch(getIaTypeByIdRequest());
-      dispatch(saveFormData({
-        interactionTypeId: params && params.interactionId,
-      }));
-      try {
-
-        const response = await Promise.all([
-          api.getIaTypeById(params),
-          api.getIaModels({
-            currentPage: 1,
-            pageSize: 20,
-            // interactionTypeId: params && params.interactionId,
-          })
-        ]);
-        if (response[1] && response[1].status === 200 && response[1].data.resCode === '00') {
-          let template = response[0] && response[0].data && response[0].data.configInfo && JSON.parse(response[0].data.configInfo);
-          const { templateInfoList } = response[1].data;
-          template.properties.interactionTemplateId.enumNames = [];
-          template.properties.interactionTemplateId.enum = [];
-          Array.isArray(templateInfoList) && templateInfoList.forEach(ti => {
-            template.properties.interactionTemplateId.enumNames.push(ti.templateName);
+export const getIaTypeById = params => {
+  return async dispatch => {
+    dispatch(getIaTypeByIdRequest());
+    dispatch(
+      saveFormData({
+        interactionTypeId: params && params.interactionId
+      })
+    );
+    try {
+      const response = await Promise.all([
+        api.getIaTypeById(params),
+        api.getIaModels({
+          currentPage: 1,
+          pageSize: 20
+          // interactionTypeId: params && params.interactionId,
+        })
+      ]);
+      if (
+        response[1] &&
+        response[1].status === 200 &&
+        response[1].data.resCode === "00"
+      ) {
+        let template =
+          response[0] &&
+          response[0].data &&
+          response[0].data.configInfo &&
+          JSON.parse(response[0].data.configInfo);
+        const { templateInfoList } = response[1].data;
+        template.properties.interactionTemplateId.enumNames = [];
+        template.properties.interactionTemplateId.enum = [];
+        Array.isArray(templateInfoList) &&
+          templateInfoList.forEach(ti => {
+            template.properties.interactionTemplateId.enumNames.push(
+              ti.templateName
+            );
             template.properties.interactionTemplateId.enum.push(ti.templateId);
           });
-          template.properties.interactionTypeId.enum = [params.interactionId];
-          template.properties.interactionTypeId.enumNames = [params.interactionTypeName];
-          dispatch(getIaTypeByIdSuccess(template));
-          // dispatch(updateFormSchema(params));
-        } else {
-          dispatch(getIaTypeByIdFailure(response.data));
-          Feedback.toast.error(response.data && response.data.resMsg);
-        }
-  
-        return response.data;
-      } catch (error) {
-        dispatch(getIaTypeByIdFailure(error));
+        template.properties.interactionTypeId.enum = [params.interactionId];
+        template.properties.interactionTypeId.enumNames = [
+          params.interactionTypeName
+        ];
+        dispatch(getIaTypeByIdSuccess(template));
+        // dispatch(updateFormSchema(params));
+      } else {
+        dispatch(getIaTypeByIdFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
       }
-    };
-  };
-  
-  export const addMaterial = (params) => {
-    return async (dispatch) => {
-      dispatch(addMaterialRequest());
-      try {
-        const response = await api.addMaterial(params);
-  
-        if (response.status === 200 && response.data.resCode === '00') {
-  
-          dispatch(addMaterialSuccess(response.data));
-          dispatch(addMaterialToggle());
-          dispatch(getAdMaterials());
-          Feedback.toast.show(response.data && response.data.resMsg);
-        } else {
-          dispatch(addMaterialFailure(response.data));
-          Feedback.toast.error(response.data && response.data.resMsg);
-        }
-  
-        return response.data;
-      } catch(error) {
-        dispatch(addMaterialFailure());
-      }
-    };
-  };
-  
-  export const updateMaterial = (params) => {
-    return async (dispatch) => {
-      dispatch(updateMaterialRequest());
-      try {
-        const response = await api.updateMaterial(params);
-  
-        if (response.status === 200 && response.data.resCode === '00') {
-  
-          dispatch(updateMaterialSuccess(response.data));
-          // dispatch(hideAddModelModal());
-          dispatch(getAdMaterials());
-          Feedback.toast.show(response.data && response.data.resMsg);
-        } else {
-          dispatch(updateMaterialFailure(response.data));
-          Feedback.toast.error(response.data && response.data.resMsg);
-        }
-  
-        return response.data;
-      } catch(error) {
-        dispatch(updateMaterialFailure());
-      }
-    };
-  };
-  
-  export const deleteMaterial = (params) => {
-    return async (dispatch) => {
-      dispatch(deleteMaterialRequest());
-      try {
-        const response = await api.deleteMaterial(params);
-  
-        if (response.status === 200 && response.data.resCode === '00') {
-  
-          dispatch(deleteMaterialSuccess(response.data));
-          dispatch(deleteMaterialModalToggle());
-          dispatch(getAdMaterials());
-          Feedback.toast.show(response.data && response.data.resMsg);
-        } else {
-          dispatch(deleteMaterialFailure(response.data));
-          Feedback.toast.error(response.data && response.data.resMsg);
-        }
-  
-        return response.data;
-      } catch(error) {
-        dispatch(deleteMaterialFailure());
-      }
-    };
-  };
 
-export const addMaterialToggle = (payload) => {
-  return (dispatch) => {
+      return response.data;
+    } catch (error) {
+      dispatch(getIaTypeByIdFailure(error));
+    }
+  };
+};
+
+export const addMaterial = params => {
+  return async dispatch => {
+    dispatch(addMaterialRequest());
+    try {
+      const response = await api.addMaterial(params);
+
+      if (response.status === 200 && response.data.resCode === "00") {
+        dispatch(addMaterialSuccess(response.data));
+        dispatch(addMaterialToggle());
+        dispatch(getAdMaterials());
+        Feedback.toast.show(response.data && response.data.resMsg);
+      } else {
+        dispatch(addMaterialFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch (error) {
+      dispatch(addMaterialFailure());
+    }
+  };
+};
+
+export const updateMaterial = params => {
+  return async dispatch => {
+    dispatch(updateMaterialRequest());
+    try {
+      const response = await api.updateMaterial(params);
+
+      if (response.status === 200 && response.data.resCode === "00") {
+        dispatch(updateMaterialSuccess(response.data));
+        // dispatch(hideAddModelModal());
+        dispatch(getAdMaterials());
+        Feedback.toast.show(response.data && response.data.resMsg);
+      } else {
+        dispatch(updateMaterialFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch (error) {
+      dispatch(updateMaterialFailure());
+    }
+  };
+};
+
+export const deleteMaterial = params => {
+  return async dispatch => {
+    dispatch(deleteMaterialRequest());
+    try {
+      const response = await api.deleteMaterial(params);
+
+      if (response.status === 200 && response.data.resCode === "00") {
+        dispatch(deleteMaterialSuccess(response.data));
+        dispatch(deleteMaterialModalToggle());
+        dispatch(getAdMaterials());
+        Feedback.toast.show(response.data && response.data.resMsg);
+      } else {
+        dispatch(deleteMaterialFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch (error) {
+      dispatch(deleteMaterialFailure());
+    }
+  };
+};
+
+export const addMaterialToggle = payload => {
+  return dispatch => {
     addMaterialSwitch = !addMaterialSwitch;
-    if (payload && ['read', 'update'].indexOf(payload.opType) !== -1) {
-      dispatch(getAdMaterialInfo({creativeId: payload && payload.creativeId}));
+    if (payload && ["read", "update"].indexOf(payload.opType) !== -1) {
+      dispatch(
+        getAdMaterialInfo({ creativeId: payload && payload.creativeId })
+      );
     }
     if (addMaterialSwitch) {
-      dispatch(getIaTypeById({interactionId: payload && payload.interactionTypeId || payload.interactionId, interactionTypeName: payload.interactionTypeName}));
+      dispatch(
+        getIaTypeById({
+          interactionId:
+            (payload && payload.interactionTypeId) || payload.interactionId,
+          interactionTypeName: payload.interactionTypeName
+        })
+      );
       dispatch(showAddMaterial(payload));
     } else {
       dispatch(hideAddMaterial());
     }
   };
-};  
+};
 
-export const deleteMaterialModalToggle = (payload) => {
-  return (dispatch) => {
+export const deleteMaterialModalToggle = payload => {
+  return dispatch => {
     deleteMaterialModalSwitch = !deleteMaterialModalSwitch;
     if (deleteMaterialModalSwitch) {
       dispatch(showDeleteMaterialModal(payload));
@@ -484,7 +507,7 @@ export const deleteMaterialModalToggle = (payload) => {
 };
 
 export const newMaterialDropDownToggle = () => {
-  return (dispatch) => {
+  return dispatch => {
     newMaterialDropDownSwitch = !newMaterialDropDownSwitch;
     if (newMaterialDropDownSwitch) {
       dispatch(showNewMaterialDropDown());
@@ -494,15 +517,21 @@ export const newMaterialDropDownToggle = () => {
   };
 };
 
-export const addMaterialFile = (params) => {
-  return async (dispatch) => {
+export const addMaterialFile = params => {
+  return async dispatch => {
     dispatch(addMaterialFileRequest());
     try {
-      const response = await api.addMaterialFile({file: params && params.file });
+      const response = await api.addMaterialFile({
+        file: params && params.file
+      });
 
-      if (response.status === 200 && response.data.resCode === '00') {
-
-        dispatch(addMaterialFileSuccess({...response.data, _type: params && params.type}));
+      if (response.status === 200 && response.data.resCode === "00") {
+        dispatch(
+          addMaterialFileSuccess({
+            ...response.data,
+            _type: params && params.type
+          })
+        );
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {
         dispatch(addMaterialFileFailure(response.data));
@@ -510,28 +539,33 @@ export const addMaterialFile = (params) => {
       }
 
       return response.data;
-    } catch(error) {
+    } catch (error) {
       dispatch(addMaterialFileFailure());
     }
   };
 };
 
-export const saveFormData = (payload) => {
+export const saveFormData = payload => {
   return {
     type: SAVE_FORM_DATA,
-    payload,
+    payload
   };
 };
 
-export const getAdMaterialInfo = (params) => {
-  return async (dispatch) => {
-    dispatch(getAdMaterialsRequest());
+export const getAdMaterialInfo = params => {
+  return async dispatch => {
+    dispatch(getAdMaterialInfoRequest());
     try {
       const response = await api.getAdMaterialInfo(params);
 
-      if (response.status === 200 && response.data.resCode === '00') {
-
-        dispatch(getAdMaterialInfoSuccess(response.data && response.data.creativeContent && JSON.parse(response.data.creativeContent)) || {});
+      if (response.status === 200 && response.data.resCode === "00") {
+        dispatch(
+          getAdMaterialInfoSuccess(
+            response.data &&
+              response.data.creativeContent &&
+              JSON.parse(response.data.creativeContent)
+          ) || {}
+        );
       } else {
         dispatch(getAdMaterialInfoFailure(response.data));
         Feedback.toast.error(response.data && response.data.resMsg);
@@ -540,14 +574,13 @@ export const getAdMaterialInfo = (params) => {
       return response.data;
     } catch (error) {
       dispatch(getAdMaterialInfoFailure(error));
-    };
-  }
+    }
+  };
 };
 
-export const setCurrentPage = (payload) => {
+export const setCurrentPage = payload => {
   return {
     type: SET_CURRENT_PAGE,
-    payload,
-  }
+    payload
+  };
 };
-    
