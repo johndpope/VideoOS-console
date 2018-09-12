@@ -312,6 +312,8 @@ export const updateType = (params) => {
       const response = await api.updateType(params);
       if (response.status === 200 && response.data.resCode === '00') {
         dispatch(updateTypeSuccess(response.data));
+        dispatch(addTypeToggle());
+        Feedback.toast.show(response.data && response.data.resMsg);
       } else {
         dispatch(updateTypeFailure(response.data));
         Feedback.toast.error(response.data && response.data.resMsg);

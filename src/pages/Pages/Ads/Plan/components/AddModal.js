@@ -156,7 +156,7 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
                   float: 'left'
                 }}>
                   <Row>
-                    <Col md='2'>
+                    <Col md='3'>
                       <Input 
                         onChange={e => {
                           setFormData({
@@ -166,7 +166,7 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
                       />
                     </Col>
                     <Col md='1'>分</Col>
-                    <Col md='2'>
+                    <Col md='3'>
                       <Input 
                         onChange={e => {
                           setFormData({
