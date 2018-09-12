@@ -9,12 +9,15 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
   const { opType } = record || {};
   const isRead = opType === 'read';
   const isUpdate = opType === 'update';
-  let launchTimes = formData && formData.launchTimes || [];
+  let launchTimes = (formData && formData.launchTimes) || (formData.launchTime && formData.launchTime.split(',')) || [];
   if (formData && formData.launchDateStart && typeof formData.launchDateStart === 'string') {
     formData.launchDateStart = moment(formData.launchDateStart);
   }
   if (formData && formData.launchDateEnd && typeof formData.launchDateEnd === 'string') {
     formData.launchDateEnd = moment(formData.launchDateEnd);
+  }
+  if (formData) {
+    formData.launchTimeType = String(formData.launchTimeType);
   }
   return (
   <Fragment>
@@ -310,7 +313,6 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
                   </InputGroupText>
                 </InputGroupAddon>
                 <DatePicker 
-                  selected={formData && formData.launchTime}
                   showTimeSelect
                   showTimeSelectOnly
                   timeIntervals={5}
@@ -384,7 +386,9 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
         <Button onClick={toggle}>取消</Button>
         <Button type="primary" onClick={() => {
           if (isUpdate) {
-            formData.launchTime = formData.launchTimes.join(',');
+            if (formData.launchTimes) {
+              formData.launchTime = formData.launchTimes.join(',');
+            }
             delete formData.launchTimes;
             updatePlan(formData);
           } else if(isRead) {
