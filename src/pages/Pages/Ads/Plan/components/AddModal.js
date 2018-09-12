@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { Row, Col, InputGroup, InputGroupAddon, InputGroupText, Input, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import { Button, Icon } from '@icedesign/base';
+import { Button, Icon, Feedback } from '@icedesign/base';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -10,7 +10,12 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
   const isRead = opType === 'read';
   const isUpdate = opType === 'update';
   let launchTimes = formData && formData.launchTimes || [];
-
+  if (formData && formData.launchDateStart && typeof formData.launchDateStart === 'string') {
+    formData.launchDateStart = moment(formData.launchDateStart);
+  }
+  if (formData && formData.launchDateEnd && typeof formData.launchDateEnd === 'string') {
+    formData.launchDateEnd = moment(formData.launchDateEnd);
+  }
   return (
   <Fragment>
     <Modal
@@ -318,8 +323,14 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
                   placeholderText='请添加投放时间'
                 />
                 <Button onClick={() => {
-                  if (!launchTimes.includes(formData.launchTime.toString())) {
-                    launchTimes.push(formData.launchTime.toString());
+                  const { launchTime } = formData;
+                  if (!launchTime) {
+                    Feedback.toast.error('请选择投放时间');
+                    return;
+                  }
+                  const ltStr = `${launchTime.hours() > 9 ? launchTime.hours() : '0' + launchTime.hours()}:${launchTime.minutes() > 9 ? launchTime.minutes() : '0' + launchTime.minutes()}`;
+                  if (!launchTimes.includes(ltStr)) {
+                    launchTimes.push(ltStr);
                     setFormData({launchTimes});
                   }
                 }}>
@@ -373,10 +384,16 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
         <Button onClick={toggle}>取消</Button>
         <Button type="primary" onClick={() => {
           if (isUpdate) {
+            formData.launchTime = formData.launchTimes.join(',');
+            delete formData.launchTimes;
             updatePlan(formData);
           } else if(isRead) {
             toggle && toggle();
           } else {
+            formData.launchTime = formData.launchTimes.join(',');
+            delete formData.launchTimes;
+            if (formData.v_minutes) delete formData.v_minutes;
+            if (formData.v_seconds) delete formData.v_seconds;
             addPlan(formData);
           }
         }}>{ isUpdate ? '确认修改' : (isRead ? '确认' : '确认新增')}</Button>

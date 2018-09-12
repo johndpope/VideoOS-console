@@ -280,16 +280,9 @@ export const addPlan = (params) => {
     dispatch(addPlanRequest());
     try {
       const _params = Object.assign({}, params);
-      if (_params.launchTimeType === '0') {
-
-      }
-      if (_params.launchTimeType === '1') {
-        
-      }
-      if (_params.launchTimeType === '2') {
-        _params.launchDateStart = _params.launchDateStart.toString();
-        _params.launchDateEnd = _params.launchDateEnd.toString();
-        _params.launchTime = `${_params.launchTime.hour()}:${_params.launchTime.minutes() < 10 ? ('0' + _params.launchTime.minutes()) : _params.launchTime.minutes()}`
+      if (_params.launchTimeType === '0' || _params.launchTimeType === '2') {
+        _params.launchDateStart = `${_params.launchDateStart.years()}-${_params.launchDateStart.months() > 9 ? _params.launchDateStart.months() : '0' + _params.launchDateStart.months()}-${_params.launchDateStart.days() > 9 ? _params.launchDateStart.days() : '0' + _params.launchDateStart.days()}`;
+        _params.launchDateEnd = `${_params.launchDateEnd.years()}-${_params.launchDateEnd.months() > 9 ? _params.launchDateEnd.months() : '0' + _params.launchDateEnd.months()}-${_params.launchDateEnd.days() > 9 ? _params.launchDateEnd.days() : '0' + _params.launchDateEnd.days()}`;
       }
       
       const response = await api.addPlan(_params);
