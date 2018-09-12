@@ -7,6 +7,7 @@ const AddModel = ({shouldOpen, toggle, addModel, updateModel, uploadModelFile, u
   const { opType } = record || {};
   const isRead = opType === 'read';
   const isUpdate = opType === 'update';
+
   return (
   <Fragment>
     <Modal
@@ -32,6 +33,7 @@ const AddModel = ({shouldOpen, toggle, addModel, updateModel, uploadModelFile, u
               setFormData({interactionTypeId: e.target.value});
             }}
           >
+            <option value="default">请选择</option>
             {
               modelTypes && Array.isArray(modelTypes) && modelTypes.length > 0 && modelTypes.map((mt, idx) => (
                 <option key={idx} value={mt.interactionId}>{mt.interactionTypeName}</option>
