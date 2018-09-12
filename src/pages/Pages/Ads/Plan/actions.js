@@ -360,7 +360,7 @@ export const addPlanModalToggle = (payload) => {
       if (payload && payload.opType) {
         dispatch(getAdPlanInfo({launchPlanId: payload && payload.launchPlanId}));
       }
-      // dispatch(getAdMaterials());
+      dispatch(getAdMaterials());
       dispatch(setFormData(payload));
       dispatch(showAddPlan(payload));
     } else {
