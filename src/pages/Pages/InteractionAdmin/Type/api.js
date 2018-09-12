@@ -53,6 +53,10 @@ export async function addType(params) {
 };
 
 export async function updateType(params) {
+  let data = new FormData();
+  for (let key in params) {
+    data.append(key, params[key]);
+  }
   return axios({
     headers: {
       token: getAuthority(),
@@ -60,6 +64,6 @@ export async function updateType(params) {
     },
     url: `${OS_API}/interactionType/modify`,
     method: 'post',
-    data: params,
+    data,
   })
 };

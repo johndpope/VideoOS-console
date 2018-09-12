@@ -92,7 +92,10 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
             disabled={isRead ? 'disabled' : false}
             defaultValue={isRead || isUpdate ? formData && `${formData.launchTimeType}` : ''}
             onChange={e => {
-              setFormData({launchTimeType: e.target.value});
+              setFormData({
+                launchTimeType: e.target.value,
+                launchTimes: [],
+              });
             }}
           >
             <option value='default'>请选择</option>
@@ -186,19 +189,23 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
                   </Row>
                 </span>
               </InputGroup>
-              {
-                launchTimes && launchTimes.length > 0 && launchTimes.map((lt, idx) =>(
-                  <div key={idx}>
-                    <span>{lt}</span>
-                    <Button onClick={() => {
-                      launchTimes.splice(idx, 1);
-                      setFormData({launchTimes});
-                    }}>
-                      <Icon type="delete"></Icon>
-                    </Button>
-                  </div>
-                ))
-              }
+              <div style={{
+                padding: '0 0 1em 6em'
+              }}>
+                {
+                  launchTimes && launchTimes.length > 0 && launchTimes.map((lt, idx) =>(
+                    <div key={idx}>
+                      <span>{lt}</span>
+                      <Button onClick={() => {
+                        launchTimes.splice(idx, 1);
+                        setFormData({launchTimes});
+                      }}>
+                        <Icon type="ashbin"></Icon>
+                      </Button>
+                    </div>
+                  ))
+                }
+              </div>
               <InputGroup className="mb-4">
                 <InputGroupAddon addonType="prepend">
                   <InputGroupText>
@@ -319,19 +326,23 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
                   <Icon type="add"></Icon>
                 </Button>
               </InputGroup>
-              {
-                launchTimes && launchTimes.length > 0 && launchTimes.map((lt, idx) =>(
-                  <div key={idx}>
-                    <span>{lt}</span>
-                    <Button onClick={() => {
-                      launchTimes.splice(idx, 1);
-                      setFormData({launchTimes});
-                    }}>
-                      <Icon type="delete"></Icon>
-                    </Button>
-                  </div>
-                ))
-              }
+              <div style={{
+                padding: '0 0 1em 6em'
+              }}>
+                {
+                  launchTimes && launchTimes.length > 0 && launchTimes.map((lt, idx) =>(
+                    <div key={idx}>
+                      <span>{lt}</span>
+                      <Button onClick={() => {
+                        launchTimes.splice(idx, 1);
+                        setFormData({launchTimes});
+                      }}>
+                        <Icon type="ashbin"></Icon>
+                      </Button>
+                    </div>
+                  ))
+                }
+              </div>
               <InputGroup className="mb-4">
                 <InputGroupAddon addonType="prepend">
                   <InputGroupText>

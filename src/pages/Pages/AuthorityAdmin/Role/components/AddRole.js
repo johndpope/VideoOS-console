@@ -3,7 +3,7 @@ import { Form, FormGroup, InputGroup, InputGroupAddon, InputGroupText, Input, La
 import { Button } from '@icedesign/base';
 
 const AddRole = ({shouldOpen, toggle, addRole, updateRole, roleAuthorities, record, formData, setFormData}) => {
-  let launchPlanName = formData && formData.launchPlanName || null;
+  let roleName = formData && formData.roleName || null;
   const { opType } = record || {};
   const isRead = opType === 'read';
   const isUpdate = opType === 'update';
@@ -30,7 +30,7 @@ const AddRole = ({shouldOpen, toggle, addRole, updateRole, roleAuthorities, reco
             disabled={isRead ? 'disabled' : false}
             defaultValue={isRead || isUpdate ? record && record.roleName : ''}
             onChange={e => {
-              setFormData({launchPlanName: e.target.value});
+              setFormData({roleName: e.target.value});
             }}
           />
         </InputGroup>
@@ -46,9 +46,6 @@ const AddRole = ({shouldOpen, toggle, addRole, updateRole, roleAuthorities, reco
             <FormGroup key={idx} row>
               <Col>{key}</Col>
               <Col>
-                <Label htmlFor={`ckb_${idx}_read`}>
-                  可读
-                </Label> 
                   <Input type="radio"
                     name={`ckb_${idx}`}
                     id={`ckb_${idx}_read`}
@@ -61,11 +58,11 @@ const AddRole = ({shouldOpen, toggle, addRole, updateRole, roleAuthorities, reco
                       setFormData({_roleAuthorities});
                     }}
                   />
+                  <Label htmlFor={`ckb_${idx}_read`}>
+                    可读
+                  </Label> 
               </Col>
               <Col>
-                <Label htmlFor={`ckb_${idx}_write`}>
-                  可写
-                </Label> 
                   <Input type="radio"
                     name={`ckb_${idx}`}
                     id={`ckb_${idx}_write`}
@@ -78,6 +75,9 @@ const AddRole = ({shouldOpen, toggle, addRole, updateRole, roleAuthorities, reco
                       setFormData({_roleAuthorities});
                     }}
                   />
+                  <Label htmlFor={`ckb_${idx}_write`}>
+                    可写
+                  </Label> 
               </Col>        
             </FormGroup>
           ))
@@ -89,7 +89,7 @@ const AddRole = ({shouldOpen, toggle, addRole, updateRole, roleAuthorities, reco
           if (isUpdate) {
             updateRole({
               roleId: record && record.roleId || '',
-              roleName: launchPlanName,
+              roleName,
               nodeIdList: Object.keys(_roleAuthorities).filter(key => {
                 return _roleAuthorities[key].read || _roleAuthorities[key].write
               }),
@@ -99,7 +99,7 @@ const AddRole = ({shouldOpen, toggle, addRole, updateRole, roleAuthorities, reco
           } else {
 
             addRole({
-              launchPlanName,
+              roleName,
               nodeIdList: Object.keys(_roleAuthorities).map(key => {
                 if (_roleAuthorities[key].read) {
                   return roleAuthorities[key].read;

@@ -102,7 +102,8 @@ const AddType = ({shouldOpen, toggle, addType, updateType, record, setFormData, 
           if (isUpdate) {
             updateType({
               interactionTypeId: record && record.interactionTypeId,
-              ...formData,
+              interactionTypeName: formData.interactionTypeName,
+              file: formData.file,
             });
           } else if(isRead) {
             toggle && toggle();
