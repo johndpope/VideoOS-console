@@ -98,7 +98,7 @@ const AddMaterial = ({shouldOpen, toggle, addPlan, updatePlan, formData, setForm
           </InputGroupAddon>
           <Input type="select"
             disabled={isRead ? 'disabled' : false}
-            defaultValue={isRead || isUpdate ? formData && `${formData.launchTimeType}` : ''}
+            defaultValue={isRead || isUpdate ? formData && formData.launchTimeType : ''}
             onChange={e => {
               setFormData({
                 launchTimeType: e.target.value,

@@ -46,6 +46,9 @@ const AddRole = ({shouldOpen, toggle, addRole, updateRole, roleAuthorities, reco
             <FormGroup key={idx} row>
               <Col>{key}</Col>
               <Col>
+                  <Label htmlFor={`ckb_${idx}_read`}>
+                    可读
+                  </Label> 
                   <Input type="radio"
                     name={`ckb_${idx}`}
                     id={`ckb_${idx}_read`}
@@ -58,11 +61,11 @@ const AddRole = ({shouldOpen, toggle, addRole, updateRole, roleAuthorities, reco
                       setFormData({_roleAuthorities});
                     }}
                   />
-                  <Label htmlFor={`ckb_${idx}_read`}>
-                    可读
-                  </Label> 
               </Col>
               <Col>
+                  <Label htmlFor={`ckb_${idx}_write`}>
+                    可写
+                  </Label> 
                   <Input type="radio"
                     name={`ckb_${idx}`}
                     id={`ckb_${idx}_write`}
@@ -75,9 +78,6 @@ const AddRole = ({shouldOpen, toggle, addRole, updateRole, roleAuthorities, reco
                       setFormData({_roleAuthorities});
                     }}
                   />
-                  <Label htmlFor={`ckb_${idx}_write`}>
-                    可写
-                  </Label> 
               </Col>        
             </FormGroup>
           ))
