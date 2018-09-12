@@ -1,24 +1,26 @@
-import React, { Fragment } from 'react';
-import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import { Button } from '@icedesign/base';
+import React, { Fragment } from "react";
+import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+import { Button } from "@icedesign/base";
 
-const DeleteAccount = ({shouldOpen, toggle, deleteAccount, record}) => (
+const DeleteAccount = ({ shouldOpen, toggle, deleteAccount, record }) => (
   <Fragment>
-    <Modal
-      isOpen={shouldOpen}  
-      toggle={toggle}
-    >
+    <Modal isOpen={shouldOpen} toggle={toggle}>
       <ModalHeader toggle={toggle}>删除账号</ModalHeader>
       <ModalBody>
-        <p>
-          确定删除该账号
-        </p>  
+        <p>确定删除该账号</p>
       </ModalBody>
       <ModalFooter>
         <Button onClick={toggle}>取消</Button>
-        <Button type="primary" onClick={() => {deleteAccount(record)}}>确认</Button>
+        <Button
+          type="primary"
+          onClick={() => {
+            deleteAccount({ userId: record.userId });
+          }}
+        >
+          确认
+        </Button>
       </ModalFooter>
-    </Modal>  
+    </Modal>
   </Fragment>
 );
 
