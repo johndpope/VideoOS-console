@@ -82,7 +82,7 @@ const AddType = ({shouldOpen, toggle, addType, updateType, record, setFormData, 
                     </Button>
                   ) : <Input 
                     type="file" 
-                    accept="application/x-lua"
+                    accept="text/x-java"
                     styles={styles.file_ipt} 
                     onChange={e => {
                       setFormData({

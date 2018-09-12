@@ -281,8 +281,8 @@ export const addPlan = (params) => {
     try {
       const _params = Object.assign({}, params);
       if (_params.launchTimeType === '0' || _params.launchTimeType === '2') {
-        _params.launchDateStart = `${_params.launchDateStart.years()}-${_params.launchDateStart.months() > 9 ? _params.launchDateStart.months() : '0' + _params.launchDateStart.months()}-${_params.launchDateStart.days() > 9 ? _params.launchDateStart.days() : '0' + _params.launchDateStart.days()}`;
-        _params.launchDateEnd = `${_params.launchDateEnd.years()}-${_params.launchDateEnd.months() > 9 ? _params.launchDateEnd.months() : '0' + _params.launchDateEnd.months()}-${_params.launchDateEnd.days() > 9 ? _params.launchDateEnd.days() : '0' + _params.launchDateEnd.days()}`;
+        _params.launchDateStart = `${_params.launchDateStart.years()}-${_params.launchDateStart.months() > 8 ? _params.launchDateStart.months() + 1 : '0' + (_params.launchDateStart.months() + 1)}-${_params.launchDateStart.date() > 9 ? _params.launchDateStart.date() : '0' + _params.launchDateStart.date()}`;
+        _params.launchDateEnd = `${_params.launchDateEnd.years()}-${_params.launchDateEnd.months() > 8 ? _params.launchDateEnd.months() +1 : '0' + (_params.launchDateEnd.months() + 1)}-${_params.launchDateEnd.date() > 9 ? _params.launchDateEnd.date() : '0' + _params.launchDateEnd.date()}`;
       }
       
       const response = await api.addPlan(_params);
