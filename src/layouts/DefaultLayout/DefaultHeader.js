@@ -8,8 +8,6 @@ import injectReducer from 'utils/injectReducer';
 import { AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
 import { userLogout, resetPasswordModalToggle, resetPassword, isTokenValid } from './actions';
 import reducer from './reducer';
-import logo from '../../assets/img/brand/logo.svg';
-import sygnet from '../../assets/img/brand/sygnet.svg';
 import PasswordReset from './PasswordReset';
 
 const propTypes = {
@@ -37,10 +35,7 @@ class DefaultHeader extends Component {
           resetPassword={resetPassword}
         />
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
-        <AppNavbarBrand
-          full={{ src: logo, width: 89, height: 25, alt: 'os-console Logo' }}
-          minimized={{ src: sygnet, width: 30, height: 30, alt: 'os-console Logo' }}
-        />
+        <AppNavbarBrand />
         <AppSidebarToggler className="d-md-down-none" display="lg" />
         <Nav className="ml-auto" navbar>
           <AppHeaderDropdown direction="down">
