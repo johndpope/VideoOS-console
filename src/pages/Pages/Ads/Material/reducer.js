@@ -91,12 +91,12 @@ function adMaterialReducer(state = initialState, action) {
       return Object.assign({}, state, {
         isLoading: action.isLoading
       });
-    case GET_MATERIAL_INFO_SUCCESS:
-      state.formData = action.payload || {};
+    case GET_MATERIAL_INFO_REQUEST:
       return Object.assign({}, state, {
         isLoading: action.isLoading
       });
-    case GET_MATERIAL_INFO_REQUEST:
+    case GET_MATERIAL_INFO_SUCCESS:
+      state.formData = action.payload || {};
       return Object.assign({}, state, {
         materialResult: action.payload.creativeInfoList || [],
         isLoading: action.isLoading
