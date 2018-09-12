@@ -14,6 +14,7 @@ import {
   getAdMaterials,
   addMaterialToggle,
   addMaterial,
+  updateMaterial,
   deleteMaterial,
   newMaterialDropDownToggle,
   deleteMaterialModalToggle,
@@ -43,6 +44,7 @@ class AdMaterial extends Component {
       adMaterial,
       addMaterialToggle,
       addMaterial,
+      updateMaterial,
       deleteMaterial,
       newMaterialDropDownToggle,
       deleteMaterialModalToggle,
@@ -61,6 +63,7 @@ class AdMaterial extends Component {
           shouldOpen={adMaterial && adMaterial.shouldAddMaterialOpen}
           addMaterialFile={addMaterialFile}
           addMaterial={addMaterial}
+          updateMaterial={updateMaterial}
           adMaterial={adMaterial}
           saveFormData={saveFormData}
           creativeIdList={adMaterial && adMaterial.creativeIdList}
@@ -138,6 +141,7 @@ const mapDispatchToProps = {
   queryAllModelTypes,
   addMaterialFile,
   addMaterial,
+  updateMaterial,
   saveFormData,
   getAdMaterials,
   deleteMaterial,
