@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { Form, InputGroup, InputGroupAddon, InputGroupText, Input, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import { Button, Icon } from '@icedesign/base';
+import { Button } from '@icedesign/base';
 
 import styles from './styles';
 
@@ -71,7 +71,7 @@ const AddType = ({shouldOpen, toggle, addType, updateType, record, setFormData, 
               </InputGroupAddon>
               <span>
                 {
-                  !(formData && formData.file || showFileIpt) && fileName ? (
+                  !(formData && formData.file || showFileIpt) && fileName && isUpdate ? (
                     <Button
                       onClick={() => {
                         setFileIptState({showFileIpt: true});
@@ -82,7 +82,7 @@ const AddType = ({shouldOpen, toggle, addType, updateType, record, setFormData, 
                     </Button>
                   ) : <Input 
                     type="file" 
-                    accept="*.txt"
+                    accept="application/x-lua"
                     styles={styles.file_ipt} 
                     onChange={e => {
                       setFormData({

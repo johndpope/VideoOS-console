@@ -59,27 +59,6 @@ const AddMaterial = ({shouldOpen, toggle, creativeIdList, addMaterial, updateMat
           ) : null
         }
       </ModalBody>
-      {/*<ModalFooter>
-        <Button onClick={toggle}>取消</Button>
-        <Button type="primary" onClick={() => {
-          if (isUpdate) {
-            updateMaterial({
-              interactionTemplateId: record && record.interactionTemplateId,
-              interactionTypeId,
-              interactionTemplateName,
-              ...uploadMaterialFileInfo,
-            });
-          } else if(isRead) {
-            toggle && toggle();
-          } else {
-            addMaterial({
-              interactionTypeId,
-              interactionTemplateName,
-              ...uploadMaterialFileInfo,
-            });
-          }
-        }}>{ isUpdate ? '确认修改' : (isRead ? '确认' : '确认新增')}</Button>
-      </ModalFooter>*/}
     </Modal>  
   </Fragment>
 )};
