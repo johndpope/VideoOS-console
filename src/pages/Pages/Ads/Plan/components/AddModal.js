@@ -196,55 +196,57 @@ const AddMaterial = ({
                 <InputGroupAddon addonType="prepend">
                   <InputGroupText>投放时间</InputGroupText>
                 </InputGroupAddon>
-                <span
-                  style={{
-                    flex: "1 1 auto",
-                    marginLeft: "8px",
-                    width: "1%",
-                    float: "left"
-                  }}
-                >
-                  <Row>
-                    <Col md="3">
-                      <Input
-                        onChange={e => {
-                          setFormData({
-                            v_minutes: e.target.value
-                          });
-                        }}
-                      />
-                    </Col>
-                    <Col md="1">分</Col>
-                    <Col md="3">
-                      <Input
-                        onChange={e => {
-                          setFormData({
-                            v_seconds: e.target.value
-                          });
-                        }}
-                      />
-                    </Col>
-                    <Col md="1">秒</Col>
-                    <Col md="1">
-                      <Button
-                        onClick={() => {
-                          if (
-                            !launchTimes.includes(
-                              `${formData.v_minutes}:${formData.v_seconds}`
-                            )
-                          ) {
-                            launchTimes.push(
-                              `${formData.v_minutes}:${formData.v_seconds}`
-                            );
-                            setFormData({ launchTimes });
-                          }
-                        }}
-                      >
-                        <Icon type="add" />
-                      </Button>
-                    </Col>
-                  </Row>
-                </span>
+                {!isRead ? (
+                  <span
+                    style={{
+                      flex: "1 1 auto",
+                      marginLeft: "8px",
+                      width: "1%",
+                      float: "left"
+                    }}
+                  >
+                    <Row>
+                      <Col md="3">
+                        <Input
+                          onChange={e => {
+                            setFormData({
+                              v_minutes: e.target.value
+                            });
+                          }}
+                        />
+                      </Col>
+                      <Col md="1">分</Col>
+                      <Col md="3">
+                        <Input
+                          onChange={e => {
+                            setFormData({
+                              v_seconds: e.target.value
+                            });
+                          }}
+                        />
+                      </Col>
+                      <Col md="1">秒</Col>
+                      <Col md="1">
+                        <Button
+                          onClick={() => {
+                            if (
+                              !launchTimes.includes(
+                                `${formData.v_minutes}:${formData.v_seconds}`
+                              )
+                            ) {
+                              launchTimes.push(
+                                `${formData.v_minutes}:${formData.v_seconds}`
+                              );
+                              setFormData({ launchTimes });
+                            }
+                          }}
+                        >
+                          <Icon type="add" />
+                        </Button>
+                      </Col>
+                    </Row>
+                  </span>
+                ) : null}
               </InputGroup>
               <div
                 style={{

@@ -44,159 +44,165 @@ import {
   GET_MATERIAL_INFO_REQUEST,
   GET_MATERIAL_INFO_SUCCESS,
   GET_MATERIAL_INFO_FAILURE,
-  SET_CURRENT_PAGE,
-} from './constants';
+  SET_CURRENT_PAGE
+} from "./constants";
 
 // The initial state of the material
 const initialState = {
   formData: {},
-  creativeIdList: [],
+  creativeIdList: []
 };
 
 function adMaterialReducer(state = initialState, action) {
-  switch(action.type) {
+  switch (action.type) {
     case SHOW_ADD_MATERIAL:
     case HIDE_ADD_MATERIAL:
       return Object.assign({}, state, {
         shouldAddMaterialOpen: action.shouldOpen,
+        record: action.payload
       });
     case SHOW_DELETE_MATERIAL_MODAL:
     case HIDE_DELETE_MATERIAL_MODAL:
       return Object.assign({}, state, {
-        record: {creativeId: action.payload && action.payload.creativeId || ''},
-        shouldDeleteMaterialOpen: action.shouldOpen,
+        record: {
+          creativeId: (action.payload && action.payload.creativeId) || ""
+        },
+        shouldDeleteMaterialOpen: action.shouldOpen
       });
     case SHOW_NEW_MATERIAL_DROPDOWN:
       return Object.assign({}, state, {
-        shouldNewMaterialDropDownOpen: action.shouldOpen,
+        shouldNewMaterialDropDownOpen: action.shouldOpen
       });
     case HIDE_NEW_MATERIAL_DROPDOWN:
       return Object.assign({}, state, {
-        shouldNewMaterialDropDownOpen: action.shouldOpen,
+        shouldNewMaterialDropDownOpen: action.shouldOpen
       });
     case GET_AD_METERIALS_REQUEST:
       return Object.assign({}, state, {
-        isLoading: action.isLoading,  
+        isLoading: action.isLoading
       });
     case GET_AD_METERIALS_SUCCESS:
       return Object.assign({}, state, {
         total: action.payload.totalRecord || 0,
         materialResult: action.payload.creativeInfoList || [],
-        isLoading: action.isLoading,  
+        isLoading: action.isLoading
       });
     case GET_AD_METERIALS_FAILURE:
       return Object.assign({}, state, {
-        isLoading: action.isLoading,  
+        isLoading: action.isLoading
       });
     case GET_MATERIAL_INFO_SUCCESS:
       state.formData = action.payload || {};
       return Object.assign({}, state, {
-        isLoading: action.isLoading,  
+        isLoading: action.isLoading
       });
     case GET_MATERIAL_INFO_REQUEST:
       return Object.assign({}, state, {
         materialResult: action.payload.creativeInfoList || [],
-        isLoading: action.isLoading,  
+        isLoading: action.isLoading
       });
     case GET_MATERIAL_INFO_FAILURE:
       return Object.assign({}, state, {
-        isLoading: action.isLoading,  
+        isLoading: action.isLoading
       });
     case GET_AD_METERIAL_BYID_REQUEST:
       return Object.assign({}, state, {
-        isLoading: action.isLoading,  
+        isLoading: action.isLoading
       });
     case GET_AD_METERIAL_BYID_SUCCESS:
       return Object.assign({}, state, {
-        isLoading: action.isLoading,  
+        isLoading: action.isLoading
       });
     case GET_AD_METERIAL_BYID_FAILURE:
       return Object.assign({}, state, {
-        isLoading: action.isLoading,  
+        isLoading: action.isLoading
       });
     case GET_IATYPE_BYID_REQUEST:
       return Object.assign({}, state, {
-        isLoading: action.isLoading,  
+        isLoading: action.isLoading
       });
     case GET_IATYPE_BYID_SUCCESS:
       return Object.assign({}, state, {
         materialSchema: action.payload,
-        isLoading: action.isLoading,  
+        isLoading: action.isLoading
       });
     case GET_IATYPE_BYID_FAILURE:
       return Object.assign({}, state, {
-        isLoading: action.isLoading,  
+        isLoading: action.isLoading
       });
     case QUERY_ALL_MODELTYPES_REQUEST:
       return Object.assign({}, state, {
-        isLoading: action.isLoading,
+        isLoading: action.isLoading
       });
     case QUERY_ALL_MODELTYPES_SUCCESS:
       return Object.assign({}, state, {
         modelTypes: action.payload,
-        isLoading: action.isLoading,
+        isLoading: action.isLoading
       });
     case QUERY_ALL_MODELTYPES_FAILURE:
       return Object.assign({}, state, {
-        isLoading: action.isLoading,
+        isLoading: action.isLoading
       });
     case ADD_METERIAL_REQUEST:
       return Object.assign({}, state, {
-        isLoading: action.isLoading,  
+        isLoading: action.isLoading
       });
     case ADD_METERIAL_SUCCESS:
       return Object.assign({}, state, {
-        isLoading: action.isLoading,  
+        isLoading: action.isLoading
       });
     case ADD_METERIAL_FAILURE:
       return Object.assign({}, state, {
-        isLoading: action.isLoading,  
+        isLoading: action.isLoading
       });
     case UPDATE_METERIAL_REQUEST:
       return Object.assign({}, state, {
-        isLoading: action.isLoading,  
+        isLoading: action.isLoading
       });
     case UPDATE_METERIAL_SUCCESS:
       return Object.assign({}, state, {
-        isLoading: action.isLoading,  
+        isLoading: action.isLoading
       });
     case UPDATE_METERIAL_FAILURE:
       return Object.assign({}, state, {
-        isLoading: action.isLoading,  
+        isLoading: action.isLoading
       });
     case DELETE_METERIAL_REQUEST:
       return Object.assign({}, state, {
-        isLoading: action.isLoading,  
+        isLoading: action.isLoading
       });
     case DELETE_METERIAL_SUCCESS:
       return Object.assign({}, state, {
-        isLoading: action.isLoading,  
+        isLoading: action.isLoading
       });
     case DELETE_METERIAL_FAILURE:
       return Object.assign({}, state, {
-        isLoading: action.isLoading,  
+        isLoading: action.isLoading
       });
     case ADD_MATERIAL_FILE_REQUEST:
       return Object.assign({}, state, {
-        isLoading: action.isLoading,  
+        isLoading: action.isLoading
       });
     case ADD_MATERIAL_FILE_SUCCESS:
       if (action && action.payload._type) {
         // state.formData[action.payload._type] = action.payload.fileUrl;
-        if (Array.isArray(state.creativeIdList) && state.creativeIdList.indexOf(action.payload.creativeFileId) === -1) {
+        if (
+          Array.isArray(state.creativeIdList) &&
+          state.creativeIdList.indexOf(action.payload.creativeFileId) === -1
+        ) {
           state.creativeIdList.push(action.payload.creativeFileId);
         }
       }
       return Object.assign({}, state);
     case ADD_MATERIAL_FILE_FAILURE:
       return Object.assign({}, state, {
-        isLoading: action.isLoading,  
+        isLoading: action.isLoading
       });
     case SAVE_FORM_DATA:
       state.formData = action.payload;
       return Object.assign({}, state);
     case SET_CURRENT_PAGE:
-      return {...state, currentPage: action.payload.currentPage};
+      return { ...state, currentPage: action.payload.currentPage };
     default:
       return state;
   }
