@@ -375,7 +375,11 @@ const AddMaterial = ({
                   selected={
                     formData &&
                     formData.launchTime &&
-                    moment(`2018-09-10 ${formData.launchTime.split(",")[0]}`)
+                    (typeof formData.launchTime === "string"
+                      ? moment(
+                          `2018-09-10 ${formData.launchTime.split(",")[0]}`
+                        )
+                      : formData.launchTime)
                   }
                   showTimeSelect
                   showTimeSelectOnly
