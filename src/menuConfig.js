@@ -5,52 +5,63 @@
 const defaultMenuConfig = {
   items: [
     {
-      name: '互动管理',
-      path: 'hu',
-      icon: 'icon-star',
+      name: "首页",
+      path: "home",
+      icon: "icon-home",
+      external: true
+    },
+    {
+      name: "互动管理",
+      path: "hu",
+      icon: "icon-star",
       children: [
         {
-          name: '类型管理',
-          path: '/hd/type'
-        }, {
-          name: '模版管理',
-          path: '/hd/model'
+          name: "类型管理",
+          path: "/hd/type"
+        },
+        {
+          name: "模版管理",
+          path: "/hd/model"
         }
       ]
-    }, {
-      name: '投放管理',
-      path: 'tf',
-      icon: 'icon-bank',
+    },
+    {
+      name: "投放管理",
+      path: "tf",
+      icon: "icon-bank",
       children: [
         {
-          name: '投放计划管理',
-          path: '/tf/plan'
-        }, {
-          name: '投放素材管理',
-          path: '/tf/material'
-        },
-      ]
-    }, {
-      name: 'license申请',
-      path: 'zs',
-      icon: 'icon-book',
-      external: true,
-    }, {
-      name: '权限管理',
-      path: 'qx',
-      icon: 'icon-user',
-      children: [
-        {
-          name: '角色管理',
-          path: '/qx/role'
+          name: "投放计划管理",
+          path: "/tf/plan"
         },
         {
-          name: '账号管理',
-          path: '/qx/account'
-        },
+          name: "投放素材管理",
+          path: "/tf/material"
+        }
       ]
     },
-  ],
+    {
+      name: "license申请",
+      path: "zs",
+      icon: "icon-book",
+      external: true
+    },
+    {
+      name: "权限管理",
+      path: "qx",
+      icon: "icon-user",
+      children: [
+        {
+          name: "角色管理",
+          path: "/qx/role"
+        },
+        {
+          name: "账号管理",
+          path: "/qx/account"
+        }
+      ]
+    }
+  ]
 };
 
 const asideMenuConfig = [];
@@ -60,10 +71,10 @@ const asideMenuConfig = [];
  * @param {Array} data
  */
 function formatter(data) {
-  return data.map((item) => {
+  return data.map(item => {
     const result = {
       ...item,
-      url: item.path,
+      url: item.path
     };
     if (item.children) {
       result.children = formatter(item.children);
