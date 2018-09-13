@@ -28,7 +28,7 @@ const defaultMenuConfig = {
     {
       name: "投放管理",
       path: "tf",
-      icon: "icon-bank",
+      icon: "icon-list",
       children: [
         {
           name: "投放计划管理",
@@ -43,7 +43,7 @@ const defaultMenuConfig = {
     {
       name: "license申请",
       path: "zs",
-      icon: "icon-book",
+      icon: "icon-map",
       external: true
     },
     {
