@@ -1,38 +1,46 @@
-import React, { Component, Fragment } from 'react';
-import { Button, Card, CardBody, CardGroup, Col, Container, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
-import { Input } from '@icedesign/base';
+import React, { Component, Fragment } from "react";
 import {
-  FormBinderWrapper,
-  FormBinder,
-} from '@icedesign/form-binder';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import injectReducer from 'utils/injectReducer';
-import { userLogin, passwordForgetTip } from './actions';
-import reducer from './reducer';
+  Button,
+  Card,
+  CardBody,
+  CardGroup,
+  Col,
+  Container,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  Row
+} from "reactstrap";
+import { Input } from "@icedesign/base";
+import { FormBinderWrapper, FormBinder } from "@icedesign/form-binder";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import injectReducer from "utils/injectReducer";
+import { userLogin, passwordForgetTip, contactUsTip } from "./actions";
+import reducer from "./reducer";
 
 class Login extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       value: {
-        username: '',
-        password: '',
+        username: "",
+        password: ""
       }
-    }
+    };
   }
 
-  formChange = (value) => {
+  formChange = value => {
     this.setState({
-      value,
+      value
     });
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault();
     this.refs.form.validateAll((errors, values) => {
       if (errors) {
-        console.log('errors', errors);
+        console.log("errors", errors);
         return;
       }
       this.props.userLogin(values);
@@ -40,7 +48,7 @@ class Login extends Component {
   };
 
   render() {
-    const { passwordForgetTip } = this.props;
+    const { passwordForgetTip, contactUsTip } = this.props;
     return (
       <div className="app flex-row align-items-center">
         <Container>
@@ -78,23 +86,44 @@ class Login extends Component {
                         </InputGroup>
                         <Row>
                           <Col xs="6">
-                            <Button color="primary" onClick={this.handleSubmit} className="px-4">确认</Button>
+                            <Button
+                              color="primary"
+                              onClick={this.handleSubmit}
+                              className="px-4"
+                            >
+                              确认
+                            </Button>
                           </Col>
                           <Col xs="6" className="text-right">
-                            <Button color="link" className="px-0" onClick={passwordForgetTip}>忘记密码?</Button>
+                            <Button
+                              color="link"
+                              className="px-0"
+                              onClick={passwordForgetTip}
+                            >
+                              忘记密码?
+                            </Button>
                           </Col>
                         </Row>
                       </Fragment>
                     </FormBinderWrapper>
                   </CardBody>
                 </Card>
-                <Card className="text-white bg-primary py-5 d-md-down-none" style={{ width: `${44}%` }}>
+                <Card
+                  className="text-white bg-primary py-5 d-md-down-none"
+                  style={{ width: `${44}%` }}
+                >
                   <CardBody className="text-center">
                     <div>
                       <h2>OS开源-控制台</h2>
-                      <p>Powered by Video++
-                      </p>
-                      <Button color="primary" className="mt-3" active>联系我们</Button>
+                      <p>Powered by Video++</p>
+                      <Button
+                        onClick={contactUsTip}
+                        color="primary"
+                        className="mt-3"
+                        active
+                      >
+                        联系我们
+                      </Button>
                     </div>
                   </CardBody>
                 </Card>
@@ -109,10 +138,11 @@ class Login extends Component {
 
 const mapDispatchToProps = {
   userLogin,
-  passwordForgetTip
+  passwordForgetTip,
+  contactUsTip
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return { loginResult: state.login };
 };
 
@@ -121,7 +151,7 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-const withReducer = injectReducer({ key: 'login', reducer });
+const withReducer = injectReducer({ key: "login", reducer });
 
 export default compose(
   withReducer,

@@ -15,16 +15,16 @@
  *    }
  */
 
-import { push } from 'react-router-redux';
-import { Feedback } from '@icedesign/base';
-import { login } from './api';
-import { setAuthority, setUserInfoLocal } from 'utils/authority';
+import { push } from "react-router-redux";
+import { Feedback } from "@icedesign/base";
+import { login } from "./api";
+import { setAuthority, setUserInfoLocal } from "utils/authority";
 // import { reloadAuthorized } from 'utils/Authorized';
 import {
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
-  USER_LOGIN_FAILURE,
-} from './constants';
+  USER_LOGIN_FAILURE
+} from "./constants";
 
 /**
  * Changes the input field of the form
@@ -36,43 +36,43 @@ import {
 const userLoginRequest = () => {
   return {
     type: USER_LOGIN_REQUEST,
-    isLoading: true,
+    isLoading: true
   };
 };
 
-const userLoginSuccess = (payload) => {
+const userLoginSuccess = payload => {
   return {
     type: USER_LOGIN_SUCCESS,
     payload,
-    isLoading: false,
+    isLoading: false
   };
 };
 
-const userLoginFailure = (payload) => {
+const userLoginFailure = payload => {
   return {
     type: USER_LOGIN_FAILURE,
     payload,
-    isLoading: false,
+    isLoading: false
   };
 };
 
-export const handleLoginForm = (e) => {
+export const handleLoginForm = e => {
   e && e.preventDefault && e.preventDefault();
-  debugger
-  console.log(e)
+  debugger;
+  console.log(e);
 };
 
-export const userLogin = (params) => {
-  return async (dispatch) => {
+export const userLogin = params => {
+  return async dispatch => {
     dispatch(userLoginRequest());
     try {
       const response = await login(params);
 
-      if (response.status === 200 && response.data.resCode === '00') {
+      if (response.status === 200 && response.data.resCode === "00") {
         setUserInfoLocal(response.data);
         setAuthority(response.data && response.data.token);
         dispatch(userLoginSuccess(response.data));
-        dispatch(push('/'));
+        dispatch(push("/"));
       } else {
         dispatch(userLoginFailure(response.data));
         Feedback.toast.error(response.data && response.data.resMsg);
@@ -86,7 +86,13 @@ export const userLogin = (params) => {
 };
 
 export const passwordForgetTip = () => {
-  return (dispatch) => {
-    Feedback.toast.show('请联系管理员');
-  }
-}
+  return () => {
+    Feedback.toast.show("请联系管理员");
+  };
+};
+
+export const contactUsTip = () => {
+  return () => {
+    Feedback.toast.show("请拨打400-8089-578");
+  };
+};
