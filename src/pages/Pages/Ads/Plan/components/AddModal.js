@@ -469,14 +469,40 @@ const AddMaterial = ({
           <Button
             type="primary"
             onClick={() => {
+              if (isRead) {
+                toggle && toggle();
+                return;
+              }
+              if (!formData) {
+                Feedback.toast.error("请输入完整信息");
+                return;
+              }
+              if (!formData.launchPlanName) {
+                Feedback.toast.error("请输入“投放名称”");
+                return;
+              }
+              if (!formData.interactionTypeName) {
+                Feedback.toast.error("“投放类型”缺失");
+                return;
+              }
+              if (!formData.creativeId) {
+                Feedback.toast.error("请选择“投放素材”");
+                return;
+              }
+              if (!formData.launchVideoId) {
+                Feedback.toast.error("请输入“投放视频id”");
+                return;
+              }
+              if (!formData.launchLenTime) {
+                Feedback.toast.error("请选择“投放时间类型”");
+                return;
+              }
               if (isUpdate) {
                 if (formData.launchTimes) {
                   formData.launchTime = formData.launchTimes.join(",");
                 }
                 delete formData.launchTimes;
                 updatePlan(formData);
-              } else if (isRead) {
-                toggle && toggle();
               } else {
                 formData.launchTime = formData.launchTimes.join(",");
                 delete formData.launchTimes;
