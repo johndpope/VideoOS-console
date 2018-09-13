@@ -11,7 +11,7 @@ import {
   ModalHeader,
   Badge
 } from "reactstrap";
-import { Button } from "@icedesign/base";
+import { Button, Feedback } from "@icedesign/base";
 
 const AddAccount = ({
   shouldOpen,
@@ -23,12 +23,12 @@ const AddAccount = ({
   record,
   currentPage
 }) => {
-  let username = null;
-  let roleId = null;
   let password = null;
   const { opType } = record || {};
   const isRead = opType === "read";
   const isUpdate = opType === "update";
+  let username = isUpdate ? record && record.userName : "";
+  let roleId = isUpdate ? record && record.roleId : "";
   return (
     <Fragment>
       <Modal isOpen={shouldOpen} toggle={toggle}>
@@ -112,20 +112,38 @@ const AddAccount = ({
           </Form>
         </ModalBody>
         <ModalFooter>
+          <Button onClick={toggle}>取消</Button>
           <Button
             type="primary"
             onClick={e => {
               e.preventDefault();
+              if (isRead) {
+                toggle && toggle();
+                return;
+              }
+              if (!username) {
+                Feedback.toast.error("请输入“账号名称”");
+                return;
+              }
+              if (!roleId) {
+                Feedback.toast.error("请选择“角色”");
+                return;
+              }
+              if (!password && !isUpdate) {
+                Feedback.toast.error("请输入“秘密”");
+                return;
+              }
               if (isUpdate) {
-                updateAccount({
+                const params = {
                   currentPage,
                   username,
                   roleId,
-                  password,
                   userId: record && record.userId
-                });
-              } else if (isRead) {
-                toggle && toggle();
+                };
+                if (password) {
+                  params.password = password;
+                }
+                updateAccount(params);
               } else {
                 addAccount({
                   currentPage,

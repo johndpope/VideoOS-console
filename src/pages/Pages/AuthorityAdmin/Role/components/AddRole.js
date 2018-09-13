@@ -13,7 +13,7 @@ import {
   ModalHeader,
   Col
 } from "reactstrap";
-import { Button } from "@icedesign/base";
+import { Button, Feedback } from "@icedesign/base";
 
 const AddRole = ({
   shouldOpen,
@@ -27,7 +27,8 @@ const AddRole = ({
   userRoleInfo,
   currentPage
 }) => {
-  let roleName = (formData && formData.roleName) || null;
+  let roleName =
+    (formData && formData.roleName) || (record && record.roleName) || null;
   const { opType } = record || {};
   const isRead = opType === "read";
   const isUpdate = opType === "update";
@@ -113,9 +114,18 @@ const AddRole = ({
           </Form>
         </ModalBody>
         <ModalFooter>
+          <Button onClick={toggle}>取消</Button>
           <Button
             type="primary"
             onClick={() => {
+              if (isRead) {
+                toggle && toggle();
+                return;
+              }
+              if (!roleName) {
+                Feedback.toast.error("请输入“角色名称”");
+                return;
+              }
               if (isUpdate) {
                 updateRole({
                   currentPage,
@@ -132,8 +142,6 @@ const AddRole = ({
                         })
                       : nodeIdList
                 });
-              } else if (isRead) {
-                toggle && toggle();
               } else {
                 addRole({
                   currentPage,
