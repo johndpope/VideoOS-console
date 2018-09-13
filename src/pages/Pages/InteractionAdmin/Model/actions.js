@@ -361,12 +361,19 @@ export const addModel = params => {
   return async dispatch => {
     dispatch(addModelRequest());
     try {
+      const currentPage = (params && params.currentPage) || 1;
+      delete params.currentPage;
       const response = await api.addModel(params);
 
       if (response.status === 200 && response.data.resCode === "00") {
         dispatch(addModelSuccess(response.data));
         dispatch(hideAddModelModal());
-        dispatch(getIaModels());
+        dispatch(
+          getIaModels({
+            currentPage,
+            pageSize: 20
+          })
+        );
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {
         dispatch(addModelFailure(response.data));
@@ -384,12 +391,19 @@ export const updateModel = params => {
   return async dispatch => {
     dispatch(updateModelRequest());
     try {
+      const currentPage = (params && params.currentPage) || 1;
+      delete params.currentPage;
       const response = await api.updateModel(params);
 
       if (response.status === 200 && response.data.resCode === "00") {
         dispatch(updateModelSuccess(response.data));
         dispatch(hideAddModelModal());
-        dispatch(getIaModels());
+        dispatch(
+          getIaModels({
+            currentPage,
+            pageSize: 20
+          })
+        );
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {
         dispatch(updateModelFailure(response.data));
@@ -407,12 +421,19 @@ export const deleteModel = params => {
   return async dispatch => {
     dispatch(deleteModelRequest());
     try {
+      const currentPage = (params && params.currentPage) || 1;
+      delete params.currentPage;
       const response = await api.deleteModel(params);
 
       if (response.status === 200 && response.data.resCode === "00") {
         dispatch(deleteModelSuccess(response.data));
         dispatch(deleteModelModalToggle());
-        dispatch(getIaModels());
+        dispatch(
+          getIaModels({
+            currentPage,
+            pageSize: 20
+          })
+        );
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {
         dispatch(deleteModelFailure(response.data));

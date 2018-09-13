@@ -14,8 +14,8 @@
  *        return { type: YOUR_ACTION_CONSTANT, var: var }
  *    }
  */
-import { Feedback } from '@icedesign/base';
-import * as api from './api';
+import { Feedback } from "@icedesign/base";
+import * as api from "./api";
 import {
   GET_ACCOUNTS_REQUEST,
   GET_ACCOUNTS_SUCCESS,
@@ -36,8 +36,8 @@ import {
   QUERY_ALL_ACCOUNTTYPES_FAILURE,
   SHOW_DELETEACCOUNT_MODAL,
   HIDE_DELETEACCOUNT_MODAL,
-  SET_CURRENT_PAGE,
-} from './constants';
+  SET_CURRENT_PAGE
+} from "./constants";
 
 let addAccountModalSwitch = false;
 let deleteAccountModalSwitch = false;
@@ -45,157 +45,158 @@ let deleteAccountModalSwitch = false;
 const getAccountsRequest = () => {
   return {
     type: GET_ACCOUNTS_REQUEST,
-    isLoading: true,
+    isLoading: true
   };
 };
 
-const getAccountsSuccess = (payload) => {
+const getAccountsSuccess = payload => {
   return {
     type: GET_ACCOUNTS_SUCCESS,
     payload,
-    isLoading: false,
+    isLoading: false
   };
 };
 
 const getAccountsFail = () => {
   return {
     type: GET_ACCOUNTS_FAIL,
-    isLoading: false,
+    isLoading: false
   };
 };
 
-const showAddAccountModal = (payload) => {
+const showAddAccountModal = payload => {
   return {
     type: SHOW_ADDACCOUNT_MODAL,
     payload,
-    shouldOpen: true,
+    shouldOpen: true
   };
 };
 
 const hideAddAccountModal = () => {
   return {
     type: HIDE_ADDACCOUNT_MODAL,
-    shouldOpen: false,
+    shouldOpen: false
   };
 };
 
-const showDeleteAccountModal = (payload) => {
+const showDeleteAccountModal = payload => {
   return {
     type: SHOW_DELETEACCOUNT_MODAL,
     payload,
-    shouldOpen: true,
+    shouldOpen: true
   };
 };
 
 const hideDeleteAccountModal = () => {
   return {
     type: HIDE_DELETEACCOUNT_MODAL,
-    shouldOpen: false,
+    shouldOpen: false
   };
 };
 
 const addAccountRequest = () => {
   return {
     type: ADD_ACCOUNT_REQUEST,
-    isLoading: true,
+    isLoading: true
   };
 };
 
-const addAccountSuccess = (payload) => {
+const addAccountSuccess = payload => {
   return {
     type: ADD_ACCOUNT_SUCCESS,
     payload,
-    isLoading: false,
+    isLoading: false
   };
 };
 
-const addAccountFail = (payload) => {
+const addAccountFail = payload => {
   return {
     type: ADD_ACCOUNT_FAIL,
     payload,
-    isLoading: false,
+    isLoading: false
   };
 };
 
 const updateAccountRequest = () => {
   return {
     type: UPDATE_ACCOUNT_REQUEST,
-    isLoading: true,
+    isLoading: true
   };
 };
 
-const updateAccountSuccess = (payload) => {
+const updateAccountSuccess = payload => {
   return {
     type: UPDATE_ACCOUNT_SUCCESS,
     payload,
-    isLoading: false,
+    isLoading: false
   };
 };
 
-const updateAccountFail = (payload) => {
+const updateAccountFail = payload => {
   return {
     type: UPDATE_ACCOUNT_FAILURE,
     payload,
-    isLoading: false,
+    isLoading: false
   };
 };
 
 const deleteAccountRequest = () => {
   return {
     type: DELETE_ACCOUNT_REQUEST,
-    isLoading: true,
+    isLoading: true
   };
 };
 
-const deleteAccountSuccess = (payload) => {
+const deleteAccountSuccess = payload => {
   return {
     type: DELETE_ACCOUNT_SUCCESS,
     payload,
-    isLoading: false,
+    isLoading: false
   };
 };
 
-const deleteAccountFail = (payload) => {
+const deleteAccountFail = payload => {
   return {
     type: DELETE_ACCOUNT_FAILURE,
     payload,
-    isLoading: false,
+    isLoading: false
   };
 };
 
 const queryAllAccountTypesRequest = () => {
   return {
     type: QUERY_ALL_ACCOUNTTYPES_REQUEST,
-    isLoading: true,
+    isLoading: true
   };
 };
 
-const queryAllAccountTypesSuccess = (payload) => {
+const queryAllAccountTypesSuccess = payload => {
   return {
     type: QUERY_ALL_ACCOUNTTYPES_SUCCESS,
     payload,
-    isLoading: true,
+    isLoading: true
   };
 };
 
 const queryAllAccountTypesFailure = () => {
   return {
     type: QUERY_ALL_ACCOUNTTYPES_FAILURE,
-    isLoading: true,
+    isLoading: true
   };
 };
 
-export const getAccounts = (params = {
-  currentPage: 1,
-  pageSize: 20,
-}) => {
-  return async (dispatch) => {
+export const getAccounts = (
+  params = {
+    currentPage: 1,
+    pageSize: 20
+  }
+) => {
+  return async dispatch => {
     dispatch(getAccountsRequest());
     try {
       const response = await api.getAaAccounts(params);
 
-      if (response.status === 200 && response.data.resCode === '00') {
-
+      if (response.status === 200 && response.data.resCode === "00") {
         dispatch(getAccountsSuccess(response.data));
       } else {
         dispatch(getAccountsFail(response.data));
@@ -203,14 +204,14 @@ export const getAccounts = (params = {
       }
 
       return response.data;
-    } catch(error) {
+    } catch (error) {
       dispatch(getAccountsFail(error));
-    } 
-  }  
+    }
+  };
 };
 
-export const addAccountModalToggle = (record) => {
-  return (dispatch) => {
+export const addAccountModalToggle = record => {
+  return dispatch => {
     addAccountModalSwitch = !addAccountModalSwitch;
     if (addAccountModalSwitch) {
       dispatch(showAddAccountModal(record));
@@ -220,8 +221,8 @@ export const addAccountModalToggle = (record) => {
   };
 };
 
-export const deleteAccountModalToggle = (record) => {
-  return (dispatch) => {
+export const deleteAccountModalToggle = record => {
+  return dispatch => {
     deleteAccountModalSwitch = !deleteAccountModalSwitch;
     if (deleteAccountModalSwitch) {
       dispatch(showDeleteAccountModal(record));
@@ -231,16 +232,23 @@ export const deleteAccountModalToggle = (record) => {
   };
 };
 
-export const addAccount = (params) => {
-  return async (dispatch) => {
+export const addAccount = params => {
+  return async dispatch => {
     dispatch(addAccountRequest());
     try {
+      const currentPage = (params && params.currentPage) || 1;
+      delete params.currentPage;
       const response = await api.addAaAccount(params);
 
-      if (response.status === 200 && response.data.resCode === '00') {
+      if (response.status === 200 && response.data.resCode === "00") {
         dispatch(addAccountSuccess(response.data));
         dispatch(addAccountModalToggle());
-        dispatch(getAccounts());
+        dispatch(
+          getAccounts({
+            currentPage,
+            pageSize: 20
+          })
+        );
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {
         dispatch(addAccountFail(response.data));
@@ -248,22 +256,29 @@ export const addAccount = (params) => {
       }
 
       return response.data;
-    } catch(error) {
+    } catch (error) {
       dispatch(addAccountFail(error));
     }
-  }
+  };
 };
 
-export const updateAccount = (params) => {
-  return async (dispatch) => {
+export const updateAccount = params => {
+  return async dispatch => {
     dispatch(updateAccountRequest());
     try {
+      const currentPage = (params && params.currentPage) || 1;
+      delete params.currentPage;
       const response = await api.updateAaAccount(params);
 
-      if (response.status === 200 && response.data.resCode === '00') {
+      if (response.status === 200 && response.data.resCode === "00") {
         dispatch(updateAccountSuccess(response.data));
         dispatch(addAccountModalToggle());
-        dispatch(getAccounts());
+        dispatch(
+          getAccounts({
+            currentPage,
+            pageSize: 20
+          })
+        );
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {
         dispatch(updateAccountFail(response.data));
@@ -271,22 +286,29 @@ export const updateAccount = (params) => {
       }
 
       return response.data;
-    } catch(error) {
+    } catch (error) {
       dispatch(updateAccountFail(error));
     }
-  }
+  };
 };
 
-export const deleteAccount = (params) => {
-  return async (dispatch) => {
+export const deleteAccount = params => {
+  return async dispatch => {
     dispatch(deleteAccountRequest());
     try {
+      const currentPage = (params && params.currentPage) || 1;
+      delete params.currentPage;
       const response = await api.deleteAaAccount(params);
 
-      if (response.status === 200 && response.data.resCode === '00') {
+      if (response.status === 200 && response.data.resCode === "00") {
         dispatch(deleteAccountSuccess(response.data));
         dispatch(deleteAccountModalToggle());
-        dispatch(getAccounts());
+        dispatch(
+          getAccounts({
+            currentPage,
+            pageSize: 20
+          })
+        );
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {
         dispatch(deleteAccountFail(response.data));
@@ -294,36 +316,39 @@ export const deleteAccount = (params) => {
       }
 
       return response.data;
-    } catch(error) {
+    } catch (error) {
       dispatch(deleteAccountFail(error));
     }
-  }
+  };
 };
 
-export const queryAllAccountTypes = (params) => {
-  return async (dispatch) => {
+export const queryAllAccountTypes = params => {
+  return async dispatch => {
     dispatch(queryAllAccountTypesRequest());
     try {
       const response = await api.queryAllAccountTypes(params);
 
-      if (response.status === 200 && response.data.resCode === '00') {
-
-        dispatch(queryAllAccountTypesSuccess(response.data && response.data.roleInfoList));
+      if (response.status === 200 && response.data.resCode === "00") {
+        dispatch(
+          queryAllAccountTypesSuccess(
+            response.data && response.data.roleInfoList
+          )
+        );
       } else {
         dispatch(queryAllAccountTypesFailure(response.data));
         Feedback.toast.error(response.data && response.data.resMsg);
       }
 
       return response.data;
-    } catch(error) {
+    } catch (error) {
       dispatch(queryAllAccountTypesFailure(error));
     }
-  }  
+  };
 };
 
-export const setCurrentPage = (payload) => {
+export const setCurrentPage = payload => {
   return {
     type: SET_CURRENT_PAGE,
-    payload,
-  }
+    payload
+  };
 };

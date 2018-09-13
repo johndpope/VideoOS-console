@@ -25,7 +25,8 @@ const AddType = ({
   formData,
   configInfo,
   fileName,
-  showFileIpt
+  showFileIpt,
+  currentPage
 }) => {
   const { opType } = record || {};
   const isRead = opType === "read";
@@ -133,7 +134,8 @@ const AddType = ({
                 updateType({
                   interactionTypeId: record && record.interactionTypeId,
                   interactionTypeName: formData.interactionTypeName,
-                  file: formData.file
+                  file: formData.file,
+                  currentPage
                 });
               } else if (isRead) {
                 toggle && toggle();
@@ -142,7 +144,7 @@ const AddType = ({
                   Feedback.toast.error("请导入类型文件");
                   return;
                 }
-                addType(formData);
+                addType({ ...formData, currentPage });
               }
             }}
           >

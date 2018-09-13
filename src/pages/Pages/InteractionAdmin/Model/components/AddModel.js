@@ -27,7 +27,8 @@ const AddModel = ({
   updateModelFile,
   setFileIptState,
   modelInfo,
-  showFileIpt
+  showFileIpt,
+  currentPage
 }) => {
   const { opType } = record || {};
   const isRead = opType === "read";
@@ -173,12 +174,14 @@ const AddModel = ({
                 updateModel({
                   interactionTemplateId: record && record.templateId,
                   ...formData,
-                  ...uploadModelFileInfo
+                  ...uploadModelFileInfo,
+                  currentPage
                 });
               } else {
                 addModel({
                   ...formData,
-                  ...uploadModelFileInfo
+                  ...uploadModelFileInfo,
+                  currentPage
                 });
               }
             }}

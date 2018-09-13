@@ -265,12 +265,19 @@ export const addRole = params => {
   return async dispatch => {
     dispatch(addRoleRequest());
     try {
+      const currentPage = (params && params.currentPage) || 1;
+      delete params.currentPage;
       const response = await api.addAaRole(params);
 
       if (response.status === 200 && response.data.resCode === "00") {
         dispatch(addRoleSuccess(response.data));
         dispatch(addRoleModalToggle());
-        dispatch(getRoles());
+        dispatch(
+          getRoles({
+            currentPage,
+            pageSize: 20
+          })
+        );
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {
         dispatch(addRoleFailure(response.data));
@@ -288,12 +295,19 @@ export const updateRole = params => {
   return async dispatch => {
     dispatch(updateRoleRequest());
     try {
+      const currentPage = (params && params.currentPage) || 1;
+      delete params.currentPage;
       const response = await api.updateAaRole(params);
 
       if (response.status === 200 && response.data.resCode === "00") {
         dispatch(updateRoleSuccess(response.data));
         dispatch(addRoleModalToggle());
-        dispatch(getRoles());
+        dispatch(
+          getRoles({
+            currentPage,
+            pageSize: 20
+          })
+        );
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {
         dispatch(updateRoleFailure(response.data));
@@ -311,12 +325,19 @@ export const deleteRole = params => {
   return async dispatch => {
     dispatch(deleteRoleRequest());
     try {
+      const currentPage = (params && params.currentPage) || 1;
+      delete params.currentPage;
       const response = await api.deleteAaRole(params);
 
       if (response.status === 200 && response.data.resCode === "00") {
         dispatch(deleteRoleSuccess(response.data));
         dispatch(deleteRoleModalToggle());
-        dispatch(getRoles());
+        dispatch(
+          getRoles({
+            currentPage,
+            pageSize: 20
+          })
+        );
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {
         dispatch(deleteRoleFailure(response.data));

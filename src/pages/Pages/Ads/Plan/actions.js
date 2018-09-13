@@ -280,6 +280,8 @@ export const addPlan = params => {
   return async dispatch => {
     dispatch(addPlanRequest());
     try {
+      const currentPage = (params && params.currentPage) || 1;
+      delete params.currentPage;
       const _params = { ...params };
       if (_params.launchTimeType === "0" || _params.launchTimeType === "2") {
         _params.launchDateStart = `${_params.launchDateStart.years()}-${
@@ -307,7 +309,12 @@ export const addPlan = params => {
       if (response.status === 200 && response.data.resCode === "00") {
         dispatch(addPlanSuccess(response.data));
         dispatch(addPlanModalToggle());
-        dispatch(getAdPlans());
+        dispatch(
+          getAdPlans({
+            currentPage,
+            pageSize: 20
+          })
+        );
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {
         dispatch(addPlanFailure(response.data));
@@ -325,12 +332,19 @@ export const updatePlan = params => {
   return async dispatch => {
     dispatch(updatePlanRequest());
     try {
+      const currentPage = (params && params.currentPage) || 1;
+      delete params.currentPage;
       const response = await api.updatePlan(params);
 
       if (response.status === 200 && response.data.resCode === "00") {
         dispatch(updatePlanSuccess(response.data));
         dispatch(addPlanModalToggle());
-        dispatch(getAdPlans());
+        dispatch(
+          getAdPlans({
+            currentPage,
+            pageSize: 20
+          })
+        );
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {
         dispatch(updatePlanFailure(response.data));
@@ -348,12 +362,19 @@ export const deletePlan = params => {
   return async dispatch => {
     dispatch(deletePlanRequest());
     try {
+      const currentPage = (params && params.currentPage) || 1;
+      delete params.currentPage;
       const response = await api.deletePlan(params);
 
       if (response.status === 200 && response.data.resCode === "00") {
         dispatch(deletePlanSuccess(response.data));
         dispatch(deletePlanModalToggle());
-        dispatch(getAdPlans());
+        dispatch(
+          getAdPlans({
+            currentPage,
+            pageSize: 20
+          })
+        );
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {
         dispatch(deletePlanFailure(response.data));

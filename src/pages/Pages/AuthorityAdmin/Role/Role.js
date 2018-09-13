@@ -51,6 +51,7 @@ class AARole extends Component {
           record={aaRole.record}
           setFormData={setFormData}
           userRoleInfo={aaRole && aaRole.userRoleInfo}
+          currentPage={aaRole && aaRole.currentPage}
         />
         <DeleteRole
           deleteRole={deleteRole}
@@ -59,6 +60,7 @@ class AARole extends Component {
             deleteRoleModalToggle(aaRole.record);
           }}
           record={aaRole.record}
+          currentPage={aaRole && aaRole.currentPage}
         />
         <IceContainer>
           <Button onClick={addRoleModalToggle}>添加角色</Button>

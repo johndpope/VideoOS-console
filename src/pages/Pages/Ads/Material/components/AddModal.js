@@ -14,7 +14,8 @@ const AddMaterial = ({
   saveFormData,
   record,
   materialSchema,
-  addMaterialFile
+  addMaterialFile,
+  currentPage
 }) => {
   const { opType } = record || {};
   const isRead = opType === "read";
@@ -50,12 +51,14 @@ const AddMaterial = ({
                     interactionTypeId: formData.interactionTypeId,
                     interactionTemplateId: formData.interactionTemplateId,
                     creativeContent: JSON.stringify(formData),
-                    creativeIdList
+                    creativeIdList,
+                    currentPage
                   });
                 } else if (isRead) {
                   toggle && toggle();
                 } else {
                   addMaterial({
+                    currentPage,
                     creativeName: formData.creativeName,
                     interactionTypeId: formData.interactionTypeId,
                     interactionTemplateId: formData.interactionTemplateId,

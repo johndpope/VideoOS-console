@@ -68,12 +68,14 @@ class AdMaterial extends Component {
           saveFormData={saveFormData}
           creativeIdList={adMaterial && adMaterial.creativeIdList}
           record={adMaterial && adMaterial.record}
+          currentPage={adMaterial && adMaterial.currentPage}
         />
         <DeleteMaterial
           deleteMaterial={deleteMaterial}
           toggle={deleteMaterialModalToggle}
           shouldOpen={adMaterial && adMaterial.shouldDeleteMaterialOpen}
           record={adMaterial && adMaterial.record}
+          currentPage={adMaterial && adMaterial.currentPage}
         />
         <IceContainer style={{ overflow: "visible" }}>
           <Dropdown

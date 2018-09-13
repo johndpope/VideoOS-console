@@ -2,7 +2,13 @@ import React, { Fragment } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import { Button } from "@icedesign/base";
 
-const DeleteAccount = ({ shouldOpen, toggle, deleteAccount, record }) => (
+const DeleteAccount = ({
+  shouldOpen,
+  toggle,
+  deleteAccount,
+  record,
+  currentPage
+}) => (
   <Fragment>
     <Modal isOpen={shouldOpen} toggle={toggle}>
       <ModalHeader toggle={toggle}>删除账号</ModalHeader>
@@ -14,7 +20,7 @@ const DeleteAccount = ({ shouldOpen, toggle, deleteAccount, record }) => (
         <Button
           type="primary"
           onClick={() => {
-            deleteAccount({ userId: record.userId });
+            deleteAccount({ userId: record.userId, currentPage });
           }}
         >
           确认

@@ -24,7 +24,8 @@ const AddRole = ({
   record,
   formData,
   setFormData,
-  userRoleInfo
+  userRoleInfo,
+  currentPage
 }) => {
   let roleName = (formData && formData.roleName) || null;
   const { opType } = record || {};
@@ -117,6 +118,7 @@ const AddRole = ({
             onClick={() => {
               if (isUpdate) {
                 updateRole({
+                  currentPage,
                   roleId: (record && record.roleId) || "",
                   roleName,
                   nodeIdList:
@@ -134,6 +136,7 @@ const AddRole = ({
                 toggle && toggle();
               } else {
                 addRole({
+                  currentPage,
                   roleName,
                   nodeIdList: Object.keys(_roleAuthorities).map(key => {
                     if (_roleAuthorities[key].read) {

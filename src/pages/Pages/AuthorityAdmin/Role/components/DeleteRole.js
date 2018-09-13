@@ -1,24 +1,32 @@
-import React, { Fragment } from 'react';
-import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import { Button } from '@icedesign/base';
+import React, { Fragment } from "react";
+import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+import { Button } from "@icedesign/base";
 
-const DeleteRole = ({shouldOpen, toggle, deleteRole, record}) => (
+const DeleteRole = ({
+  shouldOpen,
+  toggle,
+  deleteRole,
+  record,
+  currentPage
+}) => (
   <Fragment>
-    <Modal
-      isOpen={shouldOpen}  
-      toggle={toggle}
-    >
+    <Modal isOpen={shouldOpen} toggle={toggle}>
       <ModalHeader toggle={toggle}>删除角色</ModalHeader>
       <ModalBody>
-        <p>
-          确定删除该角色
-        </p>  
+        <p>确定删除该角色</p>
       </ModalBody>
       <ModalFooter>
         <Button onClick={toggle}>取消</Button>
-        <Button type="primary" onClick={() => {deleteRole(record)}}>确认</Button>
+        <Button
+          type="primary"
+          onClick={() => {
+            deleteRole({ ...record, currentPage });
+          }}
+        >
+          确认
+        </Button>
       </ModalFooter>
-    </Modal>  
+    </Modal>
   </Fragment>
 );
 

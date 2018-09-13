@@ -24,7 +24,8 @@ const AddMaterial = ({
   formData,
   setFormData,
   record,
-  materialTypes
+  materialTypes,
+  currentPage
 }) => {
   const { opType } = record || {};
   const isRead = opType === "read";
@@ -502,13 +503,13 @@ const AddMaterial = ({
                   formData.launchTime = formData.launchTimes.join(",");
                 }
                 delete formData.launchTimes;
-                updatePlan(formData);
+                updatePlan({ ...formData, currentPage });
               } else {
                 formData.launchTime = formData.launchTimes.join(",");
                 delete formData.launchTimes;
                 if (formData.v_minutes) delete formData.v_minutes;
                 if (formData.v_seconds) delete formData.v_seconds;
-                addPlan(formData);
+                addPlan({ ...formData, currentPage });
               }
             }}
           >

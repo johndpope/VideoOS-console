@@ -407,12 +407,19 @@ export const addMaterial = params => {
   return async dispatch => {
     dispatch(addMaterialRequest());
     try {
+      const currentPage = (params && params.currentPage) || 1;
+      delete params.currentPage;
       const response = await api.addMaterial(params);
 
       if (response.status === 200 && response.data.resCode === "00") {
         dispatch(addMaterialSuccess(response.data));
         dispatch(addMaterialToggle());
-        dispatch(getAdMaterials());
+        dispatch(
+          getAdMaterials({
+            currentPage,
+            pageSize: 20
+          })
+        );
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {
         dispatch(addMaterialFailure(response.data));
@@ -430,12 +437,19 @@ export const updateMaterial = params => {
   return async dispatch => {
     dispatch(updateMaterialRequest());
     try {
+      const currentPage = (params && params.currentPage) || 1;
+      delete params.currentPage;
       const response = await api.updateMaterial(params);
 
       if (response.status === 200 && response.data.resCode === "00") {
         dispatch(updateMaterialSuccess(response.data));
         dispatch(addMaterialToggle());
-        dispatch(getAdMaterials());
+        dispatch(
+          getAdMaterials({
+            currentPage,
+            pageSize: 20
+          })
+        );
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {
         dispatch(updateMaterialFailure(response.data));
@@ -453,12 +467,19 @@ export const deleteMaterial = params => {
   return async dispatch => {
     dispatch(deleteMaterialRequest());
     try {
+      const currentPage = (params && params.currentPage) || 1;
+      delete params.currentPage;
       const response = await api.deleteMaterial(params);
 
       if (response.status === 200 && response.data.resCode === "00") {
         dispatch(deleteMaterialSuccess(response.data));
         dispatch(deleteMaterialModalToggle());
-        dispatch(getAdMaterials());
+        dispatch(
+          getAdMaterials({
+            currentPage,
+            pageSize: 10
+          })
+        );
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {
         dispatch(deleteMaterialFailure(response.data));

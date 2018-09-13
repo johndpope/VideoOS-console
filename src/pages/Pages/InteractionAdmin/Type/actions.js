@@ -15,8 +15,8 @@
  *    }
  */
 
-import { Feedback } from '@icedesign/base';
-import * as api from './api';
+import { Feedback } from "@icedesign/base";
+import * as api from "./api";
 // import { reloadAuthorized } from 'utils/Authorized';
 import {
   GET_IATYPE_REQUEST,
@@ -40,8 +40,8 @@ import {
   GET_IATYPE_BYID_FAILURE,
   SET_FORM_DATA,
   SET_FILE_IPT_STATE,
-  SET_CURRENT_PAGE,
-} from './constants';
+  SET_CURRENT_PAGE
+} from "./constants";
 
 /**
  * Changes the input field of the form
@@ -53,154 +53,156 @@ import {
 let addTypeSwitch = false;
 let deleteTypeSwitch = false;
 
-const showAddTypeModal = (payload) => {
+const showAddTypeModal = payload => {
   return {
     type: SHOW_ADDTYPE_MODAL,
     shouldOpen: true,
-    payload,
-  }
+    payload
+  };
 };
 
 const hideAddTypeModal = () => {
   return {
     type: HIDDEN_ADDTYPE_MODAL,
-    shouldOpen: false,
-  }
+    shouldOpen: false
+  };
 };
 
-const showDeleteTypeModal = (payload) => {
+const showDeleteTypeModal = payload => {
   return {
     type: SHOW_DELETETYPE_MODAL,
     shouldOpen: true,
-    payload,
-  }
+    payload
+  };
 };
 
 const hideDeleteTypeModal = () => {
   return {
     type: HIDE_DELETETYPE_MODAL,
-    shouldOpen: false,
-  }
+    shouldOpen: false
+  };
 };
 
 const getIaTypesRequest = () => {
   return {
     type: GET_IATYPE_REQUEST,
-    isLoading: true,
+    isLoading: true
   };
 };
 
-const getIaTypesSuccess = (payload) => {
+const getIaTypesSuccess = payload => {
   return {
     type: GET_IATYPE_SUCCESS,
     payload,
-    isLoading: false,
+    isLoading: false
   };
 };
 
-const getIaTypesFailure = (payload) => {
+const getIaTypesFailure = payload => {
   return {
     type: GET_IATYPE_FAILURE,
     payload,
-    isLoading: false,
+    isLoading: false
   };
 };
 
 const getIaTypeByIdRequest = () => {
   return {
     type: GET_IATYPE_BYID_REQUEST,
-    isLoading: true,
+    isLoading: true
   };
 };
 
-const getIaTypeByIdSuccess = (payload) => {
+const getIaTypeByIdSuccess = payload => {
   return {
     type: GET_IATYPE_BYID_SUCCESS,
     payload,
-    isLoading: false,
+    isLoading: false
   };
 };
 
-const getIaTypeByIdFailure = (payload) => {
+const getIaTypeByIdFailure = payload => {
   return {
     type: GET_IATYPE_BYID_FAILURE,
     payload,
-    isLoading: false,
+    isLoading: false
   };
 };
 
 const deleteTypeRequest = () => {
   return {
     type: DELETE_TYPE_REQUEST,
-    isLoading: true,
-  }
+    isLoading: true
+  };
 };
 
 const deleteTypeSuccess = () => {
   return {
     type: DELETE_TYPE_SUCCESS,
-    isLoading: false,
-  }
+    isLoading: false
+  };
 };
 
 const deleteTypeFailure = () => {
   return {
     type: DELETE_TYPE_FAILURE,
-    isLoading: false,
-  }
+    isLoading: false
+  };
 };
 
 const addTypeRequest = () => {
   return {
     type: ADD_TYPE_REQUEST,
-    isLoading: true,
-  }
+    isLoading: true
+  };
 };
 
 const addTypeSuccess = () => {
   return {
     type: ADD_TYPE_SUCCESS,
-    isLoading: false,
-  }
+    isLoading: false
+  };
 };
 
 const addTypeFailure = () => {
   return {
     type: ADD_TYPE_FAILURE,
-    isLoading: false,
-  }
+    isLoading: false
+  };
 };
 
 const updateTypeRequest = () => {
   return {
     type: UPDATE_TYPE_REQUEST,
-    isLoading: true,
-  }
+    isLoading: true
+  };
 };
 
 const updateTypeSuccess = () => {
   return {
     type: UPDATE_TYPE_SUCCESS,
-    isLoading: false,
-  }
+    isLoading: false
+  };
 };
 
 const updateTypeFailure = () => {
   return {
     type: UPDATE_TYPE_FAILURE,
-    isLoading: false,
-  }
+    isLoading: false
+  };
 };
 
-export const getIaTypes = (params = {
-  currentPage: 1,
-  pageSize: 20,
-}) => {
-  return async (dispatch) => {
+export const getIaTypes = (
+  params = {
+    currentPage: 1,
+    pageSize: 20
+  }
+) => {
+  return async dispatch => {
     dispatch(getIaTypesRequest());
     try {
       const response = await api.getIaTypes(params);
-      if (response.status === 200 && response.data.resCode === '00') {
+      if (response.status === 200 && response.data.resCode === "00") {
         dispatch(getIaTypesSuccess(response.data));
       } else {
         dispatch(getIaTypesFailure(response.data));
@@ -214,12 +216,12 @@ export const getIaTypes = (params = {
   };
 };
 
-export const getIaTypeById = (params) => {
-  return async (dispatch) => {
+export const getIaTypeById = params => {
+  return async dispatch => {
     dispatch(getIaTypeByIdRequest());
     try {
       const response = await api.getIaTypeById(params);
-      if (response.status === 200 && response.data.resCode === '00') {
+      if (response.status === 200 && response.data.resCode === "00") {
         dispatch(getIaTypeByIdSuccess(response.data));
       } else {
         dispatch(getIaTypeByIdFailure(response.data));
@@ -233,43 +235,50 @@ export const getIaTypeById = (params) => {
   };
 };
 
-export const addTypeToggle = (payload) => {
-  return (dispatch) => {
+export const addTypeToggle = payload => {
+  return dispatch => {
     addTypeSwitch = !addTypeSwitch;
     if (addTypeSwitch) {
       if (payload && payload.opType) {
-        dispatch(getIaTypeById({interactionId: payload.interactionTypeId}));
+        dispatch(getIaTypeById({ interactionId: payload.interactionTypeId }));
       }
       dispatch(setFormData(payload));
       dispatch(showAddTypeModal(payload));
     } else {
-      dispatch(setFileIptState({showFileIpt: false}));
+      dispatch(setFileIptState({ showFileIpt: false }));
       dispatch(setFormData({}));
       dispatch(hideAddTypeModal());
     }
-  }
+  };
 };
 
-export const deleteTypeToggle = (record) => {
-  return (dispatch) => {
+export const deleteTypeToggle = record => {
+  return dispatch => {
     deleteTypeSwitch = !deleteTypeSwitch;
     if (deleteTypeSwitch) {
       dispatch(showDeleteTypeModal(record));
     } else {
       dispatch(hideDeleteTypeModal());
     }
-  }
+  };
 };
 
-export const addType = (params) => {
-  return async (dispatch) => {
+export const addType = params => {
+  return async dispatch => {
     dispatch(addTypeRequest());
     try {
+      const currentPage = (params && params.currentPage) || 1;
+      delete params.currentPage;
       const response = await api.addType(params);
-      if (response.status === 200 && response.data.resCode === '00') {
+      if (response.status === 200 && response.data.resCode === "00") {
         dispatch(addTypeSuccess(response.data));
         dispatch(addTypeToggle());
-        dispatch(getIaTypes());
+        dispatch(
+          getIaTypes({
+            currentPage,
+            pageSize: 20
+          })
+        );
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {
         dispatch(addTypeFailure(response.data));
@@ -277,21 +286,28 @@ export const addType = (params) => {
       }
 
       return response.data;
-    } catch(error) {
+    } catch (error) {
       dispatch(addTypeFailure(error));
     }
-  }
+  };
 };
 
-export const deleteType = (params) => {
-  return async (dispatch) => {
+export const deleteType = params => {
+  return async dispatch => {
     dispatch(deleteTypeRequest());
     try {
+      const currentPage = (params && params.currentPage) || 1;
+      delete params.currentPage;
       const response = await api.deleteType(params);
-      if (response.status === 200 && response.data.resCode === '00') {
+      if (response.status === 200 && response.data.resCode === "00") {
         dispatch(deleteTypeSuccess(response.data));
         dispatch(deleteTypeToggle());
-        dispatch(getIaTypes());
+        dispatch(
+          getIaTypes({
+            currentPage,
+            pageSize: 20
+          })
+        );
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {
         dispatch(deleteTypeFailure(response.data));
@@ -299,20 +315,28 @@ export const deleteType = (params) => {
       }
 
       return response.data;
-    } catch(error) {
+    } catch (error) {
       dispatch(deleteTypeFailure(error));
     }
-  }
+  };
 };
 
-export const updateType = (params) => {
-  return async (dispatch) => {
+export const updateType = params => {
+  return async dispatch => {
     dispatch(updateTypeRequest());
     try {
+      const currentPage = (params && params.currentPage) || 1;
+      delete params.currentPage;
       const response = await api.updateType(params);
-      if (response.status === 200 && response.data.resCode === '00') {
+      if (response.status === 200 && response.data.resCode === "00") {
         dispatch(updateTypeSuccess(response.data));
         dispatch(addTypeToggle());
+        dispatch(
+          getIaTypes({
+            currentPage,
+            pageSize: 20
+          })
+        );
         Feedback.toast.show(response.data && response.data.resMsg);
       } else {
         dispatch(updateTypeFailure(response.data));
@@ -320,29 +344,29 @@ export const updateType = (params) => {
       }
 
       return response.data;
-    } catch(error) {
+    } catch (error) {
       dispatch(updateTypeFailure(error));
     }
-  }
+  };
 };
 
-export const setFormData = (payload) => {
+export const setFormData = payload => {
   return {
     type: SET_FORM_DATA,
-    payload,
-  }
+    payload
+  };
 };
 
-export const setFileIptState = (payload) => {
+export const setFileIptState = payload => {
   return {
     type: SET_FILE_IPT_STATE,
-    payload,
-  }
+    payload
+  };
 };
 
-export const setCurrentPage = (payload) => {
+export const setCurrentPage = payload => {
   return {
     type: SET_CURRENT_PAGE,
-    payload,
-  }
+    payload
+  };
 };
