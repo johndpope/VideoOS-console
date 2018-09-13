@@ -19,7 +19,9 @@ const Welcome = () => (
         top: "22%",
         left: "50%",
         height: "116px",
-        transform: "translate3d(-50%, 0, 0)"
+        transform: "translate3d(-50%, 0, 0)",
+        WebkitUserSelect: "none",
+        WebkitUserDrag: "none"
       }}
       alt=""
     />
