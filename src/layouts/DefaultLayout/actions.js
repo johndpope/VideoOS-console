@@ -106,7 +106,7 @@ export const userLogout = params => {
     setAuthority("");
     setUserInfoLocal("");
     history.push("/login");
-    Feedback.toast.show("登出成功");
+    // Feedback.toast.show("登出成功");
   };
 };
 
