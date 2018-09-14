@@ -31,10 +31,6 @@ import AddMaterial from "./components/AddModal";
 import DeleteMaterial from "./components/DeleteModal";
 
 class AdMaterial extends Component {
-  state = {
-    currentPage: 1
-  };
-
   componentDidMount() {
     const { queryAllModelTypes, getAdMaterials } = this.props;
     queryAllModelTypes();

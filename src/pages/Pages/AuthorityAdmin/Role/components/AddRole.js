@@ -53,8 +53,10 @@ const AddRole = ({
                 defaultValue={
                   isRead || isUpdate ? record && record.roleName : ""
                 }
+                maxLength={10}
                 onChange={e => {
-                  setFormData({ roleName: e.target.value });
+                  const { value } = e.target;
+                  setFormData({ roleName: value });
                 }}
               />
             </InputGroup>
@@ -124,6 +126,10 @@ const AddRole = ({
               }
               if (!roleName) {
                 Feedback.toast.error("请输入“角色名称”");
+                return;
+              }
+              if (!/^[\u4e00-\u9fa5]+$/g.test(roleName)) {
+                Feedback.toast.error("只能是汉字");
                 return;
               }
               if (isUpdate) {

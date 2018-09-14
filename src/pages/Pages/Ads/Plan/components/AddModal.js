@@ -72,6 +72,7 @@ const AddMaterial = ({
               onChange={e => {
                 setFormData({ launchPlanName: e.target.value });
               }}
+              maxLength={10}
             />
           </InputGroup>
           <InputGroup className="mb-4">

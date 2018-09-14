@@ -48,8 +48,11 @@ const AddAccount = ({
                 defaultValue={
                   isRead || isUpdate ? record && record.userName : ""
                 }
+                minLength={6}
+                maxLength={16}
                 onChange={e => {
-                  username = e.target.value;
+                  const { value } = e.target;
+                  username = value;
                 }}
               />
             </InputGroup>
@@ -123,6 +126,10 @@ const AddAccount = ({
               }
               if (!username) {
                 Feedback.toast.error("请输入“账号名称”");
+                return;
+              }
+              if (!/^[A-Za-z]+$/gi.test(username)) {
+                Feedback.toast.error("只能是英文字符");
                 return;
               }
               if (!roleId) {

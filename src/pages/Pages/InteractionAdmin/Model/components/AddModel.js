@@ -83,6 +83,7 @@ const AddModel = ({
                 onChange={e => {
                   setFormData({ interactionTemplateName: e.target.value });
                 }}
+                maxLength={10}
               />
             </InputGroup>
             {isRead ? (
