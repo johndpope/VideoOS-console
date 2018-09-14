@@ -13,7 +13,7 @@ export default class RoleTable extends Component {
         >
           查看
         </Button>
-        {!readOnly ? (
+        {!readOnly && (record && !record.isSuperRole) ? (
           <Fragment>
             <Button
               onClick={() => {

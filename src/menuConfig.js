@@ -6,13 +6,13 @@ const defaultMenuConfig = {
   items: [
     {
       name: "首页",
-      path: "home",
+      path: "/home",
       icon: "icon-home",
       external: true
     },
     {
       name: "互动管理",
-      path: "hu",
+      path: "/hu",
       icon: "icon-star",
       children: [
         {
@@ -41,7 +41,7 @@ const defaultMenuConfig = {
     },
     {
       name: "投放管理",
-      path: "tf",
+      path: "/tf",
       icon: "icon-list",
       children: [
         {
@@ -70,13 +70,13 @@ const defaultMenuConfig = {
     },
     {
       name: "license申请",
-      path: "zs",
+      path: "/zs",
       icon: "icon-map",
       external: true
     },
     {
       name: "权限管理",
-      path: "qx",
+      path: "/qx",
       icon: "icon-user",
       children: [
         {
