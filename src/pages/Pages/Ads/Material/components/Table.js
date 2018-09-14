@@ -57,10 +57,10 @@ export default class MaterialTable extends Component {
         <Table dataSource={dataSource} hasBorder={false} isLoading={isLoading}>
           <Table.Column
             title="序号"
-            width={120}
+            width={40}
             cell={(value, index, record) => <span>{index + 1}</span>}
           />
-          <Table.Column title="新增时间" dataIndex="createDate" width={120} />
+          <Table.Column title="新增时间" dataIndex="createDate" width={80} />
           <Table.Column title="素材名称" dataIndex="creativeName" width={120} />
           <Table.Column
             title="素材类型"
@@ -70,7 +70,7 @@ export default class MaterialTable extends Component {
           <Table.Column
             title="素材使用状态"
             dataIndex="creativeStatus"
-            width={120}
+            width={80}
             cell={value => {
               if (value === 0) {
                 return <span>未使用</span>;
@@ -80,7 +80,7 @@ export default class MaterialTable extends Component {
               }
             }}
           />
-          <Table.Column title="操作" cell={this.renderOperator} width={120} />
+          <Table.Column title="操作" cell={this.renderOperator} width={140} />
         </Table>
       </div>
     );

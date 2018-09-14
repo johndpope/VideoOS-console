@@ -42,17 +42,17 @@ export default class ModalTable extends Component {
         <Table dataSource={dataSource} hasBorder={false} isLoading={isLoading}>
           <Table.Column
             title="序号"
-            width={120}
+            width={60}
             cell={(value, index, record) => <span>{index + 1}</span>}
           />
-          <Table.Column title="创建日期" dataIndex="createDate" width={120} />
+          <Table.Column title="创建日期" dataIndex="createDate" width={80} />
           <Table.Column
             title="模板类型"
             dataIndex="interactionTypeName"
-            width={120}
+            width={80}
           />
           <Table.Column title="模板名称" dataIndex="templateName" width={120} />
-          <Table.Column title="操作" cell={this.renderOperator} width={120} />
+          <Table.Column title="操作" cell={this.renderOperator} width={140} />
         </Table>
       </div>
     );
