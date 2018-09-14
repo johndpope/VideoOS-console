@@ -66,17 +66,22 @@ const AddMaterial = ({
                     creativeIdList,
                     interactionTypeName:
                       materialSchema &&
-                      materialSchema.interactionTypeId &&
-                      materialSchema.interactionTypeId.enumNames &&
-                      materialSchema.interactionTypeId.enumNames[0],
+                      materialSchema.properties &&
+                      materialSchema.properties.interactionTypeId &&
+                      materialSchema.properties.interactionTypeId.enumNames &&
+                      materialSchema.properties.interactionTypeId.enumNames[0],
                     interactionTemplateName:
                       materialSchema &&
-                      materialSchema.interactionTemplateId &&
-                      materialSchema.interactionTemplateId.enumNames &&
-                      materialSchema.interactionTemplateId.enumNames[
-                        materialSchema.interactionTemplateId.enum.indexof(
-                          formData.interactionTemplateId
-                        )
+                      materialSchema.properties &&
+                      materialSchema.properties.interactionTemplateId &&
+                      materialSchema.properties.interactionTemplateId
+                        .enumNames &&
+                      materialSchema.properties.interactionTemplateId.enumNames[
+                        materialSchema.properties.interactionTemplateId.enum
+                          ? materialSchema.properties.interactionTemplateId.enum.indexof(
+                              formData.interactionTemplateId
+                            )
+                          : 0
                       ]
                   });
                 }
