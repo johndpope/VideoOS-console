@@ -108,7 +108,16 @@ const AddModel = ({
                 <InputGroupAddon addonType="prepend">
                   <InputGroupText>模版上传</InputGroupText>
                 </InputGroupAddon>
-                <span>
+                <span
+                  style={{
+                    display: "flex",
+                    flex: "1 1 auto",
+                    width: "1%",
+                    border: "1px solid rgb(228, 231, 234)",
+                    alignItems: "center",
+                    justifyContent: "center"
+                  }}
+                >
                   {!((formData && formData.compressFileName) || showFileIpt) &&
                   (modelInfo && modelInfo.templateFileSourceName) ? (
                     <Button
@@ -121,6 +130,7 @@ const AddModel = ({
                     </Button>
                   ) : (
                     <Input
+                      style={{ marginLeft: "8px" }}
                       type="file"
                       onChange={e => {
                         const { files } = e.target;

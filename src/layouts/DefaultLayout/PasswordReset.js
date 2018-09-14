@@ -27,7 +27,7 @@ const PasswordReset = ({ shouldOpen, toggle, resetPassword }) => {
                 <InputGroupText>新密码</InputGroupText>
               </InputGroupAddon>
               <Input
-                type="text"
+                type="password"
                 placeholder="6-16位数字或英文字符"
                 onChange={e => {
                   password = e.target.value;
@@ -41,7 +41,7 @@ const PasswordReset = ({ shouldOpen, toggle, resetPassword }) => {
                 <InputGroupText>重复密码</InputGroupText>
               </InputGroupAddon>
               <Input
-                type="text"
+                type="password"
                 placeholder="请重复密码"
                 onChange={e => {
                   rPassword = e.target.value;

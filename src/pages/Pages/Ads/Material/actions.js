@@ -494,7 +494,7 @@ export const deleteMaterial = params => {
 export const addMaterialToggle = payload => {
   return dispatch => {
     addMaterialSwitch = !addMaterialSwitch;
-    if (payload && ["read", "update"].indexOf(payload.opType) !== -1) {
+    if (payload && ["read", "update"].includes(payload.opType)) {
       dispatch(
         getAdMaterialInfo({ creativeId: payload && payload.creativeId })
       );

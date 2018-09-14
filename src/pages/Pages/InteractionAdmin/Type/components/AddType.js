@@ -83,7 +83,16 @@ const AddType = ({
                 <InputGroupAddon addonType="prepend">
                   <InputGroupText>类型导入</InputGroupText>
                 </InputGroupAddon>
-                <span>
+                <span
+                  style={{
+                    display: "flex",
+                    flex: "1 1 auto",
+                    width: "1%",
+                    border: "1px solid rgb(228, 231, 234)",
+                    alignItems: "center",
+                    justifyContent: "center"
+                  }}
+                >
                   {!((formData && formData.file) || showFileIpt) &&
                   fileName &&
                   isUpdate ? (
@@ -99,7 +108,7 @@ const AddType = ({
                     <Input
                       type="file"
                       accept="text/x-java"
-                      styles={styles.file_ipt}
+                      style={styles.file_ipt}
                       onChange={e => {
                         const file = e.target.files && e.target.files[0];
                         if (!/.json$/gi.test(file.name)) {

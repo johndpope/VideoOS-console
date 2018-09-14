@@ -88,7 +88,9 @@ class DefaultLayout extends Component {
           <main className="main">
             {pathname === "/home" ? <Welcome /> : null}
 
-            <AppBreadcrumb appRoutes={routerConfig} />
+            {pathname !== "/home" ? (
+              <AppBreadcrumb appRoutes={routerConfig} />
+            ) : null}
             <Container fluid>
               <Switch>
                 {routerConfig.map((route, idx) => {
