@@ -14,11 +14,11 @@
  *        return { type: YOUR_ACTION_CONSTANT, var: var }
  *    }
  */
-import { push } from 'react-router-redux';
-import { createHashHistory } from 'history';
-import { Feedback } from '@icedesign/base';
-import * as api from './api';
-import { getAuthority, setAuthority, setUserInfoLocal } from 'utils/authority';
+import { push } from "react-router-redux";
+import { createHashHistory } from "history";
+import { Feedback } from "@icedesign/base";
+import * as api from "./api";
+import { getAuthority, setAuthority, setUserInfoLocal } from "utils/authority";
 // import { reloadAuthorized } from 'utils/Authorized';
 import {
   // USER_LOGOUT_REQUEST,
@@ -28,8 +28,8 @@ import {
   HIDE_PASSWORD_RESET_MODEL,
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
-  RESET_PASSWORD_FAILURE,
-} from './constants';
+  RESET_PASSWORD_FAILURE
+} from "./constants";
 
 /**
  * Changes the input field of the form
@@ -69,90 +69,90 @@ let resetPasswordModalSwitch = false;
 const showPasswordResetModal = () => {
   return {
     type: SHOW_PASSWORD_RESET_MODEL,
-    shouldOpen: true,
-  }
+    shouldOpen: true
+  };
 };
 
 const hidePasswordResetModal = () => {
   return {
     type: HIDE_PASSWORD_RESET_MODEL,
-    shouldOpen: false,
-  }
+    shouldOpen: false
+  };
 };
 
 const resetPasswordRequest = () => {
   return {
     type: RESET_PASSWORD_REQUEST,
-    isLoading: true,
-  }
+    isLoading: true
+  };
 };
 
 const resetPasswordSuccess = () => {
   return {
     type: RESET_PASSWORD_SUCCESS,
-    isLoading: true,
-  }
+    isLoading: true
+  };
 };
 
 const resetPasswordFailure = () => {
   return {
     type: RESET_PASSWORD_FAILURE,
-    isLoading: true,
-  }
+    isLoading: true
+  };
 };
 
-export const userLogout = (params) => {
-  return (dispatch) => {
-    setAuthority('');
-    history.push('/login');
-    Feedback.toast.show('登出成功');
-
+export const userLogout = params => {
+  return dispatch => {
+    setAuthority("");
+    setUserInfoLocal("");
+    history.push("/login");
+    Feedback.toast.show("登出成功");
   };
 };
 
 export const resetPasswordModalToggle = () => {
-  return (dispatch) => {
+  return dispatch => {
     resetPasswordModalSwitch = !resetPasswordModalSwitch;
     if (resetPasswordModalSwitch) {
       dispatch(showPasswordResetModal());
     } else {
       dispatch(hidePasswordResetModal());
     }
-  }
+  };
 };
 
-export const resetPassword = (params) => {
-  return async (dispatch) => {
-    try{
+export const resetPassword = params => {
+  return async dispatch => {
+    try {
       dispatch(resetPasswordRequest());
       const response = await api.resetPassword(params);
-      if (response.status === 200 && response.data.resCode === '00') {
-        setAuthority('');
-        setUserInfoLocal('');
+      if (response.status === 200 && response.data.resCode === "00") {
+        setAuthority("");
+        setUserInfoLocal("");
         dispatch(resetPasswordSuccess());
         dispatch(resetPasswordModalToggle());
         Feedback.toast.show(response.data && response.data.resMsg);
-        dispatch(push('/'));
+        dispatch(push("/"));
       } else {
         dispatch(resetPasswordFailure(response.data));
         Feedback.toast.error(response.data && response.data.resMsg);
       }
 
       return response.data;
-    } catch(error) {
+    } catch (error) {
       dispatch(resetPasswordFailure(error));
     }
-    
   };
 };
 
 export const isTokenValid = () => {
-  return async (dispatch) => {
-    const response = await api.isTokenValid({token: getAuthority()});
-    if (response.status === 200 && response.data.resCode === '00') {
+  return async dispatch => {
+    const response = await api.isTokenValid({ token: getAuthority() });
+    if (response.status === 200 && response.data.resCode === "00") {
       if (!response.data.isValid) {
-        setAuthority('');
-        dispatch(push('/login'));
+        setAuthority("");
+        setUserInfoLocal("");
+        dispatch(push("/login"));
       }
     }
   };
