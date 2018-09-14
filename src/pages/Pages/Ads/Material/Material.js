@@ -9,6 +9,8 @@ import { Pagination } from "@icedesign/base";
 import IceContainer from "@icedesign/container";
 import { connect } from "react-redux";
 import { compose } from "redux";
+import { AUTH_KEYS } from "src/maps";
+import { getUserInfoLocal } from "utils/authority";
 import injectReducer from "utils/injectReducer";
 import {
   getAdMaterials,
@@ -54,6 +56,7 @@ class AdMaterial extends Component {
       setCurrentPage
     } = this.props;
     const modelTypes = adMaterial.modelTypes || [];
+    const { authorList } = getUserInfoLocal();
     return (
       <div className="app">
         <AddMaterial
@@ -108,6 +111,9 @@ class AdMaterial extends Component {
           dataSource={(adMaterial && adMaterial.materialResult) || []}
           deleteMaterialModalToggle={deleteMaterialModalToggle}
           addMaterialToggle={addMaterialToggle}
+          readOnly={
+            authorList ? authorList.includes(AUTH_KEYS.MATERIAL_READ) : false
+          }
         />
         {adMaterial && !adMaterial.isLoading ? (
           <div

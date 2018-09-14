@@ -9,6 +9,8 @@ import { Pagination } from "@icedesign/base";
 import IceContainer from "@icedesign/container";
 import { connect } from "react-redux";
 import { compose } from "redux";
+import { AUTH_KEYS } from "src/maps";
+import { getUserInfoLocal } from "utils/authority";
 import injectReducer from "utils/injectReducer";
 import {
   addPlanModalToggle,
@@ -52,6 +54,7 @@ class AdPlan extends Component {
       setCurrentPage
     } = this.props;
     const modelTypes = adPlan.modelTypes || [];
+    const { authorList } = getUserInfoLocal();
     return (
       <div className="app">
         <AddPlan
@@ -103,6 +106,9 @@ class AdPlan extends Component {
           dataSource={(adPlan && adPlan.planResult) || []}
           deletePlanModalToggle={deletePlanModalToggle}
           addPlanModalToggle={addPlanModalToggle}
+          readOnly={
+            authorList ? authorList.includes(AUTH_KEYS.PLAN_READ) : false
+          }
         />
         {adPlan && !adPlan.isLoading ? (
           <div

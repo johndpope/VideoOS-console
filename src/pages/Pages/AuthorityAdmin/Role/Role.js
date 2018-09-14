@@ -3,6 +3,8 @@ import { Button, Pagination } from "@icedesign/base";
 import IceContainer from "@icedesign/container";
 import { connect } from "react-redux";
 import { compose } from "redux";
+import { AUTH_KEYS } from "src/maps";
+import { getUserInfoLocal } from "utils/authority";
 import injectReducer from "utils/injectReducer";
 import {
   getRoles,
@@ -39,6 +41,7 @@ class AARole extends Component {
       setCurrentPage,
       setFormData
     } = this.props;
+    const { authorList } = getUserInfoLocal();
     return (
       <div className="app">
         <AddRole
@@ -71,6 +74,9 @@ class AARole extends Component {
             dataSource={aaRole && aaRole.roleResult}
             addRoleModalToggle={addRoleModalToggle}
             deleteRoleModalToggle={deleteRoleModalToggle}
+            readOnly={
+              authorList ? authorList.includes(AUTH_KEYS.ROLE_READ) : false
+            }
           />
           {aaRole && !aaRole.isLoading ? (
             <div

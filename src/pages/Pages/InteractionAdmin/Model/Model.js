@@ -4,6 +4,8 @@ import { Button, Pagination } from "@icedesign/base";
 import IceContainer from "@icedesign/container";
 import { connect } from "react-redux";
 import { compose } from "redux";
+import { AUTH_KEYS } from "src/maps";
+import { getUserInfoLocal } from "utils/authority";
 import injectReducer from "utils/injectReducer";
 import {
   getIaModels,
@@ -63,6 +65,7 @@ class IAModel extends Component {
     } = this.props;
     const modelTypes = iaModel.modelTypes || [];
     const lType = location && location.state && location.state.type;
+    const { authorList } = getUserInfoLocal();
     return (
       <div className="app">
         <AddModel
@@ -130,6 +133,9 @@ class IAModel extends Component {
           dataSource={(iaModel && iaModel.modelResult) || []}
           deleteModelModalToggle={deleteModelModalToggle}
           addModelToggle={addModelToggle}
+          readOnly={
+            authorList ? authorList.includes(AUTH_KEYS.MODEL_READ) : false
+          }
         />
         {iaModel && !iaModel.isLoading ? (
           <div

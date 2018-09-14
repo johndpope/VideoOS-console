@@ -19,4 +19,25 @@ const maps = {
   "64": "角色管理"
 };
 
+export const AUTH_KEYS = {
+  TYPE_WRITE: 11,
+  MODEL_WRITE: 12,
+  PLAN_WRITE: 21,
+  MATERIAL_WRITE: 22,
+  REVIEW_WRITE: 23,
+  LICENSE_WRITE: 31,
+  INFO_WRITE: 41,
+  ACCOUNT_WRITE: 61,
+  ROLE_WRITE: 62,
+  TYPE_READ: 13,
+  MODEL_READ: 14,
+  PLAN_READ: 24,
+  MATREIAL_READ: 25,
+  REVIEW_READ: 26,
+  LICENSE_READ: 32,
+  INFO_READ: 42,
+  ACCOUNT_READ: 63,
+  ROLE_READ: 64
+};
+
 export default maps;

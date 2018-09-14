@@ -4,6 +4,8 @@ import IceContainer from "@icedesign/container";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import injectReducer from "utils/injectReducer";
+import { AUTH_KEYS } from "src/maps";
+import { getUserInfoLocal } from "utils/authority";
 import {
   getIaTypes,
   addTypeToggle,
@@ -39,6 +41,7 @@ class IAType extends Component {
       getIaTypes,
       setCurrentPage
     } = this.props;
+    const { authorList } = getUserInfoLocal();
     return (
       <div className="app">
         <AddType
@@ -73,6 +76,9 @@ class IAType extends Component {
             dataSource={(iaType && iaType.typeResult) || []}
             deleteTypeToggle={deleteTypeToggle}
             addTypeToggle={addTypeToggle}
+            readOnly={
+              authorList ? authorList.includes(AUTH_KEYS.TYPE_READ) : false
+            }
           />
           {iaType && !iaType.isLoading ? (
             <div

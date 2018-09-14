@@ -3,6 +3,8 @@ import { Button, Pagination } from "@icedesign/base";
 import IceContainer from "@icedesign/container";
 import { connect } from "react-redux";
 import { compose } from "redux";
+import { AUTH_KEYS } from "src/maps";
+import { getUserInfoLocal } from "utils/authority";
 import injectReducer from "utils/injectReducer";
 import {
   getAccounts,
@@ -37,6 +39,7 @@ class AAAcount extends Component {
       getAccounts,
       setCurrentPage
     } = this.props;
+    const { authorList } = getUserInfoLocal();
     return (
       <div className="app">
         <AddAccount
@@ -67,6 +70,9 @@ class AAAcount extends Component {
             dataSource={aaAccount && aaAccount.accountResult}
             addAccountModalToggle={addAccountModalToggle}
             deleteAccountModalToggle={deleteAccountModalToggle}
+            readOnly={
+              authorList ? authorList.includes(AUTH_KEYS.ACCOUNT_READ) : false
+            }
           />
           {aaAccount && !aaAccount.isLoading ? (
             <div

@@ -74,6 +74,8 @@
     "start-js": "react-app-rewired start",
     "start": "export OS_ENV=dev && npm-run-all -p watch-css start-js",
     "start-dev-remote": "export OS_ENV=dev && npm run build && pm2 startOrReload ecosystem.config.js",
+    "start-test-remote": "export OS_ENV=test && npm run build && pm2 startOrReload ecosystem.config.js",
+    "start-prod-remote": "export OS_ENV=prod && npm run build && pm2 startOrReload ecosystem.config.js",
     "build-js": "react-app-rewired build",
     "build": "npm-run-all build-css build-js",
     "test": "react-app-rewired test --env=jsdom",
