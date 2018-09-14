@@ -360,9 +360,7 @@ export const getIaTypeById = params => {
       const response = await Promise.all([
         api.getIaTypeById(params),
         api.getIaModels({
-          currentPage: 1,
-          pageSize: 20
-          // interactionTypeId: params && params.interactionId,
+          interactionTypeId: params && params.interactionId
         })
       ]);
       if (

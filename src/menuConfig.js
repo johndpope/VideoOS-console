@@ -16,12 +16,26 @@ const defaultMenuConfig = {
       icon: "icon-star",
       children: [
         {
+          id: 11,
           name: "类型管理",
           path: "/hd/type"
         },
         {
+          id: 13,
+          name: "类型管理",
+          path: "/hd/type",
+          readOnly: true
+        },
+        {
+          id: 12,
           name: "模版管理",
           path: "/hd/model"
+        },
+        {
+          id: 14,
+          name: "模版管理",
+          path: "/hd/model",
+          readOnly: true
         }
       ]
     },
@@ -31,12 +45,26 @@ const defaultMenuConfig = {
       icon: "icon-list",
       children: [
         {
+          id: 21,
           name: "投放计划管理",
           path: "/tf/plan"
         },
         {
+          id: 24,
+          name: "投放计划管理",
+          path: "/tf/plan",
+          readOnly: true
+        },
+        {
+          id: 22,
           name: "投放素材管理",
           path: "/tf/material"
+        },
+        {
+          id: 25,
+          name: "投放素材管理",
+          path: "/tf/material",
+          readOnly: true
         }
       ]
     },
@@ -52,12 +80,26 @@ const defaultMenuConfig = {
       icon: "icon-user",
       children: [
         {
+          id: 61,
           name: "角色管理",
           path: "/qx/role"
         },
         {
+          id: 63,
+          name: "角色管理",
+          path: "/qx/role",
+          readOnly: true
+        },
+        {
+          id: 62,
           name: "账号管理",
           path: "/qx/account"
+        },
+        {
+          id: 64,
+          name: "账号管理",
+          path: "/qx/account",
+          readOnly: true
         }
       ]
     }
