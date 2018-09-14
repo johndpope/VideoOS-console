@@ -1,35 +1,40 @@
-import React, { Component } from 'react';
-import { DropdownItem, DropdownMenu, DropdownToggle, Nav } from 'reactstrap';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import { DropdownItem, DropdownMenu, DropdownToggle, Nav } from "reactstrap";
+import PropTypes from "prop-types";
 
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import injectReducer from 'utils/injectReducer';
-import { AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
-import { userLogout, resetPasswordModalToggle, resetPassword, isTokenValid } from './actions';
-import reducer from './reducer';
-import PasswordReset from './PasswordReset';
+import { connect } from "react-redux";
+import { compose } from "redux";
+import injectReducer from "utils/injectReducer";
+import {
+  AppHeaderDropdown,
+  AppNavbarBrand,
+  AppSidebarToggler
+} from "@coreui/react";
+import { userLogout, resetPasswordModalToggle, resetPassword } from "./actions";
+import reducer from "./reducer";
+import PasswordReset from "./PasswordReset";
 
 const propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.node
 };
 
 const defaultProps = {};
 
 class DefaultHeader extends Component {
-
-  componentDidMount() {
-    const { isTokenValid } = this.props;
-    isTokenValid();
-  }
-
   render() {
     // eslint-disable-next-line
-    const { dHeader, resetPasswordModalToggle, userLogout, resetPassword, children, ...attributes } = this.props;
+    const {
+      dHeader,
+      resetPasswordModalToggle,
+      userLogout,
+      resetPassword,
+      children,
+      ...attributes
+    } = this.props;
 
     return (
       <React.Fragment>
-        <PasswordReset 
+        <PasswordReset
           toggle={resetPasswordModalToggle}
           shouldOpen={dHeader && dHeader.shouldPasswordResetModalOpen}
           resetPassword={resetPassword}
@@ -40,11 +45,19 @@ class DefaultHeader extends Component {
         <Nav className="ml-auto" navbar>
           <AppHeaderDropdown direction="down">
             <DropdownToggle nav>
-              <img src="assets/img/avatars/6.jpg" className="img-avatar" alt="admin" />
+              <img
+                src="assets/img/avatars/6.jpg"
+                className="img-avatar"
+                alt="admin"
+              />
             </DropdownToggle>
-            <DropdownMenu right style={{ right: 'auto' }}>
-              <DropdownItem onClick={resetPasswordModalToggle}><i className="fa fa-lock" /> 修改密码</DropdownItem>
-              <DropdownItem onClick={userLogout}><i className="fa fa-unlock" /> 退出登录</DropdownItem>
+            <DropdownMenu right style={{ right: "auto" }}>
+              <DropdownItem onClick={resetPasswordModalToggle}>
+                <i className="fa fa-lock" /> 修改密码
+              </DropdownItem>
+              <DropdownItem onClick={userLogout}>
+                <i className="fa fa-unlock" /> 退出登录
+              </DropdownItem>
             </DropdownMenu>
           </AppHeaderDropdown>
         </Nav>
@@ -57,13 +70,12 @@ class DefaultHeader extends Component {
 const mapDispatchToProps = {
   userLogout,
   resetPasswordModalToggle,
-  resetPassword,
-  isTokenValid,
+  resetPassword
 };
-  
-const mapStateToProps = (state) => {
+
+const mapStateToProps = state => {
   return {
-    dHeader: state.dHeader,
+    dHeader: state.dHeader
   };
 };
 
@@ -72,7 +84,7 @@ const withConnect = connect(
   mapDispatchToProps
 );
 
-const withReducer = injectReducer({ key: 'dHeader', reducer });
+const withReducer = injectReducer({ key: "dHeader", reducer });
 
 DefaultHeader.propTypes = propTypes;
 DefaultHeader.defaultProps = defaultProps;

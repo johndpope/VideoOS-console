@@ -1,7 +1,11 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import injectReducer from "utils/injectReducer";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { Container } from "reactstrap";
 import { createHashHistory } from "history";
+import { isTokenValid } from "./actions";
 import {
   AppBreadcrumb,
   AppHeader,
@@ -13,6 +17,7 @@ import {
   AppSidebarNav
 } from "@coreui/react";
 import { getAuthority, getUserInfoLocal } from "utils/authority";
+import reducer from "./reducer";
 // sidebar nav config
 import menuConfig from "../../menuConfig";
 // routes config
@@ -24,6 +29,16 @@ import Welcome from "./Welcome";
 const history = createHashHistory();
 
 class DefaultLayout extends Component {
+  componentDidMount() {
+    const { isTokenValid } = this.props;
+    isTokenValid();
+  }
+
+  componentWillReceiveProps() {
+    const { isTokenValid } = this.props;
+    isTokenValid();
+  }
+
   render() {
     const _menuConfig = { items: [] };
     const isAuthorized = getAuthority();
@@ -97,4 +112,25 @@ class DefaultLayout extends Component {
   }
 }
 
-export default DefaultLayout;
+// export default DefaultLayout;
+const mapDispatchToProps = {
+  isTokenValid
+};
+
+const mapStateToProps = state => {
+  return {
+    dHeader: state.dHeader
+  };
+};
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps
+);
+
+const withReducer = injectReducer({ key: "dHeader", reducer });
+
+export default compose(
+  withReducer,
+  withConnect
+)(DefaultLayout);
