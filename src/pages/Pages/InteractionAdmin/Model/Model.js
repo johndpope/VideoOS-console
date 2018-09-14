@@ -28,10 +28,6 @@ import AddModel from "./components/AddModel";
 import DeleteModel from "./components/DeleteModal";
 
 class IAModel extends Component {
-  state = {
-    currentPage: 1
-  };
-
   componentDidMount() {
     const options = {
       currentPage: 1,

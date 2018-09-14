@@ -30,10 +30,6 @@ import AddPlan from "./components/AddModal";
 import DeletePlan from "./components/DeleteModal";
 
 class AdPlan extends Component {
-  state = {
-    currentPage: 1
-  };
-
   componentDidMount() {
     const { getAdPlans, queryAllModelTypes } = this.props;
     getAdPlans();
