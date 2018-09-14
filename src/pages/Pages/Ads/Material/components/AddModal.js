@@ -77,8 +77,11 @@ const AddMaterial = ({
                       materialSchema.properties.interactionTemplateId
                         .enumNames &&
                       materialSchema.properties.interactionTemplateId.enumNames[
-                        materialSchema.properties.interactionTemplateId.enum
-                          ? materialSchema.properties.interactionTemplateId.enum.indexof(
+                        materialSchema.properties.interactionTemplateId.enum &&
+                        Array.isArray(
+                          materialSchema.properties.interactionTemplateId.enum
+                        )
+                          ? materialSchema.properties.interactionTemplateId.enum.indexOf(
                               formData.interactionTemplateId
                             )
                           : 0
