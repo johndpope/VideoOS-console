@@ -23,28 +23,30 @@ export default class MaterialTable extends Component {
         >
           查看
         </Button>
-        {!readOnly && shouldShow ? (
-          <Fragment>
-            <Button
-              onClick={() => {
-                addMaterialToggle({
-                  interactionTypeId: record.interactionId,
-                  interactionTypeName: record.interactionName,
-                  creativeId: record.creativeId,
-                  opType: "update"
-                });
-              }}
-            >
-              修改
-            </Button>
-            <Button
-              onClick={() => {
-                deleteMaterialModalToggle(record);
-              }}
-            >
-              删除
-            </Button>
-          </Fragment>
+        {!readOnly ? (
+          shouldShow ? (
+            <Fragment>
+              <Button
+                onClick={() => {
+                  addMaterialToggle({
+                    interactionTypeId: record.interactionId,
+                    interactionTypeName: record.interactionName,
+                    creativeId: record.creativeId,
+                    opType: "update"
+                  });
+                }}
+              >
+                修改
+              </Button>
+              <Button
+                onClick={() => {
+                  deleteMaterialModalToggle(record);
+                }}
+              >
+                删除
+              </Button>
+            </Fragment>
+          ) : null
         ) : null}
       </div>
     );
