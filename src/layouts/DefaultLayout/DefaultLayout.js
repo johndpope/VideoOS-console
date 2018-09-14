@@ -41,7 +41,7 @@ class DefaultLayout extends Component {
         if (mc.children) {
           const tmpChildren = [];
           mc.children.forEach((mcd, mIdx) => {
-            if (authorList.includes(mcd.id)) {
+            if (authorList && authorList.includes(mcd.id)) {
               tmpChildren.push(mcd);
             }
           });
