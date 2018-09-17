@@ -331,7 +331,10 @@ export const queryAllAccountTypes = params => {
       if (response.status === 200 && response.data.resCode === "00") {
         dispatch(
           queryAllAccountTypesSuccess(
-            response.data && response.data.roleInfoList
+            response.data &&
+              response.data.roleInfoList &&
+              Array.isArray(response.data.roleInfoList) &&
+              response.data.roleInfoList.filter((ril, idx) => !ril.isSuperRole)
           )
         );
       } else {
