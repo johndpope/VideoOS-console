@@ -85,10 +85,12 @@ const AddAccount = ({
               </InputGroupAddon>
               <Input
                 type="text"
-                placeholder="请输入密码"
+                placeholder="6-16位数字或者字母或者数字字母组合"
                 id="account_password"
                 disabled={isRead ? "disabled" : false}
                 type="password"
+                minLength={6}
+                maxLength={16}
                 defaultValue={
                   isRead || isUpdate ? record && record.password : ""
                 }
@@ -145,7 +147,11 @@ const AddAccount = ({
                 return;
               }
               if (!password && !isUpdate) {
-                Feedback.toast.error("请输入“秘密”");
+                Feedback.toast.error("请输入“密码”");
+                return;
+              }
+              if (!/^[0-9A-Za-z]+$/gi.test(password) && !isUpdate) {
+                Feedback.toast.error("只能是英文或数字");
                 return;
               }
               if (isUpdate) {

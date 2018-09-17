@@ -81,6 +81,11 @@ const AddRole = ({
                           ? "checked"
                           : false
                       }
+                      onClick={({ target }) => {
+                        if (target.checked) {
+                          target.checked = false;
+                        }
+                      }}
                       onChange={e => {
                         _roleAuthorities[key] = {
                           read: true,
