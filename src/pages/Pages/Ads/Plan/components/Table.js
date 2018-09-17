@@ -70,7 +70,7 @@ export default class PlanTable extends Component {
                 return <span>审核不通过</span>;
               }
               if (value === 1) {
-                return <span>审核通过</span>;
+                return <span>投放中</span>;
               }
               if (value === 2) {
                 return <span>待审核</span>;

@@ -66,7 +66,7 @@ export default class MaterialTable extends Component {
           <Table.Column title="素材名称" dataIndex="creativeName" width={120} />
           <Table.Column
             title="素材类型"
-            dataIndex="interactionTypeName"
+            dataIndex="interactionName"
             width={120}
           />
           <Table.Column
