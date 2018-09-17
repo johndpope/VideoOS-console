@@ -82,6 +82,23 @@ const uiSchema = ({ addMaterialFile }) => {
         );
       }
     },
+    videoUrl: {
+      "ui:widget": props => {
+        return (
+          <Fragment>
+            <Input
+              type="file"
+              onChange={e => {
+                addMaterialFile({
+                  file: e.target.files[0],
+                  type: "videoUrl"
+                });
+              }}
+            />
+          </Fragment>
+        );
+      }
+    },
     exposureLinks: {
       "ui:options": {
         orderable: false
