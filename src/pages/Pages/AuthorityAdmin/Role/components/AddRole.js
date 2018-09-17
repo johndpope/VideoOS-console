@@ -82,8 +82,13 @@ const AddRole = ({
                           : false
                       }
                       onClick={({ target }) => {
-                        if (target.checked) {
+                        if (
+                          _roleAuthorities[key] &&
+                          _roleAuthorities[key].read
+                        ) {
                           target.checked = false;
+                          _roleAuthorities[key].read = false;
+                          setFormData({ _roleAuthorities });
                         }
                       }}
                       onChange={e => {
@@ -107,6 +112,16 @@ const AddRole = ({
                           ? "checked"
                           : false
                       }
+                      onClick={({ target }) => {
+                        if (
+                          _roleAuthorities[key] &&
+                          _roleAuthorities[key].write
+                        ) {
+                          target.checked = false;
+                          _roleAuthorities[key].write = false;
+                          setFormData({ _roleAuthorities });
+                        }
+                      }}
                       onChange={e => {
                         _roleAuthorities[key] = {
                           read: false,
