@@ -1,73 +1,93 @@
-import React from 'react';
-import { Input } from 'reactstrap';
+import React, { Fragment } from "react";
+import { Input } from "reactstrap";
 
-const uiSchema = ({addMaterialFile}) => {
+const uiSchema = ({ addMaterialFile }) => {
   return {
     interactionTypeId: {
-      "ui:disabled": [""],
+      "ui:disabled": [""]
     },
     monitorLinks: {
       "ui:options": {
-        "orderable": false
+        orderable: false
       },
       items: {
         "ui:emptyValue": ""
       }
     },
     avatar: {
-      "ui:widget": (props) => {  
+      "ui:widget": props => {
         return (
-          <Input 
+          <Input
             type="file"
-            onChange={(e) => {
-              addMaterialFile({file: e.target.files[0], type: 'avatar'});
+            onChange={e => {
+              addMaterialFile({ file: e.target.files[0], type: "avatar" });
             }}
           />
-        )
+        );
       }
     },
     display_img: {
-      "ui:widget": (props) => {  
+      "ui:widget": props => {
         return (
-          <Input 
+          <Input
             type="file"
-            onChange={(e) => {
-              addMaterialFile({file: e.target.files[0], type: 'display_img'});
+            onChange={e => {
+              addMaterialFile({ file: e.target.files[0], type: "display_img" });
             }}
           />
-        )
+        );
       }
     },
     award_img: {
-      "ui:widget": (props) => {  
+      "ui:widget": props => {
         return (
-          <Input 
+          <Input
             type="file"
-            onChange={(e) => {
-              addMaterialFile({file: e.target.files[0], type: 'award_img'});
+            onChange={e => {
+              addMaterialFile({ file: e.target.files[0], type: "award_img" });
             }}
           />
-        )
+        );
       }
     },
     countdown_img: {
-      "ui:widget": (props) => {  
+      "ui:widget": props => {
         return (
-          <Input 
+          <Input
             type="file"
-            onChange={(e) => {
-              addMaterialFile({file: e.target.files[0], type: 'countdown_img'});
+            onChange={e => {
+              addMaterialFile({
+                file: e.target.files[0],
+                type: "countdown_img"
+              });
             }}
           />
-        )
+        );
+      }
+    },
+    imageUrl: {
+      "ui:widget": props => {
+        return (
+          <Fragment>
+            <Input
+              type="file"
+              onChange={e => {
+                addMaterialFile({
+                  file: e.target.files[0],
+                  type: "countdown_img"
+                });
+              }}
+            />
+          </Fragment>
+        );
       }
     },
     exposureLinks: {
       "ui:options": {
-        "orderable": false
-      } 
+        orderable: false
+      }
     }
-  };  
+  };
 };
 
 export default uiSchema;
