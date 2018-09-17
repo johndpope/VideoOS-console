@@ -113,7 +113,7 @@ const AddAccount = ({
                 </Button>
               ) : null}
             </InputGroup>
-            {Boolean(resMsg) ? <Badge color="warning">{resMsg}</Badge> : null}
+            {/*Boolean(resMsg) ? <Badge color="warning">{resMsg}</Badge> : null*/}
           </Form>
         </ModalBody>
         <ModalFooter>
