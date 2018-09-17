@@ -74,7 +74,7 @@ const uiSchema = ({ addMaterialFile }) => {
               onChange={e => {
                 addMaterialFile({
                   file: e.target.files[0],
-                  type: "countdown_img"
+                  type: "imageUrl"
                 });
               }}
             />
