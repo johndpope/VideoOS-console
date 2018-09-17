@@ -128,8 +128,16 @@ const AddAccount = ({
                 Feedback.toast.error("请输入“账号名称”");
                 return;
               }
-              if (!/^[A-Za-z]+$/gi.test(username)) {
-                Feedback.toast.error("只能是英文字符");
+              if (username.length < 6) {
+                Feedback.toast.error("不少于6位");
+                return;
+              }
+              if (username.length > 16) {
+                Feedback.toast.error("不d多于16位");
+                return;
+              }
+              if (!/^[0-9A-Za-z]+$/gi.test(username)) {
+                Feedback.toast.error("只能是英文或数字");
                 return;
               }
               if (!roleId) {
