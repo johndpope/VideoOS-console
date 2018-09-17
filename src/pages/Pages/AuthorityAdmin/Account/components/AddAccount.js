@@ -43,7 +43,7 @@ const AddAccount = ({
               </InputGroupAddon>
               <Input
                 type="text"
-                placeholder="请输入角色名称"
+                placeholder="6-16位数字或者字母或者数字字母组合"
                 disabled={isRead ? "disabled" : false}
                 defaultValue={
                   isRead || isUpdate ? record && record.userName : ""
