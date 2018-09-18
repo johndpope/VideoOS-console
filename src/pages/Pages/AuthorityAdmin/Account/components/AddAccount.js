@@ -8,8 +8,7 @@ import {
   Modal,
   ModalBody,
   ModalFooter,
-  ModalHeader,
-  Badge
+  ModalHeader
 } from "reactstrap";
 import { Button, Feedback } from "@icedesign/base";
 

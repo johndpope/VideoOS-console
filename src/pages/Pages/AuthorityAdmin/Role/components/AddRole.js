@@ -159,26 +159,30 @@ const AddRole = ({
                   roleName,
                   nodeIdList:
                     Object.keys(_roleAuthorities).length > 0
-                      ? Object.keys(_roleAuthorities).map(key => {
-                          if (_roleAuthorities[key].read) {
-                            return roleAuthorities[key].read;
-                          } else if (_roleAuthorities[key].write) {
-                            return roleAuthorities[key].write;
-                          }
-                        })
+                      ? Object.keys(_roleAuthorities)
+                          .map(key => {
+                            if (_roleAuthorities[key].read) {
+                              return roleAuthorities[key].read;
+                            } else if (_roleAuthorities[key].write) {
+                              return roleAuthorities[key].write;
+                            }
+                          })
+                          .filter(item => Boolean(item))
                       : nodeIdList
                 });
               } else {
                 addRole({
                   currentPage,
                   roleName,
-                  nodeIdList: Object.keys(_roleAuthorities).map(key => {
-                    if (_roleAuthorities[key].read) {
-                      return roleAuthorities[key].read;
-                    } else if (_roleAuthorities[key].write) {
-                      return roleAuthorities[key].write;
-                    }
-                  })
+                  nodeIdList: Object.keys(_roleAuthorities)
+                    .map(key => {
+                      if (_roleAuthorities[key].read) {
+                        return roleAuthorities[key].read;
+                      } else if (_roleAuthorities[key].write) {
+                        return roleAuthorities[key].write;
+                      }
+                    })
+                    .filter(item => Boolean(item))
                 });
               }
             }}
