@@ -37,7 +37,7 @@ const AddRole = ({
     isRead || isUpdate
       ? (formData && formData.nodeIdList) ||
         (userRoleInfo && userRoleInfo.nodeIdList)
-      : [];
+      : (formData && formData.nodeIdList) || [];
   return (
     <Fragment>
       <Modal isOpen={shouldOpen} toggle={toggle}>
@@ -81,7 +81,6 @@ const AddRole = ({
                       id={`ckb_${idx}_read`}
                       disabled={isRead ? "disabled" : false}
                       checked={
-                        (isRead || isUpdate) &&
                         nodeIdList &&
                         nodeIdList.includes(roleAuthorities[key].read)
                           ? "checked"
@@ -114,7 +113,6 @@ const AddRole = ({
                       id={`ckb_${idx}_write`}
                       disabled={isRead ? "disabled" : false}
                       checked={
-                        (isRead || isUpdate) &&
                         nodeIdList &&
                         nodeIdList.includes(roleAuthorities[key].write)
                           ? "checked"

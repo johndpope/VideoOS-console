@@ -396,6 +396,7 @@ export const getIaTypeById = params => {
 
       return response.data;
     } catch (error) {
+      Feedback.toast.error("类型配置文件格式错误");
       dispatch(getIaTypeByIdFailure(error));
     }
   };
