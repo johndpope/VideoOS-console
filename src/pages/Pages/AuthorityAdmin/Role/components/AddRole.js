@@ -140,6 +140,15 @@ const AddRole = ({
           <Button
             type="primary"
             onClick={() => {
+              const nodeIdList = Object.keys(_roleAuthorities)
+                .map(key => {
+                  if (_roleAuthorities[key].read) {
+                    return roleAuthorities[key].read;
+                  } else if (_roleAuthorities[key].write) {
+                    return roleAuthorities[key].write;
+                  }
+                })
+                .filter(item => Boolean(item));
               if (isRead) {
                 toggle && toggle();
                 return;
@@ -152,6 +161,10 @@ const AddRole = ({
                 Feedback.toast.error("只能是汉字");
                 return;
               }
+              if (!nodeIdList || nodeIdList.length === 0) {
+                Feedback.toast.error("请为角色添加权限");
+                return;
+              }
               if (isUpdate) {
                 updateRole({
                   currentPage,
@@ -159,30 +172,14 @@ const AddRole = ({
                   roleName,
                   nodeIdList:
                     Object.keys(_roleAuthorities).length > 0
-                      ? Object.keys(_roleAuthorities)
-                          .map(key => {
-                            if (_roleAuthorities[key].read) {
-                              return roleAuthorities[key].read;
-                            } else if (_roleAuthorities[key].write) {
-                              return roleAuthorities[key].write;
-                            }
-                          })
-                          .filter(item => Boolean(item))
+                      ? nodeIdList
                       : nodeIdList
                 });
               } else {
                 addRole({
                   currentPage,
                   roleName,
-                  nodeIdList: Object.keys(_roleAuthorities)
-                    .map(key => {
-                      if (_roleAuthorities[key].read) {
-                        return roleAuthorities[key].read;
-                      } else if (_roleAuthorities[key].write) {
-                        return roleAuthorities[key].write;
-                      }
-                    })
-                    .filter(item => Boolean(item))
+                  nodeIdList
                 });
               }
             }}
