@@ -136,7 +136,7 @@ const AddAccount = ({
                 return;
               }
               if (username.length > 16) {
-                Feedback.toast.error("不d多于16位");
+                Feedback.toast.error("不多于16位");
                 return;
               }
               if (!/^[0-9A-Za-z]+$/gi.test(username)) {
@@ -149,6 +149,14 @@ const AddAccount = ({
               }
               if (!password && !isUpdate) {
                 Feedback.toast.error("请输入“密码”");
+                return;
+              }
+              if (password.length < 6) {
+                Feedback.toast.error("不少于6位");
+                return;
+              }
+              if (password.length > 16) {
+                Feedback.toast.error("不多于16位");
                 return;
               }
               if (!/^[0-9A-Za-z]+$/gi.test(password) && !isUpdate) {
