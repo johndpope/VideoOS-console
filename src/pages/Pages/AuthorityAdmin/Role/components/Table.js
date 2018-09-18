@@ -47,7 +47,18 @@ export default class RoleTable extends Component {
           />
           <Table.Column title="创建日期" dataIndex="createDate" width={80} />
           <Table.Column title="角色名称" dataIndex="roleName" width={100} />
-          <Table.Column title="权限" dataIndex="roleDesc" width={160} />
+          <Table.Column
+            title="权限"
+            dataIndex="roleDesc"
+            width={160}
+            cell={value => {
+              if (value.length > 10) {
+                return <span>{`${value.substr(0, 10)}...`}</span>;
+              } else {
+                return <span>{value}</span>;
+              }
+            }}
+          />
           <Table.Column title="操作" cell={this.renderOperator} width={140} />
         </Table>
       </div>
