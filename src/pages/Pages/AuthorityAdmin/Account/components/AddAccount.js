@@ -17,7 +17,6 @@ const AddAccount = ({
   toggle,
   addAccount,
   updateAccount,
-  resMsg,
   roleTypes,
   record,
   currentPage
