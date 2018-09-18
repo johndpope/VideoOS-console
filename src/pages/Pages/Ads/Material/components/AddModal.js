@@ -32,15 +32,10 @@ const AddMaterial = ({
             <Form
               formData={formData}
               schema={materialSchema}
-              uiSchema={uiSchema(
-                isRead
-                  ? {
-                      ...addMaterialFile,
-                      "ui:disabled": ["*"],
-                      "ui:options": { disabled: true }
-                    }
-                  : { addMaterialFile }
-              )}
+              uiSchema={uiSchema({
+                isRead,
+                ...addMaterialFile
+              })}
               onChange={({ formData }) => {
                 saveFormData(formData);
               }}

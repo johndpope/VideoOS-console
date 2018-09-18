@@ -2,8 +2,8 @@ import React, { Fragment } from "react";
 import { Input } from "reactstrap";
 import { Icon } from "@icedesign/base";
 
-const uiSchema = ({ addMaterialFile }) => {
-  return {
+const uiSchema = ({ addMaterialFile, isRead }) => {
+  const schema = {
     interactionTypeId: {
       "ui:disabled": [""]
     },
@@ -104,7 +104,8 @@ const uiSchema = ({ addMaterialFile }) => {
             {Boolean(value) ? (
               <div>
                 <video
-                  source={value}
+                  controls
+                  src={value}
                   style={{
                     maxHeight: "120px"
                   }}
@@ -132,6 +133,10 @@ const uiSchema = ({ addMaterialFile }) => {
       }
     }
   };
+  if (isRead) {
+    schema["ui:disabled"] = [];
+  }
+  return schema;
 };
 
 export default uiSchema;
