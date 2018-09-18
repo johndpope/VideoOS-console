@@ -68,6 +68,7 @@ class AdMaterial extends Component {
           creativeIdList={adMaterial && adMaterial.creativeIdList}
           record={adMaterial && adMaterial.record}
           currentPage={adMaterial && adMaterial.currentPage}
+          fileData={adMaterial && adMaterial.fileData}
         />
         <DeleteMaterial
           deleteMaterial={deleteMaterial}

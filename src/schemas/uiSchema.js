@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { Input } from "reactstrap";
+import { Icon } from "@icedesign/base";
 
 const uiSchema = ({ addMaterialFile }) => {
   return {
@@ -67,34 +68,60 @@ const uiSchema = ({ addMaterialFile }) => {
     },
     imageUrl: {
       "ui:widget": props => {
+        const { value, isUpdate } = props;
         return (
           <Fragment>
-            <Input
-              type="file"
-              onChange={e => {
-                addMaterialFile({
-                  file: e.target.files[0],
-                  type: "imageUrl"
-                });
-              }}
-            />
+            {Boolean(value) ? (
+              <div>
+                <img
+                  src={value}
+                  style={{
+                    maxHeight: "48px"
+                  }}
+                />
+                {isUpdate ? <Icon type="ashbin" onClick={() => {}} /> : null}
+              </div>
+            ) : (
+              <Input
+                type="file"
+                onChange={e => {
+                  addMaterialFile({
+                    file: e.target.files[0],
+                    type: "imageUrl"
+                  });
+                }}
+              />
+            )}
           </Fragment>
         );
       }
     },
     videoUrl: {
       "ui:widget": props => {
+        const { value, isUpdate } = props;
         return (
           <Fragment>
-            <Input
-              type="file"
-              onChange={e => {
-                addMaterialFile({
-                  file: e.target.files[0],
-                  type: "videoUrl"
-                });
-              }}
-            />
+            {Boolean(value) ? (
+              <div>
+                <video
+                  source={value}
+                  style={{
+                    maxHeight: "120px"
+                  }}
+                />
+                {isUpdate ? <Icon type="ashbin" onClick={() => {}} /> : null}
+              </div>
+            ) : (
+              <Input
+                type="file"
+                onChange={e => {
+                  addMaterialFile({
+                    file: e.target.files[0],
+                    type: "videoUrl"
+                  });
+                }}
+              />
+            )}
           </Fragment>
         );
       }

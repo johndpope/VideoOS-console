@@ -15,7 +15,8 @@ const AddMaterial = ({
   record,
   materialSchema,
   addMaterialFile,
-  currentPage
+  currentPage,
+  fileData
 }) => {
   const { opType } = record || {};
   const isRead = opType === "read";
@@ -44,13 +45,19 @@ const AddMaterial = ({
                 saveFormData(formData);
               }}
               onSubmit={({ formData }) => {
+                const _formData = { ...formData };
+                if (fileData && Object.keys(fileData).length > 0) {
+                  for (let key in fileData) {
+                    _formData[key] = fileData[key];
+                  }
+                }
                 if (isUpdate) {
                   updateMaterial({
                     creativeId: record.creativeId,
                     creativeName: formData.creativeName,
                     interactionTypeId: formData.interactionTypeId,
                     interactionTemplateId: formData.interactionTemplateId,
-                    creativeContent: JSON.stringify(formData),
+                    creativeContent: JSON.stringify(_formData),
                     creativeIdList,
                     currentPage
                   });
@@ -62,7 +69,7 @@ const AddMaterial = ({
                     creativeName: formData.creativeName,
                     interactionTypeId: formData.interactionTypeId,
                     interactionTemplateId: formData.interactionTemplateId,
-                    creativeContent: JSON.stringify(formData),
+                    creativeContent: JSON.stringify(_formData),
                     creativeIdList,
                     interactionTypeName:
                       materialSchema &&

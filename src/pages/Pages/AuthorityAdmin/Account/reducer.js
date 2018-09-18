@@ -30,11 +30,14 @@ import {
   QUERY_ALL_ACCOUNTTYPES_FAILURE,
   SHOW_DELETEACCOUNT_MODAL,
   HIDE_DELETEACCOUNT_MODAL,
-  SET_CURRENT_PAGE
+  SET_CURRENT_PAGE,
+  SET_FORM_DATA
 } from "./constants";
 
 // The initial state of the account
-const initialState = {};
+const initialState = {
+  formData: {}
+};
 
 function aaAccountReducer(state = initialState, action) {
   switch (action.type) {
@@ -116,6 +119,18 @@ function aaAccountReducer(state = initialState, action) {
       });
     case SET_CURRENT_PAGE:
       return { ...state, currentPage: action.payload.currentPage };
+    case SET_FORM_DATA:
+      const payload = action.payload;
+      if (typeof payload === "object") {
+        if (Object.keys(payload).length === 0) {
+          state.formData = payload;
+        } else {
+          Object.keys(payload).forEach(key => {
+            state.formData[key] = payload[key];
+          });
+        }
+      }
+      return Object.assign({}, state);
     default:
       return state;
   }

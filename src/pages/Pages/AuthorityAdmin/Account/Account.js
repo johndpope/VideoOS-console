@@ -14,7 +14,8 @@ import {
   queryAllAccountTypes,
   deleteAccount,
   deleteAccountModalToggle,
-  setCurrentPage
+  setCurrentPage,
+  setFormData
 } from "./actions";
 import reducer from "./reducer";
 import AccountTable from "./components/Table";
@@ -37,7 +38,8 @@ class AAAcount extends Component {
       deleteAccount,
       deleteAccountModalToggle,
       getAccounts,
-      setCurrentPage
+      setCurrentPage,
+      setFormData
     } = this.props;
     const { authorList } = getUserInfoLocal();
     return (
@@ -47,10 +49,12 @@ class AAAcount extends Component {
           toggle={addAccountModalToggle}
           addAccount={addAccount}
           updateAccount={updateAccount}
+          setFormData={setFormData}
           resMsg={aaAccount && aaAccount.addAccountResErr}
           roleTypes={aaAccount.roleTypes || []}
           record={aaAccount.record}
           currentPage={aaAccount && aaAccount.currentPage}
+          formData={aaAccount && aaAccount.formData}
         />
         <DeleteAccount
           deleteAccount={deleteAccount}
@@ -110,7 +114,8 @@ const mapDispatchToProps = {
   deleteAccount,
   deleteAccountModalToggle,
   updateAccount,
-  setCurrentPage
+  setCurrentPage,
+  setFormData
 };
 
 const mapStateToProps = state => {

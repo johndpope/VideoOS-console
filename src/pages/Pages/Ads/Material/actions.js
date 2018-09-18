@@ -53,7 +53,8 @@ import {
   GET_MATERIAL_INFO_REQUEST,
   GET_MATERIAL_INFO_SUCCESS,
   GET_MATERIAL_INFO_FAILURE,
-  SET_CURRENT_PAGE
+  SET_CURRENT_PAGE,
+  SET_FILE_DATA
 } from "./constants";
 
 let newMaterialDropDownSwitch = false;
@@ -510,6 +511,7 @@ export const addMaterialToggle = payload => {
       );
       dispatch(showAddMaterial(payload));
     } else {
+      dispatch(setFileData({}));
       dispatch(hideAddMaterial());
     }
   };
@@ -601,6 +603,13 @@ export const getAdMaterialInfo = params => {
 export const setCurrentPage = payload => {
   return {
     type: SET_CURRENT_PAGE,
+    payload
+  };
+};
+
+export const setFileData = payload => {
+  return {
+    type: SET_FILE_DATA,
     payload
   };
 };

@@ -19,14 +19,17 @@ const AddAccount = ({
   updateAccount,
   roleTypes,
   record,
-  currentPage
+  currentPage,
+  formData,
+  setFormData
 }) => {
-  let password = null;
+  let password = (formData && formData.password) || "";
   const { opType } = record || {};
   const isRead = opType === "read";
   const isUpdate = opType === "update";
-  let username = isUpdate ? record && record.userName : "";
-  let roleId = isUpdate ? record && record.roleId : "";
+  let username =
+    (formData && formData.username) || (record && record.userName) || "";
+  let roleId = (formData && formData.roleId) || (record && record.roleId) || "";
   return (
     <Fragment>
       <Modal isOpen={shouldOpen} toggle={toggle}>
@@ -50,7 +53,7 @@ const AddAccount = ({
                 maxLength={16}
                 onChange={e => {
                   const { value } = e.target;
-                  username = value;
+                  setFormData({ username: value });
                 }}
               />
             </InputGroup>
@@ -63,7 +66,7 @@ const AddAccount = ({
                 disabled={isRead ? "disabled" : false}
                 defaultValue={isRead || isUpdate ? record && record.roleId : ""}
                 onChange={e => {
-                  roleId = e.target.value;
+                  setFormData({ roleId: e.target.value });
                 }}
               >
                 <option value="default">请选择</option>
@@ -93,7 +96,7 @@ const AddAccount = ({
                   isRead || isUpdate ? record && record.password : ""
                 }
                 onChange={e => {
-                  password = e.target.value;
+                  setFormData({ password: e.target.value });
                 }}
               />
               {isUpdate ? (
