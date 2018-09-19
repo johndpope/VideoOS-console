@@ -82,37 +82,25 @@ const AddAccount = ({
             </InputGroup>
             <InputGroup className="mb-4" style={{ alignItems: "center" }}>
               <InputGroupAddon addonType="prepend">
-                <InputGroupText>密码</InputGroupText>
+                <InputGroupText>{isUpdate ? "新密码" : "密码"}</InputGroupText>
               </InputGroupAddon>
               <Input
                 type="text"
-                placeholder="6-16位数字或者字母或者数字字母组合"
+                placeholder={
+                  isUpdate
+                    ? "请输入新密码"
+                    : "6-16位数字或者字母或者数字字母组合"
+                }
                 id="account_password"
                 disabled={isRead ? "disabled" : false}
                 type="password"
                 minLength={6}
                 maxLength={16}
-                defaultValue={
-                  isRead || isUpdate ? record && record.password : ""
-                }
+                defaultValue={isRead || isUpdate ? "******" : ""}
                 onChange={e => {
                   setFormData({ password: e.target.value });
                 }}
               />
-              {isUpdate ? (
-                <Button
-                  onClick={() => {
-                    if (
-                      document &&
-                      document.getElementById("account_password")
-                    ) {
-                      document.getElementById("account_password").value = "";
-                    }
-                  }}
-                >
-                  重置
-                </Button>
-              ) : null}
             </InputGroup>
             {/*Boolean(resMsg) ? <Badge color="warning">{resMsg}</Badge> : null*/}
           </Form>
@@ -147,19 +135,19 @@ const AddAccount = ({
                 Feedback.toast.error("请选择“角色”");
                 return;
               }
-              if (!password) {
+              if (!password && !isUpdate) {
                 Feedback.toast.error("请输入“密码”");
                 return;
               }
-              if (password.length < 6) {
+              if (password && password.length < 6) {
                 Feedback.toast.error("不少于6位");
                 return;
               }
-              if (password.length > 16) {
+              if (password && password.length > 16) {
                 Feedback.toast.error("不多于16位");
                 return;
               }
-              if (!/^[0-9A-Za-z]+$/gi.test(password)) {
+              if (password && !/^[0-9A-Za-z]+$/gi.test(password)) {
                 Feedback.toast.error("只能是英文或数字");
                 return;
               }

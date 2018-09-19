@@ -13,6 +13,9 @@ const uiSchema = ({
     interactionTypeId: {
       "ui:disabled": [""]
     },
+    show_close_btn: {
+      "ui:description": "单位：秒"
+    },
     monitorLinks: {
       "ui:options": {
         orderable: false
@@ -23,13 +26,44 @@ const uiSchema = ({
     },
     avatar: {
       "ui:widget": props => {
+        let switcher = Boolean(uiSchemaConf && uiSchemaConf.avatarSwitcher);
+        const { value } = props;
         return (
-          <Input
-            type="file"
-            onChange={e => {
-              addMaterialFile({ file: e.target.files[0], type: "avatar" });
-            }}
-          />
+          <Fragment>
+            {Boolean(value) && !switcher ? (
+              <div>
+                <img
+                  src={value}
+                  style={{
+                    maxWidth: "400px"
+                  }}
+                />
+                {isUpdate ? (
+                  <button
+                    type="button"
+                    class="btn btn-danger array-item-remove"
+                    style={{
+                      flex: "1 1 0%",
+                      padding: "6px 8px",
+                      fontWeight: "bold"
+                    }}
+                    onClick={() => {
+                      setSwitcher({ avatarSwitcher: true });
+                    }}
+                  >
+                    <i class="glyphicon glyphicon-remove" />
+                  </button>
+                ) : null}
+              </div>
+            ) : (
+              <Input
+                type="file"
+                onChange={e => {
+                  addMaterialFile({ file: e.target.files[0], type: "avatar" });
+                }}
+              />
+            )}
+          </Fragment>
         );
       }
     },
@@ -83,16 +117,24 @@ const uiSchema = ({
                 <img
                   src={value}
                   style={{
-                    maxHeight: "120px"
+                    maxWidth: "400px"
                   }}
                 />
                 {isUpdate ? (
-                  <Icon
-                    type="ashbin"
+                  <button
+                    type="button"
+                    class="btn btn-danger array-item-remove"
+                    style={{
+                      flex: "1 1 0%",
+                      padding: "6px 8px",
+                      fontWeight: "bold"
+                    }}
                     onClick={() => {
                       setSwitcher({ switcher: true });
                     }}
-                  />
+                  >
+                    <i class="glyphicon glyphicon-remove" />
+                  </button>
                 ) : null}
               </div>
             ) : (
@@ -126,12 +168,20 @@ const uiSchema = ({
                   }}
                 />
                 {isUpdate ? (
-                  <Icon
-                    type="ashbin"
+                  <button
+                    type="button"
+                    class="btn btn-danger array-item-remove"
+                    style={{
+                      flex: "1 1 0%",
+                      padding: "6px 8px",
+                      fontWeight: "bold"
+                    }}
                     onClick={() => {
                       setSwitcher({ videoSwitcher: true });
                     }}
-                  />
+                  >
+                    <i class="glyphicon glyphicon-remove" />
+                  </button>
                 ) : null}
               </div>
             ) : (
@@ -141,6 +191,53 @@ const uiSchema = ({
                   addMaterialFile({
                     file: e.target.files[0],
                     type: "videoUrl"
+                  });
+                }}
+              />
+            )}
+          </Fragment>
+        );
+      }
+    },
+    ad_video: {
+      "ui:widget": props => {
+        let switcher = Boolean(uiSchemaConf && uiSchemaConf.adVideoSwitcher);
+        const { value } = props;
+        return (
+          <Fragment>
+            {Boolean(value) && !switcher ? (
+              <div>
+                <video
+                  controls
+                  src={value}
+                  style={{
+                    maxWidth: "400px"
+                  }}
+                />
+                {isUpdate ? (
+                  <button
+                    type="button"
+                    class="btn btn-danger array-item-remove"
+                    style={{
+                      flex: "1 1 0%",
+                      padding: "6px 8px",
+                      fontWeight: "bold"
+                    }}
+                    onClick={() => {
+                      setSwitcher({ adVideoSwitcher: true });
+                    }}
+                  >
+                    <i class="glyphicon glyphicon-remove" />
+                  </button>
+                ) : null}
+              </div>
+            ) : (
+              <Input
+                type="file"
+                onChange={e => {
+                  addMaterialFile({
+                    file: e.target.files[0],
+                    type: "ad_video"
                   });
                 }}
               />
