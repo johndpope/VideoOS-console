@@ -50,6 +50,7 @@ import {
 } from "./constants";
 
 // The initial state of the material
+let tempFormData = null;
 const initialState = {
   formData: {},
   fileData: {},
@@ -203,7 +204,26 @@ function adMaterialReducer(state = initialState, action) {
         isLoading: action.isLoading
       });
     case SAVE_FORM_DATA:
-      state.formData = action.payload;
+      const _payload = action.payload;
+      if (_payload === "refresh") {
+        const { formData } = state;
+        tempFormData = { ...formData };
+        state.formData = {};
+      }
+      if (_payload === "recover") {
+        state.formData = { ...tempFormData };
+        tempFormData = null;
+      }
+      if (typeof _payload === "object") {
+        if (Object.keys(_payload).length === 0) {
+          state.formData = _payload;
+        } else {
+          Object.keys(_payload).forEach(key => {
+            state.formData[key] = _payload[key];
+          });
+        }
+      }
+      // state.formData = action.payload;
       return Object.assign({}, state);
     case SET_FILE_DATA:
       state.fileData = action.payload;

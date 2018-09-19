@@ -1,13 +1,13 @@
 import React, { Fragment } from "react";
 import { Input } from "reactstrap";
-import { Icon } from "@icedesign/base";
 
 const uiSchema = ({
   addMaterialFile,
   isRead,
   isUpdate,
   setSwitcher,
-  uiSchemaConf
+  uiSchemaConf,
+  saveFormData
 }) => {
   const schema = {
     interactionTypeId: {

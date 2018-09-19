@@ -39,7 +39,8 @@ const AddMaterial = ({
                 isUpdate,
                 setSwitcher,
                 addMaterialFile,
-                uiSchemaConf
+                uiSchemaConf,
+                saveFormData
               })}
               onChange={({ formData }) => {
                 saveFormData(formData);
@@ -111,7 +112,11 @@ const AddMaterial = ({
                 >
                   取消
                 </Button>
-                <Button type="primary" htmlType="submit">
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  style={{ marginLeft: "8px" }}
+                >
                   {isUpdate ? "确认修改" : isRead ? "确认" : "确认新增"}
                 </Button>
               </div>

@@ -301,6 +301,13 @@ const addMaterialFileFailure = () => {
   };
 };
 
+const _setSwitcher = payload => {
+  return {
+    type: SET_SWITCHER,
+    payload
+  };
+};
+
 export const getAdMaterials = (
   params = {
     currentPage: 1,
@@ -511,6 +518,7 @@ export const addMaterialToggle = payload => {
       );
       dispatch(showAddMaterial(payload));
     } else {
+      dispatch(saveFormData({}));
       dispatch(setFileData({}));
       dispatch(hideAddMaterial());
     }
@@ -615,8 +623,12 @@ export const setFileData = payload => {
 };
 
 export const setSwitcher = payload => {
-  return {
-    type: SET_SWITCHER,
-    payload
+  return async dispatch => {
+    dispatch(_setSwitcher(payload));
+    dispatch(saveFormData("refresh"));
+    // dispatch(saveFormData('recover'));
+    setTimeout(() => {
+      dispatch(saveFormData("recover"));
+    }, 0);
   };
 };
