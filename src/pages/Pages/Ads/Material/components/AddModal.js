@@ -16,7 +16,8 @@ const AddMaterial = ({
   materialSchema,
   addMaterialFile,
   currentPage,
-  fileData
+  fileData,
+  setSwitcher
 }) => {
   const { opType } = record || {};
   const isRead = opType === "read";
@@ -35,7 +36,8 @@ const AddMaterial = ({
               uiSchema={uiSchema({
                 isRead,
                 isUpdate,
-                ...addMaterialFile
+                setSwitcher,
+                addMaterialFile
               })}
               onChange={({ formData }) => {
                 saveFormData(formData);
