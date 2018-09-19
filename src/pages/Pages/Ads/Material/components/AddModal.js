@@ -34,6 +34,7 @@ const AddMaterial = ({
               schema={materialSchema}
               uiSchema={uiSchema({
                 isRead,
+                isUpdate,
                 ...addMaterialFile
               })}
               onChange={({ formData }) => {

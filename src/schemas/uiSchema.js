@@ -76,7 +76,7 @@ const uiSchema = ({ addMaterialFile, isRead }) => {
                 <img
                   src={value}
                   style={{
-                    maxHeight: "48px"
+                    maxHeight: "120px"
                   }}
                 />
                 {isUpdate ? <Icon type="ashbin" onClick={() => {}} /> : null}
@@ -107,7 +107,7 @@ const uiSchema = ({ addMaterialFile, isRead }) => {
                   controls
                   src={value}
                   style={{
-                    maxHeight: "120px"
+                    maxHeight: "160px"
                   }}
                 />
                 {isUpdate ? <Icon type="ashbin" onClick={() => {}} /> : null}
