@@ -232,6 +232,11 @@ function adMaterialReducer(state = initialState, action) {
       return { ...state, currentPage: action.payload.currentPage };
     case SET_SWITCHER:
       const payload = action.payload;
+      if (payload === "refresh") {
+        for (let key in state.uiSchemaConf) {
+          state.uiSchemaConf[key] = false;
+        }
+      }
       if (typeof payload === "object") {
         if (Object.keys(payload).length === 0) {
           state.uiSchemaConf = payload;

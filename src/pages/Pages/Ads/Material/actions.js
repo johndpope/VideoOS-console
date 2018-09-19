@@ -518,6 +518,7 @@ export const addMaterialToggle = payload => {
       );
       dispatch(showAddMaterial(payload));
     } else {
+      dispatch(_setSwitcher("refresh"));
       dispatch(saveFormData({}));
       dispatch(setFileData({}));
       dispatch(hideAddMaterial());
@@ -626,7 +627,6 @@ export const setSwitcher = payload => {
   return async dispatch => {
     dispatch(_setSwitcher(payload));
     dispatch(saveFormData("refresh"));
-    // dispatch(saveFormData('recover'));
     setTimeout(() => {
       dispatch(saveFormData("recover"));
     }, 0);
