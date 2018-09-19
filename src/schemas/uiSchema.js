@@ -68,48 +68,9 @@ const uiSchema = ({
         );
       }
     },
-    display_img: {
-      "ui:widget": props => {
-        return (
-          <Input
-            type="file"
-            onChange={e => {
-              addMaterialFile({ file: e.target.files[0], type: "display_img" });
-            }}
-          />
-        );
-      }
-    },
-    award_img: {
-      "ui:widget": props => {
-        return (
-          <Input
-            type="file"
-            onChange={e => {
-              addMaterialFile({ file: e.target.files[0], type: "award_img" });
-            }}
-          />
-        );
-      }
-    },
-    countdown_img: {
-      "ui:widget": props => {
-        return (
-          <Input
-            type="file"
-            onChange={e => {
-              addMaterialFile({
-                file: e.target.files[0],
-                type: "countdown_img"
-              });
-            }}
-          />
-        );
-      }
-    },
     imageUrl: {
       "ui:widget": props => {
-        let switcher = Boolean(uiSchemaConf && uiSchemaConf.switcher);
+        let switcher = Boolean(uiSchemaConf && uiSchemaConf.avatarSwitcher);
         const { value } = props;
         return (
           <Fragment>
@@ -131,7 +92,7 @@ const uiSchema = ({
                       fontWeight: "bold"
                     }}
                     onClick={() => {
-                      setSwitcher({ switcher: true });
+                      setSwitcher({ avatarSwitcher: true });
                     }}
                   >
                     <i class="glyphicon glyphicon-remove" />
@@ -142,10 +103,7 @@ const uiSchema = ({
               <Input
                 type="file"
                 onChange={e => {
-                  addMaterialFile({
-                    file: e.target.files[0],
-                    type: "imageUrl"
-                  });
+                  addMaterialFile({ file: e.target.files[0], type: "avatar" });
                 }}
               />
             )}
@@ -155,7 +113,7 @@ const uiSchema = ({
     },
     videoUrl: {
       "ui:widget": props => {
-        let switcher = Boolean(uiSchemaConf && uiSchemaConf.videoSwitcher);
+        let switcher = Boolean(uiSchemaConf && uiSchemaConf.adVideoSwitcher);
         const { value } = props;
         return (
           <Fragment>
@@ -165,7 +123,7 @@ const uiSchema = ({
                   controls
                   src={value}
                   style={{
-                    maxHeight: "160px"
+                    maxWidth: "400px"
                   }}
                 />
                 {isUpdate ? (
@@ -178,7 +136,7 @@ const uiSchema = ({
                       fontWeight: "bold"
                     }}
                     onClick={() => {
-                      setSwitcher({ videoSwitcher: true });
+                      setSwitcher({ adVideoSwitcher: true });
                     }}
                   >
                     <i class="glyphicon glyphicon-remove" />
@@ -189,9 +147,15 @@ const uiSchema = ({
               <Input
                 type="file"
                 onChange={e => {
+                  const file = e.target.files && e.target.files[0];
+                  if (!file) return;
+                  if (file.size > 20 * 1024 * 1024) {
+                    Feedback.toast.error("视频大小超出上限50MB");
+                    return;
+                  }
                   addMaterialFile({
-                    file: e.target.files[0],
-                    type: "videoUrl"
+                    file,
+                    type: "ad_video"
                   });
                 }}
               />
