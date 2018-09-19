@@ -460,16 +460,11 @@ export const setFormData = payload => {
   };
 };
 
-export const getAdMaterials = (
-  params = {
-    currentPage: 1,
-    pageSize: 20
-  }
-) => {
+export const getAdMaterials = () => {
   return async dispatch => {
     dispatch(getAdMaterialsRequest());
     try {
-      const response = await api.getAdMaterials(params);
+      const response = await api.getAdMaterials();
 
       if (response.status === 200 && response.data.resCode === "00") {
         dispatch(getAdMaterialsSuccess(response.data));

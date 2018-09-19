@@ -135,7 +135,8 @@ const AddModel = ({
                       type="file"
                       onChange={e => {
                         const { files } = e.target;
-                        const templateFileSourceName = files && files[0].name;
+                        const templateFileSourceName =
+                          files && files[0] && files[0].name;
                         if (!/.lua$/gi.test(templateFileSourceName)) {
                           Feedback.toast.error("请上传*.lua文件");
                           return;
@@ -174,11 +175,22 @@ const AddModel = ({
                 Feedback.toast.error("请选择“模版类型”");
                 return;
               }
-              if (!formData.interactionTemplateName) {
+              if (!formData.interactionTemplateName && !isUpdate) {
                 Feedback.toast.error("请输入“模版名称”");
                 return;
               }
-              if (!uploadModelFileInfo.compressFileName) {
+              if (!(formData && formData.templateName) && isUpdate) {
+                Feedback.toast.error("请输入“模版名称”");
+                return;
+              }
+              if (!uploadModelFileInfo.compressFileName && !isUpdate) {
+                Feedback.toast.error("请上传模版文件");
+                return;
+              }
+              if (
+                !(modelInfo && modelInfo.templateFileSourceName) &&
+                isUpdate
+              ) {
                 Feedback.toast.error("请上传模版文件");
                 return;
               }

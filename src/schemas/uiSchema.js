@@ -26,6 +26,7 @@ const uiSchema = ({
       }
     },
     avatar: {
+      "ui:emptyValue": "",
       "ui:widget": props => {
         let switcher = Boolean(uiSchemaConf && uiSchemaConf.avatarSwitcher);
         const { value } = props;
@@ -69,6 +70,7 @@ const uiSchema = ({
       }
     },
     imageUrl: {
+      "ui:emptyValue": "",
       "ui:widget": props => {
         let switcher = Boolean(uiSchemaConf && uiSchemaConf.avatarSwitcher);
         const { value } = props;
@@ -112,6 +114,7 @@ const uiSchema = ({
       }
     },
     videoUrl: {
+      "ui:emptyValue": "",
       "ui:widget": props => {
         let switcher = Boolean(uiSchemaConf && uiSchemaConf.adVideoSwitcher);
         const { value } = props;
@@ -165,6 +168,7 @@ const uiSchema = ({
       }
     },
     ad_video: {
+      "ui:emptyValue": "",
       "ui:widget": props => {
         let switcher = Boolean(uiSchemaConf && uiSchemaConf.adVideoSwitcher);
         const { value } = props;
