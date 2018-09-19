@@ -69,7 +69,7 @@ const AddAccount = ({
                   setFormData({ roleId: e.target.value });
                 }}
               >
-                <option value="default">请选择</option>
+                <option value="">请选择</option>
                 {roleTypes &&
                   Array.isArray(roleTypes) &&
                   roleTypes.length > 0 &&

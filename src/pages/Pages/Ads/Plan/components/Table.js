@@ -22,13 +22,15 @@ export default class PlanTable extends Component {
             >
               修改
             </Button>
-            <Button
-              onClick={() => {
-                deletePlanModalToggle(record);
-              }}
-            >
-              下线
-            </Button>
+            {record && record.launchStatus !== 3 ? (
+              <Button
+                onClick={() => {
+                  deletePlanModalToggle(record);
+                }}
+              >
+                下线
+              </Button>
+            ) : null}
           </Fragment>
         ) : null}
       </div>
