@@ -78,7 +78,7 @@ const uiSchema = ({
         const { value } = props;
         return (
           <Fragment>
-            {Boolean(value) && switcher ? (
+            {Boolean(value) && !switcher ? (
               <div>
                 <img
                   src={value}
@@ -90,7 +90,7 @@ const uiSchema = ({
                   <Icon
                     type="ashbin"
                     onClick={() => {
-                      setSwitcher({ switcher: false });
+                      setSwitcher({ switcher: true });
                     }}
                   />
                 ) : null}
@@ -112,11 +112,11 @@ const uiSchema = ({
     },
     videoUrl: {
       "ui:widget": props => {
-        let switcher = Boolean(uiSchemaConf && uiSchemaConf.switcher);
+        let switcher = Boolean(uiSchemaConf && uiSchemaConf.videoSwitcher);
         const { value } = props;
         return (
           <Fragment>
-            {Boolean(value) && switcher ? (
+            {Boolean(value) && !switcher ? (
               <div>
                 <video
                   controls
@@ -125,7 +125,14 @@ const uiSchema = ({
                     maxHeight: "160px"
                   }}
                 />
-                {isUpdate ? <Icon type="ashbin" onClick={() => {}} /> : null}
+                {isUpdate ? (
+                  <Icon
+                    type="ashbin"
+                    onClick={() => {
+                      setSwitcher({ videoSwitcher: true });
+                    }}
+                  />
+                ) : null}
               </div>
             ) : (
               <Input

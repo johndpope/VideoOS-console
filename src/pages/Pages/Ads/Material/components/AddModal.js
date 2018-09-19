@@ -17,7 +17,8 @@ const AddMaterial = ({
   addMaterialFile,
   currentPage,
   fileData,
-  setSwitcher
+  setSwitcher,
+  uiSchemaConf
 }) => {
   const { opType } = record || {};
   const isRead = opType === "read";
@@ -29,7 +30,7 @@ const AddMaterial = ({
           {isRead ? "素材信息" : isUpdate ? "素材修改" : "新增素材"}
         </ModalHeader>
         <ModalBody>
-          {materialSchema ? (
+          {materialSchema && typeof materialSchema === "object" ? (
             <Form
               formData={formData}
               schema={materialSchema}
@@ -37,7 +38,8 @@ const AddMaterial = ({
                 isRead,
                 isUpdate,
                 setSwitcher,
-                addMaterialFile
+                addMaterialFile,
+                uiSchemaConf
               })}
               onChange={({ formData }) => {
                 saveFormData(formData);
@@ -114,7 +116,9 @@ const AddMaterial = ({
                 </Button>
               </div>
             </Form>
-          ) : null}
+          ) : (
+            <p>类型文件格式存在问题，请检查</p>
+          )}
         </ModalBody>
       </Modal>
     </Fragment>

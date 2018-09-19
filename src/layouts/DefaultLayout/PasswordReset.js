@@ -61,13 +61,25 @@ const PasswordReset = ({ shouldOpen, toggle, resetPassword }) => {
                 Feedback.toast.error("新密码不符合要求，请重新输入");
                 return;
               }
-              const userInfo = getUserInfoLocal();
-              const { username, roleId, userId } = userInfo;
+              if (password.length < 6) {
+                Feedback.toast.error("少于6位");
+                return;
+              }
+              if (password.length > 16) {
+                Feedback.toast.error("多于16位");
+                return;
+              }
+              if (
+                !/^[0-9A-Za-z]+$/gi.test(password) ||
+                !/^[0-9A-Za-z]+$/gi.test(rPassword)
+              ) {
+                Feedback.toast.error("只能是英文或数字");
+                return;
+              }
+              const { username } = getUserInfoLocal();
               resetPassword({
                 password,
-                username,
-                roleId,
-                userId
+                username
               });
             }}
           >

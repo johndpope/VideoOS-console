@@ -32,7 +32,7 @@ class DefaultHeader extends Component {
       children,
       ...attributes
     } = this.props;
-    const { userName } = getUserInfoLocal();
+    const { username } = getUserInfoLocal();
     return (
       <React.Fragment>
         <PasswordReset
@@ -51,7 +51,7 @@ class DefaultHeader extends Component {
                 className="img-avatar"
                 alt="admin"
               />
-              {userName || ""}
+              {username || ""}
             </DropdownToggle>
             <DropdownMenu right style={{ right: "auto" }}>
               <DropdownItem onClick={resetPasswordModalToggle}>

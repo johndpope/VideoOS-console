@@ -54,7 +54,8 @@ import {
   GET_MATERIAL_INFO_SUCCESS,
   GET_MATERIAL_INFO_FAILURE,
   SET_CURRENT_PAGE,
-  SET_FILE_DATA
+  SET_FILE_DATA,
+  SET_SWITCHER
 } from "./constants";
 
 let newMaterialDropDownSwitch = false;
@@ -397,7 +398,6 @@ export const getIaTypeById = params => {
 
       return response.data;
     } catch (error) {
-      Feedback.toast.error("类型配置文件格式错误");
       dispatch(getIaTypeByIdFailure(error));
     }
   };
@@ -610,6 +610,13 @@ export const setCurrentPage = payload => {
 export const setFileData = payload => {
   return {
     type: SET_FILE_DATA,
+    payload
+  };
+};
+
+export const setSwitcher = payload => {
+  return {
+    type: SET_SWITCHER,
     payload
   };
 };

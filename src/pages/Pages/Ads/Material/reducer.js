@@ -45,14 +45,16 @@ import {
   GET_MATERIAL_INFO_SUCCESS,
   GET_MATERIAL_INFO_FAILURE,
   SET_CURRENT_PAGE,
-  SET_FILE_DATA
+  SET_FILE_DATA,
+  SET_SWITCHER
 } from "./constants";
 
 // The initial state of the material
 const initialState = {
   formData: {},
   fileData: {},
-  creativeIdList: []
+  creativeIdList: [],
+  uiSchemaConf: {}
 };
 
 function adMaterialReducer(state = initialState, action) {
@@ -208,6 +210,18 @@ function adMaterialReducer(state = initialState, action) {
       return { ...state };
     case SET_CURRENT_PAGE:
       return { ...state, currentPage: action.payload.currentPage };
+    case SET_SWITCHER:
+      const payload = action.payload;
+      if (typeof payload === "object") {
+        if (Object.keys(payload).length === 0) {
+          state.uiSchemaConf = payload;
+        } else {
+          Object.keys(payload).forEach(key => {
+            state.uiSchemaConf[key] = payload[key];
+          });
+        }
+      }
+      return { ...state };
     default:
       return state;
   }
