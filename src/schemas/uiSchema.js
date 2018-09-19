@@ -2,7 +2,13 @@ import React, { Fragment } from "react";
 import { Input } from "reactstrap";
 import { Icon } from "@icedesign/base";
 
-const uiSchema = ({ addMaterialFile, isRead }) => {
+const uiSchema = ({
+  addMaterialFile,
+  isRead,
+  isUpdate,
+  setSwitcher,
+  uiSchemaConf
+}) => {
   const schema = {
     interactionTypeId: {
       "ui:disabled": [""]
@@ -68,10 +74,11 @@ const uiSchema = ({ addMaterialFile, isRead }) => {
     },
     imageUrl: {
       "ui:widget": props => {
-        const { value, isUpdate } = props;
+        let switcher = Boolean(uiSchemaConf && uiSchemaConf.switcher);
+        const { value } = props;
         return (
           <Fragment>
-            {Boolean(value) ? (
+            {Boolean(value) && switcher ? (
               <div>
                 <img
                   src={value}
@@ -79,7 +86,14 @@ const uiSchema = ({ addMaterialFile, isRead }) => {
                     maxHeight: "120px"
                   }}
                 />
-                {isUpdate ? <Icon type="ashbin" onClick={() => {}} /> : null}
+                {isUpdate ? (
+                  <Icon
+                    type="ashbin"
+                    onClick={() => {
+                      setSwitcher({ switcher: false });
+                    }}
+                  />
+                ) : null}
               </div>
             ) : (
               <Input
@@ -98,10 +112,11 @@ const uiSchema = ({ addMaterialFile, isRead }) => {
     },
     videoUrl: {
       "ui:widget": props => {
-        const { value, isUpdate } = props;
+        let switcher = Boolean(uiSchemaConf && uiSchemaConf.switcher);
+        const { value } = props;
         return (
           <Fragment>
-            {Boolean(value) ? (
+            {Boolean(value) && switcher ? (
               <div>
                 <video
                   controls

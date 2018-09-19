@@ -147,7 +147,7 @@ const AddAccount = ({
                 Feedback.toast.error("请选择“角色”");
                 return;
               }
-              if (!password && !isUpdate) {
+              if (!password) {
                 Feedback.toast.error("请输入“密码”");
                 return;
               }
@@ -159,7 +159,7 @@ const AddAccount = ({
                 Feedback.toast.error("不多于16位");
                 return;
               }
-              if (!/^[0-9A-Za-z]+$/gi.test(password) && !isUpdate) {
+              if (!/^[0-9A-Za-z]+$/gi.test(password)) {
                 Feedback.toast.error("只能是英文或数字");
                 return;
               }
