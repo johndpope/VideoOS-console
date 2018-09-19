@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { Input } from "reactstrap";
+import { Feedback } from "@icedesign/base";
 
 const uiSchema = ({
   addMaterialFile,
@@ -235,8 +236,14 @@ const uiSchema = ({
               <Input
                 type="file"
                 onChange={e => {
+                  const file = e.target.files && e.target.files[0];
+                  if (!file) return;
+                  if (file.size > 50 * 1024 * 1024) {
+                    Feedback.toast.error("视频大小超出上限50MB");
+                    return;
+                  }
                   addMaterialFile({
-                    file: e.target.files[0],
+                    file,
                     type: "ad_video"
                   });
                 }}
