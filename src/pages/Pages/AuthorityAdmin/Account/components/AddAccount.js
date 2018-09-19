@@ -8,8 +8,7 @@ import {
   Modal,
   ModalBody,
   ModalFooter,
-  ModalHeader,
-  Badge
+  ModalHeader
 } from "reactstrap";
 import { Button, Feedback } from "@icedesign/base";
 
@@ -18,17 +17,19 @@ const AddAccount = ({
   toggle,
   addAccount,
   updateAccount,
-  resMsg,
   roleTypes,
   record,
-  currentPage
+  currentPage,
+  formData,
+  setFormData
 }) => {
-  let password = null;
+  let password = (formData && formData.password) || "";
   const { opType } = record || {};
   const isRead = opType === "read";
   const isUpdate = opType === "update";
-  let username = isUpdate ? record && record.userName : "";
-  let roleId = isUpdate ? record && record.roleId : "";
+  let username =
+    (formData && formData.username) || (record && record.userName) || "";
+  let roleId = (formData && formData.roleId) || (record && record.roleId) || "";
   return (
     <Fragment>
       <Modal isOpen={shouldOpen} toggle={toggle}>
@@ -43,7 +44,7 @@ const AddAccount = ({
               </InputGroupAddon>
               <Input
                 type="text"
-                placeholder="请输入角色名称"
+                placeholder="6-16位数字或者字母或者数字字母组合"
                 disabled={isRead ? "disabled" : false}
                 defaultValue={
                   isRead || isUpdate ? record && record.userName : ""
@@ -52,7 +53,7 @@ const AddAccount = ({
                 maxLength={16}
                 onChange={e => {
                   const { value } = e.target;
-                  username = value;
+                  setFormData({ username: value });
                 }}
               />
             </InputGroup>
@@ -65,10 +66,10 @@ const AddAccount = ({
                 disabled={isRead ? "disabled" : false}
                 defaultValue={isRead || isUpdate ? record && record.roleId : ""}
                 onChange={e => {
-                  roleId = e.target.value;
+                  setFormData({ roleId: e.target.value });
                 }}
               >
-                <option value="default">请选择</option>
+                <option value="">请选择</option>
                 {roleTypes &&
                   Array.isArray(roleTypes) &&
                   roleTypes.length > 0 &&
@@ -81,37 +82,27 @@ const AddAccount = ({
             </InputGroup>
             <InputGroup className="mb-4" style={{ alignItems: "center" }}>
               <InputGroupAddon addonType="prepend">
-                <InputGroupText>密码</InputGroupText>
+                <InputGroupText>{isUpdate ? "新密码" : "密码"}</InputGroupText>
               </InputGroupAddon>
               <Input
                 type="text"
-                placeholder="请输入密码"
+                placeholder={
+                  isUpdate
+                    ? "请输入新密码"
+                    : "6-16位数字或者字母或者数字字母组合"
+                }
                 id="account_password"
                 disabled={isRead ? "disabled" : false}
                 type="password"
-                defaultValue={
-                  isRead || isUpdate ? record && record.password : ""
-                }
+                minLength={6}
+                maxLength={16}
+                defaultValue={isRead || isUpdate ? "******" : ""}
                 onChange={e => {
-                  password = e.target.value;
+                  setFormData({ password: e.target.value });
                 }}
               />
-              {isUpdate ? (
-                <Button
-                  onClick={() => {
-                    if (
-                      document &&
-                      document.getElementById("account_password")
-                    ) {
-                      document.getElementById("account_password").value = "";
-                    }
-                  }}
-                >
-                  重置
-                </Button>
-              ) : null}
             </InputGroup>
-            {Boolean(resMsg) ? <Badge color="warning">{resMsg}</Badge> : null}
+            {/*Boolean(resMsg) ? <Badge color="warning">{resMsg}</Badge> : null*/}
           </Form>
         </ModalBody>
         <ModalFooter>
@@ -133,7 +124,7 @@ const AddAccount = ({
                 return;
               }
               if (username.length > 16) {
-                Feedback.toast.error("不d多于16位");
+                Feedback.toast.error("不多于16位");
                 return;
               }
               if (!/^[0-9A-Za-z]+$/gi.test(username)) {
@@ -145,7 +136,19 @@ const AddAccount = ({
                 return;
               }
               if (!password && !isUpdate) {
-                Feedback.toast.error("请输入“秘密”");
+                Feedback.toast.error("请输入“密码”");
+                return;
+              }
+              if (password && password.length < 6) {
+                Feedback.toast.error("不少于6位");
+                return;
+              }
+              if (password && password.length > 16) {
+                Feedback.toast.error("不多于16位");
+                return;
+              }
+              if (password && !/^[0-9A-Za-z]+$/gi.test(password)) {
+                Feedback.toast.error("只能是英文或数字");
                 return;
               }
               if (isUpdate) {

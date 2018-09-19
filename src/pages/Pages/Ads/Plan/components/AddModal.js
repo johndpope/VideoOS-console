@@ -9,7 +9,8 @@ import {
   Modal,
   ModalBody,
   ModalFooter,
-  ModalHeader
+  ModalHeader,
+  Badge
 } from "reactstrap";
 import { Button, Icon, Feedback } from "@icedesign/base";
 import DatePicker from "react-datepicker";
@@ -210,6 +211,7 @@ const AddMaterial = ({
                     <Row>
                       <Col md="3">
                         <Input
+                          maxLength={2}
                           onChange={e => {
                             setFormData({
                               v_minutes: e.target.value
@@ -220,6 +222,7 @@ const AddMaterial = ({
                       <Col md="1">分</Col>
                       <Col md="3">
                         <Input
+                          maxLength={2}
                           onChange={e => {
                             setFormData({
                               v_seconds: e.target.value
@@ -231,6 +234,22 @@ const AddMaterial = ({
                       <Col md="1">
                         <Button
                           onClick={() => {
+                            if (!formData.v_minutes) {
+                              Feedback.toast.error("请输入分");
+                              return;
+                            }
+                            if (!/^[0-9]+$/gi.test(formData.v_minutes)) {
+                              Feedback.toast.error("请输入有效分钟");
+                              return;
+                            }
+                            if (!formData.v_seconds) {
+                              Feedback.toast.error("请输入秒");
+                              return;
+                            }
+                            if (!/^[0-9]+$/gi.test(formData.v_seconds)) {
+                              Feedback.toast.error("请输入有效秒数");
+                              return;
+                            }
                             if (
                               !launchTimes.includes(
                                 `${formData.v_minutes}:${formData.v_seconds}`
@@ -244,6 +263,7 @@ const AddMaterial = ({
                           }}
                         >
                           <Icon type="add" />
+                          <Badge>点击“+”添加</Badge>
                         </Button>
                       </Col>
                     </Row>
@@ -417,6 +437,7 @@ const AddMaterial = ({
                   }}
                 >
                   <Icon type="add" />
+                  <Badge>点击“+”添加</Badge>
                 </Button>
               </InputGroup>
               <div
@@ -495,8 +516,33 @@ const AddMaterial = ({
                 Feedback.toast.error("请输入“投放视频id”");
                 return;
               }
-              if (!formData.launchLenTime) {
+              if (!formData.launchTimeType) {
                 Feedback.toast.error("请选择“投放时间类型”");
+                return;
+              }
+              if (
+                formData.launchTimeType === "0" ||
+                formData.launchTimeType === "2"
+              ) {
+                if (!formData.launchDateStart) {
+                  Feedback.toast.error('"请选择“投放开始日期”"');
+                  return;
+                }
+                if (!formData.launchDateEnd) {
+                  Feedback.toast.error('"请选择“投放结束日期”"');
+                  return;
+                }
+                if (
+                  !formData.launchTimes ||
+                  !Array.isArray(formData.launchTimes) ||
+                  formData.launchTimes.length === 0
+                ) {
+                  Feedback.toast.error('"请添加“投放时间”"');
+                  return;
+                }
+              }
+              if (!formData.launchLenTime) {
+                Feedback.toast.error("请选择“投放时长”");
                 return;
               }
               if (isUpdate) {
@@ -506,7 +552,8 @@ const AddMaterial = ({
                 delete formData.launchTimes;
                 updatePlan({ ...formData, currentPage });
               } else {
-                formData.launchTime = formData.launchTimes.join(",");
+                formData.launchTime =
+                  formData.launchTimes && formData.launchTimes.join(",");
                 delete formData.launchTimes;
                 if (formData.v_minutes) delete formData.v_minutes;
                 if (formData.v_seconds) delete formData.v_seconds;

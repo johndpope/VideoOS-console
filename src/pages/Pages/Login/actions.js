@@ -69,7 +69,9 @@ export const userLogin = params => {
       const response = await login(params);
 
       if (response.status === 200 && response.data.resCode === "00") {
-        setUserInfoLocal(response.data);
+        const { data } = response;
+
+        setUserInfoLocal({ ...data, username: params.username });
         setAuthority(response.data && response.data.token);
         dispatch(userLoginSuccess(response.data));
         dispatch(push("/"));

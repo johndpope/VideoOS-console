@@ -15,7 +15,10 @@ const AddMaterial = ({
   record,
   materialSchema,
   addMaterialFile,
-  currentPage
+  currentPage,
+  fileData,
+  setSwitcher,
+  uiSchemaConf
 }) => {
   const { opType } = record || {};
   const isRead = opType === "read";
@@ -27,30 +30,35 @@ const AddMaterial = ({
           {isRead ? "素材信息" : isUpdate ? "素材修改" : "新增素材"}
         </ModalHeader>
         <ModalBody>
-          {materialSchema ? (
+          {materialSchema && typeof materialSchema === "object" ? (
             <Form
               formData={formData}
               schema={materialSchema}
-              uiSchema={uiSchema(
-                isRead
-                  ? {
-                      ...addMaterialFile,
-                      "ui:disabled": ["*"],
-                      "ui:options": { disabled: true }
-                    }
-                  : { addMaterialFile }
-              )}
+              uiSchema={uiSchema({
+                isRead,
+                isUpdate,
+                setSwitcher,
+                addMaterialFile,
+                uiSchemaConf,
+                saveFormData
+              })}
               onChange={({ formData }) => {
                 saveFormData(formData);
               }}
               onSubmit={({ formData }) => {
+                const _formData = { ...formData };
+                if (fileData && Object.keys(fileData).length > 0) {
+                  for (let key in fileData) {
+                    _formData[key] = fileData[key];
+                  }
+                }
                 if (isUpdate) {
                   updateMaterial({
                     creativeId: record.creativeId,
                     creativeName: formData.creativeName,
                     interactionTypeId: formData.interactionTypeId,
                     interactionTemplateId: formData.interactionTemplateId,
-                    creativeContent: JSON.stringify(formData),
+                    creativeContent: JSON.stringify(_formData),
                     creativeIdList,
                     currentPage
                   });
@@ -62,7 +70,7 @@ const AddMaterial = ({
                     creativeName: formData.creativeName,
                     interactionTypeId: formData.interactionTypeId,
                     interactionTemplateId: formData.interactionTemplateId,
-                    creativeContent: JSON.stringify(formData),
+                    creativeContent: JSON.stringify(_formData),
                     creativeIdList,
                     interactionTypeName:
                       materialSchema &&
@@ -104,12 +112,18 @@ const AddMaterial = ({
                 >
                   取消
                 </Button>
-                <Button type="primary" htmlType="submit">
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  style={{ marginLeft: "8px" }}
+                >
                   {isUpdate ? "确认修改" : isRead ? "确认" : "确认新增"}
                 </Button>
               </div>
             </Form>
-          ) : null}
+          ) : (
+            <p>类型文件格式存在问题，请检查</p>
+          )}
         </ModalBody>
       </Modal>
     </Fragment>

@@ -33,7 +33,11 @@ const AddRole = ({
   const isRead = opType === "read";
   const isUpdate = opType === "update";
   let _roleAuthorities = (formData && formData._roleAuthorities) || {};
-  let nodeIdList = (userRoleInfo && userRoleInfo.nodeIdList) || [];
+  let nodeIdList =
+    isRead || isUpdate
+      ? (formData && formData.nodeIdList) ||
+        (userRoleInfo && userRoleInfo.nodeIdList)
+      : (formData && formData.nodeIdList) || [];
   return (
     <Fragment>
       <Modal isOpen={shouldOpen} toggle={toggle}>
@@ -72,42 +76,64 @@ const AddRole = ({
                   <Col>
                     <Label htmlFor={`ckb_${idx}_read`}>可读</Label>
                     <Input
-                      type="radio"
+                      type="checkbox"
                       name={`ckb_${idx}`}
                       id={`ckb_${idx}_read`}
                       disabled={isRead ? "disabled" : false}
-                      defaultChecked={
+                      checked={
+                        nodeIdList &&
                         nodeIdList.includes(roleAuthorities[key].read)
                           ? "checked"
                           : false
                       }
-                      onChange={e => {
-                        _roleAuthorities[key] = {
-                          read: true,
-                          write: false
-                        };
-                        setFormData({ _roleAuthorities });
+                      onClick={() => {
+                        if (nodeIdList.includes(roleAuthorities[key].write)) {
+                          nodeIdList.splice(
+                            nodeIdList.indexOf(roleAuthorities[key].write),
+                            1
+                          );
+                        }
+                        if (nodeIdList.includes(roleAuthorities[key].read)) {
+                          nodeIdList.splice(
+                            nodeIdList.indexOf(roleAuthorities[key].read),
+                            1
+                          );
+                        } else {
+                          nodeIdList.push(roleAuthorities[key].read);
+                        }
+                        setFormData({ nodeIdList });
                       }}
                     />
                   </Col>
                   <Col>
                     <Label htmlFor={`ckb_${idx}_write`}>可写</Label>
                     <Input
-                      type="radio"
+                      type="checkbox"
                       name={`ckb_${idx}`}
                       id={`ckb_${idx}_write`}
                       disabled={isRead ? "disabled" : false}
-                      defaultChecked={
+                      checked={
+                        nodeIdList &&
                         nodeIdList.includes(roleAuthorities[key].write)
                           ? "checked"
                           : false
                       }
-                      onChange={e => {
-                        _roleAuthorities[key] = {
-                          read: false,
-                          write: true
-                        };
-                        setFormData({ _roleAuthorities });
+                      onClick={() => {
+                        if (nodeIdList.includes(roleAuthorities[key].read)) {
+                          nodeIdList.splice(
+                            nodeIdList.indexOf(roleAuthorities[key].read),
+                            1
+                          );
+                        }
+                        if (nodeIdList.includes(roleAuthorities[key].write)) {
+                          nodeIdList.splice(
+                            nodeIdList.indexOf(roleAuthorities[key].write),
+                            1
+                          );
+                        } else {
+                          nodeIdList.push(roleAuthorities[key].write);
+                        }
+                        setFormData({ nodeIdList });
                       }}
                     />
                   </Col>
@@ -132,6 +158,10 @@ const AddRole = ({
                 Feedback.toast.error("只能是汉字");
                 return;
               }
+              if (!nodeIdList || nodeIdList.length === 0) {
+                Feedback.toast.error("请为角色添加权限");
+                return;
+              }
               if (isUpdate) {
                 updateRole({
                   currentPage,
@@ -139,26 +169,14 @@ const AddRole = ({
                   roleName,
                   nodeIdList:
                     Object.keys(_roleAuthorities).length > 0
-                      ? Object.keys(_roleAuthorities).map(key => {
-                          if (_roleAuthorities[key].read) {
-                            return roleAuthorities[key].read;
-                          } else if (_roleAuthorities[key].write) {
-                            return roleAuthorities[key].write;
-                          }
-                        })
+                      ? nodeIdList
                       : nodeIdList
                 });
               } else {
                 addRole({
                   currentPage,
                   roleName,
-                  nodeIdList: Object.keys(_roleAuthorities).map(key => {
-                    if (_roleAuthorities[key].read) {
-                      return roleAuthorities[key].read;
-                    } else if (_roleAuthorities[key].write) {
-                      return roleAuthorities[key].write;
-                    }
-                  })
+                  nodeIdList
                 });
               }
             }}

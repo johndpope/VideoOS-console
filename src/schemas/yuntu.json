@@ -1,29 +1,24 @@
 {
   "title": "",
   "type": "object",
-  "required": ["popular_point_title"],
+  "required": ["creativeName"],
   "properties": {
     "creativeName": {
-      "title": "素材名称",  
-      "type": "string"  
+      "title": "素材名称",
+      "type": "string"
     },
     "interactionTypeId": {
-      "title": "素材类型",  
-      "type": "string",
+      "title": "素材类型",
+      "type": "integer",
       "default": "请选择",
-      "enum": [],
-      "enumNames": []  
-    },
-    "interactionTemplateId": {
-      "title": "素材模板",
-      "type": "string",
       "enum": [],
       "enumNames": []
     },
-    "popular_point_title": {
-      "type": "string",
-      "title": "热点标题",
-      "default": ""  
+    "interactionTemplateId": {
+      "title": "素材模板",
+      "type": "integer",
+      "enum": [],
+      "enumNames": []
     },
     "avatar": {
       "type": "string",
@@ -32,32 +27,36 @@
     },
     "show_ad_sign": {
       "type": "boolean",
-      "title": "广告标识是否可见"  
+      "title": "广告标识是否可见",
+      "default": true
     },
     "show_close_btn": {
       "type": "boolean",
-      "title": "关闭按钮是否可见"  
+      "title": "关闭按钮是否可见",
+      "default": true
     },
     "monitorLinks": {
       "type": "array",
       "title": "点击监控链接",
       "minItems": 1,
       "items": {
-        "type": "string"  
-      }  
+        "type": "string",
+        "format": "uri"
+      }
     },
     "exposureLinks": {
       "type": "array",
       "title": "曝光监控链接",
       "minItems": 1,
       "items": {
-        "type": "string"  
-      }  
+        "type": "string",
+        "format": "uri"
+      }
     },
     "target_link": {
       "type": "string",
-      "title": "跳转外链链接",
-      "default": ""  
+      "format": "uri",
+      "title": "跳转外链链接"
     }
-  }  
+  }
 }

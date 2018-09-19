@@ -53,7 +53,9 @@ import {
   GET_MATERIAL_INFO_REQUEST,
   GET_MATERIAL_INFO_SUCCESS,
   GET_MATERIAL_INFO_FAILURE,
-  SET_CURRENT_PAGE
+  SET_CURRENT_PAGE,
+  SET_FILE_DATA,
+  SET_SWITCHER
 } from "./constants";
 
 let newMaterialDropDownSwitch = false;
@@ -299,6 +301,13 @@ const addMaterialFileFailure = () => {
   };
 };
 
+const _setSwitcher = payload => {
+  return {
+    type: SET_SWITCHER,
+    payload
+  };
+};
+
 export const getAdMaterials = (
   params = {
     currentPage: 1,
@@ -509,6 +518,9 @@ export const addMaterialToggle = payload => {
       );
       dispatch(showAddMaterial(payload));
     } else {
+      dispatch(_setSwitcher("refresh"));
+      dispatch(saveFormData({}));
+      dispatch(setFileData({}));
       dispatch(hideAddMaterial());
     }
   };
@@ -601,5 +613,22 @@ export const setCurrentPage = payload => {
   return {
     type: SET_CURRENT_PAGE,
     payload
+  };
+};
+
+export const setFileData = payload => {
+  return {
+    type: SET_FILE_DATA,
+    payload
+  };
+};
+
+export const setSwitcher = payload => {
+  return async dispatch => {
+    dispatch(_setSwitcher(payload));
+    dispatch(saveFormData("refresh"));
+    setTimeout(() => {
+      dispatch(saveFormData("recover"));
+    }, 0);
   };
 };

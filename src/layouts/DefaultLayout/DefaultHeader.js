@@ -10,6 +10,7 @@ import {
   AppNavbarBrand,
   AppSidebarToggler
 } from "@coreui/react";
+import { getUserInfoLocal } from "utils/authority";
 import { userLogout, resetPasswordModalToggle, resetPassword } from "./actions";
 import reducer from "./reducer";
 import PasswordReset from "./PasswordReset";
@@ -31,7 +32,7 @@ class DefaultHeader extends Component {
       children,
       ...attributes
     } = this.props;
-
+    const { username } = getUserInfoLocal();
     return (
       <React.Fragment>
         <PasswordReset
@@ -43,13 +44,14 @@ class DefaultHeader extends Component {
         <AppNavbarBrand />
         <AppSidebarToggler className="d-md-down-none" display="lg" />
         <Nav className="ml-auto" navbar>
-          <AppHeaderDropdown direction="down">
+          <AppHeaderDropdown direction="down" style={{ marginRight: "8px" }}>
             <DropdownToggle nav>
               <img
                 src="assets/img/avatars/6.jpg"
                 className="img-avatar"
                 alt="admin"
               />
+              {username || ""}
             </DropdownToggle>
             <DropdownMenu right style={{ right: "auto" }}>
               <DropdownItem onClick={resetPasswordModalToggle}>

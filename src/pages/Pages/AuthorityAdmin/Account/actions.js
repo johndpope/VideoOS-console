@@ -36,7 +36,8 @@ import {
   QUERY_ALL_ACCOUNTTYPES_FAILURE,
   SHOW_DELETEACCOUNT_MODAL,
   HIDE_DELETEACCOUNT_MODAL,
-  SET_CURRENT_PAGE
+  SET_CURRENT_PAGE,
+  SET_FORM_DATA
 } from "./constants";
 
 let addAccountModalSwitch = false;
@@ -216,6 +217,7 @@ export const addAccountModalToggle = record => {
     if (addAccountModalSwitch) {
       dispatch(showAddAccountModal(record));
     } else {
+      dispatch(setFormData({}));
       dispatch(hideAddAccountModal());
     }
   };
@@ -352,6 +354,13 @@ export const queryAllAccountTypes = params => {
 export const setCurrentPage = payload => {
   return {
     type: SET_CURRENT_PAGE,
+    payload
+  };
+};
+
+export const setFormData = payload => {
+  return {
+    type: SET_FORM_DATA,
     payload
   };
 };

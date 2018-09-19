@@ -119,6 +119,7 @@ const AddModel = ({
                   }}
                 >
                   {!((formData && formData.compressFileName) || showFileIpt) &&
+                  isUpdate &&
                   (modelInfo && modelInfo.templateFileSourceName) ? (
                     <Button
                       onClick={() => {

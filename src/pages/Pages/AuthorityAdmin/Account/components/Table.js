@@ -10,7 +10,7 @@ export default class AccountTable extends Component {
     } = this.props;
     return (
       <div>
-        {!readOnly ? (
+        {!readOnly && (record && !record.isSuperRole) ? (
           <Fragment>
             <Button
               onClick={() => {

@@ -44,13 +44,18 @@ import {
   GET_MATERIAL_INFO_REQUEST,
   GET_MATERIAL_INFO_SUCCESS,
   GET_MATERIAL_INFO_FAILURE,
-  SET_CURRENT_PAGE
+  SET_CURRENT_PAGE,
+  SET_FILE_DATA,
+  SET_SWITCHER
 } from "./constants";
 
 // The initial state of the material
+let tempFormData = null;
 const initialState = {
   formData: {},
-  creativeIdList: []
+  fileData: {},
+  creativeIdList: [],
+  uiSchemaConf: {}
 };
 
 function adMaterialReducer(state = initialState, action) {
@@ -185,7 +190,7 @@ function adMaterialReducer(state = initialState, action) {
       });
     case ADD_MATERIAL_FILE_SUCCESS:
       if (action && action.payload._type) {
-        // state.formData[action.payload._type] = action.payload.fileUrl;
+        state.fileData[action.payload._type] = action.payload.fileUrl;
         if (
           Array.isArray(state.creativeIdList) &&
           state.creativeIdList.indexOf(action.payload.creativeFileId) === -1
@@ -199,10 +204,49 @@ function adMaterialReducer(state = initialState, action) {
         isLoading: action.isLoading
       });
     case SAVE_FORM_DATA:
-      state.formData = action.payload;
+      const _payload = action.payload;
+      if (_payload === "refresh") {
+        const { formData } = state;
+        tempFormData = { ...formData };
+        state.formData = {};
+      }
+      if (_payload === "recover") {
+        state.formData = { ...tempFormData };
+        tempFormData = null;
+      }
+      if (typeof _payload === "object") {
+        if (Object.keys(_payload).length === 0) {
+          state.formData = _payload;
+        } else {
+          Object.keys(_payload).forEach(key => {
+            state.formData[key] = _payload[key];
+          });
+        }
+      }
+      // state.formData = action.payload;
       return Object.assign({}, state);
+    case SET_FILE_DATA:
+      state.fileData = action.payload;
+      return { ...state };
     case SET_CURRENT_PAGE:
       return { ...state, currentPage: action.payload.currentPage };
+    case SET_SWITCHER:
+      const payload = action.payload;
+      if (payload === "refresh") {
+        for (let key in state.uiSchemaConf) {
+          state.uiSchemaConf[key] = false;
+        }
+      }
+      if (typeof payload === "object") {
+        if (Object.keys(payload).length === 0) {
+          state.uiSchemaConf = payload;
+        } else {
+          Object.keys(payload).forEach(key => {
+            state.uiSchemaConf[key] = payload[key];
+          });
+        }
+      }
+      return { ...state };
     default:
       return state;
   }

@@ -69,6 +69,14 @@ const initialState = {
     数据信息管理: {
       read: 42,
       write: 41
+    },
+    账号管理: {
+      read: 63,
+      write: 61
+    },
+    角色管理: {
+      read: 64,
+      write: 62
     }
   }
 };
