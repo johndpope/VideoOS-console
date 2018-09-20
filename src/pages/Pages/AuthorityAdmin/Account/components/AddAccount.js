@@ -85,7 +85,6 @@ const AddAccount = ({
                 <InputGroupText>{isUpdate ? "新密码" : "密码"}</InputGroupText>
               </InputGroupAddon>
               <Input
-                type="text"
                 placeholder={
                   isUpdate
                     ? "请输入新密码"

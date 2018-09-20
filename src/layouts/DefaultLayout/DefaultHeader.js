@@ -28,9 +28,7 @@ class DefaultHeader extends Component {
       dHeader,
       resetPasswordModalToggle,
       userLogout,
-      resetPassword,
-      children,
-      ...attributes
+      resetPassword
     } = this.props;
     const { username } = getUserInfoLocal();
     return (

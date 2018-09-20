@@ -258,7 +258,7 @@ export const getAdPlans = (
   }
 ) => {
   return async dispatch => {
-    dispatch(getAdPlansFailure());
+    dispatch(getAdPlansRequest());
     try {
       const response = await api.getAdPlans(params);
 
