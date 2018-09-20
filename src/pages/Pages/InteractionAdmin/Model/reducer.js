@@ -40,13 +40,15 @@ import {
   UPDATE_MODEL_FILE_SUCCESS,
   UPDATE_MODEL_FILE_FAILURE,
   SET_CURRENT_PAGE,
-  SET_FILE_IPT_STATE
+  SET_FILE_IPT_STATE,
+  SET_UPLOAD_MODEL_FILE_INFO
 } from "./constants";
 
 // The initial state of the model
 const initialState = {
   formData: {},
-  pageSize: 20
+  pageSize: 20,
+  showFileIpt: false
 };
 
 function iaModelReducer(state = initialState, action) {
@@ -187,6 +189,9 @@ function iaModelReducer(state = initialState, action) {
       return { ...state, currentPage: action.payload.currentPage };
     case SET_FILE_IPT_STATE:
       return { ...state, showFileIpt: action.payload.showFileIpt };
+    case SET_UPLOAD_MODEL_FILE_INFO:
+      state.uploadModelFileInfo = action.payload;
+      return { ...state };
     default:
       return state;
   }

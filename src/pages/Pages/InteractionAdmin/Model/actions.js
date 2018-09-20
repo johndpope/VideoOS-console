@@ -54,7 +54,8 @@ import {
   UPDATE_MODEL_FILE_SUCCESS,
   UPDATE_MODEL_FILE_FAILURE,
   SET_CURRENT_PAGE,
-  SET_FILE_IPT_STATE
+  SET_FILE_IPT_STATE,
+  SET_UPLOAD_MODEL_FILE_INFO
 } from "./constants";
 
 let addModelSwitch = false;
@@ -341,6 +342,8 @@ export const addModelToggle = record => {
     } else {
       dispatch(setFileIptState({ showFileIpt: false }));
       dispatch(setFormData({}));
+      dispatch(setUploadModelFileInfo({}));
+      dispatch(setFileIptState({ showFileIpt: false }));
       dispatch(hideAddModelModal());
     }
   };
@@ -571,6 +574,13 @@ export const setFileIptState = payload => {
 export const setCurrentPage = payload => {
   return {
     type: SET_CURRENT_PAGE,
+    payload
+  };
+};
+
+export const setUploadModelFileInfo = payload => {
+  return {
+    type: SET_UPLOAD_MODEL_FILE_INFO,
     payload
   };
 };

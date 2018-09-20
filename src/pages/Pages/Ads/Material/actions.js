@@ -282,23 +282,23 @@ const deleteMaterialFailure = () => {
 
 const addMaterialFileRequest = () => {
   return {
-    type: ADD_MATERIAL_FILE_REQUEST,
-    isLoading: true
+    type: ADD_MATERIAL_FILE_REQUEST
+    // isLoading: true
   };
 };
 
 const addMaterialFileSuccess = payload => {
   return {
     type: ADD_MATERIAL_FILE_SUCCESS,
-    isLoading: false,
+    // isLoading: false,
     payload
   };
 };
 
 const addMaterialFileFailure = () => {
   return {
-    type: ADD_MATERIAL_FILE_FAILURE,
-    isLoading: false
+    type: ADD_MATERIAL_FILE_FAILURE
+    // isLoading: false
   };
 };
 
@@ -564,7 +564,7 @@ export const addMaterialFile = params => {
             _type: params && params.type
           })
         );
-        Feedback.toast.show(response.data && response.data.resMsg);
+        // Feedback.toast.show(response.data && response.data.resMsg);
       } else {
         dispatch(addMaterialFileFailure(response.data));
         Feedback.toast.error(response.data && response.data.resMsg);
