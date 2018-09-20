@@ -140,6 +140,13 @@ const AddType = ({
                 return;
               }
               if (isUpdate) {
+                if (
+                  showFileIpt &&
+                  (!formData.file || !/.json$/gi.test(formData.file.name))
+                ) {
+                  Feedback.toast.error("请导入.json类型文件");
+                  return;
+                }
                 updateType({
                   interactionTypeId: record && record.interactionTypeId,
                   interactionTypeName: formData.interactionTypeName,
@@ -149,8 +156,8 @@ const AddType = ({
               } else if (isRead) {
                 toggle && toggle();
               } else {
-                if (!formData.file) {
-                  Feedback.toast.error("请导入类型文件");
+                if (!formData.file || !/.json$/gi.test(formData.file.name)) {
+                  Feedback.toast.error("请导入.json类型文件");
                   return;
                 }
                 addType({ ...formData, currentPage });

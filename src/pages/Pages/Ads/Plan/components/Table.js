@@ -15,13 +15,13 @@ export default class PlanTable extends Component {
         </Button>
         {!readOnly ? (
           <Fragment>
-            <Button
+            {/*<Button
               onClick={() => {
                 addPlanModalToggle({ ...record, opType: "update" });
               }}
             >
               修改
-            </Button>
+            </Button>*/}
             {record && record.launchStatus !== 3 ? (
               <Button
                 onClick={() => {

@@ -184,14 +184,18 @@ const AddModel = ({
                 return;
               }
               if (!uploadModelFileInfo.compressFileName && !isUpdate) {
-                Feedback.toast.error("请上传模版文件");
+                Feedback.toast.error("请上传.lua模版文件");
                 return;
               }
               if (
-                !(modelInfo && modelInfo.templateFileSourceName) &&
-                isUpdate
+                showFileIpt
+                  ? !(
+                      uploadModelFileInfo &&
+                      uploadModelFileInfo.compressFileName
+                    )
+                  : !(modelInfo && modelInfo.templateFileSourceName)
               ) {
-                Feedback.toast.error("请上传模版文件");
+                Feedback.toast.error("请上传.lua模版文件");
                 return;
               }
               if (isUpdate) {
