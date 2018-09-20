@@ -46,7 +46,10 @@ const AddMaterial = ({
               })}
               onChange={({ formData }) => {
                 let _materialSchema = { ...materialSchema };
-                if (formData.hasOwnProperty("isShowClose")) {
+                if (
+                  formData.hasOwnProperty("isShowClose") &&
+                  formData.hasOwnProperty("closeAfter")
+                ) {
                   if (formData.isShowClose) {
                     _materialSchema.properties.closeAfter = {
                       type: "integer",
