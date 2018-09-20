@@ -26,7 +26,6 @@ const uiSchema = ({
       }
     },
     avatar: {
-      "ui:emptyValue": "",
       "ui:widget": props => {
         let switcher = Boolean(uiSchemaConf && uiSchemaConf.avatarSwitcher);
         const { value } = props;
@@ -61,6 +60,7 @@ const uiSchema = ({
             ) : (
               <Input
                 type="file"
+                accept="image/*"
                 onChange={e => {
                   addMaterialFile({ file: e.target.files[0], type: "avatar" });
                 }}
@@ -71,7 +71,6 @@ const uiSchema = ({
       }
     },
     imageUrl: {
-      "ui:emptyValue": "",
       "ui:widget": props => {
         let switcher = Boolean(uiSchemaConf && uiSchemaConf.avatarSwitcher);
         const { value } = props;
@@ -106,7 +105,7 @@ const uiSchema = ({
             ) : (
               <Input
                 type="file"
-                value={props.value}
+                // accept="image/*"
                 required={props.required}
                 onChange={e => {
                   addMaterialFile({
@@ -121,7 +120,6 @@ const uiSchema = ({
       }
     },
     videoUrl: {
-      "ui:emptyValue": "",
       "ui:widget": props => {
         let switcher = Boolean(uiSchemaConf && uiSchemaConf.adVideoSwitcher);
         const { value } = props;
@@ -156,6 +154,7 @@ const uiSchema = ({
             ) : (
               <Input
                 type="file"
+                accept="video/*"
                 onChange={e => {
                   const file = e.target.files && e.target.files[0];
                   if (!file) return;
@@ -175,7 +174,6 @@ const uiSchema = ({
       }
     },
     ad_video: {
-      "ui:emptyValue": "",
       "ui:widget": props => {
         let switcher = Boolean(uiSchemaConf && uiSchemaConf.adVideoSwitcher);
         const { value } = props;
@@ -210,6 +208,7 @@ const uiSchema = ({
             ) : (
               <Input
                 type="file"
+                accept="video/*"
                 onChange={e => {
                   const file = e.target.files && e.target.files[0];
                   if (!file) return;
