@@ -71,12 +71,12 @@ export async function queryAllModelTypes() {
   });
 }
 
-export const getAdMaterials = () => {
+export const getAdMaterials = params => {
   return axios({
     headers: {
       token: getAuthority()
     },
-    url: `${OS_API}/creative/queryAll`,
+    url: `${OS_API}/creative/queryAll?${qs.stringify(params)}`,
     method: "get"
   });
 };

@@ -258,7 +258,7 @@ export const getAdPlans = (
   }
 ) => {
   return async dispatch => {
-    dispatch(getAdPlansFailure());
+    dispatch(getAdPlansRequest());
     try {
       const response = await api.getAdPlans(params);
 
@@ -397,7 +397,11 @@ export const addPlanModalToggle = payload => {
           getAdPlanInfo({ launchPlanId: payload && payload.launchPlanId })
         );
       }
-      dispatch(getAdMaterials());
+      if (payload && payload.interactionTypeId) {
+        dispatch(
+          getAdMaterials({ interactionType: payload.interactionTypeId })
+        );
+      }
       dispatch(setFormData(payload));
       dispatch(showAddPlan(payload));
     } else {
@@ -460,11 +464,11 @@ export const setFormData = payload => {
   };
 };
 
-export const getAdMaterials = () => {
+export const getAdMaterials = params => {
   return async dispatch => {
     dispatch(getAdMaterialsRequest());
     try {
-      const response = await api.getAdMaterials();
+      const response = await api.getAdMaterials(params);
 
       if (response.status === 200 && response.data.resCode === "00") {
         dispatch(getAdMaterialsSuccess(response.data));

@@ -39,6 +39,7 @@ const uiSchema = ({
                   style={{
                     maxWidth: "400px"
                   }}
+                  alt=""
                 />
                 {isUpdate ? (
                   <button
@@ -83,6 +84,7 @@ const uiSchema = ({
                   style={{
                     maxWidth: "400px"
                   }}
+                  alt=""
                 />
                 {isUpdate ? (
                   <button

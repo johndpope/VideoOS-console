@@ -28,9 +28,9 @@ import {
   GET_AD_METERIALS_REQUEST,
   GET_AD_METERIALS_SUCCESS,
   GET_AD_METERIALS_FAILURE,
-  GET_AD_METERIAL_BYID_REQUEST,
-  GET_AD_METERIAL_BYID_SUCCESS,
-  GET_AD_METERIAL_BYID_FAILURE,
+  // GET_AD_METERIAL_BYID_REQUEST,
+  // GET_AD_METERIAL_BYID_SUCCESS,
+  // GET_AD_METERIAL_BYID_FAILURE,
   GET_IATYPE_BYID_REQUEST,
   GET_IATYPE_BYID_SUCCESS,
   GET_IATYPE_BYID_FAILURE,
@@ -196,26 +196,26 @@ const queryAllModelTypesFailure = () => {
   };
 };
 
-const getAdMaterialByIdRequest = () => {
-  return {
-    type: GET_AD_METERIAL_BYID_REQUEST,
-    isLoading: true
-  };
-};
+// const getAdMaterialByIdRequest = () => {
+//   return {
+//     type: GET_AD_METERIAL_BYID_REQUEST,
+//     isLoading: true
+//   };
+// };
 
-const getAdMaterialByIdSuccess = () => {
-  return {
-    type: GET_AD_METERIAL_BYID_SUCCESS,
-    isLoading: false
-  };
-};
+// const getAdMaterialByIdSuccess = () => {
+//   return {
+//     type: GET_AD_METERIAL_BYID_SUCCESS,
+//     isLoading: false
+//   };
+// };
 
-const getAdMaterialByIdFailure = () => {
-  return {
-    type: GET_AD_METERIAL_BYID_FAILURE,
-    isLoading: false
-  };
-};
+// const getAdMaterialByIdFailure = () => {
+//   return {
+//     type: GET_AD_METERIAL_BYID_FAILURE,
+//     isLoading: false
+//   };
+// };
 
 const addMaterialRequest = () => {
   return {
