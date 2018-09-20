@@ -18,7 +18,8 @@ const AddMaterial = ({
   currentPage,
   fileData,
   setSwitcher,
-  uiSchemaConf
+  uiSchemaConf,
+  setMaterialSchema
 }) => {
   const { opType } = record || {};
   const isRead = opType === "read";
@@ -34,15 +35,35 @@ const AddMaterial = ({
             <Form
               formData={formData}
               schema={materialSchema}
+              // noValidate
               uiSchema={uiSchema({
                 isRead,
                 isUpdate,
                 setSwitcher,
                 addMaterialFile,
                 uiSchemaConf,
-                saveFormData
+                formData
               })}
               onChange={({ formData }) => {
+                let _materialSchema = { ...materialSchema };
+                if (formData.hasOwnProperty("isShowClose")) {
+                  if (formData.isShowClose) {
+                    _materialSchema.properties.closeAfter = {
+                      type: "integer",
+                      title: "广告播放多久后可关闭"
+                    };
+                  } else {
+                    if (
+                      _materialSchema &&
+                      _materialSchema.properties &&
+                      _materialSchema.properties.closeAfter
+                    ) {
+                      _materialSchema.properties.closeAfter = {};
+                    }
+                  }
+                  setMaterialSchema(_materialSchema);
+                }
+
                 saveFormData(formData);
               }}
               onSubmit={({ formData }) => {

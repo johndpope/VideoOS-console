@@ -46,7 +46,8 @@ import {
   GET_MATERIAL_INFO_FAILURE,
   SET_CURRENT_PAGE,
   SET_FILE_DATA,
-  SET_SWITCHER
+  SET_SWITCHER,
+  SET_MATERIAL_SCHEMA
 } from "./constants";
 
 // The initial state of the material
@@ -247,6 +248,8 @@ function adMaterialReducer(state = initialState, action) {
         }
       }
       return { ...state };
+    case SET_MATERIAL_SCHEMA:
+      return { ...state, materialSchema: action.payload };
     default:
       return state;
   }

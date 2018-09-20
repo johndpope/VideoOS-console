@@ -20,25 +20,38 @@
       "enum": [],
       "enumNames": []
     },
-    "avatar": {
+    "imageUrl": {
       "type": "string",
-      "format": "data-url",
       "title": "图片"
     },
-    "show_ad_sign": {
+    "isShowAds": {
       "type": "boolean",
       "title": "广告标识是否可见",
       "default": true
     },
-    "show_close_btn": {
+    "isShowClose": {
       "type": "boolean",
       "title": "关闭按钮是否可见",
       "default": true
     },
+    "needShowOnPortrait": {
+      "type": "boolean",
+      "title": "竖屏是否可见",
+      "default": false
+    },
+    "positionX": {
+      "type": "number",
+      "title": "横屏场景，广告图片距屏幕左上角的距离占屏幕宽度比(positionX)",
+      "default": 0.5
+    },
+    "positionY": {
+      "type": "number",
+      "title": "横屏场景，广告图片距屏幕左上角的距离占屏幕高度比(positionY)",
+      "default": 0.5
+    },
     "monitorLinks": {
       "type": "array",
       "title": "点击监控链接",
-      "minItems": 1,
       "items": {
         "type": "string",
         "format": "uri"
@@ -47,13 +60,12 @@
     "exposureLinks": {
       "type": "array",
       "title": "曝光监控链接",
-      "minItems": 1,
       "items": {
         "type": "string",
         "format": "uri"
       }
     },
-    "target_link": {
+    "linkUrl": {
       "type": "string",
       "format": "uri",
       "title": "跳转外链链接"

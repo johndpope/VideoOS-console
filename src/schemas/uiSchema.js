@@ -8,7 +8,7 @@ const uiSchema = ({
   isUpdate,
   setSwitcher,
   uiSchemaConf,
-  saveFormData
+  formData
 }) => {
   const schema = {
     interactionTypeId: {
@@ -43,7 +43,7 @@ const uiSchema = ({
                 {isUpdate ? (
                   <button
                     type="button"
-                    class="btn btn-danger array-item-remove"
+                    className="btn btn-danger array-item-remove"
                     style={{
                       flex: "1 1 0%",
                       padding: "6px 8px",
@@ -87,7 +87,7 @@ const uiSchema = ({
                 {isUpdate ? (
                   <button
                     type="button"
-                    class="btn btn-danger array-item-remove"
+                    className="btn btn-danger array-item-remove"
                     style={{
                       flex: "1 1 0%",
                       padding: "6px 8px",
@@ -104,8 +104,13 @@ const uiSchema = ({
             ) : (
               <Input
                 type="file"
+                value={props.value}
+                required={props.required}
                 onChange={e => {
-                  addMaterialFile({ file: e.target.files[0], type: "avatar" });
+                  addMaterialFile({
+                    file: e.target.files[0],
+                    type: "imageUrl"
+                  });
                 }}
               />
             )}
@@ -132,7 +137,7 @@ const uiSchema = ({
                 {isUpdate ? (
                   <button
                     type="button"
-                    class="btn btn-danger array-item-remove"
+                    className="btn btn-danger array-item-remove"
                     style={{
                       flex: "1 1 0%",
                       padding: "6px 8px",
@@ -158,7 +163,7 @@ const uiSchema = ({
                   }
                   addMaterialFile({
                     file,
-                    type: "ad_video"
+                    type: "videoUrl"
                   });
                 }}
               />
@@ -186,7 +191,7 @@ const uiSchema = ({
                 {isUpdate ? (
                   <button
                     type="button"
-                    class="btn btn-danger array-item-remove"
+                    className="btn btn-danger array-item-remove"
                     style={{
                       flex: "1 1 0%",
                       padding: "6px 8px",
@@ -226,6 +231,22 @@ const uiSchema = ({
         orderable: false
       }
     }
+    // closeAfter: {
+    //   "ui:widget": props => {
+    //     return (<Fragment>
+    //       {
+    //         formData && formData.isShowClose ? (
+    //           <input type="tel"
+    //             className="custom"
+    //             value={props.value}
+    //             required={props.required}
+    //             onChange={(event) => props.onChange(event.target.value)}
+    //           />
+    //         ) : null
+    //       }
+    //     </Fragment>)
+    //   }
+    // }
   };
   if (isRead) {
     schema["ui:disabled"] = [];

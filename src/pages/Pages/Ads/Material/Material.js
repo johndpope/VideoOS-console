@@ -24,7 +24,8 @@ import {
   addMaterialFile,
   saveFormData,
   setCurrentPage,
-  setSwitcher
+  setSwitcher,
+  setMaterialSchema
 } from "./actions";
 import reducer from "./reducer";
 import MaterialTable from "./components/Table";
@@ -51,7 +52,8 @@ class AdMaterial extends Component {
       saveFormData,
       getAdMaterials,
       setCurrentPage,
-      setSwitcher
+      setSwitcher,
+      setMaterialSchema
     } = this.props;
     const modelTypes = adMaterial.modelTypes || [];
     const { authorList } = getUserInfoLocal();
@@ -73,6 +75,7 @@ class AdMaterial extends Component {
           fileData={adMaterial && adMaterial.fileData}
           setSwitcher={setSwitcher}
           uiSchemaConf={adMaterial && adMaterial.uiSchemaConf}
+          setMaterialSchema={setMaterialSchema}
         />
         <DeleteMaterial
           deleteMaterial={deleteMaterial}
@@ -155,7 +158,8 @@ const mapDispatchToProps = {
   getAdMaterials,
   deleteMaterial,
   setCurrentPage,
-  setSwitcher
+  setSwitcher,
+  setMaterialSchema
 };
 
 const mapStateToProps = state => {
