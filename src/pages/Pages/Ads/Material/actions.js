@@ -55,7 +55,8 @@ import {
   GET_MATERIAL_INFO_FAILURE,
   SET_CURRENT_PAGE,
   SET_FILE_DATA,
-  SET_SWITCHER
+  SET_SWITCHER,
+  SET_MATERIAL_SCHEMA
 } from "./constants";
 
 let newMaterialDropDownSwitch = false;
@@ -630,5 +631,12 @@ export const setSwitcher = payload => {
     setTimeout(() => {
       dispatch(saveFormData("recover"));
     }, 0);
+  };
+};
+
+export const setMaterialSchema = payload => {
+  return {
+    type: SET_MATERIAL_SCHEMA,
+    payload
   };
 };

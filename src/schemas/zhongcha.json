@@ -19,29 +19,27 @@
       "enum": ["请选择"],
       "enumNames": ["请选择"]
     },
-    "ad_video": {
+    "videoUrl": {
       "type": "string",
-      "format": "data-url",
       "title": "广告视频"
     },
-    "show_ad_sign": {
+    "isShowAds": {
       "type": "boolean",
       "title": "广告标识是否可见",
       "default": true
     },
-    "show_close_btn": {
+    "isShowClose": {
       "type": "boolean",
       "title": "广告关闭按钮是否可见",
       "default": true
     },
-    "how_long_to_close": {
+    "closeAfter": {
       "type": "integer",
       "title": "广告播放多久后可关闭"
     },
     "exposureLinks": {
       "type": "array",
       "title": "广告曝光监控链接",
-      "minItems": 1,
       "items": {
         "type": "string",
         "format": "uri"
@@ -50,13 +48,12 @@
     "monitorLinks": {
       "type": "array",
       "title": "广告点击监控链接",
-      "minItems": 1,
       "items": {
         "type": "string",
         "format": "uri"
       }
     },
-    "target_link": {
+    "linkUrl": {
       "type": "string",
       "title": "广告外链链接",
       "format": "uri"

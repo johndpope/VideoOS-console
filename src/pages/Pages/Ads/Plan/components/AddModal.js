@@ -135,9 +135,7 @@ const AddMaterial = ({
             <Input
               type="select"
               disabled={isRead ? "disabled" : false}
-              defaultValue={
-                isRead || isUpdate ? formData && formData.launchTimeType : ""
-              }
+              value={(formData && formData.launchTimeType) || ""}
               onChange={e => {
                 setFormData({
                   launchTimeType: e.target.value,
@@ -145,7 +143,7 @@ const AddMaterial = ({
                 });
               }}
             >
-              <option value="default">请选择</option>
+              <option value="">请选择</option>
               <option value="1">即时</option>
               <option value="0">视频时间</option>
               <option value="2">北京时间</option>
