@@ -264,6 +264,7 @@ const uiSchema = ({
               className="custom"
               value={props.value}
               required={props.required}
+              disabled={props.disabled}
               onChange={event => props.onChange(event.target.value)}
             />
             {props &&
