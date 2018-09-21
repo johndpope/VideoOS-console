@@ -40,7 +40,7 @@ const AddAccount = ({
           <Form>
             <InputGroup className="mb-4">
               <InputGroupAddon addonType="prepend">
-                <InputGroupText>账号名称</InputGroupText>
+                <InputGroupText>用户名</InputGroupText>
               </InputGroupAddon>
               <Input
                 type="text"
@@ -119,15 +119,15 @@ const AddAccount = ({
                 return;
               }
               if (username.length < 6) {
-                Feedback.toast.error("账号名称为“6-16位数字或者字母”");
+                Feedback.toast.error("用户名为“6-16位数字或者字母”");
                 return;
               }
               if (username.length > 16) {
-                Feedback.toast.error("账号名称为“6-16位数字或者字母”");
+                Feedback.toast.error("用户名为“6-16位数字或者字母”");
                 return;
               }
               if (!/^[0-9A-Za-z]+$/gi.test(username)) {
-                Feedback.toast.error("账号名称为“6-16位数字或者字母”");
+                Feedback.toast.error("用户名为“6-16位数字或者字母”");
                 return;
               }
               if (!roleId) {
