@@ -26,7 +26,6 @@ const uiSchema = ({
       }
     },
     avatar: {
-      "ui:emptyValue": "",
       "ui:widget": props => {
         let switcher = Boolean(uiSchemaConf && uiSchemaConf.avatarSwitcher);
         const { value } = props;
@@ -61,6 +60,7 @@ const uiSchema = ({
             ) : (
               <Input
                 type="file"
+                accept="image/*"
                 onChange={e => {
                   addMaterialFile({ file: e.target.files[0], type: "avatar" });
                 }}
@@ -71,7 +71,6 @@ const uiSchema = ({
       }
     },
     imageUrl: {
-      "ui:emptyValue": "",
       "ui:widget": props => {
         let switcher = Boolean(uiSchemaConf && uiSchemaConf.avatarSwitcher);
         const { value } = props;
@@ -106,7 +105,7 @@ const uiSchema = ({
             ) : (
               <Input
                 type="file"
-                value={props.value}
+                // accept="image/*"
                 required={props.required}
                 onChange={e => {
                   addMaterialFile({
@@ -121,7 +120,6 @@ const uiSchema = ({
       }
     },
     videoUrl: {
-      "ui:emptyValue": "",
       "ui:widget": props => {
         let switcher = Boolean(uiSchemaConf && uiSchemaConf.adVideoSwitcher);
         const { value } = props;
@@ -156,6 +154,7 @@ const uiSchema = ({
             ) : (
               <Input
                 type="file"
+                accept="video/*"
                 onChange={e => {
                   const file = e.target.files && e.target.files[0];
                   if (!file) return;
@@ -175,7 +174,6 @@ const uiSchema = ({
       }
     },
     ad_video: {
-      "ui:emptyValue": "",
       "ui:widget": props => {
         let switcher = Boolean(uiSchemaConf && uiSchemaConf.adVideoSwitcher);
         const { value } = props;
@@ -210,6 +208,7 @@ const uiSchema = ({
             ) : (
               <Input
                 type="file"
+                accept="video/*"
                 onChange={e => {
                   const file = e.target.files && e.target.files[0];
                   if (!file) return;
@@ -232,6 +231,11 @@ const uiSchema = ({
       "ui:options": {
         orderable: false
       }
+    },
+    closeAfter: {
+      "ui:description":
+        "该时间需要小于中插视频时间；如果填0，则表示该广告随时可关闭",
+      "ui:placeholder": "请填写数字，单位：秒"
     }
     // closeAfter: {
     //   "ui:widget": props => {
@@ -247,6 +251,37 @@ const uiSchema = ({
     //         ) : null
     //       }
     //     </Fragment>)
+    //   }
+    // }
+    // linkUrl: {
+    //   "ui:autofocus": true,
+    //   "ui:widget": props => {
+    //     return (
+    //       <Fragment>
+    //         <input
+    //           type="text"
+    //           autoFocus={props && props.value ? "true" : false}
+    //           className="custom"
+    //           value={props.value}
+    //           required={props.required}
+    //           disabled={props.disabled}
+    //           onChange={event => props.onChange(event.target.value)}
+    //         />
+    //         {props &&
+    //         props.value &&
+    //         /^((ht|f)tps?):\/\/([\w\-]+(\.[\w\-]+)*\/)*[\w\-]+(\.[\w\-]+)*\/?(\?([\w\-\.,@?^=%&:\/~\+#]*)+)?/gi.test(
+    //           props.value
+    //         ) ? (
+    //           <a
+    //             style={{ display: "inline-block", marginLeft: "8px" }}
+    //             href={props.value}
+    //             target="_blank"
+    //           >
+    //             点击查看详情
+    //           </a>
+    //         ) : null}
+    //       </Fragment>
+    //     );
     //   }
     // }
   };
