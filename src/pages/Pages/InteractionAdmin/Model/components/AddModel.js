@@ -59,7 +59,7 @@ const AddModel = ({
                   setFormData({ interactionTypeId: e.target.value });
                 }}
               >
-                <option value="default">请选择</option>
+                <option value="">请选择</option>
                 {modelTypes &&
                   Array.isArray(modelTypes) &&
                   modelTypes.length > 0 &&
