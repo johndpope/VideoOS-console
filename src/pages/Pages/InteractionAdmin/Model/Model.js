@@ -20,7 +20,8 @@ import {
   downloadModelTemplateFile,
   updateModelFile,
   setCurrentPage,
-  setFileIptState
+  setFileIptState,
+  setUploadModelFileInfo
 } from "./actions";
 import reducer from "./reducer";
 import ModalTable from "./components/Table";
@@ -57,7 +58,8 @@ class IAModel extends Component {
       downloadModelTemplateFile,
       updateModelFile,
       setCurrentPage,
-      setFileIptState
+      setFileIptState,
+      setUploadModelFileInfo
     } = this.props;
     const modelTypes = iaModel.modelTypes || [];
     const lType = location && location.state && location.state.type;
@@ -81,6 +83,7 @@ class IAModel extends Component {
           updateModelFile={updateModelFile}
           setFileIptState={setFileIptState}
           currentPage={iaModel && iaModel.currentPage}
+          setUploadModelFileInfo={setUploadModelFileInfo}
         />
         <DeleteModel
           deleteModel={deleteModel}
@@ -179,7 +182,8 @@ const mapDispatchToProps = {
   downloadModelTemplateFile,
   updateModelFile,
   setCurrentPage,
-  setFileIptState
+  setFileIptState,
+  setUploadModelFileInfo
 };
 
 const mapStateToProps = state => {

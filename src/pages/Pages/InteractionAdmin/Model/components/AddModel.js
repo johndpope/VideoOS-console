@@ -28,7 +28,8 @@ const AddModel = ({
   setFileIptState,
   modelInfo,
   showFileIpt,
-  currentPage
+  currentPage,
+  setUploadModelFileInfo
 }) => {
   const { opType } = record || {};
   const isRead = opType === "read";
@@ -139,6 +140,7 @@ const AddModel = ({
                           files && files[0] && files[0].name;
                         if (!/.lua$/gi.test(templateFileSourceName)) {
                           Feedback.toast.error("请上传*.lua文件");
+                          setUploadModelFileInfo({});
                           return;
                         }
                         setFormData({ templateFileSourceName });
