@@ -119,15 +119,15 @@ const AddAccount = ({
                 return;
               }
               if (username.length < 6) {
-                Feedback.toast.error("不少于6位");
+                Feedback.toast.error("账号名称为“6-16位数字或者字母”");
                 return;
               }
               if (username.length > 16) {
-                Feedback.toast.error("不多于16位");
+                Feedback.toast.error("账号名称为“6-16位数字或者字母”");
                 return;
               }
               if (!/^[0-9A-Za-z]+$/gi.test(username)) {
-                Feedback.toast.error("只能是英文或数字");
+                Feedback.toast.error("账号名称为“6-16位数字或者字母”");
                 return;
               }
               if (!roleId) {
@@ -139,15 +139,15 @@ const AddAccount = ({
                 return;
               }
               if (password && password.length < 6) {
-                Feedback.toast.error("不少于6位");
+                Feedback.toast.error("密码为“6-16位数字或者字母”");
                 return;
               }
               if (password && password.length > 16) {
-                Feedback.toast.error("不多于16位");
+                Feedback.toast.error("密码为“6-16位数字或者字母”");
                 return;
               }
               if (password && !/^[0-9A-Za-z]+$/gi.test(password)) {
-                Feedback.toast.error("只能是英文或数字");
+                Feedback.toast.error("密码为“6-16位数字或者字母”");
                 return;
               }
               if (isUpdate) {
