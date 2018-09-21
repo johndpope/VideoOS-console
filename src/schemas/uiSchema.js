@@ -14,6 +14,9 @@ const uiSchema = ({
     interactionTypeId: {
       "ui:disabled": [""]
     },
+    interactionTemplateId: {
+      "ui:placeholder": "请选择"
+    },
     show_close_btn: {
       "ui:description": "单位：秒"
     },

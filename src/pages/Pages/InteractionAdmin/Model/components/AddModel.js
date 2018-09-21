@@ -189,18 +189,18 @@ const AddModel = ({
                 Feedback.toast.error("请上传.lua模版文件");
                 return;
               }
-              if (
-                showFileIpt
-                  ? !(
-                      uploadModelFileInfo &&
-                      uploadModelFileInfo.compressFileName
-                    )
-                  : !(modelInfo && modelInfo.templateFileSourceName)
-              ) {
-                Feedback.toast.error("请上传.lua模版文件");
-                return;
-              }
               if (isUpdate) {
+                if (
+                  showFileIpt
+                    ? !(
+                        uploadModelFileInfo &&
+                        uploadModelFileInfo.compressFileName
+                      )
+                    : !(modelInfo && modelInfo.templateFileSourceName)
+                ) {
+                  Feedback.toast.error("请上传.lua模版文件");
+                  return;
+                }
                 updateModel({
                   interactionTemplateId: record && record.templateId,
                   ...formData,
