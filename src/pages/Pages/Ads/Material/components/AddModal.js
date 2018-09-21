@@ -51,20 +51,33 @@ const AddMaterial = ({
                   formData.hasOwnProperty("closeAfter")
                 ) {
                   if (formData.isShowClose) {
-                    _materialSchema.properties.closeAfter = {
-                      type: "integer",
-                      title: "广告播放多久后可关闭"
-                    };
+                    if (
+                      JSON.stringify(_materialSchema.properties.closeAfter) !==
+                      JSON.stringify(materialSchema.properties.closeAfter)
+                    ) {
+                      _materialSchema.properties.closeAfter = {
+                        type: "integer",
+                        title: "广告播放多久后可关闭"
+                      };
+                      setMaterialSchema(_materialSchema);
+                    }
                   } else {
                     if (
                       _materialSchema &&
                       _materialSchema.properties &&
                       _materialSchema.properties.closeAfter
                     ) {
-                      _materialSchema.properties.closeAfter = {};
+                      if (
+                        JSON.stringify(
+                          _materialSchema.properties.closeAfter
+                        ) !==
+                        JSON.stringify(materialSchema.properties.closeAfter)
+                      ) {
+                        _materialSchema.properties.closeAfter = {};
+                        setMaterialSchema(_materialSchema);
+                      }
                     }
                   }
-                  setMaterialSchema(_materialSchema);
                 }
 
                 saveFormData(formData);

@@ -485,7 +485,7 @@ export const deleteMaterial = params => {
         dispatch(
           getAdMaterials({
             currentPage,
-            pageSize: 10
+            pageSize: 20
           })
         );
         Feedback.toast.show(response.data && response.data.resMsg);

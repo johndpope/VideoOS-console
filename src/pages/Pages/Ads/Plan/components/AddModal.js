@@ -94,14 +94,19 @@ const AddMaterial = ({
             <Input
               type="select"
               disabled={isRead ? "disabled" : false}
-              defaultValue={
-                isRead || isUpdate ? formData && formData.creativeId : ""
-              }
+              value={(formData && formData.creativeId) || ""}
               onChange={e => {
                 setFormData({ creativeId: e.target.value });
               }}
             >
-              <option value="default">请选择</option>
+              {isRead ? (
+                <option value="">
+                  {(formData && formData.creativeName) || ""}
+                </option>
+              ) : (
+                <option value="">请选择</option>
+              )}
+
               {materialTypes &&
                 Array.isArray(materialTypes) &&
                 materialTypes.length > 0 &&
