@@ -50,7 +50,7 @@ const AddMaterial = ({
     formData.launchDateEnd = moment(formData.launchDateEnd);
   }
   if (formData) {
-    formData.launchTimeType = String(formData.launchTimeType);
+    formData.launchTimeType = String(formData.launchTimeType || "");
   }
   return (
     <Fragment>
