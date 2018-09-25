@@ -69,7 +69,7 @@ const AddAccount = ({
                   setFormData({ roleId: e.target.value });
                 }}
               >
-                <option value="">请选择</option>
+                <option value="default">请选择</option>
                 {roleTypes &&
                   Array.isArray(roleTypes) &&
                   roleTypes.length > 0 &&
@@ -130,7 +130,7 @@ const AddAccount = ({
                 Feedback.toast.error("用户名为“6-16位数字或者字母”");
                 return;
               }
-              if (!roleId) {
+              if (!roleId || roleId === "default") {
                 Feedback.toast.error("请选择“角色”");
                 return;
               }

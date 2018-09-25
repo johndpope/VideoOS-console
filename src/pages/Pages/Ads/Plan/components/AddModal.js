@@ -298,24 +298,27 @@ const AddMaterial = ({
                 <InputGroupAddon addonType="prepend">
                   <InputGroupText>投放时长</InputGroupText>
                 </InputGroupAddon>
+
                 <Input
-                  type="select"
+                  type="tel"
                   disabled={isRead ? "disabled" : false}
                   defaultValue={
                     isRead || isUpdate ? formData && formData.launchLenTime : ""
                   }
+                  placeholder="请输入投放时长"
                   onChange={e => {
                     setFormData({ launchLenTime: e.target.value });
                   }}
-                >
-                  <option value="default">请选择</option>
+                />
+                <span>秒</span>
+                {/*  <option value="default">请选择</option>
                   <option value="10">10秒</option>
                   <option value="20">20秒</option>
                   <option value="30">30秒</option>
                   <option value="60">60秒</option>
                   <option value="120">120秒</option>
                   <option value="自定义">自定义</option>
-                </Input>
+                </Input>*/}
               </InputGroup>
             </Fragment>
           ) : null}
@@ -328,23 +331,17 @@ const AddMaterial = ({
                   <InputGroupText>投放时长</InputGroupText>
                 </InputGroupAddon>
                 <Input
-                  type="select"
+                  type="tel"
                   disabled={isRead ? "disabled" : false}
                   defaultValue={
                     isRead || isUpdate ? formData && formData.launchLenTime : ""
                   }
+                  placeholder="请输入投放时长"
                   onChange={e => {
                     setFormData({ launchLenTime: e.target.value });
                   }}
-                >
-                  <option value="default">请选择</option>
-                  <option value="10">10秒</option>
-                  <option value="20">20秒</option>
-                  <option value="30">30秒</option>
-                  <option value="60">60秒</option>
-                  <option value="120">120秒</option>
-                  <option value="自定义">自定义</option>
-                </Input>
+                />
+                <span>秒</span>
               </InputGroup>
             </Fragment>
           ) : null}
@@ -469,23 +466,17 @@ const AddMaterial = ({
                   <InputGroupText>投放时长</InputGroupText>
                 </InputGroupAddon>
                 <Input
-                  type="select"
+                  type="tel"
                   disabled={isRead ? "disabled" : false}
                   defaultValue={
                     isRead || isUpdate ? formData && formData.launchLenTime : ""
                   }
+                  placeholder="请输入投放时长"
                   onChange={e => {
                     setFormData({ launchLenTime: e.target.value });
                   }}
-                >
-                  <option value="default">请选择</option>
-                  <option value="10">10秒</option>
-                  <option value="20">20秒</option>
-                  <option value="30">30秒</option>
-                  <option value="60">60秒</option>
-                  <option value="120">120秒</option>
-                  <option value="自定义">自定义</option>
-                </Input>
+                />
+                <span>秒</span>
               </InputGroup>
             </Fragment>
           ) : null}
@@ -545,7 +536,14 @@ const AddMaterial = ({
                 }
               }
               if (!formData.launchLenTime) {
-                Feedback.toast.error("请选择“投放时长”");
+                Feedback.toast.error("请输入“投放时长”");
+                return;
+              }
+              if (
+                formData.launchLenTime &&
+                !/^[0-9]+$/gi.test(formData.launchLenTime)
+              ) {
+                Feedback.toast.error("投放时长为数字");
                 return;
               }
               if (isUpdate) {
