@@ -310,7 +310,9 @@ const AddMaterial = ({
                     setFormData({ launchLenTime: e.target.value });
                   }}
                 />
-                <span>秒</span>
+                <span style={{ paddingLeft: "8px", lineHeight: "33.99px" }}>
+                  秒
+                </span>
                 {/*  <option value="default">请选择</option>
                   <option value="10">10秒</option>
                   <option value="20">20秒</option>
@@ -341,7 +343,9 @@ const AddMaterial = ({
                     setFormData({ launchLenTime: e.target.value });
                   }}
                 />
-                <span>秒</span>
+                <span style={{ paddingLeft: "8px", lineHeight: "33.99px" }}>
+                  秒
+                </span>
               </InputGroup>
             </Fragment>
           ) : null}
@@ -476,7 +480,9 @@ const AddMaterial = ({
                     setFormData({ launchLenTime: e.target.value });
                   }}
                 />
-                <span>秒</span>
+                <span style={{ paddingLeft: "8px", lineHeight: "33.99px" }}>
+                  秒
+                </span>
               </InputGroup>
             </Fragment>
           ) : null}
