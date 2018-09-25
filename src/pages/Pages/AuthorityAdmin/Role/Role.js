@@ -29,6 +29,13 @@ class AARole extends Component {
     queryAllRoleTypes();
   }
 
+  componentWillUnmount() {
+    const { setCurrentPage } = this.props;
+    setCurrentPage({
+      currentPage: 1
+    });
+  }
+
   render() {
     const {
       aaRole,

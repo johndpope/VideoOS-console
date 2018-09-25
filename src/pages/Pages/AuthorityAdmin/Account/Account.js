@@ -29,6 +29,13 @@ class AAAcount extends Component {
     queryAllAccountTypes();
   }
 
+  componentWillUnmount() {
+    const { setCurrentPage } = this.props;
+    setCurrentPage({
+      currentPage: 1
+    });
+  }
+
   render() {
     const {
       aaAccount,

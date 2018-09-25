@@ -564,6 +564,12 @@ export const addMaterialFile = params => {
             _type: params && params.type
           })
         );
+        if (params && params.type === "videoUrl") {
+          dispatch(setSwitcher({ adVideoSwitcher: false }));
+        }
+        if (params && params.type === "imageUrl") {
+          dispatch(setSwitcher({ avatarSwitcher: false }));
+        }
         // Feedback.toast.show(response.data && response.data.resMsg);
       } else {
         dispatch(addMaterialFileFailure(response.data));

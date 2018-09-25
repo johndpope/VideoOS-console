@@ -28,6 +28,13 @@ class IAType extends Component {
     getIaTypes();
   }
 
+  componentWillUnmount() {
+    const { setCurrentPage } = this.props;
+    setCurrentPage({
+      currentPage: 1
+    });
+  }
+
   render() {
     const {
       iaType,

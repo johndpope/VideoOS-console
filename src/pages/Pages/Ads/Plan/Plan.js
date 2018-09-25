@@ -36,6 +36,13 @@ class AdPlan extends Component {
     queryAllModelTypes();
   }
 
+  componentWillUnmount() {
+    const { setCurrentPage } = this.props;
+    setCurrentPage({
+      currentPage: 1
+    });
+  }
+
   render() {
     const {
       adPlan,

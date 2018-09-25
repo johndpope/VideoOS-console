@@ -1,7 +1,12 @@
 {
   "title": "",
   "type": "object",
-  "required": ["creativeName", "interactionTypeId", "interactionTemplateId"],
+  "required": [
+    "creativeName",
+    "interactionTypeId",
+    "interactionTemplateId",
+    "videoUrl"
+  ],
   "properties": {
     "creativeName": {
       "title": "素材名称",

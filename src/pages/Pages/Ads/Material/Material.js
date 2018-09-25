@@ -39,6 +39,13 @@ class AdMaterial extends Component {
     getAdMaterials();
   }
 
+  componentWillUnmount() {
+    const { setCurrentPage } = this.props;
+    setCurrentPage({
+      currentPage: 1
+    });
+  }
+
   render() {
     const {
       adMaterial,

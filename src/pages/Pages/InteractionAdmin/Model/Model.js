@@ -43,6 +43,13 @@ class IAModel extends Component {
     queryAllModelTypes();
   }
 
+  componentWillUnmount() {
+    const { setCurrentPage } = this.props;
+    setCurrentPage({
+      currentPage: 1
+    });
+  }
+
   render() {
     const {
       getIaModels,
