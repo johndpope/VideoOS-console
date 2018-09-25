@@ -20,7 +20,8 @@ import {
   downloadModelTemplateFile,
   updateModelFile,
   setCurrentPage,
-  setFileIptState
+  setFileIptState,
+  setUploadModelFileInfo
 } from "./actions";
 import reducer from "./reducer";
 import ModalTable from "./components/Table";
@@ -42,6 +43,13 @@ class IAModel extends Component {
     queryAllModelTypes();
   }
 
+  componentWillUnmount() {
+    const { setCurrentPage } = this.props;
+    setCurrentPage({
+      currentPage: 1
+    });
+  }
+
   render() {
     const {
       getIaModels,
@@ -57,7 +65,8 @@ class IAModel extends Component {
       downloadModelTemplateFile,
       updateModelFile,
       setCurrentPage,
-      setFileIptState
+      setFileIptState,
+      setUploadModelFileInfo
     } = this.props;
     const modelTypes = iaModel.modelTypes || [];
     const lType = location && location.state && location.state.type;
@@ -81,6 +90,7 @@ class IAModel extends Component {
           updateModelFile={updateModelFile}
           setFileIptState={setFileIptState}
           currentPage={iaModel && iaModel.currentPage}
+          setUploadModelFileInfo={setUploadModelFileInfo}
         />
         <DeleteModel
           deleteModel={deleteModel}
@@ -132,6 +142,7 @@ class IAModel extends Component {
           readOnly={
             authorList ? authorList.includes(AUTH_KEYS.MODEL_READ) : false
           }
+          currentPage={iaModel.currentPage || 1}
         />
         {iaModel && !iaModel.isLoading ? (
           <div
@@ -179,7 +190,8 @@ const mapDispatchToProps = {
   downloadModelTemplateFile,
   updateModelFile,
   setCurrentPage,
-  setFileIptState
+  setFileIptState,
+  setUploadModelFileInfo
 };
 
 const mapStateToProps = state => {

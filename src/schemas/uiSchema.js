@@ -2,17 +2,13 @@ import React, { Fragment } from "react";
 import { Input } from "reactstrap";
 import { Feedback } from "@icedesign/base";
 
-const uiSchema = ({
-  addMaterialFile,
-  isRead,
-  isUpdate,
-  setSwitcher,
-  uiSchemaConf,
-  formData
-}) => {
+const uiSchema = ({ addMaterialFile, isRead, setSwitcher, uiSchemaConf }) => {
   const schema = {
     interactionTypeId: {
       "ui:disabled": [""]
+    },
+    interactionTemplateId: {
+      "ui:placeholder": "请选择"
     },
     show_close_btn: {
       "ui:description": "单位：秒"
@@ -40,7 +36,7 @@ const uiSchema = ({
                   }}
                   alt=""
                 />
-                {isUpdate ? (
+                {!isRead ? (
                   <button
                     type="button"
                     className="btn btn-danger array-item-remove"
@@ -53,7 +49,7 @@ const uiSchema = ({
                       setSwitcher({ avatarSwitcher: true });
                     }}
                   >
-                    <i class="glyphicon glyphicon-remove" />
+                    <i className="glyphicon glyphicon-remove" />
                   </button>
                 ) : null}
               </div>
@@ -85,7 +81,7 @@ const uiSchema = ({
                   }}
                   alt=""
                 />
-                {isUpdate ? (
+                {!isRead ? (
                   <button
                     type="button"
                     className="btn btn-danger array-item-remove"
@@ -98,14 +94,14 @@ const uiSchema = ({
                       setSwitcher({ avatarSwitcher: true });
                     }}
                   >
-                    <i class="glyphicon glyphicon-remove" />
+                    <i className="glyphicon glyphicon-remove" />
                   </button>
                 ) : null}
               </div>
             ) : (
               <Input
                 type="file"
-                // accept="image/*"
+                accept="image/*"
                 required={props.required}
                 onChange={e => {
                   addMaterialFile({
@@ -134,7 +130,7 @@ const uiSchema = ({
                     maxWidth: "400px"
                   }}
                 />
-                {isUpdate ? (
+                {!isRead ? (
                   <button
                     type="button"
                     className="btn btn-danger array-item-remove"
@@ -147,7 +143,7 @@ const uiSchema = ({
                       setSwitcher({ adVideoSwitcher: true });
                     }}
                   >
-                    <i class="glyphicon glyphicon-remove" />
+                    <i className="glyphicon glyphicon-remove" />
                   </button>
                 ) : null}
               </div>
@@ -188,7 +184,7 @@ const uiSchema = ({
                     maxWidth: "400px"
                   }}
                 />
-                {isUpdate ? (
+                {!isRead ? (
                   <button
                     type="button"
                     className="btn btn-danger array-item-remove"
@@ -201,7 +197,7 @@ const uiSchema = ({
                       setSwitcher({ adVideoSwitcher: true });
                     }}
                   >
-                    <i class="glyphicon glyphicon-remove" />
+                    <i className="glyphicon glyphicon-remove" />
                   </button>
                 ) : null}
               </div>

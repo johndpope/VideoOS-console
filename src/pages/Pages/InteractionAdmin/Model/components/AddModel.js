@@ -28,7 +28,8 @@ const AddModel = ({
   setFileIptState,
   modelInfo,
   showFileIpt,
-  currentPage
+  currentPage,
+  setUploadModelFileInfo
 }) => {
   const { opType } = record || {};
   const isRead = opType === "read";
@@ -58,7 +59,7 @@ const AddModel = ({
                   setFormData({ interactionTypeId: e.target.value });
                 }}
               >
-                <option value="default">请选择</option>
+                <option value="">请选择</option>
                 {modelTypes &&
                   Array.isArray(modelTypes) &&
                   modelTypes.length > 0 &&
@@ -139,6 +140,7 @@ const AddModel = ({
                           files && files[0] && files[0].name;
                         if (!/.lua$/gi.test(templateFileSourceName)) {
                           Feedback.toast.error("请上传*.lua文件");
+                          setUploadModelFileInfo({});
                           return;
                         }
                         setFormData({ templateFileSourceName });
@@ -187,18 +189,18 @@ const AddModel = ({
                 Feedback.toast.error("请上传.lua模版文件");
                 return;
               }
-              if (
-                showFileIpt
-                  ? !(
-                      uploadModelFileInfo &&
-                      uploadModelFileInfo.compressFileName
-                    )
-                  : !(modelInfo && modelInfo.templateFileSourceName)
-              ) {
-                Feedback.toast.error("请上传.lua模版文件");
-                return;
-              }
               if (isUpdate) {
+                if (
+                  showFileIpt
+                    ? !(
+                        uploadModelFileInfo &&
+                        uploadModelFileInfo.compressFileName
+                      )
+                    : !(modelInfo && modelInfo.templateFileSourceName)
+                ) {
+                  Feedback.toast.error("请上传.lua模版文件");
+                  return;
+                }
                 updateModel({
                   interactionTemplateId: record && record.templateId,
                   ...formData,

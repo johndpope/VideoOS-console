@@ -28,6 +28,13 @@ class IAType extends Component {
     getIaTypes();
   }
 
+  componentWillUnmount() {
+    const { setCurrentPage } = this.props;
+    setCurrentPage({
+      currentPage: 1
+    });
+  }
+
   render() {
     const {
       iaType,
@@ -79,6 +86,7 @@ class IAType extends Component {
             readOnly={
               authorList ? authorList.includes(AUTH_KEYS.TYPE_READ) : false
             }
+            currentPage={iaType.currentPage || 1}
           />
           {iaType && !iaType.isLoading ? (
             <div

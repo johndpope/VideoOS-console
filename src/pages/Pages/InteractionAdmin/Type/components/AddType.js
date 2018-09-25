@@ -111,8 +111,10 @@ const AddType = ({
                       style={styles.file_ipt}
                       onChange={e => {
                         const file = e.target.files && e.target.files[0];
-                        if (!/.json$/gi.test(file.name)) {
+
+                        if (!/.json$/gi.test(file && file.name)) {
                           Feedback.toast.error("请上传*.json文件");
+                          setFormData({ file: null });
                           return;
                         }
                         setFormData({

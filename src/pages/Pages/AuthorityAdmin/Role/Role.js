@@ -29,6 +29,13 @@ class AARole extends Component {
     queryAllRoleTypes();
   }
 
+  componentWillUnmount() {
+    const { setCurrentPage } = this.props;
+    setCurrentPage({
+      currentPage: 1
+    });
+  }
+
   render() {
     const {
       aaRole,
@@ -77,6 +84,7 @@ class AARole extends Component {
             readOnly={
               authorList ? authorList.includes(AUTH_KEYS.ROLE_READ) : false
             }
+            currentPage={aaRole.currentPage || 1}
           />
           {aaRole && !aaRole.isLoading ? (
             <div

@@ -39,6 +39,13 @@ class AdMaterial extends Component {
     getAdMaterials();
   }
 
+  componentWillUnmount() {
+    const { setCurrentPage } = this.props;
+    setCurrentPage({
+      currentPage: 1
+    });
+  }
+
   render() {
     const {
       adMaterial,
@@ -118,6 +125,7 @@ class AdMaterial extends Component {
           readOnly={
             authorList ? authorList.includes(AUTH_KEYS.MATERIAL_READ) : false
           }
+          currentPage={adMaterial.currentPage || 1}
         />
         {adMaterial && !adMaterial.isLoading ? (
           <div

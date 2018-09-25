@@ -36,6 +36,13 @@ class AdPlan extends Component {
     queryAllModelTypes();
   }
 
+  componentWillUnmount() {
+    const { setCurrentPage } = this.props;
+    setCurrentPage({
+      currentPage: 1
+    });
+  }
+
   render() {
     const {
       adPlan,
@@ -105,6 +112,7 @@ class AdPlan extends Component {
           readOnly={
             authorList ? authorList.includes(AUTH_KEYS.PLAN_READ) : false
           }
+          currentPage={adPlan.currentPage || 1}
         />
         {adPlan && !adPlan.isLoading ? (
           <div

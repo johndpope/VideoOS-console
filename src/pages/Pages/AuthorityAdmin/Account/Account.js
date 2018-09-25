@@ -29,6 +29,13 @@ class AAAcount extends Component {
     queryAllAccountTypes();
   }
 
+  componentWillUnmount() {
+    const { setCurrentPage } = this.props;
+    setCurrentPage({
+      currentPage: 1
+    });
+  }
+
   render() {
     const {
       aaAccount,
@@ -77,6 +84,7 @@ class AAAcount extends Component {
             readOnly={
               authorList ? authorList.includes(AUTH_KEYS.ACCOUNT_READ) : false
             }
+            currentPage={aaAccount.currentPage || 1}
           />
           {aaAccount && !aaAccount.isLoading ? (
             <div

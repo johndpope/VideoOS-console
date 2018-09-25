@@ -36,6 +36,8 @@ const AddMaterial = ({
               formData={formData}
               schema={materialSchema}
               // noValidate
+              noHtml5Validate
+              showErrorList={false}
               uiSchema={uiSchema({
                 isRead,
                 isUpdate,
@@ -44,8 +46,30 @@ const AddMaterial = ({
                 uiSchemaConf,
                 formData
               })}
+              transformErrors={errors => {
+                return errors.map(error => {
+                  if (error.name === "minItems") {
+                    error.message = "必选项";
+                  }
+                  if (error.name === "required") {
+                    error.message = "必填项";
+                  }
+                  if (error.name === "pattern") {
+                    error.message = "汉字、字母、数字、下划线组合";
+                  }
+                  if (error.name === "maxLength") {
+                    error.message = `超过${error.params.limit}字符上限`;
+                  }
+                  return error;
+                });
+              }}
               onChange={({ formData }) => {
                 let _materialSchema = { ...materialSchema };
+                // if (fileData && Object.keys(fileData).length > 0) {
+                //   for (let key in fileData) {
+                //     formData[key] = fileData[key];
+                //   }
+                // }
                 if (
                   formData.hasOwnProperty("isShowClose") &&
                   formData.hasOwnProperty("closeAfter")
@@ -83,19 +107,19 @@ const AddMaterial = ({
                 saveFormData(formData);
               }}
               onSubmit={({ formData }) => {
-                const _formData = { ...formData };
-                if (fileData && Object.keys(fileData).length > 0) {
-                  for (let key in fileData) {
-                    _formData[key] = fileData[key];
-                  }
-                }
+                // const _formData = { ...formData };
+                // if (fileData && Object.keys(fileData).length > 0) {
+                //   for (let key in fileData) {
+                //     _formData[key] = fileData[key];
+                //   }
+                // }
                 if (isUpdate) {
                   updateMaterial({
                     creativeId: record.creativeId,
                     creativeName: formData.creativeName,
                     interactionTypeId: formData.interactionTypeId,
                     interactionTemplateId: formData.interactionTemplateId,
-                    creativeContent: JSON.stringify(_formData),
+                    creativeContent: JSON.stringify(formData),
                     creativeIdList,
                     currentPage
                   });
@@ -107,7 +131,7 @@ const AddMaterial = ({
                     creativeName: formData.creativeName,
                     interactionTypeId: formData.interactionTypeId,
                     interactionTemplateId: formData.interactionTemplateId,
-                    creativeContent: JSON.stringify(_formData),
+                    creativeContent: JSON.stringify(formData),
                     creativeIdList,
                     interactionTypeName:
                       materialSchema &&
