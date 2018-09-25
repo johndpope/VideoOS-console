@@ -27,8 +27,7 @@ const AddAccount = ({
   const { opType } = record || {};
   const isRead = opType === "read";
   const isUpdate = opType === "update";
-  let username =
-    (formData && formData.username) || (record && record.userName) || "";
+  let username = (formData && formData.username) || "";
   let roleId = (formData && formData.roleId) || (record && record.roleId) || "";
   return (
     <Fragment>

@@ -1,11 +1,20 @@
 {
   "title": "",
   "type": "object",
-  "required": ["creativeName"],
+  "required": [
+    "creativeName",
+    "interactionTypeId",
+    "interactionTemplateId",
+    "imageUrl",
+    "positionX",
+    "positionY"
+  ],
   "properties": {
     "creativeName": {
       "title": "素材名称",
-      "type": "string"
+      "type": "string",
+      "maxLength": 10,
+      "pattern": "[0-9A-Za-z\u4e00-\u9fa5-]+$"
     },
     "interactionTypeId": {
       "title": "素材类型",

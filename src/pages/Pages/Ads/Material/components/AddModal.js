@@ -36,6 +36,7 @@ const AddMaterial = ({
               formData={formData}
               schema={materialSchema}
               // noValidate
+              noHtml5Validate
               uiSchema={uiSchema({
                 isRead,
                 isUpdate,
@@ -46,6 +47,11 @@ const AddMaterial = ({
               })}
               onChange={({ formData }) => {
                 let _materialSchema = { ...materialSchema };
+                // if (fileData && Object.keys(fileData).length > 0) {
+                //   for (let key in fileData) {
+                //     formData[key] = fileData[key];
+                //   }
+                // }
                 if (
                   formData.hasOwnProperty("isShowClose") &&
                   formData.hasOwnProperty("closeAfter")
@@ -83,19 +89,19 @@ const AddMaterial = ({
                 saveFormData(formData);
               }}
               onSubmit={({ formData }) => {
-                const _formData = { ...formData };
-                if (fileData && Object.keys(fileData).length > 0) {
-                  for (let key in fileData) {
-                    _formData[key] = fileData[key];
-                  }
-                }
+                // const _formData = { ...formData };
+                // if (fileData && Object.keys(fileData).length > 0) {
+                //   for (let key in fileData) {
+                //     _formData[key] = fileData[key];
+                //   }
+                // }
                 if (isUpdate) {
                   updateMaterial({
                     creativeId: record.creativeId,
                     creativeName: formData.creativeName,
                     interactionTypeId: formData.interactionTypeId,
                     interactionTemplateId: formData.interactionTemplateId,
-                    creativeContent: JSON.stringify(_formData),
+                    creativeContent: JSON.stringify(formData),
                     creativeIdList,
                     currentPage
                   });
@@ -107,7 +113,7 @@ const AddMaterial = ({
                     creativeName: formData.creativeName,
                     interactionTypeId: formData.interactionTypeId,
                     interactionTemplateId: formData.interactionTemplateId,
-                    creativeContent: JSON.stringify(_formData),
+                    creativeContent: JSON.stringify(formData),
                     creativeIdList,
                     interactionTypeName:
                       materialSchema &&
