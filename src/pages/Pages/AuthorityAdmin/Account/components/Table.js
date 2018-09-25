@@ -33,14 +33,18 @@ export default class AccountTable extends Component {
   };
 
   render() {
-    const { dataSource, isLoading } = this.props;
+    const { dataSource, isLoading, currentPage } = this.props;
     return (
       <div className="animated fadeIn">
         <Table dataSource={dataSource} hasBorder={false} isLoading={isLoading}>
           <Table.Column
             title="序号"
             width={40}
-            cell={(value, index, record) => <span>{index + 1}</span>}
+            cell={(value, index, record) => (
+              <span>
+                {index + (currentPage ? (currentPage - 1) * 20 : 0) + 1}
+              </span>
+            )}
           />
           <Table.Column title="创建日期" dataIndex="createDate" width={80} />
           <Table.Column title="账号名称" dataIndex="userName" width={120} />

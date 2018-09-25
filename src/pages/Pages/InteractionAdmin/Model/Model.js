@@ -135,6 +135,7 @@ class IAModel extends Component {
           readOnly={
             authorList ? authorList.includes(AUTH_KEYS.MODEL_READ) : false
           }
+          currentPage={iaModel.currentPage || 1}
         />
         {iaModel && !iaModel.isLoading ? (
           <div

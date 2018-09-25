@@ -118,6 +118,7 @@ class AdMaterial extends Component {
           readOnly={
             authorList ? authorList.includes(AUTH_KEYS.MATERIAL_READ) : false
           }
+          currentPage={adMaterial.currentPage || 1}
         />
         {adMaterial && !adMaterial.isLoading ? (
           <div

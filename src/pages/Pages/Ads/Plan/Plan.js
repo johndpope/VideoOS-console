@@ -105,6 +105,7 @@ class AdPlan extends Component {
           readOnly={
             authorList ? authorList.includes(AUTH_KEYS.PLAN_READ) : false
           }
+          currentPage={adPlan.currentPage || 1}
         />
         {adPlan && !adPlan.isLoading ? (
           <div
