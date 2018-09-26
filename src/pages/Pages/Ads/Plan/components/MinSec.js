@@ -65,7 +65,7 @@ const MinSec = ({ time, idx, setFormData, isRead, launchTimes }) => {
                   }
                 } else {
                   launchTimes = [];
-                  launchTimes.push(temp_ms.join(":"));
+                  launchTimes.push(ms_txt);
                 }
                 setFormData({ launchTimes });
               }

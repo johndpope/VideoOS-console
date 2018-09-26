@@ -359,74 +359,103 @@ const AddMaterial = ({
                 <InputGroupAddon addonType="prepend">
                   <InputGroupText>投放时间</InputGroupText>
                 </InputGroupAddon>
-                <DatePicker
-                  selected={
-                    formData &&
-                    formData.launchTime &&
-                    (typeof formData.launchTime === "string"
-                      ? moment(
-                          `2018-09-10 ${formData.launchTime.split(",")[0]}`
-                        )
-                      : formData.launchTime)
-                  }
-                  showTimeSelect
-                  showTimeSelectOnly
-                  timeIntervals={5}
-                  dateFormat="LT"
-                  timeCaption="Time"
-                  isClearable={true}
-                  onChange={e => {
-                    setFormData({ launchTime: e });
-                  }}
-                  placeholderText="请添加投放时间"
-                />
-                <Button
-                  onClick={() => {
-                    const { launchTime } = formData;
-                    if (!launchTime) {
-                      Feedback.toast.error("请选择投放时间");
-                      return;
-                    }
-                    const ltStr = `${
-                      launchTime.hours() > 9
-                        ? launchTime.hours()
-                        : "0" + launchTime.hours()
-                    }:${
-                      launchTime.minutes() > 9
-                        ? launchTime.minutes()
-                        : "0" + launchTime.minutes()
-                    }`;
-                    if (!launchTimes.includes(ltStr)) {
-                      launchTimes.push(ltStr);
-                      setFormData({ launchTimes });
-                    }
+                <span
+                  style={{
+                    flex: "1 1 auto",
+                    marginLeft: "8px",
+                    width: "1%",
+                    float: "left"
                   }}
                 >
-                  <Icon type="add" />
-                  <Badge>点击“+”添加</Badge>
-                </Button>
+                  <Row>
+                    <Col md="10">
+                      {launchTimes &&
+                        launchTimes.length > 0 &&
+                        launchTimes.map((lt, idx) => (
+                          <Row className="full-child-height-bj">
+                            <Col>
+                              <DatePicker
+                                key={lt}
+                                selected={
+                                  lt && /:/gi.test(lt)
+                                    ? moment(`2018-09-10 ${lt}`)
+                                    : formData &&
+                                      formData.launchTime &&
+                                      (typeof formData.launchTime === "string"
+                                        ? moment(
+                                            `2018-09-10 ${
+                                              formData.launchTime.split(",")[0]
+                                            }`
+                                          )
+                                        : formData.launchTime)
+                                }
+                                showTimeSelect
+                                showTimeSelectOnly
+                                timeIntervals={5}
+                                dateFormat="LT"
+                                timeCaption="Time"
+                                onChange={e => {
+                                  const ms_txt = `${
+                                    e.hours() > 9 ? e.hours() : "0" + e.hour()
+                                  }:${
+                                    e.minutes() > 9
+                                      ? e.minutes()
+                                      : "0" + e.minutes()
+                                  }`;
+                                  if (launchTimes) {
+                                    if (!launchTimes.includes(ms_txt)) {
+                                      launchTimes[idx] = ms_txt;
+                                    } else {
+                                      Feedback.toast.error("该投放时间已添加");
+                                      return;
+                                    }
+                                  } else {
+                                    launchTimes = [];
+                                    launchTimes.push(ms_txt);
+                                  }
+                                  setFormData({ launchTimes });
+                                }}
+                                placeholderText="请添加投放时间"
+                              />
+                            </Col>
+                            {idx !== 0 && !isRead ? (
+                              <Col>
+                                <Button
+                                  onClick={() => {
+                                    launchTimes.splice(idx, 1);
+                                    setFormData({ launchTimes });
+                                  }}
+                                >
+                                  <Icon type="ashbin" />
+                                </Button>
+                              </Col>
+                            ) : null}
+                          </Row>
+                        ))}
+                    </Col>
+                    {!isRead ? (
+                      <Col md="1">
+                        <Button
+                          onClick={() => {
+                            if (!formData.launchTimes) {
+                              Feedback.toast.error("请输入分秒");
+                              return;
+                            }
+                            if (formData.launchTimes.includes("")) {
+                              Feedback.toast.error("输入不完整或存在重复");
+                              return;
+                            }
+                            formData.launchTimes.push("");
+                            setFormData({ launchTimes });
+                          }}
+                        >
+                          <Icon type="add" />
+                        </Button>
+                      </Col>
+                    ) : null}
+                  </Row>
+                </span>
               </InputGroup>
-              <div
-                style={{
-                  padding: "0 0 1em 6em"
-                }}
-              >
-                {launchTimes &&
-                  launchTimes.length > 0 &&
-                  launchTimes.map((lt, idx) => (
-                    <div key={idx}>
-                      <span>{lt}</span>
-                      <Button
-                        onClick={() => {
-                          launchTimes.splice(idx, 1);
-                          setFormData({ launchTimes });
-                        }}
-                      >
-                        <Icon type="ashbin" />
-                      </Button>
-                    </div>
-                  ))}
-              </div>
               <InputGroup className="mb-4">
                 <InputGroupAddon addonType="prepend">
                   <InputGroupText>投放时长</InputGroupText>
