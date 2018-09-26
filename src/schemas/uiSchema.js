@@ -2,7 +2,14 @@ import React, { Fragment } from "react";
 import { Input } from "reactstrap";
 import { Feedback } from "@icedesign/base";
 
-const uiSchema = ({ addMaterialFile, isRead, setSwitcher, uiSchemaConf }) => {
+const uiSchema = ({
+  addMaterialFile,
+  isRead,
+  setSwitcher,
+  uiSchemaConf,
+  formData,
+  saveFormData
+}) => {
   const schema = {
     interactionTypeId: {
       "ui:disabled": [""]
@@ -19,51 +26,6 @@ const uiSchema = ({ addMaterialFile, isRead, setSwitcher, uiSchemaConf }) => {
       },
       items: {
         "ui:emptyValue": ""
-      }
-    },
-    avatar: {
-      "ui:widget": props => {
-        let switcher = Boolean(uiSchemaConf && uiSchemaConf.avatarSwitcher);
-        const { value } = props;
-        return (
-          <Fragment>
-            {Boolean(value) && !switcher ? (
-              <div>
-                <img
-                  src={value}
-                  style={{
-                    maxWidth: "400px"
-                  }}
-                  alt=""
-                />
-                {!isRead ? (
-                  <button
-                    type="button"
-                    className="btn btn-danger array-item-remove"
-                    style={{
-                      flex: "1 1 0%",
-                      padding: "6px 8px",
-                      fontWeight: "bold"
-                    }}
-                    onClick={() => {
-                      setSwitcher({ avatarSwitcher: true });
-                    }}
-                  >
-                    <i className="glyphicon glyphicon-remove" />
-                  </button>
-                ) : null}
-              </div>
-            ) : (
-              <Input
-                type="file"
-                accept="image/*"
-                onChange={e => {
-                  addMaterialFile({ file: e.target.files[0], type: "avatar" });
-                }}
-              />
-            )}
-          </Fragment>
-        );
       }
     },
     imageUrl: {
@@ -91,6 +53,8 @@ const uiSchema = ({ addMaterialFile, isRead, setSwitcher, uiSchemaConf }) => {
                       fontWeight: "bold"
                     }}
                     onClick={() => {
+                      formData.imageUrl = "";
+                      saveFormData({ ...formData });
                       setSwitcher({ avatarSwitcher: true });
                     }}
                   >
@@ -102,6 +66,7 @@ const uiSchema = ({ addMaterialFile, isRead, setSwitcher, uiSchemaConf }) => {
               <Input
                 type="file"
                 accept="image/*"
+                // value={props.value}
                 required={props.required}
                 onChange={e => {
                   addMaterialFile({
@@ -140,6 +105,8 @@ const uiSchema = ({ addMaterialFile, isRead, setSwitcher, uiSchemaConf }) => {
                       fontWeight: "bold"
                     }}
                     onClick={() => {
+                      formData.videoUrl = "";
+                      saveFormData({ ...formData });
                       setSwitcher({ adVideoSwitcher: true });
                     }}
                   >
@@ -161,60 +128,6 @@ const uiSchema = ({ addMaterialFile, isRead, setSwitcher, uiSchemaConf }) => {
                   addMaterialFile({
                     file,
                     type: "videoUrl"
-                  });
-                }}
-              />
-            )}
-          </Fragment>
-        );
-      }
-    },
-    ad_video: {
-      "ui:widget": props => {
-        let switcher = Boolean(uiSchemaConf && uiSchemaConf.adVideoSwitcher);
-        const { value } = props;
-        return (
-          <Fragment>
-            {Boolean(value) && !switcher ? (
-              <div>
-                <video
-                  controls
-                  src={value}
-                  style={{
-                    maxWidth: "400px"
-                  }}
-                />
-                {!isRead ? (
-                  <button
-                    type="button"
-                    className="btn btn-danger array-item-remove"
-                    style={{
-                      flex: "1 1 0%",
-                      padding: "6px 8px",
-                      fontWeight: "bold"
-                    }}
-                    onClick={() => {
-                      setSwitcher({ adVideoSwitcher: true });
-                    }}
-                  >
-                    <i className="glyphicon glyphicon-remove" />
-                  </button>
-                ) : null}
-              </div>
-            ) : (
-              <Input
-                type="file"
-                accept="video/*"
-                onChange={e => {
-                  const file = e.target.files && e.target.files[0];
-                  if (!file) return;
-                  if (file.size > 20 * 1024 * 1024) {
-                    Feedback.toast.error("视频大小超出上限50MB");
-                    return;
-                  }
-                  addMaterialFile({
-                    file,
-                    type: "ad_video"
                   });
                 }}
               />

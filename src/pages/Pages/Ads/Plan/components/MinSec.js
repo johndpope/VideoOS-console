@@ -15,26 +15,19 @@ const MinSec = ({ time, idx, setFormData, isRead, launchTimes }) => {
             maxLength={2}
             defaultValue={temp_ms[0]}
             onChange={e => {
+              temp_ms[0] = e.target.value || "";
+              const ms_txt = temp_ms.join(":");
+              if (launchTimes) {
+                launchTimes[idx] = ms_txt;
+              } else {
+                launchTimes = [];
+                launchTimes.push(ms_txt);
+              }
               if (!/^[0-9]+$/gi.test(e.target.value)) {
                 Feedback.toast.error("请输入有效分钟数");
                 return;
               }
-              temp_ms[0] = e.target.value || "";
-              if (temp_ms[1]) {
-                const ms_txt = temp_ms.join(":");
-                if (launchTimes) {
-                  if (!launchTimes.includes(ms_txt)) {
-                    launchTimes[idx] = ms_txt;
-                  } else {
-                    Feedback.toast.error("该投放时间已添加");
-                    return;
-                  }
-                } else {
-                  launchTimes = [];
-                  launchTimes.push(ms_txt);
-                }
-                setFormData({ launchTimes });
-              }
+              setFormData({ launchTimes });
             }}
           />
         </Col>
@@ -46,6 +39,14 @@ const MinSec = ({ time, idx, setFormData, isRead, launchTimes }) => {
             maxLength={2}
             defaultValue={temp_ms[1]}
             onChange={e => {
+              temp_ms[1] = e.target.value || "";
+              const ms_txt = temp_ms.join(":");
+              if (launchTimes) {
+                launchTimes[idx] = ms_txt;
+              } else {
+                launchTimes = [];
+                launchTimes.push(ms_txt);
+              }
               if (
                 !/^[0-9]+$/gi.test(e.target.value) ||
                 Number(e.target.value) > 60
@@ -53,22 +54,7 @@ const MinSec = ({ time, idx, setFormData, isRead, launchTimes }) => {
                 Feedback.toast.error("请输入有效秒数");
                 return;
               }
-              temp_ms[1] = e.target.value || "";
-              if (temp_ms[0]) {
-                const ms_txt = temp_ms.join(":");
-                if (launchTimes) {
-                  if (!launchTimes.includes(ms_txt)) {
-                    launchTimes[idx] = ms_txt;
-                  } else {
-                    Feedback.toast.error("该投放时间已添加");
-                    return;
-                  }
-                } else {
-                  launchTimes = [];
-                  launchTimes.push(ms_txt);
-                }
-                setFormData({ launchTimes });
-              }
+              setFormData({ launchTimes });
             }}
           />
         </Col>
