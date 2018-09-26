@@ -171,7 +171,7 @@ const AddMaterial = ({
           formData.launchTimeType &&
           (formData.launchTimeType === "0" || formData.launchTimeType === 0) ? (
             <Fragment>
-              <InputGroup className="mb-4">
+              <InputGroup className="mb-4 full-child-height">
                 <InputGroupAddon addonType="prepend">
                   <InputGroupText>投放日期</InputGroupText>
                 </InputGroupAddon>
@@ -315,7 +315,7 @@ const AddMaterial = ({
           formData.launchTimeType &&
           formData.launchTimeType === "2" ? (
             <Fragment>
-              <InputGroup className="mb-4">
+              <InputGroup className="mb-4 full-child-height">
                 <InputGroupAddon addonType="prepend">
                   <InputGroupText>投放日期</InputGroupText>
                 </InputGroupAddon>
@@ -355,7 +355,7 @@ const AddMaterial = ({
                   placeholderText="请选择结束日期"
                 />
               </InputGroup>
-              <InputGroup className="mb-4">
+              <InputGroup className="mb-4 full-child-height">
                 <InputGroupAddon addonType="prepend">
                   <InputGroupText>投放时间</InputGroupText>
                 </InputGroupAddon>
