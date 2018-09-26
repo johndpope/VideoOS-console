@@ -321,6 +321,7 @@ const AddMaterial = ({
                 </InputGroupAddon>
                 <DatePicker
                   locale="cn-gb"
+                  disabled={isRead ? true : false}
                   selected={formData && formData.launchDateStart}
                   startDate={formData && formData.launchDateStart}
                   endDate={formData && formData.launchDateEnd}
@@ -338,6 +339,7 @@ const AddMaterial = ({
                   placeholderText="请选择开始日期"
                 />
                 <DatePicker
+                  disabled={isRead ? true : false}
                   selected={formData && formData.launchDateEnd}
                   startDate={formData && formData.launchDateStart}
                   endDate={formData && formData.launchDateEnd}
@@ -375,7 +377,11 @@ const AddMaterial = ({
                           <Row className="full-child-height-bj">
                             <Col>
                               <DatePicker
+                                style={{
+                                  height: "31.98px"
+                                }}
                                 key={lt}
+                                disabled={isRead ? true : false}
                                 selected={
                                   lt && /:/gi.test(lt)
                                     ? moment(`2018-09-10 ${lt}`)
