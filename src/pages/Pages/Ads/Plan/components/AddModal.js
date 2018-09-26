@@ -9,8 +9,7 @@ import {
   Modal,
   ModalBody,
   ModalFooter,
-  ModalHeader,
-  Badge
+  ModalHeader
 } from "reactstrap";
 import { Button, Icon, Feedback } from "@icedesign/base";
 import DatePicker from "react-datepicker";
