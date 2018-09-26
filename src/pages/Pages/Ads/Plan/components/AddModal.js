@@ -231,7 +231,7 @@ const AddMaterial = ({
                         launchTimes.map((lt, idx) => (
                           <MinSec
                             time={lt}
-                            key={lt}
+                            key={lt + idx}
                             launchTimes={launchTimes}
                             idx={idx}
                             setFormData={setFormData}
@@ -244,15 +244,20 @@ const AddMaterial = ({
                       <Col md="1">
                         <Button
                           onClick={() => {
-                            if (!formData.launchTimes) {
-                              Feedback.toast.error("请输入分秒");
-                              return;
+                            // if (!formData.launchTimes) {
+                            //   Feedback.toast.error("请输入分秒");
+                            //   return;
+                            // }
+                            // if (formData.launchTimes.includes("")) {
+                            //   Feedback.toast.error("输入不完整或存在重复");
+                            //   return;
+                            // }
+                            if (formData && formData.launchTimes) {
+                              formData.launchTimes.push("");
+                            } else {
+                              formData.launchTimes = [""];
                             }
-                            if (formData.launchTimes.includes("")) {
-                              Feedback.toast.error("输入不完整或存在重复");
-                              return;
-                            }
-                            formData.launchTimes.push("");
+
                             setFormData({ launchTimes });
                           }}
                         >
@@ -379,7 +384,7 @@ const AddMaterial = ({
                                 style={{
                                   height: "31.98px"
                                 }}
-                                key={lt}
+                                key={lt + idx}
                                 disabled={isRead ? true : false}
                                 selected={
                                   lt && /:/gi.test(lt)
@@ -408,12 +413,7 @@ const AddMaterial = ({
                                       : "0" + e.minutes()
                                   }`;
                                   if (launchTimes) {
-                                    if (!launchTimes.includes(ms_txt)) {
-                                      launchTimes[idx] = ms_txt;
-                                    } else {
-                                      Feedback.toast.error("该投放时间已添加");
-                                      return;
-                                    }
+                                    launchTimes[idx] = ms_txt;
                                   } else {
                                     launchTimes = [];
                                     launchTimes.push(ms_txt);
@@ -442,14 +442,6 @@ const AddMaterial = ({
                       <Col md="1">
                         <Button
                           onClick={() => {
-                            if (!formData.launchTimes) {
-                              Feedback.toast.error("请输入分秒");
-                              return;
-                            }
-                            if (formData.launchTimes.includes("")) {
-                              Feedback.toast.error("输入不完整或存在重复");
-                              return;
-                            }
                             formData.launchTimes.push("");
                             setFormData({ launchTimes });
                           }}
@@ -488,6 +480,9 @@ const AddMaterial = ({
           <Button
             type="primary"
             onClick={() => {
+              const tempHash = [];
+              let repeatState = false;
+              let invalidState = false;
               if (isRead) {
                 toggle && toggle();
                 return;
@@ -534,6 +529,24 @@ const AddMaterial = ({
                   formData.launchTimes.length === 0
                 ) {
                   Feedback.toast.error('"请添加“投放时间”"');
+                  return;
+                }
+                formData.launchTimes.forEach((lt, idx) => {
+                  if (!tempHash.includes(lt)) {
+                    tempHash.push(lt);
+                  } else {
+                    repeatState = true;
+                  }
+                  if (!/^[0-9]{1,2}:[0-9]{1,2}$/gi.test(lt)) {
+                    invalidState = true;
+                  }
+                });
+                if (invalidState) {
+                  Feedback.toast.error('"请输入有效分秒值且不能为空"');
+                  return;
+                }
+                if (repeatState) {
+                  Feedback.toast.error('"投放时间有重复"');
                   return;
                 }
               }

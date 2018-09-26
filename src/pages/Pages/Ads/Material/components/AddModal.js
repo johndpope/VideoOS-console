@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import Form from "react-jsonschema-form";
 import { Modal, ModalBody, ModalHeader } from "reactstrap";
-import { Button } from "@icedesign/base";
+import { Button, Feedback } from "@icedesign/base";
 import uiSchema from "schemas/uiSchema";
 
 const AddMaterial = ({
@@ -44,10 +44,14 @@ const AddMaterial = ({
                 setSwitcher,
                 addMaterialFile,
                 uiSchemaConf,
-                formData
+                formData,
+                saveFormData
               })}
               transformErrors={errors => {
                 return errors.map(error => {
+                  if (error.name === "format") {
+                    error.message = "必选项";
+                  }
                   if (error.name === "minItems") {
                     error.message = "必选项";
                   }
@@ -113,6 +117,22 @@ const AddMaterial = ({
                 //     _formData[key] = fileData[key];
                 //   }
                 // }
+                if (
+                  formData &&
+                  formData.hasOwnProperty("imageUrl") &&
+                  !formData.imageUrl
+                ) {
+                  Feedback.toast.error("请上传图片");
+                  return;
+                }
+                if (
+                  formData &&
+                  formData.hasOwnProperty("videoUrl") &&
+                  !formData.videoUrl
+                ) {
+                  Feedback.toast.error("请上传视频");
+                  return;
+                }
                 if (isUpdate) {
                   updateMaterial({
                     creativeId: record.creativeId,
