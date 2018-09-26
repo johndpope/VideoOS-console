@@ -10,10 +10,15 @@ const MinSec = ({ time, idx, setFormData, isRead, launchTimes }) => {
       <Row>
         <Col md="3">
           <Input
+            type="tel"
             disabled={isRead ? "disabled" : false}
             maxLength={2}
             defaultValue={temp_ms[0]}
             onChange={e => {
+              if (!/^[0-9]+$/gi.test(e.target.value)) {
+                Feedback.toast.error("请输入有效分钟数");
+                return;
+              }
               temp_ms[0] = e.target.value || "";
               if (temp_ms[1]) {
                 const ms_txt = temp_ms.join(":");
@@ -36,10 +41,18 @@ const MinSec = ({ time, idx, setFormData, isRead, launchTimes }) => {
         <Col md="1">分</Col>
         <Col md="3">
           <Input
+            type="tel"
             disabled={isRead ? "disabled" : false}
             maxLength={2}
             defaultValue={temp_ms[1]}
             onChange={e => {
+              if (
+                !/^[0-9]+$/gi.test(e.target.value) ||
+                Number(e.target.value) > 60
+              ) {
+                Feedback.toast.error("请输入有效秒数");
+                return;
+              }
               temp_ms[1] = e.target.value || "";
               if (temp_ms[0]) {
                 const ms_txt = temp_ms.join(":");
