@@ -565,12 +565,12 @@ const AddMaterial = ({
                 if (formData.launchTimes) {
                   formData.launchTime = formData.launchTimes.join(",");
                 }
-                delete formData.launchTimes;
+                // delete formData.launchTimes;
                 updatePlan({ ...formData, currentPage });
               } else {
                 formData.launchTime =
                   formData.launchTimes && formData.launchTimes.join(",");
-                delete formData.launchTimes;
+                // delete formData.launchTimes;
                 if (formData.v_minutes) delete formData.v_minutes;
                 if (formData.v_seconds) delete formData.v_seconds;
                 addPlan({ ...formData, currentPage });
