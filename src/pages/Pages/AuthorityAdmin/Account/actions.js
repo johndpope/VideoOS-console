@@ -215,6 +215,9 @@ export const addAccountModalToggle = record => {
   return dispatch => {
     addAccountModalSwitch = !addAccountModalSwitch;
     if (addAccountModalSwitch) {
+      if (record && record.userName) {
+        dispatch(setFormData({ username: record.userName }));
+      }
       dispatch(showAddAccountModal(record));
     } else {
       dispatch(setFormData({}));

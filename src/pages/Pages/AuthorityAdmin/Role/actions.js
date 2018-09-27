@@ -241,6 +241,9 @@ export const addRoleModalToggle = record => {
       if (record && record.opType) {
         dispatch(queryUserRole({ roleId: record.roleId }));
       }
+      if (record && record.roleName) {
+        dispatch(setFormData({ roleName: record.roleName }));
+      }
       dispatch(showAddRoleModal(record));
     } else {
       // dispatch(setNodeIdList({}));

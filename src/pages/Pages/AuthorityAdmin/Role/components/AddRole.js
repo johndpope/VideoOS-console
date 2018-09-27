@@ -27,10 +27,10 @@ const AddRole = ({
   userRoleInfo,
   currentPage
 }) => {
-  let roleName = (formData && formData.roleName) || null;
   const { opType } = record || {};
   const isRead = opType === "read";
   const isUpdate = opType === "update";
+  let roleName = (formData && formData.roleName) || null;
   let _roleAuthorities = (formData && formData._roleAuthorities) || {};
   let nodeIdList =
     isRead || isUpdate

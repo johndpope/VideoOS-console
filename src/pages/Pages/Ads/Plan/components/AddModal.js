@@ -401,7 +401,7 @@ const AddMaterial = ({
                                 }
                                 showTimeSelect
                                 showTimeSelectOnly
-                                timeIntervals={5}
+                                timeIntervals={1}
                                 dateFormat="LT"
                                 timeCaption="Time"
                                 onChange={e => {
