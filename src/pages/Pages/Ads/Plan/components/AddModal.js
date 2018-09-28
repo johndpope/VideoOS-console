@@ -161,9 +161,9 @@ const AddMaterial = ({
               }}
             >
               <option value="">请选择</option>
-              <option value="1">即时</option>
-              <option value="0">视频时间</option>
-              <option value="2">北京时间</option>
+              <option value="1">即时（仅适用于投放至直播内容）</option>
+              <option value="0">视频时间（仅适用于投放至点播内容）</option>
+              <option value="2">北京时间（仅适用于投放至直播内容）</option>
             </Input>
           </InputGroup>
           {formData &&
