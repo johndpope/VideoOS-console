@@ -95,6 +95,11 @@ const AddAccount = ({
                 minLength={6}
                 maxLength={16}
                 defaultValue={isRead || isUpdate ? "******" : ""}
+                onFocus={e => {
+                  if (e.target.value === "******") {
+                    e.target.value = "";
+                  }
+                }}
                 onChange={e => {
                   setFormData({ password: e.target.value });
                 }}

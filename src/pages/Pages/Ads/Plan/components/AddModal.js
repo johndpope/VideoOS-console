@@ -161,9 +161,9 @@ const AddMaterial = ({
               }}
             >
               <option value="">请选择</option>
-              <option value="1">即时</option>
-              <option value="0">视频时间</option>
-              <option value="2">北京时间</option>
+              <option value="1">即时（仅适用于投放至直播内容）</option>
+              <option value="0">视频时间（仅适用于投放至点播内容）</option>
+              <option value="2">北京时间（仅适用于投放至直播内容）</option>
             </Input>
           </InputGroup>
           {formData &&
@@ -401,7 +401,7 @@ const AddMaterial = ({
                                 }
                                 showTimeSelect
                                 showTimeSelectOnly
-                                timeIntervals={5}
+                                timeIntervals={1}
                                 dateFormat="LT"
                                 timeCaption="Time"
                                 onChange={e => {
@@ -565,12 +565,12 @@ const AddMaterial = ({
                 if (formData.launchTimes) {
                   formData.launchTime = formData.launchTimes.join(",");
                 }
-                delete formData.launchTimes;
+                // delete formData.launchTimes;
                 updatePlan({ ...formData, currentPage });
               } else {
                 formData.launchTime =
                   formData.launchTimes && formData.launchTimes.join(",");
-                delete formData.launchTimes;
+                // delete formData.launchTimes;
                 if (formData.v_minutes) delete formData.v_minutes;
                 if (formData.v_seconds) delete formData.v_seconds;
                 addPlan({ ...formData, currentPage });

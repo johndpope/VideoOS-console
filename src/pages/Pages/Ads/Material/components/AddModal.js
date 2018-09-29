@@ -95,15 +95,17 @@ const AddMaterial = ({
                       _materialSchema.properties &&
                       _materialSchema.properties.closeAfter
                     ) {
-                      if (
-                        JSON.stringify(
-                          _materialSchema.properties.closeAfter
-                        ) !==
-                        JSON.stringify(materialSchema.properties.closeAfter)
-                      ) {
-                        _materialSchema.properties.closeAfter = {};
-                        setMaterialSchema(_materialSchema);
-                      }
+                      _materialSchema.properties.closeAfter = {};
+                      setMaterialSchema(_materialSchema);
+                      // if (
+                      //   JSON.stringify(
+                      //     _materialSchema.properties.closeAfter
+                      //   ) !==
+                      //   JSON.stringify(materialSchema.properties.closeAfter)
+                      // ) {
+                      //   _materialSchema.properties.closeAfter = {};
+                      //   setMaterialSchema(_materialSchema);
+                      // }
                     }
                   }
                 }

@@ -458,7 +458,7 @@ export const uploadModelFile = params => {
 
       if (response.status === 200 && response.data.resCode === "00") {
         dispatch(uploadModelFileSuccess(response.data));
-        Feedback.toast.show(response.data && response.data.resMsg);
+        // Feedback.toast.show(response.data && response.data.resMsg);
       } else {
         dispatch(uploadModelFileFailure(response.data));
         Feedback.toast.error(response.data && response.data.resMsg);
