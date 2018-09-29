@@ -19,12 +19,14 @@ $ npm start         # visit http://localhost:3000
 - 默认端口
 
 ```bash
+$ npm install
 $ npm run start-prod-remote
 ```
 
 - 指定端口
 
 ```bash
+$ npm install
 $ export OS_CONSOLE_SERVER_PORT = [端口号, eg: 4444] && npm run start-prod-remote
 ```
 
