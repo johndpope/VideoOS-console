@@ -32,13 +32,15 @@ $ export OS_CONSOLE_SERVER_PORT = [端口号, eg: 4444] && npm run start-prod-re
 
 ## jsonschema/uischema 配置手册
 
+带有“参见 uischema” 标注的，即表明  该项的实现需要 uishcema 配合。
+
 1. jsonschema
 
 ---
 
 ```javascript {.line-numbers .class1 .class}
 {
-  "definitions": {
+  "definitions": {                                          // ->定义引用schema
     "Person": {
       "type": "object",
       "properties": {
@@ -54,44 +56,44 @@ $ export OS_CONSOLE_SERVER_PORT = [端口号, eg: 4444] && npm run start-prod-re
       }
     }
   },
-  "title": "jsonschema配置案例",
-  "description": "这是一份jsonschema配置案例",
-  "type": "object",
-  "required": [],
-  "properties": {
+  "title": "jsonschema配置案例",                            // ->表单标题
+  "description": "这是一份jsonschema配置案例",               // ->表单说明/介绍
+  "type": "object",                                       // ->表单数据类型
+  "required": ["stringField"],                            // ->必填表单项
+  "properties": {                                         // ->定义数据属性
     "stringField": {
-      "type": "string",
+      "type": "string",                                   // ->字符串
       "title": "文本输入框"
     },
     "integerField": {
-      "type": "integer",
+      "type": "integer",                                  // ->整型
       "title": "整数输入框"
     },
     "booleanField": {
-      "type": "boolean",
+      "type": "boolean",                                  // ->布尔
       "title": "布尔选择框"
     },
     "numberField": {
-      "type": "number",
+      "type": "number",                                   // ->数值，含小数
       "title": "数值输入框"
     },
     "timeField": {
-      "type": "string",
+      "type": "string",                                   // ->参见uischema
       "title": "时间选择",
       "format": "date-time"
     },
     "dateField": {
-      "type": "string",
+      "type": "string",                                   // ->参见uischema
       "title": "日期选择",
       "format": "date"
     },
     "fileField": {
-      "type": "string",
+      "type": "string",                                   // ->但文件上传
       "format": "data-url",
       "title": "单文件上传"
     },
     "multiFileField": {
-      "type": "array",
+      "type": "array",                                    // ->多文件上传
       "title": "多文件上传",
       "items": {
         "type": "string",
@@ -99,37 +101,37 @@ $ export OS_CONSOLE_SERVER_PORT = [端口号, eg: 4444] && npm run start-prod-re
       }
     },
     "passwordField": {
-      "type": "string",
+      "type": "string",                                   // ->参见uischema
       "title": "密码输入框"
     },
     "telphoneField": {
-      "type": "string",
+      "type": "string",                                   // ->参见uischema
       "title": "号码输入框"
     },
     "textareaField": {
-      "type": "string",
+      "type": "string",                                   // ->参见uischema
       "title": "文本框"
     },
     "selectField": {
-      "type": "integer",
+      "type": "integer",                                  // ->下拉选择
       "title": "下拉选择",
       "enum": [1, 2, 3],
       "enumNames": ["一", "二", "三"]
     },
     "secretField": {
-      "type": "string",
+      "type": "string",                                   // ->参见uischema
       "title": "隐藏输入框"
     },
     "disableField": {
-      "type": "string",
+      "type": "string",                                   // ->参见uischema
       "title": "输入框禁用"
     },
     "readonlyField": {
-      "type": "string",
+      "type": "string",                                   // -参见uischema
       "title": "只读输入框"
     },
     "radioFiled": {
-      "type": "integer",
+      "type": "integer",                                  // -参见uischema
       "title": "单选",
       "enum": [
         1,
@@ -138,13 +140,13 @@ $ export OS_CONSOLE_SERVER_PORT = [端口号, eg: 4444] && npm run start-prod-re
       ]
     },
     "rangeField": {
-      "type": "integer",
+      "type": "integer",                                  // -参见uischema
       "title": "范围选择",
       "minimum": 0,
       "maximum": 100
     },
     "rangeStepField": {
-      "type": "integer",
+      "type": "integer",                                  // -参见uischema
       "title": "步进选择",
       "minimum": 0,
       "maximum": 100,
@@ -158,7 +160,7 @@ $ export OS_CONSOLE_SERVER_PORT = [端口号, eg: 4444] && npm run start-prod-re
       }
     },
     "arrayField2": {
-      "type": "array",
+      "type": "array",                                    // -参见uischema
       "title": "多属性值数组项",
       "items": [
         {
@@ -176,54 +178,54 @@ $ export OS_CONSOLE_SERVER_PORT = [端口号, eg: 4444] && npm run start-prod-re
       "type": "array",
       "title": "引用类型数组",
       "items": {
-        "$ref": "#/definitions/Person"
+        "$ref": "#/definitions/Person"                    // ->引用schema定义
       }
     },
     "customWidgetComponentsField": {
-      "type": "string",
+      "type": "string",                                   // -参见uischema
       "title": "自定义定制组件项"
     },
     "fieldWithDescription": {
       "type": "string",
       "title": "带有描述/副标题输入项",
-      "description": "这是一个带有描述/副标题的输入框"
+      "description": "这是一个带有描述/副标题的输入框"         // ->带描述表单项
     },
     "fieldWithPlaceholder": {
       "type": "string",
-      "title": "这是一个带有placeholder的输入框"
+      "title": "这是一个带有placeholder的输入框"             // ->参见uischema
     },
     "arrayItemOrderable": {
-      "type": "array",
+      "type": "array",                                    // ->参见uischema
       "title": "可/不可排序的列表",
       "items": {
         "type": "string"
       }
     },
     "arrayItemAddable": {
-      "type": "array",
+      "type": "array",                                    // ->参见uischema
       "title": "可/不可添加数据的输入项",
       "items": {
         "type": "string"
       }
     },
     "arrayItemRemovable": {
-      "type": "array",
+      "type": "array",                                    // ->参见uischema
       "title": "可/不可删除数据的输入项",
       "items": {
         "type": "string"
       }
     },
     "customFieldCss": {
-      "type": "string",
+      "type": "string",                                   // ->参见uischema
       "title": "自定义输入框样式类名"
     },
     "disableEnumAttributeFields": {
-      "type": "string",
+      "type": "string",                                   // ->参见uischema
       "title": "禁用枚举值",
       "enum": ["one", "two", "three"]
     },
     "multipleChoiceList": {
-      "type": "array",
+      "type": "array",                                    // ->参见uischema
       "title": "多选项",
       "items": {
         "type": "string",
@@ -232,24 +234,24 @@ $ export OS_CONSOLE_SERVER_PORT = [端口号, eg: 4444] && npm run start-prod-re
       "uniqueItems": true
     },
     "fieldHelpText": {
-      "type": "string",
+      "type": "string",                                   // ->参见uischema
       "title": "带有提示帮助信息输入框"
     },
     "fieldTitleText": {
-      "type": "string",
+      "type": "string",                                   // ->参见uischema
       "title": "自定义输入框label标题"
     },
     "fieldAutoFocus": {
-      "type": "string",
+      "type": "string",                                   // ->参见uischema
       "title": "输入框焦点状态"
     },
     "fieldTextareaRow": {
-      "type": "string",
+      "type": "string",                                   // ->参见uischema
       "title": "文本框行数"
     },
     "propertyDependencyField": {
       "title": "属性值依赖，某属性非空，关联属性亦非空",
-      "type": "object",
+      "type": "object",                                   // ->属性依赖
       "properties": {
         "name": {
           "type": "string"
@@ -266,7 +268,7 @@ $ export OS_CONSOLE_SERVER_PORT = [端口号, eg: 4444] && npm run start-prod-re
     },
     "schemaDependencyField": {
       "title": "模版项依赖，指定属性非空，其关联属性自动动态添加至表单模版",
-      "type": "object",
+      "type": "object",                                   // ->schema依赖
       "properties": {
         "name": {
           "type": "string"
@@ -296,45 +298,45 @@ $ export OS_CONSOLE_SERVER_PORT = [端口号, eg: 4444] && npm run start-prod-re
 ```javascript {.line-numbers .class1 .class}
 {
   "passwordField": {
-    "ui:widget": "password"
+    "ui:widget": "password"               // ->指明为密码框
   },
   "textareaField": {
-    "ui:widget": "textarea"
+    "ui:widget": "textarea"               // ->指明为文本框
   },
   "dateField": {
-    "ui:widget": "alt-date"
+    "ui:widget": "alt-date"               // ->指明为日期选择
   },
   "timeField": {
-    "ui:widget": "alt-datetime"
+    "ui:widget": "alt-datetime"           // ->指明为时间选择
   },
   "telphoneField": {
-    "ui:widget": "tel"
+    "ui:widget": "tel"                    // ->指明为号码输入
   },
   "selectField": {
-    "ui:widget": "select"
+    "ui:widget": "select"                 // ->指明为下拉列表选择
   },
   "secretField": {
-    "ui:widget": "hidden"
+    "ui:widget": "hidden"                 // ->指明为隐藏表单项
   },
   "disableField": {
-    "ui:disable": true
+    "ui:disable": true                    // ->指明为表单项禁用
   },
   "readonlyField": {
-    "ui:readonly": true
+    "ui:readonly": true                   // ->指明为只读表单项
   },
   "radioFiled": {
-    "ui:widget": "radio",
+    "ui:widget": "radio",                 // ->指明为单选
     "ui:options": {
       "inline": true
     }
   },
   "rangeField": {
+    "ui:widget": "range"                  // ->指明为范围选择
+  },
+  "rangeStepField": {                     // ->指明为步进选择
     "ui:widget": "range"
   },
-  "rangeStepField": {
-    "ui:widget": "range"
-  },
-  "customWidgetComponentsField": {
+  "customWidgetComponentsField": {        // ->自定义输入项组件
     "ui:widget": (props) => {
       return (
         <input type="text"
@@ -347,43 +349,43 @@ $ export OS_CONSOLE_SERVER_PORT = [端口号, eg: 4444] && npm run start-prod-re
     }
   },
   "fieldWithPlaceholder": {
-    "ui:placeholder": "placeholder展示"
+    "ui:placeholder": "placeholder展示"    // ->指明为带有placeholder输入框
   },
   "arrayItemOrderable": {
-    "ui:options": {
+    "ui:options": {                       // ->指明为可排序
       "orderable": true/false
     }
   },
   "arrayItemAddable": {
-    "ui:options":  {
+    "ui:options":  {                      // ->指明为可添加
       addable: true/false
     }
   },
   "arrayItemRemovable": {
-    "ui:options":  {
+    "ui:options":  {                      // ->指明为可删除
       removable: true/false
     }
   },
   "customFieldCss": {
-    "classNames": ""
+    "classNames": ""                      // ->自定义表单项样式类名
   },
   "disableEnumAttributeFields": {
-    "ui:enumDisabled": ["two"]
+    "ui:enumDisabled": ["two"]            // ->指明为不可选择值项
   },
   "multipleChoiceList": {
-    "ui:widget": "checkboxes"
+    "ui:widget": "checkboxes"             // ->指明为多选
   },
   "fieldHelpText": {
-    "ui:help": ""
+    "ui:help": ""                         // ->指明为输入框提示
   },
   "fieldTitleText": {
-    "ui:title": ""
+    "ui:title": ""                        // ->自定义表单项label标题
   },
   "fieldAutoFocus": {
-    "ui:autofocus": true/false
+    "ui:autofocus": true/false            // ->设置输入框焦点状态
   },
   "fieldTextareaRow": {
-    "ui:widget": "textarea",
+    "ui:widget": "textarea",              // ->设置文本框行数
     "ui:options": {
       rows: 15
     }
