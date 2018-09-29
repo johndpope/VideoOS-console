@@ -394,3 +394,15 @@ $ export OS_CONSOLE_SERVER_PORT = [端口号, eg: 4444] && npm run start-prod-re
 3. 预览图片
 
 @import "jsonschema_form.png" {width="200px" title="渲染后的表单" alt="渲染后的表单"}
+
+---
+
+title: "READ ME"
+author: "Justin Zhang\<zhangjian@videopls.com\>"
+date: Sept. 29, 2018
+output:
+pdf_document
+toc: true
+toc_depth: 2
+
+---
