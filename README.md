@@ -14,6 +14,12 @@ $ npm install
 $ npm start         # visit http://localhost:3000
 ```
 
+## 启动测试
+
+```bash
+$ npm run test
+```
+
 ## 发布生产
 
 - 默认端口
@@ -30,9 +36,212 @@ $ npm install
 $ export OS_CONSOLE_SERVER_PORT = [端口号, eg: 4444] && npm run start-prod-remote
 ```
 
+## 修改配置
+
+进入/src/config 目录  修改相应文件即可
+
+- dev.js 开发环境
+- test.js 测试环境
+- prod.js 生成环境
+
 ## jsonschema/uischema 配置手册
 
-带有“参见 uischema” 标注的，即表明  该项的实现需要 uishcema 配合。
+jsonschema 的作用简明表述即将数据对象转化成表单描述对象。数据对象中核心的组成为  对象属性，jsonschema 提供将对象属性描述成表单项的  语法标准。下面将以某系统中的“新增家庭”为例，说明一下如何通过 jsonschema 来实现这一功能。
+
+ 家庭数据模型：
+
+```javascript {.line-numbers}
+{
+  id: "",
+  name: "",
+  address: "",
+  members: []
+}
+```
+
+成员数据模型：
+
+```javascript {.line-numbers}
+{
+  id: "",
+  name: "",
+  gender: 0/1,
+  age: "",
+  height: ""
+}
+```
+
+地址数据模型：
+
+```javascript {.line-numbers}
+{
+  id: "",
+  province: "",
+  city: "",
+  street: "",
+  detail: "",
+  code: "",
+}
+```
+
+带有“参见 uischema” 标注的，即表明该项的实现需要 uishcema 配合。
+
+- 定义一个值类型为 string 的属性
+
+```javascript {.line-numbers}
+"name": {
+  "title": "姓名",
+  "type": "string"
+}
+```
+
+- 定义一个值类型为 integer 的属性
+
+```javascript {.line-numbers}
+"age": {
+  "title": "年龄",
+  "type": "integer"
+}
+```
+
+- 定义一个值类型为 boolean 的属性
+
+```javascript {.line-numbers}
+"gender": {
+  "title": "性别",
+  "type": "boolean"
+}
+```
+
+- 定义一个值类型为 number 的属性
+
+```javascript {.line-numbers}
+"height": {
+  "title": "身高",
+  "type": "number",
+  "description": "单位：m，精度：cm"
+}
+```
+
+- 定义  引用类型
+
+```javascript {.line-numbers}
+{
+  "definitions": {
+    "member": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "gender: {
+          "type": "boolean"
+        },
+        "age": {
+          "type": "integer"
+        },
+        "height": {
+          "type": "number"
+        }
+      }
+    }
+  }
+}
+```
+
+- 定义一个值类型为 array 的属性
+
+```javascript {.line-numbers}
+"members": {
+  "title": "家庭成员",
+  "type": "array",
+  "items": {
+    "$ref": "#/definitions/member"
+  }
+}
+```
+
+- 定义一个值为文本块（文件上传）的属性
+
+```javascript {.line-numbers}
+"file": {
+  "type": "string",
+  "format": "data-url"
+}
+```
+
+- 定义一个值为日期的属性
+
+```javascript {.line-numbers}
+"date": {
+ "type": "string",
+ "format": "date"
+}
+```
+
+- 完整家庭 jsonschema 定义
+
+```javascript {.line-numbers}
+{
+  "definitions": {
+    "member": {
+      "type": "object",
+       "properties": {
+         "id": {
+           "type": "string"
+         },
+         "name": {
+           "type": "string"
+         },
+         "gender: {
+           "type": "boolean"
+         },
+         "age": {
+           "type": "integer"
+         },
+         "height": {
+           "type": "number"
+         }
+       }
+    }
+  },
+  "title": "",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "address": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "province": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "street": {
+          "type": "string"
+        },
+        "code": {
+          "type": "integer"
+        }
+    },
+    "members": {
+      "$ref": "#/definitions/member"
+    }
+  }
+}
+```
 
 1. jsonschema
 
@@ -59,7 +268,7 @@ $ export OS_CONSOLE_SERVER_PORT = [端口号, eg: 4444] && npm run start-prod-re
   "title": "jsonschema配置案例",                      // ->表单标题
   "description": "这是一份jsonschema配置案例",         // ->表单说明/介绍
   "type": "object",                                 // ->表单数据类型
-  "required": ["stringField"],                      // ->必填表单项
+  "required": ["stringField"],                      // ->设置必填表单项
   "properties": {                                   // ->定义数据属性
     "stringField": {
       "type": "string",                             // ->字符串
@@ -127,11 +336,11 @@ $ export OS_CONSOLE_SERVER_PORT = [端口号, eg: 4444] && npm run start-prod-re
       "title": "输入框禁用"
     },
     "readonlyField": {
-      "type": "string",                             // -参见uischema
+      "type": "string",                             // ->参见uischema
       "title": "只读输入框"
     },
     "radioFiled": {
-      "type": "integer",                            // -参见uischema
+      "type": "integer",                            // ->参见uischema
       "title": "单选",
       "enum": [
         1,
@@ -140,13 +349,13 @@ $ export OS_CONSOLE_SERVER_PORT = [端口号, eg: 4444] && npm run start-prod-re
       ]
     },
     "rangeField": {
-      "type": "integer",                            // -参见uischema
+      "type": "integer",                            // ->参见uischema
       "title": "范围选择",
       "minimum": 0,
       "maximum": 100
     },
     "rangeStepField": {
-      "type": "integer",                            // -参见uischema
+      "type": "integer",                            // ->参见uischema
       "title": "步进选择",
       "minimum": 0,
       "maximum": 100,
@@ -160,7 +369,7 @@ $ export OS_CONSOLE_SERVER_PORT = [端口号, eg: 4444] && npm run start-prod-re
       }
     },
     "arrayField2": {
-      "type": "array",                              // -参见uischema
+      "type": "array",                              // ->参见uischema
       "title": "多属性值数组项",
       "items": [
         {
@@ -182,7 +391,7 @@ $ export OS_CONSOLE_SERVER_PORT = [端口号, eg: 4444] && npm run start-prod-re
       }
     },
     "customWidgetComponentsField": {
-      "type": "string",                             // -参见uischema
+      "type": "string",                             // ->参见uischema
       "title": "自定义定制组件项"
     },
     "fieldWithDescription": {
