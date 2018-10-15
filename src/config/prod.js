@@ -1,5 +1,5 @@
 const config = {
-  OS_API: "http://10.66.90.208:8082/videoos"
+  OS_API: "http://os-open.videojj.com/videoos"
 };
 
 export default Object.freeze(Object.assign({}, config));
