@@ -122,7 +122,7 @@ const uiSchema = ({
                   const file = e.target.files && e.target.files[0];
                   if (!file) return;
                   if (file.size > 20 * 1024 * 1024) {
-                    Feedback.toast.error("视频大小超出上限50MB");
+                    Feedback.toast.error("视频大小超出上限20MB");
                     return;
                   }
                   addMaterialFile({

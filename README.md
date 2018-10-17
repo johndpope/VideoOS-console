@@ -67,7 +67,7 @@ $ export OS_CONSOLE_SERVER_PORT = [端口号, eg: 4444] && npm run start-prod-re
 
 ## jsonschema/uischema 配置手册
 
-jsonschema 的作用简明表述即将数据对象转化成表单描述对象。数据对象中核心的组成为  对象属性，jsonschema 提供将对象属性描述成表单项的  语法标准。下面将以某系统中的“新增家庭”为例，说明一下如何通过 jsonschema 来实现这一功能。
+jsonschema 的作用简明表述即将数据对象转化成表单描述对象。数据对象中核心的组成为对象属性，jsonschema 提供将对象属性描述成表单项的语法标准。下面将以某系统中的“新增家庭”为例，说明一下如何通过 jsonschema 来实现这一功能。
 
  家庭数据模型：
 
