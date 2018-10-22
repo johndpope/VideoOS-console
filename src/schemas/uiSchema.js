@@ -146,53 +146,6 @@ const uiSchema = ({
         "该时间需要小于中插视频时间；如果填0，则表示该广告随时可关闭",
       "ui:placeholder": "请填写数字，单位：秒"
     }
-    // closeAfter: {
-    //   "ui:widget": props => {
-    //     return (<Fragment>
-    //       {
-    //         formData && formData.isShowClose ? (
-    //           <input type="tel"
-    //             className="custom"
-    //             value={props.value}
-    //             required={props.required}
-    //             onChange={(event) => props.onChange(event.target.value)}
-    //           />
-    //         ) : null
-    //       }
-    //     </Fragment>)
-    //   }
-    // }
-    // linkUrl: {
-    //   "ui:autofocus": true,
-    //   "ui:widget": props => {
-    //     return (
-    //       <Fragment>
-    //         <input
-    //           type="text"
-    //           autoFocus={props && props.value ? "true" : false}
-    //           className="custom"
-    //           value={props.value}
-    //           required={props.required}
-    //           disabled={props.disabled}
-    //           onChange={event => props.onChange(event.target.value)}
-    //         />
-    //         {props &&
-    //         props.value &&
-    //         /^((ht|f)tps?):\/\/([\w\-]+(\.[\w\-]+)*\/)*[\w\-]+(\.[\w\-]+)*\/?(\?([\w\-\.,@?^=%&:\/~\+#]*)+)?/gi.test(
-    //           props.value
-    //         ) ? (
-    //           <a
-    //             style={{ display: "inline-block", marginLeft: "8px" }}
-    //             href={props.value}
-    //             target="_blank"
-    //           >
-    //             点击查看详情
-    //           </a>
-    //         ) : null}
-    //       </Fragment>
-    //     );
-    //   }
-    // }
   };
   if (isRead) {
     schema["ui:disabled"] = [];

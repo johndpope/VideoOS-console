@@ -75,6 +75,17 @@ const defaultMenuConfig = {
       external: true
     },
     {
+      name: "操作日志管理",
+      path: "/rz",
+      icon: "icon-book",
+      children: [
+        {
+          name: "日志信息管理",
+          path: "/rz/log"
+        }
+      ]
+    },
+    {
       name: "权限管理",
       path: "/qx",
       icon: "icon-user",

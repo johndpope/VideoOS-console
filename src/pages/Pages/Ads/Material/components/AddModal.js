@@ -112,6 +112,87 @@ const AddMaterial = ({
 
                 saveFormData(formData);
               }}
+              ArrayFieldTemplate={props => {
+                if (["角色"].includes(props.title)) {
+                  return (
+                    <div>
+                      <label style={{ display: "block" }}>{props.title}*</label>
+                      {props.items.map((element, idx) => {
+                        return (
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "row"
+                            }}
+                          >
+                            <input type="file" />
+                            <input
+                              type="text"
+                              placeholder="请输入角色名称"
+                              value={element.value}
+                              // onChange={element.children.props.onChange}
+                            />
+                            {element.hasRemove && (
+                              <button
+                                type="button"
+                                className="btn btn-danger array-item-remove"
+                                onClick={() => {
+                                  element.onDropIndexClick(idx);
+                                }}
+                              >
+                                <i className="glyphicon glyphicon-remove" />
+                              </button>
+                            )}
+                          </div>
+                        );
+                      })}
+                      {props.canAdd && (
+                        <button
+                          type="button"
+                          className="btn btn-info btn-add"
+                          onClick={props.onAddClick}
+                        >
+                          <i className="glyphicon glyphicon-plus" />
+                        </button>
+                      )}
+                    </div>
+                  );
+                }
+                if (["对话内容"].includes(props.title)) {
+                  return (
+                    <div>
+                      <label style={{ display: "block" }}>{props.title}*</label>
+                      {props.items.map((element, idx) => {
+                        return <div />;
+                      })}
+                      {props.canAdd && (
+                        <button
+                          type="button"
+                          className="btn btn-info btn-add"
+                          onClick={props.onAddClick}
+                        >
+                          <i className="glyphicon glyphicon-plus" />
+                        </button>
+                      )}
+                    </div>
+                  );
+                }
+                return (
+                  <div>
+                    <label style={{ display: "block" }}>{props.title}</label>
+                    {props.items.map(element => element.children)}
+                    {props.canAdd && (
+                      <button
+                        type="button"
+                        className="btn btn-info btn-add"
+                        onClick={props.onAddClick}
+                      >
+                        <i className="glyphicon glyphicon-plus" />
+                      </button>
+                    )}
+                  </div>
+                );
+              }}
               onSubmit={({ formData }) => {
                 // const _formData = { ...formData };
                 // if (fileData && Object.keys(fileData).length > 0) {
