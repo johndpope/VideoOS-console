@@ -102,7 +102,7 @@ class IAModel extends Component {
           currentPage={iaModel && iaModel.currentPage}
         />
         <IceContainer>
-          <Button onClick={() => addModelToggle({})}>新增模版</Button>
+          <Button onClick={() => addModelToggle({})}>新增主题</Button>
           <InputGroup className="mb-4">
             <InputGroupAddon addonType="prepend">
               <InputGroupText>类型：</InputGroupText>

@@ -1,8 +1,10 @@
 import React, { Fragment } from "react";
 import Form from "react-jsonschema-form";
-import { Modal, ModalBody, ModalHeader } from "reactstrap";
+import { Modal, ModalBody, ModalHeader, Row, Col } from "reactstrap";
 import { Button, Feedback } from "@icedesign/base";
 import uiSchema from "schemas/uiSchema";
+
+import Bubbles from "./Bubbles";
 
 const AddMaterial = ({
   shouldOpen,
@@ -38,15 +40,18 @@ const AddMaterial = ({
               // noValidate
               noHtml5Validate
               showErrorList={false}
-              uiSchema={uiSchema({
-                isRead,
-                isUpdate,
-                setSwitcher,
-                addMaterialFile,
-                uiSchemaConf,
-                formData,
-                saveFormData
-              })}
+              uiSchema={{
+                ...uiSchema({
+                  isRead,
+                  isUpdate,
+                  setSwitcher,
+                  addMaterialFile,
+                  uiSchemaConf,
+                  formData,
+                  saveFormData
+                }),
+                "ui:field": "bubbles"
+              }}
               transformErrors={errors => {
                 return errors.map(error => {
                   if (error.name === "format") {
@@ -112,94 +117,140 @@ const AddMaterial = ({
 
                 saveFormData(formData);
               }}
-              ArrayFieldTemplate={props => {
-                if (["角色"].includes(props.title)) {
-                  return (
-                    <div>
-                      <label style={{ display: "block" }}>{props.title}*</label>
-                      {props.items.map((element, idx) => {
-                        return (
-                          <div
-                            style={{
-                              display: "flex",
-                              flexDirection: "row"
-                            }}
-                          >
-                            <input type="file" />
-                            <input
-                              type="text"
-                              placeholder="请输入角色名称"
-                              value={element.value}
-                              // onChange={element.children.props.onChange}
-                            />
-                            {element.hasRemove && (
-                              <button
-                                type="button"
-                                className="btn btn-danger array-item-remove"
-                                onClick={() => {
-                                  element.onDropIndexClick(idx);
-                                }}
-                              >
-                                <i className="glyphicon glyphicon-remove" />
-                              </button>
-                            )}
-                          </div>
-                        );
-                      })}
-                      {props.canAdd && (
-                        <button
-                          type="button"
-                          className="btn btn-info btn-add"
-                          onClick={props.onAddClick}
-                        >
-                          <i className="glyphicon glyphicon-plus" />
-                        </button>
-                      )}
-                    </div>
-                  );
-                }
-                if (["对话内容"].includes(props.title)) {
-                  return (
-                    <div>
-                      <label style={{ display: "block" }}>{props.title}*</label>
-                      {props.items.map((element, idx) => {
-                        return <div />;
-                      })}
-                      {props.canAdd && (
-                        <button
-                          type="button"
-                          className="btn btn-info btn-add"
-                          onClick={props.onAddClick}
-                        >
-                          <i className="glyphicon glyphicon-plus" />
-                        </button>
-                      )}
-                    </div>
-                  );
-                }
-                return (
-                  <div>
-                    <label style={{ display: "block" }}>{props.title}</label>
-                    {props.items.map(element => element.children)}
-                    {props.canAdd && (
-                      <button
-                        type="button"
-                        className="btn btn-info btn-add"
-                        onClick={props.onAddClick}
-                      >
-                        <i className="glyphicon glyphicon-plus" />
-                      </button>
-                    )}
-                  </div>
-                );
-              }}
+              fields={{ bubbles: Bubbles }}
+              // ArrayFieldTemplate={props => {
+              //   if (["角色"].includes(props.title)) {
+              //     return (
+              //       <div key={props.idSchema.$id}>
+              //         <label style={{ display: "block" }}>{props.title}*</label>
+              //         {props.items.map((element, idx) => {
+              //           const { idSchema, readonly, required, formData } = element.children.props;
+              //           return (
+              //             <div
+              //               key={idSchema.$id}
+              //               className={element.className}
+              //               style={{
+              //                 display: "flex",
+              //                 flexDirection: "row"
+              //               }}
+              //             >
+              //               <input
+              //                 key={idSchema.roleAvatar.$id}
+              //                 type="file"
+              //                 name={formData.roleAvatar}
+              //                 onChange={e => {
+              //                   addMaterialFile({
+              //                     file: e.target.files[0],
+              //                   });
+              //               }}/>
+              //               <input
+              //                 key={idSchema.roleName.$id}
+              //                 type="text"
+              //                 name={formData.roleName}
+              //                 readOnly={readonly ? 'readonly': false}
+              //                 required={required ? 'required': false}
+              //                 placeholder="请输入角色名称"
+              //                 // value={element.value}
+              //                 onChange={e => {
+              //                   element.children.props.onChange(e.target.value)
+              //                 }}
+              //               />
+              //               {element.hasRemove && (
+              //                 <button
+              //                   type="button"
+              //                   className="btn btn-danger array-item-remove"
+              //                   onClick={e => {
+              //                     element.onDropIndexClick(idx)(e);
+              //                   }}
+              //                 >
+              //                   <i className="glyphicon glyphicon-remove" />
+              //                 </button>
+              //               )}
+              //             </div>
+              //           );
+              //         })}
+              //         {props.canAdd && (<div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
+              //           <button
+              //             type="button"
+              //             className="btn btn-info btn-add col-md-2"
+              //             onClick={props.onAddClick}
+              //           >
+              //             <i className="glyphicon glyphicon-plus" />
+              //           </button>
+              //           </div>)}
+              //       </div>
+              //     );
+              //   }
+              //   if (["对话内容"].includes(props.title)) {
+              //     return (
+              //       <div>
+              //         <label style={{ display: "block" }}>{props.title}*</label>
+              //         {props.items.map((element, idx) => {
+              //           return <div
+              //             key={idx}
+              //             className={element.className}
+              //           >
+              //             <Row>
+              //               <Col><select className="form-control" defaultValue="0">
+              //                 <option value="0">用户（第一人称）</option>
+              //               </select></Col>
+              //               <Col><select className="form-control" defaultValue="1">
+              //                 <option value="1">文本对话</option>
+              //                 <option value="2">气泡图片</option>
+              //                 <option value="3">按钮选择对话</option>
+              //               </select></Col>
+              //             </Row>
+              //             <Row>
+              //               <Col><input type="text" placeholder="请输入文本对话内容"/></Col>
+              //             </Row>
+              //             <Row>
+              //               <Col>
+              //                 <label>展示持续时间：</label>
+              //                 <input type="text"/><span>秒</span>
+              //               </Col>
+              //             </Row>
+              //             {element.hasRemove && (
+              //                 <button
+              //                   type="button"
+              //                   className="btn btn-danger array-item-remove"
+              //                   onClick={e => {
+              //                     element.onDropIndexClick(idx)(e);
+              //                   }}
+              //                 >
+              //                   <i className="glyphicon glyphicon-remove" />
+              //                 </button>
+              //               )}
+              //           </div>;
+              //         })}
+              //         {props.canAdd && (<div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
+              //           <button
+              //             type="button"
+              //             className="btn btn-info btn-add col-md-2"
+              //             onClick={props.onAddClick}
+              //           >
+              //             <i className="glyphicon glyphicon-plus" />
+              //           </button>
+              //         </div>)}
+              //       </div>
+              //     );
+              //   }
+              //   return (
+              //     <div>
+              //       <label style={{ display: "block" }}>{props.title}</label>
+              //       {props.items.map(element => element.children)}
+              //       {props.canAdd && (
+              //         <button
+              //           type="button"
+              //           className="btn btn-info btn-add"
+              //           onClick={props.onAddClick}
+              //         >
+              //           <i className="glyphicon glyphicon-plus" />
+              //         </button>
+              //       )}
+              //     </div>
+              //   );
+              // }}
               onSubmit={({ formData }) => {
-                // const _formData = { ...formData };
-                // if (fileData && Object.keys(fileData).length > 0) {
-                //   for (let key in fileData) {
-                //     _formData[key] = fileData[key];
-                //   }
-                // }
                 if (
                   formData &&
                   formData.hasOwnProperty("imageUrl") &&

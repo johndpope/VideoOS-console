@@ -19,12 +19,12 @@ const routerConfig = [
   },
   {
     path: "/hd/type",
-    name: "类型管理",
+    name: "应用管理",
     component: IAType
   },
   {
     path: "/hd/model",
-    name: "模版管理",
+    name: "主题管理",
     component: IAModel
   },
   {

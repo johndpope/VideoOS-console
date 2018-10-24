@@ -75,7 +75,7 @@ class IAType extends Component {
           currentPage={iaType && iaType.currentPage}
         />
         <IceContainer>
-          <Button onClick={() => addTypeToggle({})}>新增类型</Button>
+          <Button onClick={() => addTypeToggle({})}>新增应用</Button>
         </IceContainer>
         <IceContainer>
           <TypeTable

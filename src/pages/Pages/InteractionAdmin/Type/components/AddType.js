@@ -35,13 +35,13 @@ const AddType = ({
     <Fragment>
       <Modal isOpen={shouldOpen} toggle={toggle}>
         <ModalHeader toggle={toggle}>
-          {isRead ? "类型信息" : isUpdate ? "类型修改" : "新增类型"}
+          {isRead ? "应用信息" : isUpdate ? "应用修改" : "新增应用"}
         </ModalHeader>
         <ModalBody>
           <Form>
             <InputGroup className="mb-4">
               <InputGroupAddon addonType="prepend">
-                <InputGroupText>类型名称</InputGroupText>
+                <InputGroupText>应用名称</InputGroupText>
               </InputGroupAddon>
               <Input
                 type="text"
@@ -81,7 +81,7 @@ const AddType = ({
             ) : (
               <InputGroup className="mb-4">
                 <InputGroupAddon addonType="prepend">
-                  <InputGroupText>类型导入</InputGroupText>
+                  <InputGroupText>应用导入</InputGroupText>
                 </InputGroupAddon>
                 <span
                   style={{
@@ -138,7 +138,7 @@ const AddType = ({
                 return;
               }
               if (!formData.interactionTypeName) {
-                Feedback.toast.error("请输入“类型名称”");
+                Feedback.toast.error("请输入“应用名称”");
                 return;
               }
               if (isUpdate) {
@@ -146,7 +146,7 @@ const AddType = ({
                   showFileIpt &&
                   (!formData.file || !/.json$/gi.test(formData.file.name))
                 ) {
-                  Feedback.toast.error("请导入.json类型文件");
+                  Feedback.toast.error("请导入.json应用文件");
                   return;
                 }
                 updateType({
@@ -159,7 +159,7 @@ const AddType = ({
                 toggle && toggle();
               } else {
                 if (!formData.file || !/.json$/gi.test(formData.file.name)) {
-                  Feedback.toast.error("请导入.json类型文件");
+                  Feedback.toast.error("请导入.json应用文件");
                   return;
                 }
                 addType({ ...formData, currentPage });

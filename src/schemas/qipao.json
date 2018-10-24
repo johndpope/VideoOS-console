@@ -1,4 +1,5 @@
 {
+  "key": "qipao",
   "definitions": {
     "Role": {
       "type": "object",
