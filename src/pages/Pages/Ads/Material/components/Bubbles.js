@@ -44,7 +44,12 @@ export default class Bubbles extends Component {
   };
 
   deleteRole = idx => {
-    let { roles = [] } = this.state;
+    let { roles = [], messages = [] } = this.state;
+    if (JSON.stringify(messages).includes(roles[idx].roleName)) {
+      if (!window.confirm("对话内容中有该角色，确认删除该角色吗？")) {
+        return;
+      }
+    }
     roles.splice(idx, 1);
     this.setState({ roles });
     this.props.onChange(this.state);
@@ -170,6 +175,7 @@ export default class Bubbles extends Component {
                         }}
                       >
                         <img
+                          alt=""
                           src={role.roleAvatar}
                           style={{ maxWidth: "64px", maxHeight: "64px" }}
                         />
@@ -357,6 +363,7 @@ export default class Bubbles extends Component {
                                   }}
                                 >
                                   <img
+                                    alt=""
                                     src={JSON.parse(message.content).fileUrl}
                                     style={{
                                       maxWidth: "64px",
