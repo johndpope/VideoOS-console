@@ -4,6 +4,8 @@ import { Modal, ModalBody, ModalHeader } from "reactstrap";
 import { Button, Feedback } from "@icedesign/base";
 import uiSchema from "schemas/uiSchema";
 
+import Bubbles from "./Bubbles";
+
 const AddMaterial = ({
   shouldOpen,
   toggle,
@@ -37,16 +39,29 @@ const AddMaterial = ({
               schema={materialSchema}
               // noValidate
               noHtml5Validate
-              showErrorList={false}
-              uiSchema={uiSchema({
-                isRead,
-                isUpdate,
-                setSwitcher,
-                addMaterialFile,
-                uiSchemaConf,
-                formData,
-                saveFormData
-              })}
+              showErrorList={true}
+              uiSchema={{
+                ...uiSchema({
+                  isRead,
+                  isUpdate,
+                  setSwitcher,
+                  addMaterialFile,
+                  uiSchemaConf,
+                  formData,
+                  saveFormData
+                }),
+                "ui:field": "bubbles"
+              }}
+              ErrorList={props => {
+                const { errors } = props;
+                return (
+                  <div>
+                    {errors.map((error, idx) => {
+                      return <li key={idx}>{error.stack}</li>;
+                    })}
+                  </div>
+                );
+              }}
               transformErrors={errors => {
                 return errors.map(error => {
                   if (error.name === "format") {
@@ -112,13 +127,8 @@ const AddMaterial = ({
 
                 saveFormData(formData);
               }}
+              fields={{ bubbles: Bubbles }}
               onSubmit={({ formData }) => {
-                // const _formData = { ...formData };
-                // if (fileData && Object.keys(fileData).length > 0) {
-                //   for (let key in fileData) {
-                //     _formData[key] = fileData[key];
-                //   }
-                // }
                 if (
                   formData &&
                   formData.hasOwnProperty("imageUrl") &&

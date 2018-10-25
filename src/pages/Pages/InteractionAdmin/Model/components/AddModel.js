@@ -39,13 +39,13 @@ const AddModel = ({
     <Fragment>
       <Modal isOpen={shouldOpen} toggle={toggle}>
         <ModalHeader toggle={toggle}>
-          {isRead ? "模板信息" : isUpdate ? "模板修改" : "新增模版"}
+          {isRead ? "模板信息" : isUpdate ? "模板修改" : "新增主题"}
         </ModalHeader>
         <ModalBody>
           <Form>
             <InputGroup className="mb-4">
               <InputGroupAddon addonType="prepend">
-                <InputGroupText>模版类型</InputGroupText>
+                <InputGroupText>主题类型</InputGroupText>
               </InputGroupAddon>
               <Input
                 type="select"
@@ -72,11 +72,11 @@ const AddModel = ({
             </InputGroup>
             <InputGroup className="mb-4">
               <InputGroupAddon addonType="prepend">
-                <InputGroupText>模版名称</InputGroupText>
+                <InputGroupText>文件名称</InputGroupText>
               </InputGroupAddon>
               <Input
                 type="text"
-                placeholder="请输入模版名称"
+                placeholder="请输入主题名称"
                 disabled={isRead ? "disabled" : false}
                 defaultValue={
                   isRead || isUpdate ? formData && formData.templateName : ""
@@ -90,7 +90,7 @@ const AddModel = ({
             {isRead ? (
               <InputGroup className="mb-4">
                 <InputGroupAddon addonType="prepend">
-                  <InputGroupText>模版文件</InputGroupText>
+                  <InputGroupText>主题文件</InputGroupText>
                 </InputGroupAddon>
                 <span>
                   <Button
@@ -107,7 +107,7 @@ const AddModel = ({
             ) : (
               <InputGroup className="mb-4">
                 <InputGroupAddon addonType="prepend">
-                  <InputGroupText>模版上传</InputGroupText>
+                  <InputGroupText>主题上传</InputGroupText>
                 </InputGroupAddon>
                 <span
                   style={{
@@ -174,19 +174,19 @@ const AddModel = ({
                 return;
               }
               if (!formData.interactionTypeId) {
-                Feedback.toast.error("请选择“模版类型”");
+                Feedback.toast.error("请选择“主题类型”");
                 return;
               }
               if (!formData.interactionTemplateName && !isUpdate) {
-                Feedback.toast.error("请输入“模版名称”");
+                Feedback.toast.error("请输入“主题名称”");
                 return;
               }
               if (!(formData && formData.templateName) && isUpdate) {
-                Feedback.toast.error("请输入“模版名称”");
+                Feedback.toast.error("请输入“主题名称”");
                 return;
               }
               if (!uploadModelFileInfo.compressFileName && !isUpdate) {
-                Feedback.toast.error("请上传.lua模版文件");
+                Feedback.toast.error("请上传.lua主题文件");
                 return;
               }
               if (isUpdate) {
@@ -198,7 +198,7 @@ const AddModel = ({
                       )
                     : !(modelInfo && modelInfo.templateFileSourceName)
                 ) {
-                  Feedback.toast.error("请上传.lua模版文件");
+                  Feedback.toast.error("请上传.lua主题文件");
                   return;
                 }
                 updateModel({

@@ -1,0 +1,75 @@
+{
+  "key": "qipao",
+  "definitions": {
+    "Role": {
+      "type": "object",
+      "properties": {
+        "roleAvatar": {
+          "type": "string",
+          "title": ""
+        },
+        "roleName": {
+          "type": "string",
+          "title": ""
+        }
+      }
+    },
+    "Message": {
+      "type": "object",
+      "properties": {
+        "duration": {
+          "type": "integer",
+          "title": "展示持续时间"
+        }
+      }
+    }
+  },
+  "title": "",
+  "type": "object",
+  "required": ["creativeName", "interactionTemplateId", "roles"],
+  "properties": {
+    "creativeName": {
+      "title": "素材名称",
+      "type": "string",
+      "maxLength": 10,
+      "pattern": "[0-9A-Za-z\u4e00-\u9fa5-]+$"
+    },
+    "interactionTypeId": {
+      "title": "素材类型",
+      "type": "integer",
+      "default": "请选择",
+      "enum": [],
+      "enumNames": []
+    },
+    "interactionTemplateId": {
+      "title": "素材模板",
+      "type": "integer",
+      "enum": [],
+      "enumNames": []
+    },
+    "isShowAds": {
+      "type": "boolean",
+      "title": "广告标识是否可见",
+      "default": true
+    },
+    "isShowClose": {
+      "type": "boolean",
+      "title": "关闭按钮是否可见",
+      "default": true
+    },
+    "roles": {
+      "type": "array",
+      "title": "角色",
+      "items": {
+        "$ref": "#/definitions/Role"
+      }
+    },
+    "messages": {
+      "type": "array",
+      "title": "对话内容",
+      "items": {
+        "$ref": "#/definitions/Message"
+      }
+    }
+  }
+}

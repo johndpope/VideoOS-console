@@ -42,7 +42,7 @@ import {
 const initialState = {
   formData: {},
   roleAuthorities: {
-    类型管理: {
+    应用管理: {
       read: 13,
       write: 11
     },
