@@ -14,7 +14,7 @@
         }
       }
     },
-    "Content": {
+    "Message": {
       "type": "object",
       "properties": {
         "duration": {
@@ -64,11 +64,11 @@
         "$ref": "#/definitions/Role"
       }
     },
-    "contents": {
+    "messages": {
       "type": "array",
       "title": "对话内容",
       "items": {
-        "$ref": "#/definitions/Content"
+        "$ref": "#/definitions/Message"
       }
     }
   }

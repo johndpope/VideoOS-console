@@ -72,7 +72,7 @@ const AddModel = ({
             </InputGroup>
             <InputGroup className="mb-4">
               <InputGroupAddon addonType="prepend">
-                <InputGroupText>主题名称</InputGroupText>
+                <InputGroupText>文件名称</InputGroupText>
               </InputGroupAddon>
               <Input
                 type="text"

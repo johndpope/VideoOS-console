@@ -6,7 +6,20 @@ import { addMaterialFile } from "../api";
 export default class Bubbles extends Component {
   constructor(props) {
     super(props);
-    this.state = { ...props.formData, contentType: 1 };
+    this.state = {
+      ...props.formData,
+      messageType: 1,
+      interactionTemplateId:
+        props.schema.properties.interactionTemplateId.enum[0],
+      readonly: Boolean(props.uiSchema["ui:disabled"])
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      ...nextProps.formData,
+      readonly: Boolean(nextProps.uiSchema["ui:disabled"])
+    });
   }
 
   onChange = name => {
@@ -37,34 +50,33 @@ export default class Bubbles extends Component {
     this.props.onChange(this.state);
   };
 
-  addContent = () => {
-    let { contents = [] } = this.state;
-    contents.push({
+  addMessage = () => {
+    let { messages = [] } = this.state;
+    messages.push({
       duration: null
     });
-    this.setState({ contents });
+    this.setState({ messages });
     this.props.onChange(this.state);
   };
 
-  deleteContent = idx => {
-    let { contents = [] } = this.state;
-    contents.splice(idx, 1);
-    this.setState({ contents });
+  deleteMessage = idx => {
+    let { messages = [] } = this.state;
+    messages.splice(idx, 1);
+    this.setState({ messages });
     this.props.onChange(this.state);
   };
 
-  changeContentType = value => {
+  changeMessageType = value => {
     this.setState({
-      contentType: Number(value)
+      messageType: value
     });
   };
 
   render() {
     let { schema } = this.props;
-    let { roles = [], contents = [], contentType } = this.state;
+    let { roles = [], messages = [], messageType, readonly } = this.state;
     const {
       creativeName,
-      interactionTypeId,
       interactionTemplateId,
       isShowAds = true,
       isShowClose = true,
@@ -78,6 +90,10 @@ export default class Bubbles extends Component {
           <Input
             value={creativeName}
             onChange={this.onChange("creativeName")}
+            maxLength={10}
+            required
+            readOnly={readonly}
+            pattern={/[0-9A-Za-z\u4e00-\u9fa5-]+$/}
           />
         </div>
         <div className="array-item">
@@ -87,7 +103,7 @@ export default class Bubbles extends Component {
               schema.properties &&
               schema.properties.interactionTypeId &&
               schema.properties.interactionTypeId.enum.map((em, idx) => (
-                <option value={em}>
+                <option value={em} key={idx}>
                   {schema.properties.interactionTypeId.enumNames[idx]}
                 </option>
               ))}
@@ -97,6 +113,7 @@ export default class Bubbles extends Component {
           <Label>素材模板*</Label>
           <Input
             type="select"
+            readOnly={readonly}
             value={interactionTemplateId}
             onChange={this.onChange("interactionTemplateId")}
           >
@@ -104,7 +121,7 @@ export default class Bubbles extends Component {
               schema.properties &&
               schema.properties.interactionTemplateId &&
               schema.properties.interactionTemplateId.enum.map((em, idx) => (
-                <option value={em}>
+                <option value={em} key={idx}>
                   {schema.properties.interactionTemplateId.enumNames[idx]}
                 </option>
               ))}
@@ -113,18 +130,21 @@ export default class Bubbles extends Component {
         <div className="array-item">
           <Label check>
             <Input
+              checked
               type="checkbox"
+              disabled={readonly ? "disabled" : false}
               value={isShowAds}
               onChange={this.onChange("isShowAds")}
             />
-            {"  "}
-            广告标识是否可见
+            {`  广告标识是否可见`}
           </Label>
         </div>
         <div className="array-item">
           <Label check>
             <Input
+              checked
               type="checkbox"
+              disabled={readonly ? "disabled" : false}
               value={isShowClose}
               onChange={this.onChange("isShowClose")}
             />
@@ -133,86 +153,100 @@ export default class Bubbles extends Component {
           </Label>
         </div>
         <div className="array-item">
-          <Label>角色*</Label>
+          <Label>角色</Label>
           {roles &&
             roles.length > 0 &&
             roles.map((role, idx) => {
               return (
-                <Row key={idx}>
-                  <Col md="5">
+                <Row key={idx} style={{ marginBottom: "8px" }}>
+                  <Col md="4">
                     {role.roleAvatar ? (
                       <div
                         style={{
                           display: "flex",
                           flexDirection: "row",
-                          justifyContent: "center",
+                          justifyMessage: "center",
                           alignItems: "center"
                         }}
                       >
                         <img
                           src={role.roleAvatar}
-                          style={{ maxWidth: "128px", maxHeight: "128px" }}
+                          style={{ maxWidth: "64px", maxHeight: "64px" }}
                         />
-                        <button
-                          type="button"
-                          className="btn btn-danger array-item-remove"
-                          onClick={e => {
-                            role.roleAvatar = null;
-                            this.state.roles[idx] = role;
-                            this.setState({ roles });
-                          }}
-                        >
-                          <i className="glyphicon glyphicon-remove" />
-                        </button>
+                        {!readonly ? (
+                          <button
+                            type="button"
+                            className="btn btn-danger array-item-remove"
+                            onClick={e => {
+                              role.roleAvatar = null;
+                              roles[idx] = role;
+                              this.setState({ roles });
+                            }}
+                          >
+                            <i className="glyphicon glyphicon-remove" />
+                          </button>
+                        ) : null}
                       </div>
                     ) : (
-                      <input
-                        type="file"
-                        onChange={e => {
-                          if (e.target.files.length > 0) {
-                            addMaterialFile({ file: e.target.files[0] }).then(
-                              result => {
-                                if (result.status === 200) {
-                                  if (
-                                    result.data &&
-                                    result.data.resCode === "00"
-                                  ) {
-                                    role.roleAvatar = result.data.fileUrl;
-                                    this.state.roles[idx] = role;
-                                    this.setState({ roles });
-                                    this.props.onChange(this.state);
-                                  }
-                                }
-                                // console.log(result);
-                              }
-                            );
-                          }
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyMessage: "center",
+                          alignItems: "center"
                         }}
-                      />
+                      >
+                        <input
+                          type="file"
+                          onChange={e => {
+                            if (e.target.files.length > 0) {
+                              addMaterialFile({ file: e.target.files[0] }).then(
+                                result => {
+                                  if (result.status === 200) {
+                                    if (
+                                      result.data &&
+                                      result.data.resCode === "00"
+                                    ) {
+                                      role.roleAvatar = result.data.fileUrl;
+                                      roles[idx] = role;
+                                      this.setState({ roles });
+                                      this.props.onChange(this.state);
+                                    }
+                                  }
+                                  // console.log(result);
+                                }
+                              );
+                            }
+                          }}
+                        />
+                      </div>
                     )}
                   </Col>
                   <Col md="5">
                     <input
                       type="text"
+                      readOnly={readonly}
                       placeholder="请输入角色名称"
                       onChange={e => {
                         role.roleName = e.target.value;
-                        this.state.roles[idx] = role;
+                        roles[idx] = role;
                         this.setState({ roles });
                         this.props.onChange(this.state);
                       }}
                     />
                   </Col>
                   <Col md="2">
-                    <button
-                      type="button"
-                      className="btn btn-danger array-item-remove"
-                      onClick={e => {
-                        this.deleteRole(idx);
-                      }}
-                    >
-                      <i className="glyphicon glyphicon-remove" />
-                    </button>
+                    {!readonly ? (
+                      <button
+                        type="button"
+                        className="btn btn-danger array-item-remove"
+                        onClick={e => {
+                          this.deleteRole(idx);
+                        }}
+                      >
+                        <i className="glyphicon glyphicon-remove" />
+                      </button>
+                    ) : null}
                   </Col>
                 </Row>
               );
@@ -224,176 +258,403 @@ export default class Bubbles extends Component {
               justifyContent: "flex-end"
             }}
           >
-            <button
-              type="button"
-              className="btn btn-info btn-add col-md-2"
-              onClick={this.addRole.bind(this)}
-            >
-              <i className="glyphicon glyphicon-plus" />
-            </button>
+            {!readonly ? (
+              <button
+                type="button"
+                className="btn btn-info btn-add col-md-2"
+                onClick={this.addRole.bind(this)}
+              >
+                <i className="glyphicon glyphicon-plus" />
+              </button>
+            ) : null}
           </div>
         </div>
         <div className="array-item">
           <Label>对话内容*</Label>
-          {contents &&
-            contents.length > 0 &&
-            contents.map((content, idx) => {
+          {messages &&
+            messages.length > 0 &&
+            messages.map((message, idx) => {
               return (
-                <Row key={idx}>
+                <Row key={idx} style={{ marginBottom: "8px" }}>
                   <Col md="10">
-                    <Row>
+                    <Row style={{ marginBottom: "8px" }}>
                       <Col>
                         <Input
                           type="select"
+                          readOnly={readonly}
                           defaultValue="1"
-                          onChange={e => {}}
+                          onChange={e => {
+                            const { value } = e.target;
+                            if (value !== "2") {
+                              const data = value.split(",");
+                              message.name = data[0];
+                              message.avatar = data[1];
+                            } else {
+                              message.userType = 2;
+                            }
+                            messages[idx] = message;
+                            this.setState({ messages });
+                            this.props.onChange(this.state);
+                          }}
                         >
-                          <option value="1">用户（第一人称）</option>
+                          <option value="2">用户（第一人称）</option>
                           {roles &&
                             roles.length > 0 &&
                             roles
                               .filter(role => role.roleAvatar && role.roleName)
                               .map((role, idx) => (
-                                <option key={idx + 2}>{role.roleName}</option>
+                                <option
+                                  key={idx + 2}
+                                  value={`${role.roleName},${role.roleAvatar}`}
+                                >
+                                  {role.roleName}
+                                </option>
                               ))}
                         </Input>
                       </Col>
                       <Col>
                         <Input
                           type="select"
+                          readOnly={readonly}
                           defaultValue="1"
                           onChange={e => {
-                            this.changeContentType(e.target.value);
+                            this.changeMessageType(e.target.value);
                           }}
                         >
-                          <option value="1">文本对话</option>
-                          <option value="2">气泡图片</option>
-                          <option value="3">按钮选择对话</option>
+                          <option value={`${idx}1`}>文本对话</option>
+                          <option value={`${idx}2`}>气泡图片</option>
+                          <option value={`${idx}3`}>按钮选择对话</option>
                         </Input>
                       </Col>
                     </Row>
-                    {contentType === 1 ? (
-                      <Row>
+                    {messageType === `${idx}1` ? (
+                      <Row style={{ marginBottom: "8px" }}>
                         <Col>
                           <Input
                             type="textarea"
+                            readOnly={readonly}
+                            maxLength={100}
                             placeholder="请输入文本对话内容"
-                            onChange={e => {}}
+                            onChange={e => {
+                              message.content = e.target.value || "";
+                            }}
                           />
                         </Col>
                       </Row>
                     ) : null}
-                    {contentType === 2 ? (
+                    {messageType === `${idx}2` ? (
                       <Fragment>
-                        <Row>
+                        <Row style={{ marginBottom: "8px" }}>
                           <Col>
-                            <Input
-                              type="file"
-                              onChange={e => {
-                                addMaterialFile({
-                                  file: e.target.files[0]
-                                }).then(result => {
-                                  if (result.status === 200) {
-                                    if (
-                                      result.data &&
-                                      result.data.resCode === "00"
-                                    ) {
-                                      // TODO
-                                      this.props.onChange(this.state);
+                            {message.content ? (
+                              <Fragment>
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    justifyMessage: "center",
+                                    alignItems: "center"
+                                  }}
+                                >
+                                  <img
+                                    src={JSON.parse(message.content).fileUrl}
+                                    style={{
+                                      maxWidth: "64px",
+                                      maxHeight: "64px"
+                                    }}
+                                  />
+                                  {!readonly ? (
+                                    <button
+                                      type="button"
+                                      className="btn btn-danger array-item-remove"
+                                      onClick={e => {
+                                        message.content = null;
+                                        messages[idx] = message;
+                                        this.setState({ messages });
+                                        this.props.onChange(this.state);
+                                      }}
+                                    >
+                                      <i className="glyphicon glyphicon-remove" />
+                                    </button>
+                                  ) : null}
+                                </div>
+                              </Fragment>
+                            ) : (
+                              <Input
+                                type="file"
+                                placeholder="上传气泡图片"
+                                onChange={e => {
+                                  addMaterialFile({
+                                    file: e.target.files[0]
+                                  }).then(result => {
+                                    if (result.status === 200) {
+                                      if (
+                                        result.data &&
+                                        result.data.resCode === "00"
+                                      ) {
+                                        message.content = JSON.stringify(
+                                          result.data
+                                        );
+                                        messages[idx] = message;
+                                        this.setState({ messages });
+                                        this.props.onChange(this.state);
+                                      }
                                     }
-                                  }
-                                });
+                                  });
+                                }}
+                              />
+                            )}
+                          </Col>
+                        </Row>
+                        <Row style={{ marginBottom: "8px" }}>
+                          <Col>
+                            <Label style={{ fontWeight: "normal" }}>
+                              气泡外链链接
+                            </Label>
+                            <Input
+                              type="url"
+                              readOnly={readonly}
+                              placeholder="请输入气泡外链链接"
+                              onChange={e => {
+                                message.link = e.target.value;
+                                messages[idx] = message;
+                                this.setState({ messages });
+                                this.props.onChange(this.state);
                               }}
                             />
                           </Col>
                         </Row>
-                        <Row>
+                        <Row style={{ marginBottom: "8px" }}>
                           <Col>
-                            <Label>气泡外链链接</Label>
+                            <Label style={{ fontWeight: "normal" }}>
+                              气泡点击监控链接
+                            </Label>
                             <Input
-                              placeholder="请输入气泡外链链接"
-                              onChange={e => {}}
-                            />
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col>
-                            <Label>气泡点击监控链接</Label>
-                            <Input
+                              type="url"
+                              readOnly={readonly}
                               placeholder="请输入气泡点击监控链接"
-                              onChange={e => {}}
+                              onChange={e => {
+                                message.clickTrackLink = e.target.value;
+                                messages[idx] = message;
+                                this.setState({ messages });
+                                this.props.onChange(this.state);
+                              }}
                             />
                           </Col>
                         </Row>
-                        <Row>
+                        <Row style={{ marginBottom: "8px" }}>
                           <Col>
-                            <Label>气泡曝光监控链接</Label>
+                            <Label style={{ fontWeight: "normal" }}>
+                              气泡曝光监控链接
+                            </Label>
                             <Input
+                              type="url"
+                              readOnly={readonly}
                               placeholder="请输入气泡曝光监控链接"
-                              onChange={e => {}}
+                              onChange={e => {
+                                message.exposureTrackLink = e.target.value;
+                                messages[idx] = message;
+                                this.setState({ messages });
+                                this.props.onChange(this.state);
+                              }}
                             />
                           </Col>
                         </Row>
                       </Fragment>
                     ) : null}
-                    {contentType === 3 ? (
+                    {messageType === `${idx}3` ? (
                       <Fragment>
-                        <Row>
+                        <Row style={{ marginBottom: "8px" }}>
                           <Col>
-                            <Label>
-                              {content && content.userType === 1 ? "左" : "右"}
-                              侧按钮*
+                            <Label style={{ fontWeight: "normal" }}>
+                              左侧按钮*
                             </Label>
                             <Input
-                              placeholder={`请输入${
-                                content && content.userType === 1 ? "左" : "右"
-                              }侧按钮文案`}
-                              onChange={e => {}}
+                              readOnly={readonly}
+                              placeholder={`请输入左侧按钮文案`}
+                              onChange={e => {
+                                if (message.messageButtons) {
+                                  message.messageButtons[0].title =
+                                    e.target.value;
+                                } else {
+                                  message.messageButtons = [
+                                    { title: e.target.value }
+                                  ];
+                                }
+                              }}
                             />
                           </Col>
                         </Row>
-                        <Row>
+                        <Row style={{ marginBottom: "8px" }}>
                           <Col>
-                            <Label>
-                              {content && content.userType === 1 ? "左" : "右"}
-                              侧按钮外链链接*
+                            <Label style={{ fontWeight: "normal" }}>
+                              左侧按钮外链链接*
                             </Label>
                             <Input
-                              placeholder={`请输入${
-                                content && content.userType === 1 ? "左" : "右"
-                              }侧按钮外链链接`}
-                              onChange={e => {}}
+                              type="url"
+                              readOnly={readonly}
+                              placeholder={`请输入左侧按钮外链链接`}
+                              onChange={e => {
+                                if (message.messageButtons) {
+                                  message.messageButtons[0].link =
+                                    e.target.value;
+                                } else {
+                                  message.messageButtons = [
+                                    { link: e.target.value }
+                                  ];
+                                }
+                              }}
                             />
                           </Col>
                         </Row>
-                        <Row>
+                        <Row style={{ marginBottom: "8px" }}>
                           <Col>
-                            <Label>点击监控链接</Label>
+                            <Label style={{ fontWeight: "normal" }}>
+                              点击监控链接
+                            </Label>
                             <Input
+                              type="url"
+                              readOnly={readonly}
                               placeholder="请输入气泡点击监控链接"
-                              onChange={e => {}}
+                              onChange={e => {
+                                if (message.messageButtons) {
+                                  message.messageButtons[0].clickTrackLink =
+                                    e.target.value;
+                                } else {
+                                  message.messageButtons = [
+                                    { clickTrackLink: e.target.value }
+                                  ];
+                                }
+                              }}
                             />
                           </Col>
                         </Row>
-                        <Row>
+                        <Row style={{ marginBottom: "8px" }}>
                           <Col>
-                            <Label>曝光监控链接</Label>
+                            <Label style={{ fontWeight: "normal" }}>
+                              曝光监控链接
+                            </Label>
                             <Input
+                              type="url"
+                              readOnly={readonly}
                               placeholder="请输入气泡曝光监控链接"
-                              onChange={e => {}}
+                              onChange={e => {
+                                if (message.messageButtons) {
+                                  message.messageButtons[0].exposureTrackLink =
+                                    e.target.value;
+                                } else {
+                                  message.messageButtons = [
+                                    { exposureTrackLink: e.target.value }
+                                  ];
+                                }
+                              }}
+                            />
+                          </Col>
+                        </Row>
+                        <Row style={{ marginBottom: "8px" }}>
+                          <Col>
+                            <Label style={{ fontWeight: "normal" }}>
+                              右侧按钮*
+                            </Label>
+                            <Input
+                              readOnly={readonly}
+                              placeholder={`请输入右侧按钮文案`}
+                              onChange={e => {
+                                if (message.messageButtons) {
+                                  message.messageButtons[1].title =
+                                    e.target.value;
+                                } else {
+                                  message.messageButtons = [
+                                    ,
+                                    { title: e.target.value }
+                                  ];
+                                }
+                              }}
+                            />
+                          </Col>
+                        </Row>
+                        <Row style={{ marginBottom: "8px" }}>
+                          <Col>
+                            <Label style={{ fontWeight: "normal" }}>
+                              右侧按钮外链链接*
+                            </Label>
+                            <Input
+                              type="url"
+                              readOnly={readonly}
+                              placeholder={`请输入右侧按钮外链链接`}
+                              onChange={e => {
+                                if (message.messageButtons) {
+                                  message.messageButtons[1].link =
+                                    e.target.value;
+                                } else {
+                                  message.messageButtons = [
+                                    ,
+                                    { link: e.target.value }
+                                  ];
+                                }
+                              }}
+                            />
+                          </Col>
+                        </Row>
+                        <Row style={{ marginBottom: "8px" }}>
+                          <Col>
+                            <Label style={{ fontWeight: "normal" }}>
+                              点击监控链接
+                            </Label>
+                            <Input
+                              type="url"
+                              readOnly={readonly}
+                              placeholder="请输入气泡点击监控链接"
+                              onChange={e => {
+                                if (message.messageButtons) {
+                                  message.messageButtons[1].clickTrackLink =
+                                    e.target.value;
+                                } else {
+                                  message.messageButtons = [
+                                    ,
+                                    { clickTrackLink: e.target.value }
+                                  ];
+                                }
+                              }}
+                            />
+                          </Col>
+                        </Row>
+                        <Row style={{ marginBottom: "8px" }}>
+                          <Col>
+                            <Label style={{ fontWeight: "normal" }}>
+                              曝光监控链接
+                            </Label>
+                            <Input
+                              type="url"
+                              readOnly={readonly}
+                              placeholder="请输入气泡曝光监控链接"
+                              onChange={e => {
+                                if (message.messageButtons) {
+                                  message.messageButtons[1].exposureTrackLink =
+                                    e.target.value;
+                                } else {
+                                  message.messageButtons = [
+                                    ,
+                                    { exposureTrackLink: e.target.value }
+                                  ];
+                                }
+                              }}
                             />
                           </Col>
                         </Row>
                       </Fragment>
                     ) : null}
-                    <Row>
+                    <Row style={{ marginBottom: "8px" }}>
                       <Col>
-                        <Label>展示持续时间*</Label>
+                        <Label style={{ fontWeight: "normal" }}>
+                          展示持续时间*
+                        </Label>
                         <Input
+                          readOnly={readonly}
                           value={duration}
                           onChange={e => {
                             this.setState({
-                              duration: Number(e.target.value)
+                              duration: e.target.value
                             });
                           }}
                         />
@@ -401,15 +662,17 @@ export default class Bubbles extends Component {
                     </Row>
                   </Col>
                   <Col md="2">
-                    <button
-                      type="button"
-                      className="btn btn-danger array-item-remove"
-                      onClick={e => {
-                        this.deleteContent(idx);
-                      }}
-                    >
-                      <i className="glyphicon glyphicon-remove" />
-                    </button>
+                    {!readonly ? (
+                      <button
+                        type="button"
+                        className="btn btn-danger array-item-remove"
+                        onClick={e => {
+                          this.deleteMessage(idx);
+                        }}
+                      >
+                        <i className="glyphicon glyphicon-remove" />
+                      </button>
+                    ) : null}
                   </Col>
                 </Row>
               );
@@ -421,13 +684,15 @@ export default class Bubbles extends Component {
               justifyContent: "flex-end"
             }}
           >
-            <button
-              type="button"
-              className="btn btn-info btn-add col-md-2"
-              onClick={this.addContent.bind(this)}
-            >
-              <i className="glyphicon glyphicon-plus" />
-            </button>
+            {!readonly ? (
+              <button
+                type="button"
+                className="btn btn-info btn-add col-md-2"
+                onClick={this.addMessage.bind(this)}
+              >
+                <i className="glyphicon glyphicon-plus" />
+              </button>
+            ) : null}
           </div>
         </div>
       </Fragment>
