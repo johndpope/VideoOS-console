@@ -59,7 +59,9 @@ export default class Bubbles extends Component {
   addMessage = () => {
     let { messages = [] } = this.state;
     messages.push({
-      duration: null
+      duration: null,
+      messageType: 1,
+      userType: 2
     });
     this.setState({ messages });
     this.props.onChange(this.state);
@@ -219,6 +221,7 @@ export default class Bubbles extends Component {
                       >
                         <input
                           type="file"
+                          value={role.roleName}
                           onChange={e => {
                             if (e.target.files.length > 0) {
                               addMaterialFile({ file: e.target.files[0] }).then(
@@ -319,6 +322,7 @@ export default class Bubbles extends Component {
                               const data = value.split(",");
                               message.name = data[0];
                               message.avatar = data[1];
+                              message.userType = 1;
                             } else {
                               message.userType = 2;
                             }
@@ -345,21 +349,23 @@ export default class Bubbles extends Component {
                       <Col>
                         <Input
                           type="select"
-                          value={messageType}
+                          value={message.messageType}
                           readOnly={readonly}
                           onChange={e => {
-                            message.messageType = e.target.value;
-                            this.changeMessageType(e.target.value);
+                            message.messageType = Number(e.target.value);
+                            messages[idx] = message;
+                            this.setState({ messages });
+                            this.props.onChange(this.state);
+                            // this.changeMessageType(e.target.value);
                           }}
                         >
-                          <option value={`${idx}1`}>文本对话</option>
-                          <option value={`${idx}2`}>气泡图片</option>
-                          <option value={`${idx}3`}>按钮选择对话</option>
+                          <option value="1">文本对话</option>
+                          <option value="2">气泡图片</option>
+                          <option value="3">按钮选择对话</option>
                         </Input>
                       </Col>
                     </Row>
-                    {messageType === `${idx}1` ||
-                    (message && message.messageType === `${idx}1`) ? (
+                    {message && message.messageType === 1 ? (
                       <Row style={{ marginBottom: "8px" }}>
                         <Col>
                           <Input
@@ -383,8 +389,7 @@ export default class Bubbles extends Component {
                         </Col>
                       </Row>
                     ) : null}
-                    {messageType === `${idx}2` ||
-                    (message && message.messageType === `${idx}2`) ? (
+                    {message && message.messageType === 2 ? (
                       <Fragment>
                         <Row style={{ marginBottom: "8px" }}>
                           <Col>
@@ -515,8 +520,7 @@ export default class Bubbles extends Component {
                         </Row>
                       </Fragment>
                     ) : null}
-                    {messageType === `${idx}3` ||
-                    (message && message.messageType === `${idx}3`) ? (
+                    {message && message.messageType === 3 ? (
                       <Fragment>
                         <Row style={{ marginBottom: "8px" }}>
                           <Col>
