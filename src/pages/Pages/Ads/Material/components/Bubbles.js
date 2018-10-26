@@ -82,7 +82,7 @@ export default class Bubbles extends Component {
 
   render() {
     let { schema, errorSchema } = this.props;
-    let { roles = [], messages = [], messageType, readonly } = this.state;
+    let { roles = [], messages = [], readonly } = this.state;
     const {
       creativeName,
       interactionTemplateId,
@@ -379,7 +379,6 @@ export default class Bubbles extends Component {
                             maxLength={100}
                             placeholder="请输入文本对话内容"
                             onChange={e => {
-                              message.messageType = messageType;
                               message.content = e.target.value || "";
                               messages[idx] = message;
                               this.setState({ messages });
@@ -441,7 +440,6 @@ export default class Bubbles extends Component {
                                         result.data.resCode === "00"
                                       ) {
                                         message.content = result.data;
-                                        message.messageType = messageType;
                                         messages[idx] = message;
                                         this.setState({ messages });
                                         this.props.onChange(this.state);
@@ -800,7 +798,6 @@ export default class Bubbles extends Component {
                           value={message.duration}
                           onChange={e => {
                             message.duration = e.target.value >> 0;
-                            message.messageType = messageType;
                             messages[idx] = message;
                             this.setState({
                               messages
