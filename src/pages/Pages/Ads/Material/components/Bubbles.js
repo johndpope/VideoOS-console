@@ -128,6 +128,7 @@ export default class Bubbles extends Component {
           <Input
             type="select"
             readOnly={readonly}
+            disabled={readonly ? "disabled" : false}
             value={interactionTemplateId}
             onChange={this.onChange("interactionTemplateId")}
           >
@@ -180,7 +181,11 @@ export default class Bubbles extends Component {
             roles.length > 0 &&
             roles.map((role, idx) => {
               return (
-                <Row key={idx} style={{ marginBottom: "8px" }}>
+                <Row
+                  key={idx}
+                  className="array-item"
+                  style={{ marginBottom: "8px" }}
+                >
                   <Col md="4">
                     {role.roleAvatar ? (
                       <div
@@ -315,6 +320,7 @@ export default class Bubbles extends Component {
                         <Input
                           type="select"
                           readOnly={readonly}
+                          disabled={readonly ? "disabled" : false}
                           value={`${message.name},${message.avatar}`}
                           onChange={e => {
                             const { value } = e.target;
@@ -351,6 +357,7 @@ export default class Bubbles extends Component {
                           type="select"
                           value={message.messageType}
                           readOnly={readonly}
+                          disabled={readonly ? "disabled" : false}
                           onChange={e => {
                             message.messageType = Number(e.target.value);
                             messages[idx] = message;
@@ -376,6 +383,7 @@ export default class Bubbles extends Component {
                                 : ""
                             }
                             readOnly={readonly}
+                            disabled={readonly ? "disabled" : false}
                             maxLength={100}
                             placeholder="请输入文本对话内容"
                             onChange={e => {
