@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Label, Input, Row, Col } from "reactstrap";
+import { Feedback } from "@icedesign/base";
 
 import { addMaterialFile } from "../api";
 
@@ -231,7 +232,15 @@ export default class Bubbles extends Component {
                                       roles[idx] = role;
                                       this.setState({ roles });
                                       this.props.onChange(this.state);
+                                    } else {
+                                      Feedback.toast.error(
+                                        result.data && result.data.resMsg
+                                      );
                                     }
+                                  } else {
+                                    Feedback.toast.error(
+                                      `${result.status}：上传出错了，请重试`
+                                    );
                                   }
                                   // console.log(result);
                                 }
@@ -431,7 +440,15 @@ export default class Bubbles extends Component {
                                         messages[idx] = message;
                                         this.setState({ messages });
                                         this.props.onChange(this.state);
+                                      } else {
+                                        Feedback.toast.error(
+                                          result.data && result.data.resMsg
+                                        );
                                       }
+                                    } else {
+                                      Feedback.toast.error(
+                                        `${result.status}：上传出错了，请重试`
+                                      );
                                     }
                                   });
                                 }}
