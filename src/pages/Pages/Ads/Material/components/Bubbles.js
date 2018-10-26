@@ -131,7 +131,7 @@ export default class Bubbles extends Component {
               ))}
           </Input>
         </div>
-        <div className="array-item">
+        <div className="array-item checkbox">
           <Label check>
             <Input
               checked
@@ -143,7 +143,7 @@ export default class Bubbles extends Component {
             {`  广告标识是否可见`}
           </Label>
         </div>
-        <div className="array-item">
+        <div className="array-item checkbox">
           <Label check>
             <Input
               checked
@@ -337,6 +337,7 @@ export default class Bubbles extends Component {
                         <Col>
                           <Input
                             type="textarea"
+                            value={message.content}
                             readOnly={readonly}
                             maxLength={100}
                             placeholder="请输入文本对话内容"
