@@ -8,7 +8,6 @@ export default class Bubbles extends Component {
     super(props);
     this.state = {
       ...props.formData,
-      messageType: "01",
       interactionTemplateId:
         props.schema.properties.interactionTemplateId.enum[0],
       readonly: Boolean(props.uiSchema["ui:disabled"])
@@ -304,7 +303,7 @@ export default class Bubbles extends Component {
                         <Input
                           type="select"
                           readOnly={readonly}
-                          defaultValue="1"
+                          value={`${message.name},${message.avatar}`}
                           onChange={e => {
                             const { value } = e.target;
                             if (value !== "2") {
@@ -337,8 +336,10 @@ export default class Bubbles extends Component {
                       <Col>
                         <Input
                           type="select"
+                          value={messageType}
                           readOnly={readonly}
                           onChange={e => {
+                            message.messageType = e.target.value;
                             this.changeMessageType(e.target.value);
                           }}
                         >
@@ -354,7 +355,11 @@ export default class Bubbles extends Component {
                         <Col>
                           <Input
                             type="textarea"
-                            value={message.content}
+                            value={
+                              typeof message.content === "string"
+                                ? message.content
+                                : ""
+                            }
                             readOnly={readonly}
                             maxLength={100}
                             placeholder="请输入文本对话内容"
@@ -386,7 +391,7 @@ export default class Bubbles extends Component {
                                 >
                                   <img
                                     alt=""
-                                    src={JSON.parse(message.content).fileUrl}
+                                    src={message.content.fileUrl}
                                     style={{
                                       maxWidth: "64px",
                                       maxHeight: "64px"
@@ -421,9 +426,7 @@ export default class Bubbles extends Component {
                                         result.data &&
                                         result.data.resCode === "00"
                                       ) {
-                                        message.content = JSON.stringify(
-                                          result.data
-                                        );
+                                        message.content = result.data;
                                         message.messageType = messageType;
                                         messages[idx] = message;
                                         this.setState({ messages });
@@ -444,6 +447,7 @@ export default class Bubbles extends Component {
                             <Input
                               type="url"
                               readOnly={readonly}
+                              value={message.link}
                               placeholder="请输入气泡外链链接"
                               onChange={e => {
                                 message.link = e.target.value;
@@ -462,6 +466,7 @@ export default class Bubbles extends Component {
                             <Input
                               type="url"
                               readOnly={readonly}
+                              value={message.clickTrackLink}
                               placeholder="请输入气泡点击监控链接"
                               onChange={e => {
                                 message.clickTrackLink = e.target.value;
@@ -479,6 +484,7 @@ export default class Bubbles extends Component {
                             </Label>
                             <Input
                               type="url"
+                              value={message.exposureTrackLink}
                               readOnly={readonly}
                               placeholder="请输入气泡曝光监控链接"
                               onChange={e => {
@@ -502,6 +508,12 @@ export default class Bubbles extends Component {
                             </Label>
                             <Input
                               readOnly={readonly}
+                              value={
+                                message &&
+                                message.messageButtons &&
+                                message.messageButtons[0] &&
+                                message.messageButtons[0].title
+                              }
                               placeholder={`请输入左侧按钮文案`}
                               onChange={e => {
                                 if (message.messageButtons) {
@@ -528,6 +540,12 @@ export default class Bubbles extends Component {
                             </Label>
                             <Input
                               type="url"
+                              value={
+                                message &&
+                                message.messageButtons &&
+                                message.messageButtons[0] &&
+                                message.messageButtons[0].link
+                              }
                               readOnly={readonly}
                               placeholder={`请输入左侧按钮外链链接`}
                               onChange={e => {
@@ -555,6 +573,12 @@ export default class Bubbles extends Component {
                             </Label>
                             <Input
                               type="url"
+                              value={
+                                message &&
+                                message.messageButtons &&
+                                message.messageButtons[0] &&
+                                message.messageButtons[0].clickTrackLink
+                              }
                               readOnly={readonly}
                               placeholder="请输入气泡点击监控链接"
                               onChange={e => {
@@ -582,6 +606,12 @@ export default class Bubbles extends Component {
                             </Label>
                             <Input
                               type="url"
+                              value={
+                                message &&
+                                message.messageButtons &&
+                                message.messageButtons[0] &&
+                                message.messageButtons[0].exposureTrackLink
+                              }
                               readOnly={readonly}
                               placeholder="请输入气泡曝光监控链接"
                               onChange={e => {
@@ -609,6 +639,12 @@ export default class Bubbles extends Component {
                             </Label>
                             <Input
                               readOnly={readonly}
+                              value={
+                                message &&
+                                message.messageButtons &&
+                                message.messageButtons[1] &&
+                                message.messageButtons[1].title
+                              }
                               placeholder={`请输入右侧按钮文案`}
                               onChange={e => {
                                 if (message.messageButtons) {
@@ -636,6 +672,12 @@ export default class Bubbles extends Component {
                             </Label>
                             <Input
                               type="url"
+                              value={
+                                message &&
+                                message.messageButtons &&
+                                message.messageButtons[1] &&
+                                message.messageButtons[1].link
+                              }
                               readOnly={readonly}
                               placeholder={`请输入右侧按钮外链链接`}
                               onChange={e => {
@@ -664,6 +706,12 @@ export default class Bubbles extends Component {
                             </Label>
                             <Input
                               type="url"
+                              value={
+                                message &&
+                                message.messageButtons &&
+                                message.messageButtons[1] &&
+                                message.messageButtons[1].clickTrackLink
+                              }
                               readOnly={readonly}
                               placeholder="请输入气泡点击监控链接"
                               onChange={e => {
@@ -692,6 +740,12 @@ export default class Bubbles extends Component {
                             </Label>
                             <Input
                               type="url"
+                              value={
+                                message &&
+                                message.messageButtons &&
+                                message.messageButtons[1] &&
+                                message.messageButtons[1].exposureTrackLink
+                              }
                               readOnly={readonly}
                               placeholder="请输入气泡曝光监控链接"
                               onChange={e => {
