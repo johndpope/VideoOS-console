@@ -26,7 +26,7 @@
   },
   "title": "",
   "type": "object",
-  "required": ["creativeName", "interactionTemplateId", "roles"],
+  "required": ["creativeName", "interactionTemplateId", "messages"],
   "properties": {
     "creativeName": {
       "title": "素材名称",

@@ -26,6 +26,7 @@ const AddMaterial = ({
   const { opType } = record || {};
   const isRead = opType === "read";
   const isUpdate = opType === "update";
+  const isSpecial = ["qipao"].includes(materialSchema && materialSchema.key);
   return (
     <Fragment>
       <Modal isOpen={shouldOpen} toggle={toggle}>
@@ -39,7 +40,7 @@ const AddMaterial = ({
               schema={materialSchema}
               // noValidate
               noHtml5Validate
-              showErrorList={true}
+              showErrorList={false}
               uiSchema={{
                 ...uiSchema({
                   isRead,
@@ -127,11 +128,7 @@ const AddMaterial = ({
 
                 saveFormData(formData);
               }}
-              fields={
-                ["qipao"].includes(materialSchema.key)
-                  ? { bubbles: Bubbles }
-                  : null
-              }
+              fields={isSpecial ? { bubbles: Bubbles } : null}
               onSubmit={({ formData }) => {
                 if (
                   formData &&
