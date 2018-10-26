@@ -8,7 +8,7 @@ export default class Bubbles extends Component {
     super(props);
     this.state = {
       ...props.formData,
-      messageType: 1,
+      messageType: "01",
       interactionTemplateId:
         props.schema.properties.interactionTemplateId.enum[0],
       readonly: Boolean(props.uiSchema["ui:disabled"])
@@ -18,7 +18,8 @@ export default class Bubbles extends Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       ...nextProps.formData,
-      readonly: Boolean(nextProps.uiSchema["ui:disabled"])
+      readonly: Boolean(nextProps.uiSchema["ui:disabled"]),
+      errorSchema: nextProps.errorSchema
     });
   }
 
@@ -78,7 +79,7 @@ export default class Bubbles extends Component {
   };
 
   render() {
-    let { schema } = this.props;
+    let { schema, errorSchema } = this.props;
     let { roles = [], messages = [], messageType, readonly } = this.state;
     const {
       creativeName,
@@ -97,8 +98,15 @@ export default class Bubbles extends Component {
             maxLength={10}
             required
             readOnly={readonly}
-            pattern={/[0-9A-Za-z\u4e00-\u9fa5-]+$/}
           />
+          {errorSchema &&
+            errorSchema.creativeName &&
+            errorSchema.creativeName.__errors &&
+            errorSchema.creativeName.__errors.map((err, idx) => (
+              <li key={idx} style={{ color: "#f86c6b" }}>
+                {err}
+              </li>
+            ))}
         </div>
         <div className="array-item">
           <Label>素材类型</Label>
@@ -130,6 +138,14 @@ export default class Bubbles extends Component {
                 </option>
               ))}
           </Input>
+          {errorSchema &&
+            errorSchema.interactionTemplateId &&
+            errorSchema.interactionTemplateId.__errors &&
+            errorSchema.interactionTemplateId.__errors.map((err, idx) => (
+              <li key={idx} style={{ color: "#f86c6b" }}>
+                {err}
+              </li>
+            ))}
         </div>
         <div className="array-item checkbox">
           <Label check>
@@ -256,6 +272,7 @@ export default class Bubbles extends Component {
                 </Row>
               );
             })}
+
           <div
             style={{
               display: "flex",
@@ -321,7 +338,6 @@ export default class Bubbles extends Component {
                         <Input
                           type="select"
                           readOnly={readonly}
-                          defaultValue="1"
                           onChange={e => {
                             this.changeMessageType(e.target.value);
                           }}
@@ -332,7 +348,8 @@ export default class Bubbles extends Component {
                         </Input>
                       </Col>
                     </Row>
-                    {messageType === `${idx}1` ? (
+                    {messageType === `${idx}1` ||
+                    (message && message.messageType === `${idx}1`) ? (
                       <Row style={{ marginBottom: "8px" }}>
                         <Col>
                           <Input
@@ -342,6 +359,7 @@ export default class Bubbles extends Component {
                             maxLength={100}
                             placeholder="请输入文本对话内容"
                             onChange={e => {
+                              message.messageType = messageType;
                               message.content = e.target.value || "";
                               messages[idx] = message;
                               this.setState({ messages });
@@ -351,11 +369,12 @@ export default class Bubbles extends Component {
                         </Col>
                       </Row>
                     ) : null}
-                    {messageType === `${idx}2` ? (
+                    {messageType === `${idx}2` ||
+                    (message && message.messageType === `${idx}2`) ? (
                       <Fragment>
                         <Row style={{ marginBottom: "8px" }}>
                           <Col>
-                            {message.content ? (
+                            {typeof message.content === "object" ? (
                               <Fragment>
                                 <div
                                   style={{
@@ -405,6 +424,7 @@ export default class Bubbles extends Component {
                                         message.content = JSON.stringify(
                                           result.data
                                         );
+                                        message.messageType = messageType;
                                         messages[idx] = message;
                                         this.setState({ messages });
                                         this.props.onChange(this.state);
@@ -472,7 +492,8 @@ export default class Bubbles extends Component {
                         </Row>
                       </Fragment>
                     ) : null}
-                    {messageType === `${idx}3` ? (
+                    {messageType === `${idx}3` ||
+                    (message && message.messageType === `${idx}3`) ? (
                       <Fragment>
                         <Row style={{ marginBottom: "8px" }}>
                           <Col>
@@ -491,6 +512,11 @@ export default class Bubbles extends Component {
                                     { title: e.target.value }
                                   ];
                                 }
+                                messages[idx] = message;
+                                this.setState({
+                                  messages
+                                });
+                                this.props.onChange(this.state);
                               }}
                             />
                           </Col>
@@ -513,6 +539,11 @@ export default class Bubbles extends Component {
                                     { link: e.target.value }
                                   ];
                                 }
+                                messages[idx] = message;
+                                this.setState({
+                                  messages
+                                });
+                                this.props.onChange(this.state);
                               }}
                             />
                           </Col>
@@ -535,6 +566,11 @@ export default class Bubbles extends Component {
                                     { clickTrackLink: e.target.value }
                                   ];
                                 }
+                                messages[idx] = message;
+                                this.setState({
+                                  messages
+                                });
+                                this.props.onChange(this.state);
                               }}
                             />
                           </Col>
@@ -557,6 +593,11 @@ export default class Bubbles extends Component {
                                     { exposureTrackLink: e.target.value }
                                   ];
                                 }
+                                messages[idx] = message;
+                                this.setState({
+                                  messages
+                                });
+                                this.props.onChange(this.state);
                               }}
                             />
                           </Col>
@@ -579,6 +620,11 @@ export default class Bubbles extends Component {
                                     { title: e.target.value }
                                   ];
                                 }
+                                messages[idx] = message;
+                                this.setState({
+                                  messages
+                                });
+                                this.props.onChange(this.state);
                               }}
                             />
                           </Col>
@@ -602,6 +648,11 @@ export default class Bubbles extends Component {
                                     { link: e.target.value }
                                   ];
                                 }
+                                messages[idx] = message;
+                                this.setState({
+                                  messages
+                                });
+                                this.props.onChange(this.state);
                               }}
                             />
                           </Col>
@@ -625,6 +676,11 @@ export default class Bubbles extends Component {
                                     { clickTrackLink: e.target.value }
                                   ];
                                 }
+                                messages[idx] = message;
+                                this.setState({
+                                  messages
+                                });
+                                this.props.onChange(this.state);
                               }}
                             />
                           </Col>
@@ -648,6 +704,11 @@ export default class Bubbles extends Component {
                                     { exposureTrackLink: e.target.value }
                                   ];
                                 }
+                                messages[idx] = message;
+                                this.setState({
+                                  messages
+                                });
+                                this.props.onChange(this.state);
                               }}
                             />
                           </Col>
@@ -664,6 +725,7 @@ export default class Bubbles extends Component {
                           value={message.duration}
                           onChange={e => {
                             message.duration = e.target.value >> 0;
+                            message.messageType = messageType;
                             messages[idx] = message;
                             this.setState({
                               messages
@@ -690,6 +752,15 @@ export default class Bubbles extends Component {
                 </Row>
               );
             })}
+
+          {errorSchema &&
+            errorSchema.messages &&
+            errorSchema.messages.__errors &&
+            errorSchema.messages.__errors.map((err, idx) => (
+              <li key={idx} style={{ color: "#f86c6b" }}>
+                {err}
+              </li>
+            ))}
           <div
             style={{
               display: "flex",
