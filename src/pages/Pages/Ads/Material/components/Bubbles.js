@@ -221,7 +221,6 @@ export default class Bubbles extends Component {
                       >
                         <input
                           type="file"
-                          value={role.roleName}
                           onChange={e => {
                             if (e.target.files.length > 0) {
                               addMaterialFile({ file: e.target.files[0] }).then(
@@ -257,6 +256,7 @@ export default class Bubbles extends Component {
                   <Col md="5">
                     <input
                       type="text"
+                      value={role.roleName}
                       readOnly={readonly}
                       placeholder="请输入角色名称"
                       onChange={e => {
@@ -667,11 +667,14 @@ export default class Bubbles extends Component {
                               placeholder={`请输入右侧按钮文案`}
                               onChange={e => {
                                 if (message.messageButtons) {
+                                  if (!message.messageButtons[1]) {
+                                    message.messageButtons[1] = {};
+                                  }
                                   message.messageButtons[1].title =
                                     e.target.value;
                                 } else {
                                   message.messageButtons = [
-                                    ,
+                                    {},
                                     { title: e.target.value }
                                   ];
                                 }
@@ -701,11 +704,14 @@ export default class Bubbles extends Component {
                               placeholder={`请输入右侧按钮外链链接`}
                               onChange={e => {
                                 if (message.messageButtons) {
+                                  if (!message.messageButtons[1]) {
+                                    message.messageButtons[1] = {};
+                                  }
                                   message.messageButtons[1].link =
                                     e.target.value;
                                 } else {
                                   message.messageButtons = [
-                                    ,
+                                    {},
                                     { link: e.target.value }
                                   ];
                                 }
@@ -735,11 +741,14 @@ export default class Bubbles extends Component {
                               placeholder="请输入气泡点击监控链接"
                               onChange={e => {
                                 if (message.messageButtons) {
+                                  if (!message.messageButtons[1]) {
+                                    message.messageButtons[1] = {};
+                                  }
                                   message.messageButtons[1].clickTrackLink =
                                     e.target.value;
                                 } else {
                                   message.messageButtons = [
-                                    ,
+                                    {},
                                     { clickTrackLink: e.target.value }
                                   ];
                                 }
@@ -769,11 +778,14 @@ export default class Bubbles extends Component {
                               placeholder="请输入气泡曝光监控链接"
                               onChange={e => {
                                 if (message.messageButtons) {
+                                  if (!message.messageButtons[1]) {
+                                    message.messageButtons[1] = {};
+                                  }
                                   message.messageButtons[1].exposureTrackLink =
                                     e.target.value;
                                 } else {
                                   message.messageButtons = [
-                                    ,
+                                    {},
                                     { exposureTrackLink: e.target.value }
                                   ];
                                 }
