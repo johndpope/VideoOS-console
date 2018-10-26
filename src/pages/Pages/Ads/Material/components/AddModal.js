@@ -127,7 +127,11 @@ const AddMaterial = ({
 
                 saveFormData(formData);
               }}
-              fields={{ bubbles: Bubbles }}
+              fields={
+                ["qipao"].includes(materialSchema.key)
+                  ? { bubbles: Bubbles }
+                  : null
+              }
               onSubmit={({ formData }) => {
                 if (
                   formData &&

@@ -84,8 +84,7 @@ export default class Bubbles extends Component {
       creativeName,
       interactionTemplateId,
       isShowAds = true,
-      isShowClose = true,
-      duration
+      isShowClose = true
     } = this.state;
 
     return (
@@ -132,7 +131,7 @@ export default class Bubbles extends Component {
               ))}
           </Input>
         </div>
-        <div className="array-item">
+        <div className="array-item checkbox">
           <Label check>
             <Input
               checked
@@ -144,7 +143,7 @@ export default class Bubbles extends Component {
             {`  广告标识是否可见`}
           </Label>
         </div>
-        <div className="array-item">
+        <div className="array-item checkbox">
           <Label check>
             <Input
               checked
@@ -338,11 +337,15 @@ export default class Bubbles extends Component {
                         <Col>
                           <Input
                             type="textarea"
+                            value={message.content}
                             readOnly={readonly}
                             maxLength={100}
                             placeholder="请输入文本对话内容"
                             onChange={e => {
                               message.content = e.target.value || "";
+                              messages[idx] = message;
+                              this.setState({ messages });
+                              this.props.onChange(this.state);
                             }}
                           />
                         </Col>
@@ -658,11 +661,14 @@ export default class Bubbles extends Component {
                         </Label>
                         <Input
                           readOnly={readonly}
-                          value={duration}
+                          value={message.duration}
                           onChange={e => {
+                            message.duration = e.target.value >> 0;
+                            messages[idx] = message;
                             this.setState({
-                              duration: e.target.value
+                              messages
                             });
+                            this.props.onChange(this.state);
                           }}
                         />
                       </Col>
