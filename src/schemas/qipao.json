@@ -18,7 +18,7 @@
       "type": "object",
       "properties": {
         "duration": {
-          "type": "integer",
+          "type": "number",
           "title": "展示持续时间"
         }
       }
