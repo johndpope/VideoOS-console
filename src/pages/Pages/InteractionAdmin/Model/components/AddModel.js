@@ -138,8 +138,8 @@ const AddModel = ({
                         const { files } = e.target;
                         const templateFileSourceName =
                           files && files[0] && files[0].name;
-                        if (!/.zip$/gi.test(templateFileSourceName)) {
-                          Feedback.toast.error("请上传*.zip文件");
+                        if (!/.lua$/gi.test(templateFileSourceName)) {
+                          Feedback.toast.error("请上传*.lua文件");
                           setUploadModelFileInfo({});
                           return;
                         }
@@ -159,9 +159,9 @@ const AddModel = ({
               </InputGroup>
             )}
           </Form>
-          <div>
-            注：需上传压缩文件格式(*.zip)。且同一个主题下，文件名不能重名哦。
-          </div>
+          {/*<div>
+            注：需上传压缩文件格式(*.lua)。且同一个主题下，文件名不能重名哦。
+          </div>*/}
         </ModalBody>
         <ModalFooter>
           <Button onClick={toggle}>取消</Button>
