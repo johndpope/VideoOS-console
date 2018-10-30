@@ -10,7 +10,9 @@
         },
         "roleName": {
           "type": "string",
-          "title": ""
+          "title": "",
+          "maxLength": 10,
+          "pattern": "[0-9A-Za-z\u4e00-\u9fa5-]+$"
         }
       }
     },
