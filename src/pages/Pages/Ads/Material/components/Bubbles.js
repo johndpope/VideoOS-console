@@ -294,6 +294,23 @@ export default class Bubbles extends Component {
                               }
                             }}
                           />
+                          {errorSchema &&
+                            errorSchema.roles &&
+                            Object.keys(errorSchema.roles).map(
+                              key =>
+                                errorSchema.roles[key].roleAvatar
+                                  ? errorSchema.roles[
+                                      key
+                                    ].roleAvatar.__errors.map((err, idx) => (
+                                      <li
+                                        key={idx}
+                                        style={{ color: "#f86c6b" }}
+                                      >
+                                        未上传角色图片
+                                      </li>
+                                    ))
+                                  : null
+                            )}
                         </div>
                       </div>
                     )}
@@ -318,11 +335,20 @@ export default class Bubbles extends Component {
                         );
                       }}
                     />
-                    {this.state.roleNameError ? (
-                      <li style={{ color: "#f86c6b" }}>
-                        请填写，仅支持汉字/字母/数字
-                      </li>
-                    ) : null}
+                    {errorSchema &&
+                      errorSchema.roles &&
+                      Object.keys(errorSchema.roles).map(
+                        key =>
+                          errorSchema.roles[key].roleName
+                            ? errorSchema.roles[key].roleName.__errors.map(
+                                (err, idx) => (
+                                  <li key={idx} style={{ color: "#f86c6b" }}>
+                                    {err}
+                                  </li>
+                                )
+                              )
+                            : null
+                      )}
                   </Col>
                   <Col md="2">
                     {!readonly ? (
@@ -968,6 +994,23 @@ export default class Bubbles extends Component {
                                 );
                               }}
                             />
+                            {errorSchema &&
+                              errorSchema.messages &&
+                              Object.keys(errorSchema.messages).map(
+                                key =>
+                                  errorSchema.messages[key].duration
+                                    ? errorSchema.messages[
+                                        key
+                                      ].duration.__errors.map((err, idx) => (
+                                        <li
+                                          key={idx}
+                                          style={{ color: "#f86c6b" }}
+                                        >
+                                          {err}
+                                        </li>
+                                      ))
+                                    : null
+                              )}
                           </Col>
                           <Col>
                             <span>秒</span>
