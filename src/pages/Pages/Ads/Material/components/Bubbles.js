@@ -40,8 +40,7 @@ export default class Bubbles extends Component {
       roleAvatar: null,
       roleName: null
     });
-    this.setState({ roles });
-    this.props.onChange(this.state);
+    this.setState({ roles }, () => this.props.onChange(this.state));
   };
 
   deleteRole = idx => {
@@ -52,8 +51,7 @@ export default class Bubbles extends Component {
       }
     }
     roles.splice(idx, 1);
-    this.setState({ roles });
-    this.props.onChange(this.state);
+    this.setState({ roles }, () => this.props.onChange(this.state));
   };
 
   addMessage = () => {
@@ -63,15 +61,13 @@ export default class Bubbles extends Component {
       messageType: 1,
       userType: 2
     });
-    this.setState({ messages });
-    this.props.onChange(this.state);
+    this.setState({ messages }, () => this.props.onChange(this.state));
   };
 
   deleteMessage = idx => {
     let { messages = [] } = this.state;
     messages.splice(idx, 1);
-    this.setState({ messages });
-    this.props.onChange(this.state);
+    this.setState({ messages }, () => this.props.onChange(this.state));
   };
 
   changeMessageType = value => {
@@ -226,6 +222,7 @@ export default class Bubbles extends Component {
                       >
                         <input
                           type="file"
+                          accept="image/png, image/jpg, image/jpeg"
                           onChange={e => {
                             if (e.target.files.length > 0) {
                               addMaterialFile({ file: e.target.files[0] }).then(
@@ -262,6 +259,7 @@ export default class Bubbles extends Component {
                     <input
                       type="text"
                       value={role.roleName}
+                      maxLength={10}
                       readOnly={readonly}
                       placeholder="请输入角色名称"
                       onChange={e => {
@@ -813,18 +811,25 @@ export default class Bubbles extends Component {
                         <Label style={{ fontWeight: "normal" }}>
                           展示持续时间*
                         </Label>
-                        <Input
-                          readOnly={readonly}
-                          value={message.duration}
-                          onChange={e => {
-                            message.duration = e.target.value >> 0;
-                            messages[idx] = message;
-                            this.setState({
-                              messages
-                            });
-                            this.props.onChange(this.state);
-                          }}
-                        />
+                        <Row>
+                          <Col>
+                            <Input
+                              readOnly={readonly}
+                              value={message.duration}
+                              onChange={e => {
+                                message.duration = e.target.value >> 0;
+                                messages[idx] = message;
+                                this.setState({
+                                  messages
+                                });
+                                this.props.onChange(this.state);
+                              }}
+                            />
+                          </Col>
+                          <Col>
+                            <span>秒</span>
+                          </Col>
+                        </Row>
                       </Col>
                     </Row>
                   </Col>
