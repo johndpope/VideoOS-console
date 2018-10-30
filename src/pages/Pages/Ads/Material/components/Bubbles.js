@@ -373,7 +373,11 @@ export default class Bubbles extends Component {
                           type="select"
                           readOnly={readonly}
                           disabled={readonly ? "disabled" : false}
-                          value={`${message.name},${message.avatar}`}
+                          value={
+                            message.userType === 1
+                              ? `${message.name},${message.avatar}`
+                              : "2"
+                          }
                           onChange={e => {
                             const { value } = e.target;
                             if (value !== "2") {
