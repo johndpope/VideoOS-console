@@ -256,19 +256,29 @@ export default class Bubbles extends Component {
                     )}
                   </Col>
                   <Col md="5">
-                    <input
+                    <Input
                       type="text"
                       value={role.roleName}
                       maxLength={10}
                       readOnly={readonly}
                       placeholder="请输入角色名称"
                       onChange={e => {
+                        if (!/0-9A-Za-z\u4e00-\u9fa5-/gi.test(e.target.value)) {
+                          this.setState({ roleNameError: true });
+                        } else {
+                          this.setState({ roleNameError: false });
+                        }
                         role.roleName = e.target.value;
                         roles[idx] = role;
                         this.setState({ roles });
                         this.props.onChange(this.state);
                       }}
                     />
+                    {this.state.roleNameError ? (
+                      <li style={{ color: "#f86c6b" }}>
+                        请填写，仅支持汉字/字母/数字
+                      </li>
+                    ) : null}
                   </Col>
                   <Col md="2">
                     {!readonly ? (
@@ -421,10 +431,11 @@ export default class Bubbles extends Component {
                                       type="button"
                                       className="btn btn-danger array-item-remove"
                                       onClick={e => {
-                                        message.content = null;
+                                        message.content = "";
                                         messages[idx] = message;
-                                        this.setState({ messages });
-                                        this.props.onChange(this.state);
+                                        this.setState({ messages }, () =>
+                                          this.props.onChange(this.state)
+                                        );
                                       }}
                                     >
                                       <i className="glyphicon glyphicon-remove" />
@@ -433,35 +444,57 @@ export default class Bubbles extends Component {
                                 </div>
                               </Fragment>
                             ) : (
-                              <Input
-                                type="file"
-                                placeholder="上传气泡图片"
-                                onChange={e => {
-                                  addMaterialFile({
-                                    file: e.target.files[0]
-                                  }).then(result => {
-                                    if (result.status === 200) {
-                                      if (
-                                        result.data &&
-                                        result.data.resCode === "00"
-                                      ) {
-                                        message.content = result.data;
-                                        messages[idx] = message;
-                                        this.setState({ messages });
-                                        this.props.onChange(this.state);
+                              <div
+                                style={{
+                                  position: "relative",
+                                  width: "120px",
+                                  height: "32px",
+                                  border: "1px solid #e4e7ea",
+                                  textAlign: "center",
+                                  lineHeight: "32px"
+                                }}
+                              >
+                                上传气泡图片
+                                <Input
+                                  style={{
+                                    position: "absolute",
+                                    opacity: 0,
+                                    top: 0,
+                                    left: 0,
+                                    width: "100%",
+                                    height: "100%",
+                                    borderRadius: "0.25rem"
+                                  }}
+                                  type="file"
+                                  placeholder="上传气泡图片"
+                                  onChange={e => {
+                                    addMaterialFile({
+                                      file: e.target.files[0]
+                                    }).then(result => {
+                                      if (result.status === 200) {
+                                        if (
+                                          result.data &&
+                                          result.data.resCode === "00"
+                                        ) {
+                                          message.content = result.data;
+                                          messages[idx] = message;
+                                          this.setState({ messages }, () =>
+                                            this.props.onChange(this.state)
+                                          );
+                                        } else {
+                                          Feedback.toast.error(
+                                            result.data && result.data.resMsg
+                                          );
+                                        }
                                       } else {
                                         Feedback.toast.error(
-                                          result.data && result.data.resMsg
+                                          `${result.status}：上传出错了，请重试`
                                         );
                                       }
-                                    } else {
-                                      Feedback.toast.error(
-                                        `${result.status}：上传出错了，请重试`
-                                      );
-                                    }
-                                  });
-                                }}
-                              />
+                                    });
+                                  }}
+                                />
+                              </div>
                             )}
                           </Col>
                         </Row>
@@ -478,8 +511,9 @@ export default class Bubbles extends Component {
                               onChange={e => {
                                 message.link = e.target.value;
                                 messages[idx] = message;
-                                this.setState({ messages });
-                                this.props.onChange(this.state);
+                                this.setState({ messages }, () =>
+                                  this.props.onChange(this.state)
+                                );
                               }}
                             />
                           </Col>
@@ -497,8 +531,9 @@ export default class Bubbles extends Component {
                               onChange={e => {
                                 message.clickTrackLink = e.target.value;
                                 messages[idx] = message;
-                                this.setState({ messages });
-                                this.props.onChange(this.state);
+                                this.setState({ messages }, () =>
+                                  this.props.onChange(this.state)
+                                );
                               }}
                             />
                           </Col>
@@ -516,8 +551,9 @@ export default class Bubbles extends Component {
                               onChange={e => {
                                 message.exposureTrackLink = e.target.value;
                                 messages[idx] = message;
-                                this.setState({ messages });
-                                this.props.onChange(this.state);
+                                this.setState({ messages }, () =>
+                                  this.props.onChange(this.state)
+                                );
                               }}
                             />
                           </Col>
@@ -561,10 +597,12 @@ export default class Bubbles extends Component {
                                   ];
                                 }
                                 messages[idx] = message;
-                                this.setState({
-                                  messages
-                                });
-                                this.props.onChange(this.state);
+                                this.setState(
+                                  {
+                                    messages
+                                  },
+                                  () => this.props.onChange(this.state)
+                                );
                               }}
                             />
                             {this.state.leftBtnError ? (
@@ -600,10 +638,12 @@ export default class Bubbles extends Component {
                                   ];
                                 }
                                 messages[idx] = message;
-                                this.setState({
-                                  messages
-                                });
-                                this.props.onChange(this.state);
+                                this.setState(
+                                  {
+                                    messages
+                                  },
+                                  () => this.props.onChange(this.state)
+                                );
                               }}
                             />
                           </Col>
@@ -633,10 +673,12 @@ export default class Bubbles extends Component {
                                   ];
                                 }
                                 messages[idx] = message;
-                                this.setState({
-                                  messages
-                                });
-                                this.props.onChange(this.state);
+                                this.setState(
+                                  {
+                                    messages
+                                  },
+                                  () => this.props.onChange(this.state)
+                                );
                               }}
                             />
                           </Col>
@@ -666,10 +708,12 @@ export default class Bubbles extends Component {
                                   ];
                                 }
                                 messages[idx] = message;
-                                this.setState({
-                                  messages
-                                });
-                                this.props.onChange(this.state);
+                                this.setState(
+                                  {
+                                    messages
+                                  },
+                                  () => this.props.onChange(this.state)
+                                );
                               }}
                             />
                           </Col>
@@ -713,10 +757,12 @@ export default class Bubbles extends Component {
                                   ];
                                 }
                                 messages[idx] = message;
-                                this.setState({
-                                  messages
-                                });
-                                this.props.onChange(this.state);
+                                this.setState(
+                                  {
+                                    messages
+                                  },
+                                  () => this.props.onChange(this.state)
+                                );
                               }}
                             />
                             {this.state.rightBtnError ? (
@@ -756,10 +802,12 @@ export default class Bubbles extends Component {
                                   ];
                                 }
                                 messages[idx] = message;
-                                this.setState({
-                                  messages
-                                });
-                                this.props.onChange(this.state);
+                                this.setState(
+                                  {
+                                    messages
+                                  },
+                                  () => this.props.onChange(this.state)
+                                );
                               }}
                             />
                           </Col>
@@ -793,10 +841,12 @@ export default class Bubbles extends Component {
                                   ];
                                 }
                                 messages[idx] = message;
-                                this.setState({
-                                  messages
-                                });
-                                this.props.onChange(this.state);
+                                this.setState(
+                                  {
+                                    messages
+                                  },
+                                  () => this.props.onChange(this.state)
+                                );
                               }}
                             />
                           </Col>
@@ -830,10 +880,12 @@ export default class Bubbles extends Component {
                                   ];
                                 }
                                 messages[idx] = message;
-                                this.setState({
-                                  messages
-                                });
-                                this.props.onChange(this.state);
+                                this.setState(
+                                  {
+                                    messages
+                                  },
+                                  () => this.props.onChange(this.state)
+                                );
                               }}
                             />
                           </Col>
@@ -853,10 +905,12 @@ export default class Bubbles extends Component {
                               onChange={e => {
                                 message.duration = e.target.value >> 0;
                                 messages[idx] = message;
-                                this.setState({
-                                  messages
-                                });
-                                this.props.onChange(this.state);
+                                this.setState(
+                                  {
+                                    messages
+                                  },
+                                  () => this.props.onChange(this.state)
+                                );
                               }}
                             />
                           </Col>
