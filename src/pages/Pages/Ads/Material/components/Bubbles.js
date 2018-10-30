@@ -33,6 +33,9 @@ export default class Bubbles extends Component {
       if (["isShowClose"].includes(name)) {
         value = !isShowClose;
       }
+      if (["interactionTemplateId"].includes(name)) {
+        value = Number(value);
+      }
       this.setState(
         {
           [name]: value
