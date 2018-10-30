@@ -25,9 +25,17 @@ export default class Bubbles extends Component {
 
   onChange = name => {
     return event => {
+      let { value } = event.target;
+      const { isShowAds, isShowClose } = this.state;
+      if (["isShowAds"].includes(name)) {
+        value = !isShowAds;
+      }
+      if (["isShowClose"].includes(name)) {
+        value = !isShowClose;
+      }
       this.setState(
         {
-          [name]: event.target.value
+          [name]: value
         },
         () => this.props.onChange(this.state)
       );
@@ -45,7 +53,11 @@ export default class Bubbles extends Component {
 
   deleteRole = idx => {
     let { roles = [], messages = [] } = this.state;
-    if (JSON.stringify(messages).includes(roles[idx].roleName)) {
+    if (
+      roles[idx] &&
+      roles[idx].roleName &&
+      JSON.stringify(messages).includes(roles[idx].roleName)
+    ) {
       if (!window.confirm("对话内容中有该角色，确认删除该角色吗？")) {
         return;
       }
@@ -56,6 +68,12 @@ export default class Bubbles extends Component {
 
   addMessage = () => {
     let { messages = [] } = this.state;
+    messages.forEach(msg => {
+      if (msg.messageType === 3) {
+        Feedback.toast.error("按钮选择为对话的最后一步");
+        return;
+      }
+    });
     messages.push({
       duration: null,
       messageType: 1,
@@ -149,7 +167,7 @@ export default class Bubbles extends Component {
         <div className="array-item checkbox">
           <Label check>
             <Input
-              checked
+              defaultChecked={isShowAds ? "checked" : false}
               type="checkbox"
               disabled={readonly ? "disabled" : false}
               value={isShowAds}
@@ -161,7 +179,7 @@ export default class Bubbles extends Component {
         <div className="array-item checkbox">
           <Label check>
             <Input
-              checked
+              defaultChecked={isShowClose ? "checked" : false}
               type="checkbox"
               disabled={readonly ? "disabled" : false}
               value={isShowClose}
@@ -255,8 +273,9 @@ export default class Bubbles extends Component {
                                     ) {
                                       role.roleAvatar = result.data.fileUrl;
                                       roles[idx] = role;
-                                      this.setState({ roles });
-                                      this.props.onChange(this.state);
+                                      this.setState({ roles }, () =>
+                                        this.props.onChange(this.state)
+                                      );
                                     } else {
                                       Feedback.toast.error(
                                         result.data && result.data.resMsg
@@ -291,8 +310,9 @@ export default class Bubbles extends Component {
                         // }
                         role.roleName = e.target.value;
                         roles[idx] = role;
-                        this.setState({ roles });
-                        this.props.onChange(this.state);
+                        this.setState({ roles }, () =>
+                          this.props.onChange(this.state)
+                        );
                       }}
                     />
                     {this.state.roleNameError ? (
@@ -397,14 +417,21 @@ export default class Bubbles extends Component {
                         >
                           <option value="1">文本对话</option>
                           <option value="2">气泡图片</option>
-                          <option value="3">按钮选择对话</option>
+                          <option value="3">
+                            按钮选择对话（按钮选择为对话的最后一步）
+                          </option>
                         </Input>
                       </Col>
                     </Row>
                     {message && message.messageType === 1 ? (
                       <Row style={{ marginBottom: "8px" }}>
                         <Col>
-                          <Input
+                          <textarea
+                            style={{
+                              border: "1px solid #e4e7ea",
+                              borderRadius: "0.25rem",
+                              width: "100%"
+                            }}
                             type="textarea"
                             value={
                               typeof message.content === "string"
