@@ -67,13 +67,16 @@ export default class Bubbles extends Component {
   };
 
   addMessage = () => {
+    let canAdd = true;
     let { messages = [] } = this.state;
     messages.forEach(msg => {
       if (msg.messageType === 3) {
+        canAdd = false;
         Feedback.toast.error("按钮选择为对话的最后一步");
         return;
       }
     });
+    if (!canAdd) return;
     messages.push({
       duration: null,
       messageType: 1,
