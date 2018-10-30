@@ -386,17 +386,24 @@ export const getIaTypeById = params => {
         const { templateInfoList } = response[1].data;
         template.properties.interactionTemplateId.enumNames = [];
         template.properties.interactionTemplateId.enum = [];
-        Array.isArray(templateInfoList) &&
+
+        if (Array.isArray(templateInfoList)) {
           templateInfoList.forEach(ti => {
             template.properties.interactionTemplateId.enumNames.push(
               ti.templateName
             );
             template.properties.interactionTemplateId.enum.push(ti.templateId);
           });
-        template.properties.interactionTypeId.enum = [params.interactionId];
-        template.properties.interactionTypeId.enumNames = [
-          params.interactionTypeName
-        ];
+          template.properties.interactionTypeId.enum = [params.interactionId];
+          template.properties.interactionTypeId.enumNames = [
+            params.interactionTypeName
+          ];
+          dispatch(
+            saveFormData({
+              interactionTemplateId: templateInfoList[0].templateId || ""
+            })
+          );
+        }
         dispatch(getIaTypeByIdSuccess(template));
         // dispatch(updateFormSchema(params));
       } else {
