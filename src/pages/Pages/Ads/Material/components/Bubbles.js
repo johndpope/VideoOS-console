@@ -220,13 +220,34 @@ export default class Bubbles extends Component {
                           alignItems: "center"
                         }}
                       >
-                        <input
-                          type="file"
-                          accept="image/png, image/jpg, image/jpeg"
-                          onChange={e => {
-                            if (e.target.files.length > 0) {
-                              addMaterialFile({ file: e.target.files[0] }).then(
-                                result => {
+                        <div
+                          style={{
+                            position: "relative",
+                            width: "120px",
+                            height: "32px",
+                            border: "1px solid #e4e7ea",
+                            textAlign: "center",
+                            lineHeight: "32px"
+                          }}
+                        >
+                          上传图片
+                          <input
+                            style={{
+                              position: "absolute",
+                              opacity: 0,
+                              top: 0,
+                              left: 0,
+                              width: "100%",
+                              height: "100%",
+                              borderRadius: "0.25rem"
+                            }}
+                            type="file"
+                            accept="image/png, image/jpg, image/jpeg"
+                            onChange={e => {
+                              if (e.target.files.length > 0) {
+                                addMaterialFile({
+                                  file: e.target.files[0]
+                                }).then(result => {
                                   if (result.status === 200) {
                                     if (
                                       result.data &&
@@ -247,11 +268,11 @@ export default class Bubbles extends Component {
                                     );
                                   }
                                   // console.log(result);
-                                }
-                              );
-                            }
-                          }}
-                        />
+                                });
+                              }
+                            }}
+                          />
+                        </div>
                       </div>
                     )}
                   </Col>
