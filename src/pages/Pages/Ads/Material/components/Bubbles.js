@@ -533,6 +533,8 @@ export default class Bubbles extends Component {
                             </Label>
                             <Input
                               readOnly={readonly}
+                              required
+                              maxLength={5}
                               value={
                                 message &&
                                 message.messageButtons &&
@@ -541,6 +543,15 @@ export default class Bubbles extends Component {
                               }
                               placeholder={`请输入左侧按钮文案`}
                               onChange={e => {
+                                if (
+                                  !/[0-9A-Za-z\u4e00-\u9fa5-]+$/gi.test(
+                                    e.target.value
+                                  )
+                                ) {
+                                  this.setState({ leftBtnError: true });
+                                } else {
+                                  this.setState({ leftBtnError: false });
+                                }
                                 if (message.messageButtons) {
                                   message.messageButtons[0].title =
                                     e.target.value;
@@ -556,6 +567,11 @@ export default class Bubbles extends Component {
                                 this.props.onChange(this.state);
                               }}
                             />
+                            {this.state.leftBtnError ? (
+                              <li style={{ color: "#f86c6b" }}>
+                                必填，仅支持汉字/字母/数字
+                              </li>
+                            ) : null}
                           </Col>
                         </Row>
                         <Row style={{ marginBottom: "8px" }}>
@@ -565,6 +581,7 @@ export default class Bubbles extends Component {
                             </Label>
                             <Input
                               type="url"
+                              required
                               value={
                                 message &&
                                 message.messageButtons &&
@@ -664,6 +681,8 @@ export default class Bubbles extends Component {
                             </Label>
                             <Input
                               readOnly={readonly}
+                              maxLength={5}
+                              required
                               value={
                                 message &&
                                 message.messageButtons &&
@@ -672,6 +691,15 @@ export default class Bubbles extends Component {
                               }
                               placeholder={`请输入右侧按钮文案`}
                               onChange={e => {
+                                if (
+                                  !/[0-9A-Za-z\u4e00-\u9fa5-]+$/gi.test(
+                                    e.target.value
+                                  )
+                                ) {
+                                  this.setState({ rightBtnError: true });
+                                } else {
+                                  this.setState({ rightBtnError: false });
+                                }
                                 if (message.messageButtons) {
                                   if (!message.messageButtons[1]) {
                                     message.messageButtons[1] = {};
@@ -691,6 +719,11 @@ export default class Bubbles extends Component {
                                 this.props.onChange(this.state);
                               }}
                             />
+                            {this.state.rightBtnError ? (
+                              <li style={{ color: "#f86c6b" }}>
+                                必填，仅支持汉字/字母/数字
+                              </li>
+                            ) : null}
                           </Col>
                         </Row>
                         <Row style={{ marginBottom: "8px" }}>
@@ -700,6 +733,7 @@ export default class Bubbles extends Component {
                             </Label>
                             <Input
                               type="url"
+                              required
                               value={
                                 message &&
                                 message.messageButtons &&
