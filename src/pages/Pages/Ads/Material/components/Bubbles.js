@@ -263,11 +263,11 @@ export default class Bubbles extends Component {
                       readOnly={readonly}
                       placeholder="请输入角色名称"
                       onChange={e => {
-                        if (!/0-9A-Za-z\u4e00-\u9fa5-/gi.test(e.target.value)) {
-                          this.setState({ roleNameError: true });
-                        } else {
-                          this.setState({ roleNameError: false });
-                        }
+                        // if (!/0-9A-Za-z\u4e00-\u9fa5-/gi.test(e.target.value)) {
+                        //   this.setState({ roleNameError: true });
+                        // } else {
+                        //   this.setState({ roleNameError: false });
+                        // }
                         role.roleName = e.target.value;
                         roles[idx] = role;
                         this.setState({ roles });
