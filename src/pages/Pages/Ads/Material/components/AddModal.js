@@ -170,7 +170,7 @@ const AddMaterial = ({
                 ) {
                   formData.messages.forEach(msg => {
                     if (msg.messageType === 1) {
-                      if (!msg.content) {
+                      if (!msg.content || typeof msg.content === "object") {
                         canSubmit = false;
                         Feedback.toast.error("“对话文本内容”不能为空哦");
                         return;
