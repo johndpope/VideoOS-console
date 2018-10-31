@@ -159,9 +159,9 @@ const AddModel = ({
               </InputGroup>
             )}
           </Form>
-          {/*<div>
+          <div>
             注：需上传压缩文件格式(*.zip)。且同一个主题下，文件名不能重名哦。
-          </div>*/}
+          </div>
         </ModalBody>
         <ModalFooter>
           <Button onClick={toggle}>取消</Button>
