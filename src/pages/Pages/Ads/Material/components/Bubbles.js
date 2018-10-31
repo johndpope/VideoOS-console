@@ -25,9 +25,20 @@ export default class Bubbles extends Component {
 
   onChange = name => {
     return event => {
+      let { value } = event.target;
+      const { isShowAds, isShowClose } = this.state;
+      if (["isShowAds"].includes(name)) {
+        value = !isShowAds;
+      }
+      if (["isShowClose"].includes(name)) {
+        value = !isShowClose;
+      }
+      if (["interactionTemplateId"].includes(name)) {
+        value = Number(value);
+      }
       this.setState(
         {
-          [name]: event.target.value
+          [name]: value
         },
         () => this.props.onChange(this.state)
       );
@@ -45,7 +56,11 @@ export default class Bubbles extends Component {
 
   deleteRole = idx => {
     let { roles = [], messages = [] } = this.state;
-    if (JSON.stringify(messages).includes(roles[idx].roleName)) {
+    if (
+      roles[idx] &&
+      roles[idx].roleName &&
+      JSON.stringify(messages).includes(roles[idx].roleName)
+    ) {
       if (!window.confirm("对话内容中有该角色，确认删除该角色吗？")) {
         return;
       }
@@ -55,7 +70,16 @@ export default class Bubbles extends Component {
   };
 
   addMessage = () => {
+    let canAdd = true;
     let { messages = [] } = this.state;
+    messages.forEach(msg => {
+      if (msg.messageType === 3) {
+        canAdd = false;
+        Feedback.toast.error("按钮选择为对话的最后一步");
+        return;
+      }
+    });
+    if (!canAdd) return;
     messages.push({
       duration: null,
       messageType: 1,
@@ -149,7 +173,7 @@ export default class Bubbles extends Component {
         <div className="array-item checkbox">
           <Label check>
             <Input
-              checked
+              defaultChecked={isShowAds ? "checked" : false}
               type="checkbox"
               disabled={readonly ? "disabled" : false}
               value={isShowAds}
@@ -161,7 +185,7 @@ export default class Bubbles extends Component {
         <div className="array-item checkbox">
           <Label check>
             <Input
-              checked
+              defaultChecked={isShowClose ? "checked" : false}
               type="checkbox"
               disabled={readonly ? "disabled" : false}
               value={isShowClose}
@@ -220,13 +244,34 @@ export default class Bubbles extends Component {
                           alignItems: "center"
                         }}
                       >
-                        <input
-                          type="file"
-                          accept="image/png, image/jpg, image/jpeg"
-                          onChange={e => {
-                            if (e.target.files.length > 0) {
-                              addMaterialFile({ file: e.target.files[0] }).then(
-                                result => {
+                        <div
+                          style={{
+                            position: "relative",
+                            width: "120px",
+                            height: "32px",
+                            border: "1px solid #e4e7ea",
+                            textAlign: "center",
+                            lineHeight: "32px"
+                          }}
+                        >
+                          上传图片
+                          <input
+                            style={{
+                              position: "absolute",
+                              opacity: 0,
+                              top: 0,
+                              left: 0,
+                              width: "100%",
+                              height: "100%",
+                              borderRadius: "0.25rem"
+                            }}
+                            type="file"
+                            accept="image/png, image/jpg, image/gif"
+                            onChange={e => {
+                              if (e.target.files.length > 0) {
+                                addMaterialFile({
+                                  file: e.target.files[0]
+                                }).then(result => {
                                   if (result.status === 200) {
                                     if (
                                       result.data &&
@@ -234,8 +279,9 @@ export default class Bubbles extends Component {
                                     ) {
                                       role.roleAvatar = result.data.fileUrl;
                                       roles[idx] = role;
-                                      this.setState({ roles });
-                                      this.props.onChange(this.state);
+                                      this.setState({ roles }, () =>
+                                        this.props.onChange(this.state)
+                                      );
                                     } else {
                                       Feedback.toast.error(
                                         result.data && result.data.resMsg
@@ -247,11 +293,28 @@ export default class Bubbles extends Component {
                                     );
                                   }
                                   // console.log(result);
-                                }
-                              );
-                            }
-                          }}
-                        />
+                                });
+                              }
+                            }}
+                          />
+                          {errorSchema &&
+                            errorSchema.roles &&
+                            Object.keys(errorSchema.roles).map(
+                              key =>
+                                errorSchema.roles[key].roleAvatar
+                                  ? errorSchema.roles[
+                                      key
+                                    ].roleAvatar.__errors.map((err, idx) => (
+                                      <li
+                                        key={idx}
+                                        style={{ color: "#f86c6b" }}
+                                      >
+                                        未上传角色图片
+                                      </li>
+                                    ))
+                                  : null
+                            )}
+                        </div>
                       </div>
                     )}
                   </Col>
@@ -263,22 +326,32 @@ export default class Bubbles extends Component {
                       readOnly={readonly}
                       placeholder="请输入角色名称"
                       onChange={e => {
-                        if (!/0-9A-Za-z\u4e00-\u9fa5-/gi.test(e.target.value)) {
-                          this.setState({ roleNameError: true });
-                        } else {
-                          this.setState({ roleNameError: false });
-                        }
+                        // if (!/0-9A-Za-z\u4e00-\u9fa5-/gi.test(e.target.value)) {
+                        //   this.setState({ roleNameError: true });
+                        // } else {
+                        //   this.setState({ roleNameError: false });
+                        // }
                         role.roleName = e.target.value;
                         roles[idx] = role;
-                        this.setState({ roles });
-                        this.props.onChange(this.state);
+                        this.setState({ roles }, () =>
+                          this.props.onChange(this.state)
+                        );
                       }}
                     />
-                    {this.state.roleNameError ? (
-                      <li style={{ color: "#f86c6b" }}>
-                        请填写，仅支持汉字/字母/数字
-                      </li>
-                    ) : null}
+                    {errorSchema &&
+                      errorSchema.roles &&
+                      Object.keys(errorSchema.roles).map(
+                        key =>
+                          errorSchema.roles[key].roleName
+                            ? errorSchema.roles[key].roleName.__errors.map(
+                                (err, idx) => (
+                                  <li key={idx} style={{ color: "#f86c6b" }}>
+                                    {err}
+                                  </li>
+                                )
+                              )
+                            : null
+                      )}
                   </Col>
                   <Col md="2">
                     {!readonly ? (
@@ -329,7 +402,11 @@ export default class Bubbles extends Component {
                           type="select"
                           readOnly={readonly}
                           disabled={readonly ? "disabled" : false}
-                          value={`${message.name},${message.avatar}`}
+                          value={
+                            message.userType === 1
+                              ? `${message.name},${message.avatar}`
+                              : "2"
+                          }
                           onChange={e => {
                             const { value } = e.target;
                             if (value !== "2") {
@@ -376,14 +453,21 @@ export default class Bubbles extends Component {
                         >
                           <option value="1">文本对话</option>
                           <option value="2">气泡图片</option>
-                          <option value="3">按钮选择对话</option>
+                          <option value="3">
+                            按钮选择对话（按钮选择为对话的最后一步）
+                          </option>
                         </Input>
                       </Col>
                     </Row>
                     {message && message.messageType === 1 ? (
                       <Row style={{ marginBottom: "8px" }}>
                         <Col>
-                          <Input
+                          <textarea
+                            style={{
+                              border: "1px solid #e4e7ea",
+                              borderRadius: "0.25rem",
+                              width: "100%"
+                            }}
                             type="textarea"
                             value={
                               typeof message.content === "string"
@@ -913,6 +997,23 @@ export default class Bubbles extends Component {
                                 );
                               }}
                             />
+                            {errorSchema &&
+                              errorSchema.messages &&
+                              Object.keys(errorSchema.messages).map(
+                                key =>
+                                  errorSchema.messages[key].duration
+                                    ? errorSchema.messages[
+                                        key
+                                      ].duration.__errors.map((err, idx) => (
+                                        <li
+                                          key={idx}
+                                          style={{ color: "#f86c6b" }}
+                                        >
+                                          {err}
+                                        </li>
+                                      ))
+                                    : null
+                              )}
                           </Col>
                           <Col>
                             <span>秒</span>

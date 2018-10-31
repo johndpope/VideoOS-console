@@ -203,7 +203,14 @@ export const getIaTypes = (
     try {
       const response = await api.getIaTypes(params);
       if (response.status === 200 && response.data.resCode === "00") {
-        dispatch(getIaTypesSuccess(response.data));
+        const { totalPage } = response.data;
+        if (params.currentPage <= totalPage) {
+          dispatch(getIaTypesSuccess(response.data));
+        } else {
+          params.currentPage = totalPage;
+          dispatch(setCurrentPage({ currentPage: totalPage }));
+          dispatch(getIaTypes(params));
+        }
       } else {
         dispatch(getIaTypesFailure(response.data));
         Feedback.toast.error(response.data && response.data.resMsg);

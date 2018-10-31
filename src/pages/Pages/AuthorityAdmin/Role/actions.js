@@ -221,7 +221,14 @@ export const getRoles = (
       const response = await api.getAaRoles(params);
 
       if (response.status === 200 && response.data.resCode === "00") {
-        dispatch(getRolesSuccess(response.data));
+        const { totalPage } = response.data;
+        if (params.currentPage <= totalPage) {
+          dispatch(getRolesSuccess(response.data));
+        } else {
+          params.currentPage = totalPage;
+          dispatch(setCurrentPage({ currentPage: totalPage }));
+          dispatch(getRoles(params));
+        }
       } else {
         dispatch(getRolesFail(response.data));
         Feedback.toast.error(response.data && response.data.resMsg);

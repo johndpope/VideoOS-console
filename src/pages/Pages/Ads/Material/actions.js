@@ -321,7 +321,14 @@ export const getAdMaterials = (
       const response = await api.getAdMaterials(params);
 
       if (response.status === 200 && response.data.resCode === "00") {
-        dispatch(getAdMaterialsSuccess(response.data));
+        const { totalPage } = response.data;
+        if (params.currentPage <= totalPage) {
+          dispatch(getAdMaterialsSuccess(response.data));
+        } else {
+          params.currentPage = totalPage;
+          dispatch(setCurrentPage({ currentPage: totalPage }));
+          dispatch(getAdMaterials(params));
+        }
       } else {
         dispatch(getAdMaterialsFailure(response.data));
         Feedback.toast.error(response.data && response.data.resMsg);
@@ -386,17 +393,24 @@ export const getIaTypeById = params => {
         const { templateInfoList } = response[1].data;
         template.properties.interactionTemplateId.enumNames = [];
         template.properties.interactionTemplateId.enum = [];
-        Array.isArray(templateInfoList) &&
+
+        if (Array.isArray(templateInfoList)) {
           templateInfoList.forEach(ti => {
             template.properties.interactionTemplateId.enumNames.push(
               ti.templateName
             );
             template.properties.interactionTemplateId.enum.push(ti.templateId);
           });
-        template.properties.interactionTypeId.enum = [params.interactionId];
-        template.properties.interactionTypeId.enumNames = [
-          params.interactionTypeName
-        ];
+          template.properties.interactionTypeId.enum = [params.interactionId];
+          template.properties.interactionTypeId.enumNames = [
+            params.interactionTypeName
+          ];
+          dispatch(
+            saveFormData({
+              interactionTemplateId: templateInfoList[0].templateId || ""
+            })
+          );
+        }
         dispatch(getIaTypeByIdSuccess(template));
         // dispatch(updateFormSchema(params));
       } else {

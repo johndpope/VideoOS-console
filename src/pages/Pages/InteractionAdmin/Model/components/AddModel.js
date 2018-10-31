@@ -188,6 +188,14 @@ const AddModel = ({
                 Feedback.toast.error("请输入“主题名称”");
                 return;
               }
+              if (
+                uploadModelFileInfo &&
+                uploadModelFileInfo.resMsg &&
+                uploadModelFileInfo.resMsg === "模版在使用中，不能更新"
+              ) {
+                Feedback.toast.error(uploadModelFileInfo.resMsg);
+                return;
+              }
               if (!uploadModelFileInfo.compressFileName && !isUpdate) {
                 Feedback.toast.error("请上传.lua主题文件");
                 return;

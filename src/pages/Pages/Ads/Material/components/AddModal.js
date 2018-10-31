@@ -65,6 +65,22 @@ const AddMaterial = ({
               }}
               transformErrors={errors => {
                 return errors.map(error => {
+                  if (error.name === "type") {
+                    let msg = "";
+                    if (error.params.type === "number") {
+                      msg = "数值类型";
+                    }
+                    if (error.params.type === "integer") {
+                      msg = "整型";
+                    }
+                    if (error.params.type === "boolean") {
+                      msg = "布尔值";
+                    }
+                    if (error.params.type === "string") {
+                      msg = "字符串";
+                    }
+                    error.message = msg;
+                  }
                   if (error.name === "format") {
                     error.message = "必选项";
                   }
@@ -75,7 +91,7 @@ const AddMaterial = ({
                     error.message = "必填项";
                   }
                   if (error.name === "pattern") {
-                    error.message = "汉字、字母、数字、下划线组合";
+                    error.message = "汉字、字母、数字组合";
                   }
                   if (error.name === "maxLength") {
                     error.message = `超过${error.params.limit}字符上限`;
@@ -130,6 +146,7 @@ const AddMaterial = ({
               }}
               fields={isSpecial ? { bubbles: Bubbles } : null}
               onSubmit={({ formData }) => {
+                let canSubmit = true;
                 if (
                   formData &&
                   formData.hasOwnProperty("imageUrl") &&
@@ -145,6 +162,76 @@ const AddMaterial = ({
                 ) {
                   Feedback.toast.error("请上传视频");
                   return;
+                }
+                if (
+                  formData &&
+                  formData.hasOwnProperty("messages") &&
+                  formData.messages
+                ) {
+                  formData.messages.forEach(msg => {
+                    if (msg.messageType === 1) {
+                      if (!msg.content) {
+                        canSubmit = false;
+                        Feedback.toast.error("“对话文本内容”不能为空哦");
+                        return;
+                      }
+                    }
+                    if (msg.messageType === 2) {
+                      if (!msg.content) {
+                        canSubmit = false;
+                        Feedback.toast.error("“气泡图片”不能为空哦");
+                        return;
+                      }
+                    }
+                    if (msg.messageType === 3) {
+                      if (!msg.messageButtons) {
+                        canSubmit = false;
+                        Feedback.toast.error("必填项");
+                        return;
+                      }
+                      if (
+                        msg.messageButtons[0] &&
+                        msg.messageButtons[0].title
+                      ) {
+                        canSubmit = false;
+                        Feedback.toast.error("“左侧按钮文案”不能为空哦");
+                        return;
+                      }
+                      if (
+                        !msg.messageButtons[0] &&
+                        msg.messageButtons[0].link
+                      ) {
+                        canSubmit = false;
+                        Feedback.toast.error("“左侧按钮外链链接”不能为空哦");
+                        return;
+                      }
+                      if (
+                        msg.messageButtons[1] &&
+                        msg.messageButtons[0].title
+                      ) {
+                        canSubmit = false;
+                        Feedback.toast.error("“右侧按钮文案”不能为空哦");
+                        return;
+                      }
+                      if (
+                        !msg.messageButtons[1] &&
+                        msg.messageButtons[0].link
+                      ) {
+                        canSubmit = false;
+                        Feedback.toast.error("“右侧按钮外链链接”不能为空哦");
+                        return;
+                      }
+                    }
+
+                    if (!msg.duration) {
+                      canSubmit = false;
+                      Feedback.toast.error("“展示持续时间”不能为空哦");
+                      return;
+                    }
+                  });
+                  if (!canSubmit) {
+                    return;
+                  }
                 }
                 if (isUpdate) {
                   updateMaterial({
