@@ -549,6 +549,7 @@ export default class Bubbles extends Component {
                                     height: "100%",
                                     borderRadius: "0.25rem"
                                   }}
+                                  accept="image/png, image/jpg, image/gif"
                                   type="file"
                                   placeholder="上传气泡图片"
                                   onChange={e => {
