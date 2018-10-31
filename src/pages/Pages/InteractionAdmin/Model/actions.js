@@ -318,7 +318,14 @@ export const getIaModels = (
       const response = await api.getIaModels(params);
 
       if (response.status === 200 && response.data.resCode === "00") {
-        dispatch(getIaModelsSuccess(response.data));
+        const { totalPage } = response.data;
+        if (params.currentPage <= totalPage) {
+          dispatch(getIaModelsSuccess(response.data));
+        } else {
+          params.currentPage = totalPage;
+          dispatch(setCurrentPage({ currentPage: totalPage }));
+          dispatch(getIaModels(params));
+        }
       } else {
         dispatch(getIaModelsFailure(response.data));
         Feedback.toast.error(response.data && response.data.resMsg);

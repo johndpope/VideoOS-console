@@ -263,7 +263,14 @@ export const getAdPlans = (
       const response = await api.getAdPlans(params);
 
       if (response.status === 200 && response.data.resCode === "00") {
-        dispatch(getAdPlansSuccess(response.data));
+        const { totalPage } = response.data;
+        if (params.currentPage <= totalPage) {
+          dispatch(getAdPlansSuccess(response.data));
+        } else {
+          params.currentPage = totalPage;
+          dispatch(setCurrentPage({ currentPage: totalPage }));
+          dispatch(getAdPlans(params));
+        }
       } else {
         dispatch(getAdPlansFailure(response.data));
         Feedback.toast.error(response.data && response.data.resMsg);

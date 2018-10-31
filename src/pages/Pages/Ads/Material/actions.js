@@ -321,7 +321,14 @@ export const getAdMaterials = (
       const response = await api.getAdMaterials(params);
 
       if (response.status === 200 && response.data.resCode === "00") {
-        dispatch(getAdMaterialsSuccess(response.data));
+        const { totalPage } = response.data;
+        if (params.currentPage <= totalPage) {
+          dispatch(getAdMaterialsSuccess(response.data));
+        } else {
+          params.currentPage = totalPage;
+          dispatch(setCurrentPage({ currentPage: totalPage }));
+          dispatch(getAdMaterials(params));
+        }
       } else {
         dispatch(getAdMaterialsFailure(response.data));
         Feedback.toast.error(response.data && response.data.resMsg);
