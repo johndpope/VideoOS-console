@@ -17,7 +17,15 @@
   },
   "title": "",
   "type": "object",
-  "required": ["creativeName", "interactionTemplateId", "vote"],
+  "required": [
+    "creativeName",
+    "interactionTemplateId",
+    "imageUrl",
+    "voteImageUrl",
+    "voteTitle",
+    "voteList",
+    "voteBtnImage"
+  ],
   "properties": {
     "creativeName": {
       "title": "素材名称",
@@ -40,7 +48,7 @@
     },
     "isShowAds": {
       "type": "boolean",
-      "title": "广告标识是否可见",
+      "title": "关闭按钮是否可见",
       "default": true
     },
     "isShowClose": {
@@ -48,12 +56,52 @@
       "title": "关闭按钮是否可见",
       "default": true
     },
-    "messages": {
-      "type": "",
-      "title": "对话内容",
+    "imageUrl": {
+      "type": "string",
+      "title": "热点图片"
+    },
+    "exposureTrackLink": {
+      "type": "string",
+      "format": "uri",
+      "title": "热点曝光监控链接"
+    },
+    "clickTrackLink": {
+      "type": "string",
+      "format": "uri",
+      "title": "热点点击监控链接"
+    },
+    "voteImageUrl": {
+      "type": "string",
+      "title": "投票弹窗图片"
+    },
+    "voteTitle": {
+      "type": "string",
+      "title": "投票弹窗标题"
+    },
+    "voteList": {
+      "type": "array",
+      "title": "信息选项",
       "items": {
         "$ref": "#/definitions/Item"
       }
+    },
+    "voteBtnImage": {
+      "type": "string",
+      "title": "投票按钮图片"
+    },
+    "voteBtnExposureTrackLink": {
+      "type": "string",
+      "format": "uri",
+      "title": "投票按钮曝光的监控链接"
+    },
+    "voteBtnClickTrackLink": {
+      "type": "string",
+      "format": "uri",
+      "title": "投票按钮点击监控链接"
+    },
+    "voteRule": {
+      "type": "string",
+      "title": "投票规则"
     }
   }
 }

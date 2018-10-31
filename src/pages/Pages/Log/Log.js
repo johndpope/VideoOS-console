@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Pagination } from "@icedesign/base";
 import { connect } from "react-redux";
 import { compose } from "redux";

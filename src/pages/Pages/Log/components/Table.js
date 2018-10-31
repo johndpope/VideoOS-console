@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from "react";
-import { Table, Button } from "@icedesign/base";
+import React, { Component } from "react";
+import { Table } from "@icedesign/base";
 
 export default class LogTable extends Component {
   render() {
