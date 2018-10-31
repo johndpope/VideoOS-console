@@ -297,10 +297,11 @@ const updateModelFileSuccess = payload => {
   };
 };
 
-const updateModelFileFailure = () => {
+const updateModelFileFailure = payload => {
   return {
     type: UPDATE_MODEL_FILE_FAILURE,
-    isLoading: false
+    isLoading: false,
+    payload
   };
 };
 

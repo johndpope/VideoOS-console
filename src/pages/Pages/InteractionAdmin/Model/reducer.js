@@ -183,6 +183,7 @@ function iaModelReducer(state = initialState, action) {
     case UPDATE_MODEL_FILE_FAILURE:
       return {
         ...state,
+        uploadModelFileInfo: action.payload,
         isLoading: action.isLoading
       };
     case SET_CURRENT_PAGE:
