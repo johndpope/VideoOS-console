@@ -177,7 +177,7 @@ const AddMaterial = ({
                       }
                     }
                     if (msg.messageType === 2) {
-                      if (!msg.content) {
+                      if (!msg.content || typeof msg.content !== "object") {
                         canSubmit = false;
                         Feedback.toast.error("“气泡图片”不能为空哦");
                         return;
