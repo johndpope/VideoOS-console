@@ -165,19 +165,27 @@ const AddMaterial = ({
                 }
                 if (
                   formData &&
+                  formData.messages &&
+                  formData.messages.length === 0
+                ) {
+                  Feedback.toast.error("请添加“对话内容”");
+                  return;
+                }
+                if (
+                  formData &&
                   formData.hasOwnProperty("messages") &&
                   formData.messages
                 ) {
                   formData.messages.forEach(msg => {
                     if (msg.messageType === 1) {
-                      if (!msg.content) {
+                      if (!msg.content || typeof msg.content === "object") {
                         canSubmit = false;
                         Feedback.toast.error("“对话文本内容”不能为空哦");
                         return;
                       }
                     }
                     if (msg.messageType === 2) {
-                      if (!msg.content) {
+                      if (!msg.content || typeof msg.content !== "object") {
                         canSubmit = false;
                         Feedback.toast.error("“气泡图片”不能为空哦");
                         return;
@@ -189,33 +197,43 @@ const AddMaterial = ({
                         Feedback.toast.error("必填项");
                         return;
                       }
+                      if (!msg.messageButtons[0]) {
+                        canSubmit = false;
+                        Feedback.toast.error("请输入左侧按钮必填信息");
+                        return;
+                      }
                       if (
                         msg.messageButtons[0] &&
-                        msg.messageButtons[0].title
+                        !Boolean(msg.messageButtons[0].title)
                       ) {
                         canSubmit = false;
                         Feedback.toast.error("“左侧按钮文案”不能为空哦");
                         return;
                       }
                       if (
-                        !msg.messageButtons[0] &&
-                        msg.messageButtons[0].link
+                        msg.messageButtons[0] &&
+                        !Boolean(msg.messageButtons[0].link)
                       ) {
                         canSubmit = false;
                         Feedback.toast.error("“左侧按钮外链链接”不能为空哦");
                         return;
                       }
+                      if (!msg.messageButtons[1]) {
+                        canSubmit = false;
+                        Feedback.toast.error("请输入右侧按钮必填信息");
+                        return;
+                      }
                       if (
                         msg.messageButtons[1] &&
-                        msg.messageButtons[0].title
+                        !Boolean(msg.messageButtons[1].title)
                       ) {
                         canSubmit = false;
                         Feedback.toast.error("“右侧按钮文案”不能为空哦");
                         return;
                       }
                       if (
-                        !msg.messageButtons[1] &&
-                        msg.messageButtons[0].link
+                        msg.messageButtons[1] &&
+                        !Boolean(msg.messageButtons[1].link)
                       ) {
                         canSubmit = false;
                         Feedback.toast.error("“右侧按钮外链链接”不能为空哦");

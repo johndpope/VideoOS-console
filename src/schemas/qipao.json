@@ -69,6 +69,7 @@
     "messages": {
       "type": "array",
       "title": "对话内容",
+      "minItems": 1,
       "items": {
         "$ref": "#/definitions/Message"
       }

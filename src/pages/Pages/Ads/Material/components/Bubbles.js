@@ -152,6 +152,7 @@ export default class Bubbles extends Component {
             value={interactionTemplateId}
             onChange={this.onChange("interactionTemplateId")}
           >
+            <option value="">请选择</option>
             {schema &&
               schema.properties &&
               schema.properties.interactionTemplateId &&
@@ -173,7 +174,7 @@ export default class Bubbles extends Component {
         <div className="array-item checkbox">
           <Label check>
             <Input
-              defaultChecked={isShowAds ? "checked" : false}
+              checked={isShowAds ? "checked" : false}
               type="checkbox"
               disabled={readonly ? "disabled" : false}
               value={isShowAds}
@@ -185,7 +186,7 @@ export default class Bubbles extends Component {
         <div className="array-item checkbox">
           <Label check>
             <Input
-              defaultChecked={isShowClose ? "checked" : false}
+              checked={isShowClose ? "checked" : false}
               type="checkbox"
               disabled={readonly ? "disabled" : false}
               value={isShowClose}
@@ -266,7 +267,7 @@ export default class Bubbles extends Component {
                               borderRadius: "0.25rem"
                             }}
                             type="file"
-                            accept="image/png, image/jpg, image/gif"
+                            accept="image/png, image/jpg, image/jpeg"
                             onChange={e => {
                               if (e.target.files.length > 0) {
                                 addMaterialFile({
@@ -549,6 +550,7 @@ export default class Bubbles extends Component {
                                     height: "100%",
                                     borderRadius: "0.25rem"
                                   }}
+                                  accept="image/png, image/jpg, image/jpeg, image/gif"
                                   type="file"
                                   placeholder="上传气泡图片"
                                   onChange={e => {
@@ -1044,7 +1046,7 @@ export default class Bubbles extends Component {
             errorSchema.messages.__errors &&
             errorSchema.messages.__errors.map((err, idx) => (
               <li key={idx} style={{ color: "#f86c6b" }}>
-                {err}
+                {err || "必填项"}
               </li>
             ))}
           <div
