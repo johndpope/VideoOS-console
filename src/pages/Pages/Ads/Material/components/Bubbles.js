@@ -1046,7 +1046,7 @@ export default class Bubbles extends Component {
             errorSchema.messages.__errors &&
             errorSchema.messages.__errors.map((err, idx) => (
               <li key={idx} style={{ color: "#f86c6b" }}>
-                {err}
+                {err || "必填项"}
               </li>
             ))}
           <div

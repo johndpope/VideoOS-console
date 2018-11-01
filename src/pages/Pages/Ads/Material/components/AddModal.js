@@ -165,6 +165,14 @@ const AddMaterial = ({
                 }
                 if (
                   formData &&
+                  formData.messages &&
+                  formData.messages.length === 0
+                ) {
+                  Feedback.toast.error("请添加“对话内容”");
+                  return;
+                }
+                if (
+                  formData &&
                   formData.hasOwnProperty("messages") &&
                   formData.messages
                 ) {

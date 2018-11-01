@@ -180,7 +180,13 @@ const AddModel = ({
                 Feedback.toast.error("请选择“主题类型”");
                 return;
               }
-              if (!formData.interactionTemplateName && !isUpdate) {
+              if (
+                !formData.hasOwnProperty("interactionTemplateName") &&
+                isUpdate
+              ) {
+                formData.interactionTemplateName = formData.templateName;
+              }
+              if (!formData.interactionTemplateName) {
                 Feedback.toast.error("请输入“主题名称”");
                 return;
               }
