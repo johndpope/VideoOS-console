@@ -149,7 +149,7 @@ export default class Bubbles extends Component {
             type="select"
             readOnly={readonly}
             disabled={readonly ? "disabled" : false}
-            value={interactionTemplateId}
+            value={interactionTemplateId || ""}
             onChange={this.onChange("interactionTemplateId")}
           >
             <option value="">请选择</option>
