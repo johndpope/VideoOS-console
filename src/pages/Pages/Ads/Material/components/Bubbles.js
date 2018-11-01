@@ -152,6 +152,7 @@ export default class Bubbles extends Component {
             value={interactionTemplateId}
             onChange={this.onChange("interactionTemplateId")}
           >
+            <option value="">请选择</option>
             {schema &&
               schema.properties &&
               schema.properties.interactionTemplateId &&
