@@ -405,11 +405,11 @@ export const getIaTypeById = params => {
           template.properties.interactionTypeId.enumNames = [
             params.interactionTypeName
           ];
-          dispatch(
-            saveFormData({
-              interactionTemplateId: templateInfoList[0].templateId || ""
-            })
-          );
+          // dispatch(
+          //   saveFormData({
+          //     interactionTemplateId: templateInfoList[0].templateId || ""
+          //   })
+          // );
         }
         dispatch(getIaTypeByIdSuccess(template));
         // dispatch(updateFormSchema(params));
@@ -518,11 +518,6 @@ export const deleteMaterial = params => {
 export const addMaterialToggle = payload => {
   return dispatch => {
     addMaterialSwitch = !addMaterialSwitch;
-    if (payload && ["read", "update"].includes(payload.opType)) {
-      dispatch(
-        getAdMaterialInfo({ creativeId: payload && payload.creativeId })
-      );
-    }
     if (addMaterialSwitch) {
       dispatch(
         getIaTypeById({
@@ -531,6 +526,11 @@ export const addMaterialToggle = payload => {
           interactionTypeName: payload.interactionTypeName
         })
       );
+      if (payload && ["read", "update"].includes(payload.opType)) {
+        dispatch(
+          getAdMaterialInfo({ creativeId: payload && payload.creativeId })
+        );
+      }
       dispatch(showAddMaterial(payload));
     } else {
       dispatch(_setSwitcher("refresh"));
