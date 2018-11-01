@@ -266,7 +266,7 @@ export default class Bubbles extends Component {
                               borderRadius: "0.25rem"
                             }}
                             type="file"
-                            accept="image/png, image/jpg"
+                            accept="image/png, image/jpg, image/jpeg"
                             onChange={e => {
                               if (e.target.files.length > 0) {
                                 addMaterialFile({
@@ -549,7 +549,7 @@ export default class Bubbles extends Component {
                                     height: "100%",
                                     borderRadius: "0.25rem"
                                   }}
-                                  accept="image/png, image/jpg, image/gif"
+                                  accept="image/png, image/jpg, image/jpeg, image/gif"
                                   type="file"
                                   placeholder="上传气泡图片"
                                   onChange={e => {
