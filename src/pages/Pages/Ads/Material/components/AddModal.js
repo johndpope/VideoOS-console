@@ -96,6 +96,11 @@ const AddMaterial = ({
                   if (error.name === "maxLength") {
                     error.message = `超过${error.params.limit}字符上限`;
                   }
+                  if (error.name === "enum") {
+                    if (error.params.allowedValues) {
+                      error.message = "请选择";
+                    }
+                  }
                   return error;
                 });
               }}

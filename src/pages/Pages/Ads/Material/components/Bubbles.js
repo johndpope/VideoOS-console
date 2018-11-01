@@ -9,8 +9,6 @@ export default class Bubbles extends Component {
     super(props);
     this.state = {
       ...props.formData,
-      interactionTemplateId:
-        props.schema.properties.interactionTemplateId.enum[0],
       readonly: Boolean(props.uiSchema["ui:disabled"])
     };
   }
