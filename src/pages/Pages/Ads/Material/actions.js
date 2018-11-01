@@ -322,6 +322,10 @@ export const getAdMaterials = (
 
       if (response.status === 200 && response.data.resCode === "00") {
         const { totalPage } = response.data;
+        if (totalPage <= 0) {
+          dispatch(getAdMaterialsSuccess([]));
+          return;
+        }
         if (params.currentPage <= totalPage) {
           dispatch(getAdMaterialsSuccess(response.data));
         } else {
