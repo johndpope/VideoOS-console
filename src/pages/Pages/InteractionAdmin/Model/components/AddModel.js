@@ -34,7 +34,18 @@ const AddModel = ({
   const { opType } = record || {};
   const isRead = opType === "read";
   const isUpdate = opType === "update";
-
+  if (
+    isUpdate &&
+    formData &&
+    formData.interactionTypeId &&
+    modelTypes &&
+    !JSON.stringify(modelTypes).includes(formData.interactionTypeId)
+  ) {
+    modelTypes.push({
+      interactionId: formData.interactionTypeId,
+      interactionTypeName: formData.interactionTypeName
+    });
+  }
   return (
     <Fragment>
       <Modal isOpen={shouldOpen} toggle={toggle}>

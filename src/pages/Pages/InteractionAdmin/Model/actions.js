@@ -319,6 +319,10 @@ export const getIaModels = (
 
       if (response.status === 200 && response.data.resCode === "00") {
         const { totalPage } = response.data;
+        if (totalPage <= 0) {
+          dispatch(getIaModelsSuccess([]));
+          return;
+        }
         if (params.currentPage <= totalPage) {
           dispatch(getIaModelsSuccess(response.data));
         } else {
