@@ -56,7 +56,7 @@ const AddModel = ({
           <Form>
             <InputGroup className="mb-4">
               <InputGroupAddon addonType="prepend">
-                <InputGroupText>主题类型</InputGroupText>
+                <InputGroupText>所属应用</InputGroupText>
               </InputGroupAddon>
               <Input
                 type="select"

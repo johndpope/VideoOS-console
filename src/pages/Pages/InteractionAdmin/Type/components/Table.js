@@ -52,7 +52,7 @@ export default class TypeTable extends Component {
           />
           <Table.Column title="创建日期" dataIndex="createDate" width={80} />
           <Table.Column
-            title="类型名称"
+            title="应用名称"
             dataIndex="interactionTypeName"
             width={120}
           />

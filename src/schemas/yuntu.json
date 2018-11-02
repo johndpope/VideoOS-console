@@ -17,14 +17,14 @@
       "pattern": "[0-9A-Za-z\u4e00-\u9fa5-]+$"
     },
     "interactionTypeId": {
-      "title": "素材类型",
+      "title": "所属应用",
       "type": "integer",
       "default": "请选择",
       "enum": [],
       "enumNames": []
     },
     "interactionTemplateId": {
-      "title": "素材模板",
+      "title": "素材主题",
       "type": "integer",
       "enum": [],
       "enumNames": []
