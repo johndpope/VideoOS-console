@@ -76,7 +76,6 @@ export default class Votes extends Component {
     const {
       creativeName,
       interactionTemplateId,
-      isShowAds = true,
       isShowClose = true
     } = this.state;
 
