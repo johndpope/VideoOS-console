@@ -10,7 +10,9 @@
         },
         "title": {
           "type": "string",
-          "title": ""
+          "title": "",
+          "maxLength": 5,
+          "pattern": "[0-9A-Za-z\u4e00-\u9fa5]+$"
         }
       }
     }
@@ -19,6 +21,7 @@
   "type": "object",
   "required": [
     "creativeName",
+    "interactionTypeId",
     "interactionTemplateId",
     "imageUrl",
     "voteImageUrl",
@@ -76,7 +79,9 @@
     },
     "voteTitle": {
       "type": "string",
-      "title": "投票弹窗标题"
+      "title": "投票弹窗标题",
+      "maxLength": 10,
+      "pattern": "[0-9A-Za-z\u4e00-\u9fa5]+$"
     },
     "voteList": {
       "type": "array",
@@ -101,7 +106,8 @@
     },
     "voteRule": {
       "type": "string",
-      "title": "投票规则"
+      "title": "投票规则",
+      "maxLength": 100
     }
   }
 }
