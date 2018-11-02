@@ -150,7 +150,7 @@ const AddModel = ({
                         const templateFileSourceName =
                           files && files[0] && files[0].name;
                         if (!/.zip$/gi.test(templateFileSourceName)) {
-                          Feedback.toast.error("请上传*.lua文件");
+                          Feedback.toast.error("请上传*.zip文件");
                           setUploadModelFileInfo({});
                           return;
                         }
@@ -214,7 +214,7 @@ const AddModel = ({
                 return;
               }
               if (!uploadModelFileInfo.compressFileName && !isUpdate) {
-                Feedback.toast.error("请上传.lua主题文件");
+                Feedback.toast.error("请上传.zip主题文件");
                 return;
               }
               if (isUpdate) {
@@ -226,7 +226,7 @@ const AddModel = ({
                       )
                     : !(modelInfo && modelInfo.templateFileSourceName)
                 ) {
-                  Feedback.toast.error("请上传.lua主题文件");
+                  Feedback.toast.error("请上传.zip主题文件");
                   return;
                 }
                 updateModel({

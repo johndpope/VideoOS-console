@@ -5,6 +5,12 @@ import { Button, Feedback } from "@icedesign/base";
 import uiSchema from "schemas/uiSchema";
 
 import Bubbles from "./Bubbles";
+import Votes from "./Votes";
+
+const fieldsMap = {
+  qipao: Bubbles,
+  toupiao: Votes
+};
 
 const AddMaterial = ({
   shouldOpen,
@@ -26,7 +32,9 @@ const AddMaterial = ({
   const { opType } = record || {};
   const isRead = opType === "read";
   const isUpdate = opType === "update";
-  const isSpecial = ["qipao"].includes(materialSchema && materialSchema.key);
+  const isSpecial = ["qipao", "toupiao"].includes(
+    materialSchema && materialSchema.key
+  );
   return (
     <Fragment>
       <Modal isOpen={shouldOpen} toggle={toggle}>
@@ -51,8 +59,13 @@ const AddMaterial = ({
                   formData,
                   saveFormData
                 }),
-                "ui:field": "bubbles"
+                "ui:field": "fields"
               }}
+              fields={
+                isSpecial
+                  ? { fields: fieldsMap[materialSchema && materialSchema.key] }
+                  : null
+              }
               ErrorList={props => {
                 const { errors } = props;
                 return (
@@ -149,7 +162,6 @@ const AddMaterial = ({
 
                 saveFormData(formData);
               }}
-              fields={isSpecial ? { bubbles: Bubbles } : null}
               onSubmit={({ formData }) => {
                 let canSubmit = true;
                 if (

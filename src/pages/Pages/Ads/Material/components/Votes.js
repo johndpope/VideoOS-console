@@ -145,38 +145,6 @@ export default class Votes extends Component {
         </div>
         <div>
           <Label>投票按钮图片*</Label>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyMessage: "center",
-              alignItems: "center"
-            }}
-          >
-            <img
-              alt=""
-              src={message.content.fileUrl}
-              style={{
-                maxWidth: "64px",
-                maxHeight: "64px"
-              }}
-            />
-            {!readonly ? (
-              <button
-                type="button"
-                className="btn btn-danger array-item-remove"
-                onClick={e => {
-                  message.content = "";
-                  messages[idx] = message;
-                  this.setState({ messages }, () =>
-                    this.props.onChange(this.state)
-                  );
-                }}
-              >
-                <i className="glyphicon glyphicon-remove" />
-              </button>
-            ) : null}
-          </div>
         </div>
         <div className="array-item">
           <Label>投票按钮曝光的监控链接</Label>
