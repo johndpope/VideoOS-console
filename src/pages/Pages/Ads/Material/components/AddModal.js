@@ -199,7 +199,7 @@ const AddMaterial = ({
                     if (msg.messageType === 3) {
                       if (!msg.messageButtons) {
                         canSubmit = false;
-                        Feedback.toast.error("必填项");
+                        Feedback.toast.error("请输入左侧按钮必填信息");
                         return;
                       }
                       if (!msg.messageButtons[0]) {
