@@ -51,11 +51,11 @@ export default class ModalTable extends Component {
           />
           <Table.Column title="创建日期" dataIndex="createDate" width={80} />
           <Table.Column
-            title="模板类型"
+            title="所属应用"
             dataIndex="interactionTypeName"
             width={80}
           />
-          <Table.Column title="模板名称" dataIndex="templateName" width={120} />
+          <Table.Column title="主题名称" dataIndex="templateName" width={120} />
           <Table.Column title="操作" cell={this.renderOperator} width={140} />
         </Table>
       </div>

@@ -86,7 +86,7 @@ const AddMaterial = ({
           </InputGroup>
           <InputGroup className="mb-4">
             <InputGroupAddon addonType="prepend">
-              <InputGroupText>投放类型</InputGroupText>
+              <InputGroupText>投放应用</InputGroupText>
             </InputGroupAddon>
             <Input
               type="text"
