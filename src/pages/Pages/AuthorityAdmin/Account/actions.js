@@ -199,6 +199,10 @@ export const getAccounts = (
 
       if (response.status === 200 && response.data.resCode === "00") {
         const { totalPage } = response.data;
+        if (totalPage <= 0) {
+          dispatch(getAccountsSuccess([]));
+          return;
+        }
         if (params.currentPage <= totalPage) {
           dispatch(getAccountsSuccess(response.data));
         } else {

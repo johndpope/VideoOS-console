@@ -9,8 +9,6 @@ export default class Bubbles extends Component {
     super(props);
     this.state = {
       ...props.formData,
-      interactionTemplateId:
-        props.schema.properties.interactionTemplateId.enum[0],
       readonly: Boolean(props.uiSchema["ui:disabled"])
     };
   }
@@ -149,7 +147,7 @@ export default class Bubbles extends Component {
             type="select"
             readOnly={readonly}
             disabled={readonly ? "disabled" : false}
-            value={interactionTemplateId}
+            value={interactionTemplateId || ""}
             onChange={this.onChange("interactionTemplateId")}
           >
             <option value="">请选择</option>
