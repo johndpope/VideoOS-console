@@ -143,7 +143,7 @@ export default class Votes extends Component {
         <div className="array-item checkbox">
           <Label check>
             <Input
-              defaultChecked={isShowClose ? "checked" : false}
+              checked={isShowClose ? "checked" : false}
               type="checkbox"
               disabled={readonly ? "disabled" : false}
               value={isShowClose}
