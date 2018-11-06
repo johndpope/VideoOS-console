@@ -97,15 +97,28 @@ export async function getModelInfoById(params) {
   });
 }
 
-export async function downloadModelTemplateFile(params) {
-  return axios({
-    headers: {
-      token: getAuthority()
-    },
-    url: `${OS_API}/template/download`,
-    method: "post",
-    data: params
-  });
+export function downloadModelTemplateFile(params) {
+  // return axios({
+  //   headers: {
+  //     token: getAuthority()
+  //   },
+  //   url: `${OS_API}/template/download`,
+  //   method: "post",
+  //   data: params
+  // });
+  let anchor = document.createElement("a");
+  let href = `${OS_API}/template/getdown?templateId=${
+    params.templateId
+  }&token=${getAuthority()}`;
+  anchor.style.visibility = "hidden";
+  anchor.href = href;
+  anchor.target = "_blank";
+  anchor.download = "模版文件.zip";
+  document.body.appendChild(anchor);
+  let evt = document.createEvent("MouseEvents");
+  evt.initEvent("click", true, true);
+  anchor.dispatchEvent(evt);
+  document.body.removeChild(anchor);
 }
 
 export async function updateModelFile(params) {
