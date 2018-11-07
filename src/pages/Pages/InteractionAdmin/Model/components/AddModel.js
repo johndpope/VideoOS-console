@@ -229,11 +229,12 @@ const AddModel = ({
                   ...formData,
                   currentPage
                 });
+              } else if (!isRead) {
+                addModel({
+                  ...formData,
+                  currentPage
+                });
               }
-              addModel({
-                ...formData,
-                currentPage
-              });
             }}
           >
             {isUpdate ? "确认修改" : isRead ? "确认" : "确认新增"}

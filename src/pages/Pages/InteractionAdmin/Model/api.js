@@ -112,7 +112,9 @@ export function downloadModelTemplateFile(params) {
   }&token=${getAuthority()}`;
   anchor.style.visibility = "hidden";
   anchor.href = href;
-  anchor.target = "_blank";
+  if ("download" in anchor) {
+    anchor.target = "_blank";
+  }
   anchor.download = "模版文件.zip";
   document.body.appendChild(anchor);
   let evt = document.createEvent("MouseEvents");
