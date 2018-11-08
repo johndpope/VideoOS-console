@@ -71,7 +71,8 @@ export default class Votes extends Component {
       voteBtnImage,
       voteBtnExposureTrackLink,
       voteBtnClickTrackLink,
-      voteRule
+      voteRule,
+      creativeIdList = []
     } = this.state;
     const {
       creativeName,
@@ -226,7 +227,15 @@ export default class Votes extends Component {
                         if (result.status === 200) {
                           if (result.data && result.data.resCode === "00") {
                             imageUrl = result.data.fileUrl;
-                            this.setState({ imageUrl }, () =>
+                            if (
+                              Array.isArray(creativeIdList) &&
+                              creativeIdList.indexOf(
+                                result.data.creativeFileId
+                              ) === -1
+                            ) {
+                              creativeIdList.push(result.data.creativeFileId);
+                            }
+                            this.setState({ imageUrl, creativeIdList }, () =>
                               this.props.onChange(this.state)
                             );
                           } else {
@@ -358,8 +367,17 @@ export default class Votes extends Component {
                         if (result.status === 200) {
                           if (result.data && result.data.resCode === "00") {
                             voteImageUrl = result.data.fileUrl;
-                            this.setState({ voteImageUrl }, () =>
-                              this.props.onChange(this.state)
+                            if (
+                              Array.isArray(creativeIdList) &&
+                              creativeIdList.indexOf(
+                                result.data.creativeFileId
+                              ) === -1
+                            ) {
+                              creativeIdList.push(result.data.creativeFileId);
+                            }
+                            this.setState(
+                              { voteImageUrl, creativeIdList },
+                              () => this.props.onChange(this.state)
                             );
                           } else {
                             Feedback.toast.error(
@@ -494,8 +512,19 @@ export default class Votes extends Component {
                                     ) {
                                       vote.imageUrl = result.data.fileUrl;
                                       voteList[idx] = vote;
-                                      this.setState({ voteList }, () =>
-                                        this.props.onChange(this.state)
+                                      if (
+                                        Array.isArray(creativeIdList) &&
+                                        creativeIdList.indexOf(
+                                          result.data.creativeFileId
+                                        ) === -1
+                                      ) {
+                                        creativeIdList.push(
+                                          result.data.creativeFileId
+                                        );
+                                      }
+                                      this.setState(
+                                        { voteList, creativeIdList },
+                                        () => this.props.onChange(this.state)
                                       );
                                     } else {
                                       Feedback.toast.error(
@@ -670,8 +699,17 @@ export default class Votes extends Component {
                         if (result.status === 200) {
                           if (result.data && result.data.resCode === "00") {
                             voteBtnImage = result.data.fileUrl;
-                            this.setState({ voteBtnImage }, () =>
-                              this.props.onChange(this.state)
+                            if (
+                              Array.isArray(creativeIdList) &&
+                              creativeIdList.indexOf(
+                                result.data.creativeFileId
+                              ) === -1
+                            ) {
+                              creativeIdList.push(result.data.creativeFileId);
+                            }
+                            this.setState(
+                              { voteBtnImage, creativeIdList },
+                              () => this.props.onChange(this.state)
                             );
                           } else {
                             Feedback.toast.error(

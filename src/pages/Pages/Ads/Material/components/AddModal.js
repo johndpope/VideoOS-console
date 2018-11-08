@@ -275,7 +275,8 @@ const AddMaterial = ({
                     interactionTypeId: formData.interactionTypeId,
                     interactionTemplateId: formData.interactionTemplateId,
                     creativeContent: JSON.stringify(formData),
-                    creativeIdList,
+                    creativeIdList:
+                      (formData && formData.creativeIdList) || creativeIdList,
                     currentPage
                   });
                 } else if (isRead) {
@@ -287,7 +288,8 @@ const AddMaterial = ({
                     interactionTypeId: formData.interactionTypeId,
                     interactionTemplateId: formData.interactionTemplateId,
                     creativeContent: JSON.stringify(formData),
-                    creativeIdList,
+                    creativeIdList:
+                      (formData && formData.creativeIdList) || creativeIdList,
                     interactionTypeName:
                       materialSchema &&
                       materialSchema.properties &&
