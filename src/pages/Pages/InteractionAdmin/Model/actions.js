@@ -535,23 +535,24 @@ export const getModelInfoById = params => {
 };
 
 export const downloadModelTemplateFile = params => {
-  return async dispatch => {
-    dispatch(downloadModelTemplateFileRequest());
-    try {
-      const response = await api.downloadModelTemplateFile(params);
+  return dispatch => {
+    api.downloadModelTemplateFile(params);
+    //dispatch(downloadModelTemplateFileRequest());
+    // try {
+    //   const response = await api.downloadModelTemplateFile(params);
 
-      if (response.status === 200) {
-        saveFile(response.data, "text/latex", "模版文件.lua");
-        dispatch(downloadModelTemplateFileSuccess(response.data));
-      } else {
-        dispatch(downloadModelTemplateFileFailure(response.data));
-        Feedback.toast.error(response.data && response.data.resMsg);
-      }
+    //   if (response.status === 200) {
+    //     saveFile(response.data, "text/latex", "模版文件.lua");
+    //     dispatch(downloadModelTemplateFileSuccess(response.data));
+    //   } else {
+    //     dispatch(downloadModelTemplateFileFailure(response.data));
+    //     Feedback.toast.error(response.data && response.data.resMsg);
+    //   }
 
-      return response.data;
-    } catch (error) {
-      dispatch(downloadModelTemplateFileFailure(error));
-    }
+    //   return response.data;
+    // } catch (error) {
+    //   dispatch(downloadModelTemplateFileFailure(error));
+    // }
   };
 };
 

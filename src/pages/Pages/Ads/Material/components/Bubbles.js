@@ -129,7 +129,7 @@ export default class Bubbles extends Component {
             ))}
         </div>
         <div className="array-item">
-          <Label>素材类型</Label>
+          <Label>所属应用</Label>
           <Input type="select" disabled>
             {schema &&
               schema.properties &&
@@ -142,7 +142,7 @@ export default class Bubbles extends Component {
           </Input>
         </div>
         <div className="array-item">
-          <Label>素材模板*</Label>
+          <Label>素材主题*</Label>
           <Input
             type="select"
             readOnly={readonly}
@@ -265,7 +265,7 @@ export default class Bubbles extends Component {
                               borderRadius: "0.25rem"
                             }}
                             type="file"
-                            accept="image/png, image/jpg, image/jpeg"
+                            accept="image/png, image/jpg, image/jpeg, image/gif"
                             onChange={e => {
                               if (e.target.files.length > 0) {
                                 addMaterialFile({

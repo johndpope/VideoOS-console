@@ -67,7 +67,11 @@ const AddModel = ({
                     : ""
                 }
                 onChange={e => {
-                  setFormData({ interactionTypeId: e.target.value });
+                  const values = e.target.value.split(",");
+                  setFormData({
+                    interactionTypeId: values[0],
+                    interactionTypeName: values[1]
+                  });
                 }}
               >
                 <option value="">请选择</option>
@@ -75,7 +79,10 @@ const AddModel = ({
                   Array.isArray(modelTypes) &&
                   modelTypes.length > 0 &&
                   modelTypes.map((mt, idx) => (
-                    <option key={idx} value={mt.interactionId}>
+                    <option
+                      key={idx}
+                      value={`${mt.interactionId},${mt.interactionTypeName}`}
+                    >
                       {mt.interactionTypeName}
                     </option>
                   ))}
@@ -93,7 +100,7 @@ const AddModel = ({
                   isRead || isUpdate ? formData && formData.templateName : ""
                 }
                 onChange={e => {
-                  setFormData({ interactionTemplateName: e.target.value });
+                  setFormData({ templateName: e.target.value });
                 }}
                 maxLength={10}
               />
@@ -149,20 +156,21 @@ const AddModel = ({
                         const { files } = e.target;
                         const templateFileSourceName =
                           files && files[0] && files[0].name;
-                        if (!/.lua$/gi.test(templateFileSourceName)) {
-                          Feedback.toast.error("请上传*.lua文件");
-                          setUploadModelFileInfo({});
+                        if (!/.zip$/gi.test(templateFileSourceName)) {
+                          Feedback.toast.error("请上传*.zip文件");
                           return;
                         }
-                        setFormData({ templateFileSourceName });
-                        if (isUpdate) {
-                          updateModelFile({
-                            templateId: record && record.templateId,
-                            file: files && files[0]
-                          });
-                        } else {
-                          uploadModelFile({ file: files && files[0] });
-                        }
+                        setFormData({ file: files && files[0] });
+
+                        // setFormData({ templateFileSourceName });
+                        // if (isUpdate) {
+                        //   updateModelFile({
+                        //     templateId: record && record.templateId,
+                        //     file: files && files[0]
+                        //   });
+                        // } else {
+                        //   uploadModelFile({ file: files && files[0] });
+                        // }
                       }}
                     />
                   )}
@@ -170,9 +178,9 @@ const AddModel = ({
               </InputGroup>
             )}
           </Form>
-          {/*<div>
-            注：需上传压缩文件格式(*.lua)。且同一个主题下，文件名不能重名哦。
-          </div>*/}
+          <div>
+            注：需上传压缩文件格式(*.zip)。且同一个主题下，文件名不能重名哦。
+          </div>
         </ModalBody>
         <ModalFooter>
           <Button onClick={toggle}>取消</Button>
@@ -191,17 +199,7 @@ const AddModel = ({
                 Feedback.toast.error("请选择“主题类型”");
                 return;
               }
-              if (
-                !formData.hasOwnProperty("interactionTemplateName") &&
-                isUpdate
-              ) {
-                formData.interactionTemplateName = formData.templateName;
-              }
-              if (!formData.interactionTemplateName) {
-                Feedback.toast.error("请输入“主题名称”");
-                return;
-              }
-              if (!(formData && formData.templateName) && isUpdate) {
+              if (!formData.templateName) {
                 Feedback.toast.error("请输入“主题名称”");
                 return;
               }
@@ -213,32 +211,27 @@ const AddModel = ({
                 Feedback.toast.error(uploadModelFileInfo.resMsg);
                 return;
               }
-              if (!uploadModelFileInfo.compressFileName && !isUpdate) {
-                Feedback.toast.error("请上传.lua主题文件");
+              if (formData && !formData.file && !isUpdate) {
+                Feedback.toast.error("请上传*.zip文件");
                 return;
               }
               if (isUpdate) {
                 if (
                   showFileIpt
-                    ? !(
-                        uploadModelFileInfo &&
-                        uploadModelFileInfo.compressFileName
-                      )
+                    ? !(formData && formData.file)
                     : !(modelInfo && modelInfo.templateFileSourceName)
                 ) {
-                  Feedback.toast.error("请上传.lua主题文件");
+                  Feedback.toast.error("请上传.zip主题文件");
                   return;
                 }
                 updateModel({
                   interactionTemplateId: record && record.templateId,
                   ...formData,
-                  ...uploadModelFileInfo,
                   currentPage
                 });
-              } else {
+              } else if (!isRead) {
                 addModel({
                   ...formData,
-                  ...uploadModelFileInfo,
                   currentPage
                 });
               }

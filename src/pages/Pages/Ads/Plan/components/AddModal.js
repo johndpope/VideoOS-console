@@ -38,7 +38,7 @@ const AddMaterial = ({
     Array.isArray(formData.launchTimes) &&
     formData.launchTimes.length > 0
       ? formData.launchTimes
-      : (formData.launchTime && formData.launchTime.split(",")) || [""];
+      : (formData.launchTime && formData.launchTime[0]) || [""];
   if (
     formData &&
     formData.launchDateStart &&
@@ -391,10 +391,10 @@ const AddMaterial = ({
                                     ? moment(`2018-09-10 ${lt}`)
                                     : formData &&
                                       formData.launchTime &&
-                                      (typeof formData.launchTime === "string"
+                                      (Array.isArray(formData.launchTime)
                                         ? moment(
                                             `2018-09-10 ${
-                                              formData.launchTime.split(",")[0]
+                                              formData.launchTime[0]
                                             }`
                                           )
                                         : formData.launchTime)
@@ -561,18 +561,28 @@ const AddMaterial = ({
                 Feedback.toast.error("投放时长为数字");
                 return;
               }
+              if (formData.interactionTypeName) {
+                delete formData.interactionTypeName;
+              }
               if (isUpdate) {
                 if (formData.launchTimes) {
-                  formData.launchTime = formData.launchTimes.join(",");
+                  formData.launchTime = [formData.launchTimes];
+                }
+                if (formData.launchTimes) {
+                  delete formData.launchTimes;
                 }
                 // delete formData.launchTimes;
                 updatePlan({ ...formData, currentPage });
               } else {
-                formData.launchTime =
-                  formData.launchTimes && formData.launchTimes.join(",");
+                formData.launchTime = [
+                  formData.launchTimes && formData.launchTimes
+                ];
                 // delete formData.launchTimes;
                 if (formData.v_minutes) delete formData.v_minutes;
                 if (formData.v_seconds) delete formData.v_seconds;
+                if (formData.launchTimes) {
+                  delete formData.launchTimes;
+                }
                 addPlan({ ...formData, currentPage });
               }
             }}

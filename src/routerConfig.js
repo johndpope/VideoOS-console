@@ -65,7 +65,7 @@ const routerConfig = [
     component: License
   },
   {
-    path: "rz/log",
+    path: "/rz/log",
     name: "日志信息管理",
     component: Log
   }
