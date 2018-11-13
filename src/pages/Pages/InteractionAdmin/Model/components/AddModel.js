@@ -63,7 +63,10 @@ const AddModel = ({
                 disabled={isRead ? "disabled" : false}
                 defaultValue={
                   isRead || isUpdate
-                    ? formData && formData.interactionTypeId
+                    ? formData &&
+                      `${formData.interactionTypeId},${
+                        formData.interactionTypeName
+                      }`
                     : ""
                 }
                 onChange={e => {
