@@ -283,6 +283,22 @@ const AddMaterial = ({
                     interactionTypeId: formData.interactionTypeId,
                     interactionTemplateId: formData.interactionTemplateId,
                     creativeContent: JSON.stringify(formData),
+                    interactionTemplateName:
+                      materialSchema &&
+                      materialSchema.properties &&
+                      materialSchema.properties.interactionTemplateId &&
+                      materialSchema.properties.interactionTemplateId
+                        .enumNames &&
+                      materialSchema.properties.interactionTemplateId.enumNames[
+                        materialSchema.properties.interactionTemplateId.enum &&
+                        Array.isArray(
+                          materialSchema.properties.interactionTemplateId.enum
+                        )
+                          ? materialSchema.properties.interactionTemplateId.enum.indexOf(
+                              formData.interactionTemplateId
+                            )
+                          : 0
+                      ],
                     creativeIdList:
                       (formData && formData.creativeIdList) || creativeIdList,
                     currentPage
