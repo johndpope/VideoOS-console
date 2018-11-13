@@ -332,66 +332,68 @@ export default class Votes extends Component {
                   </div>
                 </Fragment>
               ) : (
-                <div
-                  style={{
-                    position: "relative",
-                    width: "120px",
-                    height: "32px",
-                    border: "1px solid #e4e7ea",
-                    textAlign: "center",
-                    lineHeight: "32px"
-                  }}
-                >
-                  上传图片
-                  <Input
+                <Fragment>
+                  <div
                     style={{
-                      position: "absolute",
-                      opacity: 0,
-                      top: 0,
-                      left: 0,
-                      width: "100%",
-                      height: "100%",
-                      borderRadius: "0.25rem"
+                      position: "relative",
+                      width: "120px",
+                      height: "32px",
+                      border: "1px solid #e4e7ea",
+                      textAlign: "center",
+                      lineHeight: "32px"
                     }}
-                    accept="image/png, image/jpg, image/jpeg, image/gif"
-                    type="file"
-                    placeholder="上传图片"
-                    onChange={e => {
-                      const { files } = e.target;
-                      if (!files || files.length <= 0) {
-                        return;
-                      }
-                      addMaterialFile({
-                        file: files[0]
-                      }).then(result => {
-                        if (result.status === 200) {
-                          if (result.data && result.data.resCode === "00") {
-                            voteImageUrl = result.data.fileUrl;
-                            if (
-                              Array.isArray(creativeIdList) &&
-                              creativeIdList.indexOf(
-                                result.data.creativeFileId
-                              ) === -1
-                            ) {
-                              creativeIdList.push(result.data.creativeFileId);
+                  >
+                    上传图片
+                    <Input
+                      style={{
+                        position: "absolute",
+                        opacity: 0,
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                        borderRadius: "0.25rem"
+                      }}
+                      accept="image/png, image/jpg, image/jpeg, image/gif"
+                      type="file"
+                      placeholder="上传图片"
+                      onChange={e => {
+                        const { files } = e.target;
+                        if (!files || files.length <= 0) {
+                          return;
+                        }
+                        addMaterialFile({
+                          file: files[0]
+                        }).then(result => {
+                          if (result.status === 200) {
+                            if (result.data && result.data.resCode === "00") {
+                              voteImageUrl = result.data.fileUrl;
+                              if (
+                                Array.isArray(creativeIdList) &&
+                                creativeIdList.indexOf(
+                                  result.data.creativeFileId
+                                ) === -1
+                              ) {
+                                creativeIdList.push(result.data.creativeFileId);
+                              }
+                              this.setState(
+                                { voteImageUrl, creativeIdList },
+                                () => this.props.onChange(this.state)
+                              );
+                            } else {
+                              Feedback.toast.error(
+                                result.data && result.data.resMsg
+                              );
                             }
-                            this.setState(
-                              { voteImageUrl, creativeIdList },
-                              () => this.props.onChange(this.state)
-                            );
                           } else {
                             Feedback.toast.error(
-                              result.data && result.data.resMsg
+                              `${result.status}：上传出错了，请重试`
                             );
                           }
-                        } else {
-                          Feedback.toast.error(
-                            `${result.status}：上传出错了，请重试`
-                          );
-                        }
-                      });
-                    }}
-                  />
+                        });
+                      }}
+                    />
+                  </div>
                   {errorSchema &&
                     errorSchema.voteImageUrl &&
                     errorSchema.voteImageUrl.__errors &&
@@ -400,7 +402,7 @@ export default class Votes extends Component {
                         {err}
                       </li>
                     ))}
-                </div>
+                </Fragment>
               )}
             </Col>
           </Row>
@@ -664,66 +666,68 @@ export default class Votes extends Component {
                   </div>
                 </Fragment>
               ) : (
-                <div
-                  style={{
-                    position: "relative",
-                    width: "120px",
-                    height: "32px",
-                    border: "1px solid #e4e7ea",
-                    textAlign: "center",
-                    lineHeight: "32px"
-                  }}
-                >
-                  上传图片
-                  <Input
+                <Fragment>
+                  <div
                     style={{
-                      position: "absolute",
-                      opacity: 0,
-                      top: 0,
-                      left: 0,
-                      width: "100%",
-                      height: "100%",
-                      borderRadius: "0.25rem"
+                      position: "relative",
+                      width: "120px",
+                      height: "32px",
+                      border: "1px solid #e4e7ea",
+                      textAlign: "center",
+                      lineHeight: "32px"
                     }}
-                    accept="image/png, image/jpg, image/jpeg, image/gif"
-                    type="file"
-                    placeholder="上传图片"
-                    onChange={e => {
-                      const { files } = e.target;
-                      if (!files || files.length <= 0) {
-                        return;
-                      }
-                      addMaterialFile({
-                        file: files[0]
-                      }).then(result => {
-                        if (result.status === 200) {
-                          if (result.data && result.data.resCode === "00") {
-                            voteBtnImage = result.data.fileUrl;
-                            if (
-                              Array.isArray(creativeIdList) &&
-                              creativeIdList.indexOf(
-                                result.data.creativeFileId
-                              ) === -1
-                            ) {
-                              creativeIdList.push(result.data.creativeFileId);
+                  >
+                    上传图片
+                    <Input
+                      style={{
+                        position: "absolute",
+                        opacity: 0,
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                        borderRadius: "0.25rem"
+                      }}
+                      accept="image/png, image/jpg, image/jpeg, image/gif"
+                      type="file"
+                      placeholder="上传图片"
+                      onChange={e => {
+                        const { files } = e.target;
+                        if (!files || files.length <= 0) {
+                          return;
+                        }
+                        addMaterialFile({
+                          file: files[0]
+                        }).then(result => {
+                          if (result.status === 200) {
+                            if (result.data && result.data.resCode === "00") {
+                              voteBtnImage = result.data.fileUrl;
+                              if (
+                                Array.isArray(creativeIdList) &&
+                                creativeIdList.indexOf(
+                                  result.data.creativeFileId
+                                ) === -1
+                              ) {
+                                creativeIdList.push(result.data.creativeFileId);
+                              }
+                              this.setState(
+                                { voteBtnImage, creativeIdList },
+                                () => this.props.onChange(this.state)
+                              );
+                            } else {
+                              Feedback.toast.error(
+                                result.data && result.data.resMsg
+                              );
                             }
-                            this.setState(
-                              { voteBtnImage, creativeIdList },
-                              () => this.props.onChange(this.state)
-                            );
                           } else {
                             Feedback.toast.error(
-                              result.data && result.data.resMsg
+                              `${result.status}：上传出错了，请重试`
                             );
                           }
-                        } else {
-                          Feedback.toast.error(
-                            `${result.status}：上传出错了，请重试`
-                          );
-                        }
-                      });
-                    }}
-                  />
+                        });
+                      }}
+                    />
+                  </div>
                   {errorSchema &&
                     errorSchema.voteBtnImage &&
                     errorSchema.voteBtnImage.__errors &&
@@ -732,7 +736,7 @@ export default class Votes extends Component {
                         {err}
                       </li>
                     ))}
-                </div>
+                </Fragment>
               )}
             </Col>
           </Row>
