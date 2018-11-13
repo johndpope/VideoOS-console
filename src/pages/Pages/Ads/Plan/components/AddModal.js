@@ -561,9 +561,9 @@ const AddMaterial = ({
                 Feedback.toast.error("投放时长为数字");
                 return;
               }
-              if (formData.interactionTypeName) {
-                delete formData.interactionTypeName;
-              }
+              // if (formData.interactionTypeName) {
+              //   delete formData.interactionTypeName;
+              // }
               if (isUpdate) {
                 if (formData.launchTimes) {
                   formData.launchTime = [formData.launchTimes];
