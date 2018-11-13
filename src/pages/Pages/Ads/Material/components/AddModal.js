@@ -190,6 +190,14 @@ const AddMaterial = ({
                 }
                 if (
                   formData &&
+                  formData.voteList &&
+                  formData.voteList.length === 0
+                ) {
+                  Feedback.toast.error("请添加“信息选项”");
+                  return;
+                }
+                if (
+                  formData &&
                   formData.hasOwnProperty("messages") &&
                   formData.messages
                 ) {

@@ -413,7 +413,7 @@ export default class Votes extends Component {
             type="url"
             readOnly={readonly}
             value={voteTitle}
-            placeholder="请输入链接"
+            placeholder="请输入投票弹窗标题"
             onChange={e => {
               voteTitle = e.target.value;
               this.setState({ voteTitle }, () =>
@@ -781,7 +781,7 @@ export default class Votes extends Component {
             }}
             readOnly={readonly}
             value={voteRule}
-            placeholder="请输入链接"
+            placeholder="请输入投票规则"
             onChange={e => {
               voteRule = e.target.value;
               this.setState({ voteRule }, () =>
