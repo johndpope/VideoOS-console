@@ -429,7 +429,7 @@ export default class Votes extends Component {
             ))}
         </div>
         <div>
-          <Label>*信息选项*</Label>
+          <Label>信息选项*</Label>
           {voteList &&
             voteList.length > 0 &&
             voteList.map((vote, idx) => {
@@ -769,8 +769,12 @@ export default class Votes extends Component {
         </div>
         <div className="array-item">
           <Label>投票规则</Label>
-          <Input
-            type="textarea"
+          <textarea
+            style={{
+              border: "1px solid #e4e7ea",
+              borderRadius: "0.25rem",
+              width: "100%"
+            }}
             readOnly={readonly}
             value={voteRule}
             placeholder="请输入链接"
