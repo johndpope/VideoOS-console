@@ -105,7 +105,7 @@ class IAModel extends Component {
           <Button onClick={() => addModelToggle({})}>新增主题</Button>
           <InputGroup className="mb-4">
             <InputGroupAddon addonType="prepend">
-              <InputGroupText>类型：</InputGroupText>
+              <InputGroupText>应用：</InputGroupText>
             </InputGroupAddon>
             <Input
               type="select"

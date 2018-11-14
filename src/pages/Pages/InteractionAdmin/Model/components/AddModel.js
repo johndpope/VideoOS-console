@@ -50,7 +50,7 @@ const AddModel = ({
     <Fragment>
       <Modal isOpen={shouldOpen} toggle={toggle}>
         <ModalHeader toggle={toggle}>
-          {isRead ? "模板信息" : isUpdate ? "模板修改" : "新增主题"}
+          {isRead ? "主题信息" : isUpdate ? "主题修改" : "新增主题"}
         </ModalHeader>
         <ModalBody>
           <Form>
