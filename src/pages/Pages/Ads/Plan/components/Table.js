@@ -63,7 +63,7 @@ export default class PlanTable extends Component {
             width={120}
           />
           <Table.Column
-            title="投放类型"
+            title="投放应用"
             dataIndex="interactionTypeName"
             width={120}
           />
