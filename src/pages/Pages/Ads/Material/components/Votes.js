@@ -251,18 +251,18 @@ export default class Votes extends Component {
                       });
                     }}
                   />
-                  {errorSchema &&
-                    errorSchema.imageUrl &&
-                    errorSchema.imageUrl.__errors &&
-                    errorSchema.imageUrl.__errors.map((err, idx) => (
-                      <li key={idx} style={{ color: "#f86c6b" }}>
-                        {err}
-                      </li>
-                    ))}
                 </div>
               )}
             </Col>
           </Row>
+          {errorSchema &&
+            errorSchema.imageUrl &&
+            errorSchema.imageUrl.__errors &&
+            errorSchema.imageUrl.__errors.map((err, idx) => (
+              <li key={idx} style={{ color: "#f86c6b" }}>
+                {err}
+              </li>
+            ))}
         </div>
         <div className="array-item">
           <Label>热点曝光监控链接</Label>
