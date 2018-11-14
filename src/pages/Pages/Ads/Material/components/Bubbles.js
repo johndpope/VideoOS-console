@@ -105,7 +105,8 @@ export default class Bubbles extends Component {
       creativeName,
       interactionTemplateId,
       isShowAds = true,
-      isShowClose = true
+      isShowClose = true,
+      creativeIdList = []
     } = this.state;
 
     return (
@@ -562,8 +563,20 @@ export default class Bubbles extends Component {
                                         ) {
                                           message.content = result.data;
                                           messages[idx] = message;
-                                          this.setState({ messages }, () =>
-                                            this.props.onChange(this.state)
+                                          if (
+                                            Array.isArray(creativeIdList) &&
+                                            creativeIdList.indexOf(
+                                              result.data.creativeFileId
+                                            ) === -1
+                                          ) {
+                                            creativeIdList.push(
+                                              result.data.creativeFileId
+                                            );
+                                          }
+                                          this.setState(
+                                            { messages, creativeIdList },
+                                            () =>
+                                              this.props.onChange(this.state)
                                           );
                                         } else {
                                           Feedback.toast.error(
