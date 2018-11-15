@@ -501,7 +501,7 @@ export default class Votes extends Component {
                               borderRadius: "0.25rem"
                             }}
                             type="file"
-                            accept="image/png, image/jpg, image/jpeg"
+                            accept="image/png, image/jpg, image/jpeg, image/gif"
                             onChange={e => {
                               if (e.target.files.length > 0) {
                                 addMaterialFile({
