@@ -61,6 +61,10 @@ export default class Cards extends Component {
   render() {
     let { schema, errorSchema } = this.props;
     let {
+      creativeName,
+      interactionTemplateId,
+      isShowAds = true,
+      isShowClose = true,
       hotspotArray = [],
       readonly,
       imageUrl,
@@ -74,14 +78,10 @@ export default class Cards extends Component {
       voteRule,
       creativeIdList = []
     } = this.state;
-    const {
-      creativeName,
-      interactionTemplateId,
-      isShowClose = true
-    } = this.state;
 
     return (
       <Fragment>
+        <h3>1.基本信息：</h3>
         <div className="array-item">
           <Label>素材名称*</Label>
           <Input
@@ -144,6 +144,18 @@ export default class Cards extends Component {
         <div className="array-item checkbox">
           <Label check>
             <Input
+              checked={isShowAds ? "checked" : false}
+              type="checkbox"
+              disabled={readonly ? "disabled" : false}
+              value={isShowAds}
+              onChange={this.onChange("isShowAds")}
+            />
+            {`  广告标识是否可见`}
+          </Label>
+        </div>
+        <div className="array-item checkbox">
+          <Label check>
+            <Input
               checked={isShowClose ? "checked" : false}
               type="checkbox"
               disabled={readonly ? "disabled" : false}
@@ -151,9 +163,61 @@ export default class Cards extends Component {
               onChange={this.onChange("isShowClose")}
             />
             {"  "}
-            关闭按钮是否可见*
+            关闭按钮是否可见
           </Label>
         </div>
+        <h3>2.配置卡牌（2-3张）：</h3>
+        <div className="array-item">
+          {hotspotArray &&
+            hotspotArray.map((hsa, idx) => (
+              <Row>
+                <Col>
+                  <Row style={{ marginBottom: "8px" }}>
+                    <Col md="10">
+                      <Label style={{ fontWeight: "normal" }}>
+                        气泡点击监控链接
+                      </Label>
+                      <Input
+                        type="url"
+                        readOnly={readonly}
+                        value={hsa.clickTrackLink}
+                        placeholder="请输入气泡点击监控链接"
+                        onChange={e => {
+                          hsa.clickTrackLink = e.target.value;
+                          hotspotArray[idx] = hsa;
+                          this.setState({ hotspotArray }, () =>
+                            this.props.onChange(this.state)
+                          );
+                        }}
+                      />
+                    </Col>
+                  </Row>
+                  <Row style={{ marginBottom: "8px" }}>
+                    <Col>
+                      <Label style={{ fontWeight: "normal" }}>
+                        气泡曝光监控链接
+                      </Label>
+                      <Input
+                        type="url"
+                        value={hsa.exposureTrackLink}
+                        readOnly={readonly}
+                        placeholder="请输入气泡曝光监控链接"
+                        onChange={e => {
+                          hsa.exposureTrackLink = e.target.value;
+                          hotspotArray[idx] = hsa;
+                          this.setState({ hotspotArray }, () =>
+                            this.props.onChange(this.state)
+                          );
+                        }}
+                      />
+                    </Col>
+                  </Row>
+                </Col>
+                <Col />
+              </Row>
+            ))}
+        </div>
+        <h3>3.收集成功后续：</h3>
       </Fragment>
     );
   }

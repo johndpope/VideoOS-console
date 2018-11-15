@@ -6,10 +6,12 @@ import uiSchema from "schemas/uiSchema";
 
 import Bubbles from "./Bubbles";
 import Votes from "./Votes";
+import Cards from "./Cards";
 
 const fieldsMap = {
   qipao: Bubbles,
-  toupiao: Votes
+  toupiao: Votes,
+  kapai: Cards
 };
 
 const AddMaterial = ({
@@ -32,7 +34,7 @@ const AddMaterial = ({
   const { opType } = record || {};
   const isRead = opType === "read";
   const isUpdate = opType === "update";
-  const isSpecial = ["qipao", "toupiao"].includes(
+  const isSpecial = ["qipao", "toupiao", "kapai"].includes(
     materialSchema && materialSchema.key
   );
   return (
