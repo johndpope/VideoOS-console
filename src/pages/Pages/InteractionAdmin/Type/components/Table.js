@@ -57,7 +57,7 @@ export default class TypeTable extends Component {
             width={120}
           />
           <Table.Column
-            title="模板"
+            title="主题"
             cell={(value, index, record) => (
               <Link
                 to={{
@@ -65,7 +65,7 @@ export default class TypeTable extends Component {
                   state: { type: record.interactionTypeId }
                 }}
               >
-                模版列表
+                主题列表
               </Link>
             )}
             width={60}

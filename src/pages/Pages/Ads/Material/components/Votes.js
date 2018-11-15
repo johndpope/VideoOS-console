@@ -251,18 +251,18 @@ export default class Votes extends Component {
                       });
                     }}
                   />
-                  {errorSchema &&
-                    errorSchema.imageUrl &&
-                    errorSchema.imageUrl.__errors &&
-                    errorSchema.imageUrl.__errors.map((err, idx) => (
-                      <li key={idx} style={{ color: "#f86c6b" }}>
-                        {err}
-                      </li>
-                    ))}
                 </div>
               )}
             </Col>
           </Row>
+          {errorSchema &&
+            errorSchema.imageUrl &&
+            errorSchema.imageUrl.__errors &&
+            errorSchema.imageUrl.__errors.map((err, idx) => (
+              <li key={idx} style={{ color: "#f86c6b" }}>
+                {err}
+              </li>
+            ))}
         </div>
         <div className="array-item">
           <Label>热点曝光监控链接</Label>
@@ -413,7 +413,7 @@ export default class Votes extends Component {
             type="url"
             readOnly={readonly}
             value={voteTitle}
-            placeholder="请输入链接"
+            placeholder="请输入投票弹窗标题"
             onChange={e => {
               voteTitle = e.target.value;
               this.setState({ voteTitle }, () =>
@@ -544,22 +544,16 @@ export default class Votes extends Component {
                             }}
                           />
                           {errorSchema &&
-                            errorSchema.voteList &&
-                            Object.keys(errorSchema.voteList).map(
-                              key =>
-                                errorSchema.voteList[key].imageUrl
-                                  ? errorSchema.voteList[
-                                      key
-                                    ].imageUrl.__errors.map((err, idx) => (
-                                      <li
-                                        key={idx}
-                                        style={{ color: "#f86c6b" }}
-                                      >
-                                        未上传投票图片
-                                      </li>
-                                    ))
-                                  : null
-                            )}
+                          errorSchema.voteList &&
+                          errorSchema.voteList[idx]
+                            ? errorSchema.voteList[idx].imageUrl.__errors.map(
+                                (err, idx) => (
+                                  <li key={idx} style={{ color: "#f86c6b" }}>
+                                    未上传投票图片
+                                  </li>
+                                )
+                              )
+                            : null}
                         </div>
                       </div>
                     )}
@@ -580,19 +574,17 @@ export default class Votes extends Component {
                       }}
                     />
                     {errorSchema &&
-                      errorSchema.voteList &&
-                      Object.keys(errorSchema.voteList).map(
-                        key =>
-                          errorSchema.voteList[key].title
-                            ? errorSchema.voteList[key].title.__errors.map(
-                                (err, idx) => (
-                                  <li key={idx} style={{ color: "#f86c6b" }}>
-                                    {err}
-                                  </li>
-                                )
-                              )
-                            : null
-                      )}
+                    errorSchema.voteList &&
+                    errorSchema.voteList[idx] &&
+                    errorSchema.voteList[idx].title
+                      ? errorSchema.voteList[idx].title.__errors.map(
+                          (err, idx) => (
+                            <li key={idx} style={{ color: "#f86c6b" }}>
+                              {err}
+                            </li>
+                          )
+                        )
+                      : null}
                   </Col>
                   <Col md="2">
                     {!readonly ? (
@@ -610,6 +602,16 @@ export default class Votes extends Component {
                 </Row>
               );
             })}
+
+          {errorSchema &&
+          errorSchema.voteList &&
+          errorSchema.voteList.hasOwnProperty("__errors")
+            ? errorSchema.voteList.__errors.map((err, idx) => (
+                <li key={idx} style={{ color: "#f86c6b" }}>
+                  {err}
+                </li>
+              ))
+            : null}
           <div
             style={{
               display: "flex",
@@ -781,7 +783,7 @@ export default class Votes extends Component {
             }}
             readOnly={readonly}
             value={voteRule}
-            placeholder="请输入链接"
+            placeholder="请输入投票规则"
             onChange={e => {
               voteRule = e.target.value;
               this.setState({ voteRule }, () =>

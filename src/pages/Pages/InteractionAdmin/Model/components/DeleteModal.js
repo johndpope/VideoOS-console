@@ -11,9 +11,9 @@ const DeleteRole = ({
 }) => (
   <Fragment>
     <Modal isOpen={shouldOpen} toggle={toggle}>
-      <ModalHeader toggle={toggle}>删除模版</ModalHeader>
+      <ModalHeader toggle={toggle}>删除主题</ModalHeader>
       <ModalBody>
-        <p>确定删除该模版</p>
+        <p>确定删除该主题</p>
       </ModalBody>
       <ModalFooter>
         <Button onClick={toggle}>取消</Button>

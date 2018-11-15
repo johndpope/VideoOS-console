@@ -6,10 +6,12 @@ import uiSchema from "schemas/uiSchema";
 
 import Bubbles from "./Bubbles";
 import Votes from "./Votes";
+import Cards from "./Cards";
 
 const fieldsMap = {
   qipao: Bubbles,
-  toupiao: Votes
+  toupiao: Votes,
+  kapai: Cards
 };
 
 const AddMaterial = ({
@@ -32,7 +34,7 @@ const AddMaterial = ({
   const { opType } = record || {};
   const isRead = opType === "read";
   const isUpdate = opType === "update";
-  const isSpecial = ["qipao", "toupiao"].includes(
+  const isSpecial = ["qipao", "toupiao", "kapai"].includes(
     materialSchema && materialSchema.key
   );
   return (
@@ -190,6 +192,14 @@ const AddMaterial = ({
                 }
                 if (
                   formData &&
+                  formData.voteList &&
+                  formData.voteList.length === 0
+                ) {
+                  Feedback.toast.error("请添加“信息选项”");
+                  return;
+                }
+                if (
+                  formData &&
                   formData.hasOwnProperty("messages") &&
                   formData.messages
                 ) {
@@ -211,7 +221,7 @@ const AddMaterial = ({
                     if (msg.messageType === 3) {
                       if (!msg.messageButtons) {
                         canSubmit = false;
-                        Feedback.toast.error("必填项");
+                        Feedback.toast.error("请输入左侧按钮必填信息");
                         return;
                       }
                       if (!msg.messageButtons[0]) {
@@ -275,6 +285,22 @@ const AddMaterial = ({
                     interactionTypeId: formData.interactionTypeId,
                     interactionTemplateId: formData.interactionTemplateId,
                     creativeContent: JSON.stringify(formData),
+                    interactionTemplateName:
+                      materialSchema &&
+                      materialSchema.properties &&
+                      materialSchema.properties.interactionTemplateId &&
+                      materialSchema.properties.interactionTemplateId
+                        .enumNames &&
+                      materialSchema.properties.interactionTemplateId.enumNames[
+                        materialSchema.properties.interactionTemplateId.enum &&
+                        Array.isArray(
+                          materialSchema.properties.interactionTemplateId.enum
+                        )
+                          ? materialSchema.properties.interactionTemplateId.enum.indexOf(
+                              formData.interactionTemplateId
+                            )
+                          : 0
+                      ],
                     creativeIdList:
                       (formData && formData.creativeIdList) || creativeIdList,
                     currentPage
