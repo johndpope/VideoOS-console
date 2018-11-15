@@ -87,7 +87,7 @@ export default class Votes extends Component {
           <Input
             value={creativeName}
             onChange={this.onChange("creativeName")}
-            maxLength={10}
+            maxLength={15}
             required
             readOnly={readonly}
           />
@@ -413,6 +413,7 @@ export default class Votes extends Component {
             type="url"
             readOnly={readonly}
             value={voteTitle}
+            maxLength={10}
             placeholder="请输入投票弹窗标题"
             onChange={e => {
               voteTitle = e.target.value;
