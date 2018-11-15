@@ -563,7 +563,7 @@ export default class Votes extends Component {
                     <Input
                       type="text"
                       value={vote.title}
-                      maxLength={10}
+                      maxLength={5}
                       readOnly={readonly}
                       placeholder="请输入投票对象名称"
                       onChange={e => {
