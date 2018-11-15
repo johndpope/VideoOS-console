@@ -76,7 +76,7 @@ export default class Cards extends Component {
       voteBtnExposureTrackLink,
       voteBtnClickTrackLink,
       voteRule,
-      creativeIdList = []
+      creativeIdList = [{}, {}]
     } = this.state;
 
     return (
@@ -168,12 +168,82 @@ export default class Cards extends Component {
         </div>
         <h3>2.配置卡牌（2-3张）：</h3>
         <div className="array-item">
+          <Label>热点1：</Label>
+          <Row style={{ marginBottom: "8px" }}>
+            <Col>
+              <Label style={{ fontWeight: "normal" }}>热点图片*</Label>
+              <Input
+                type="url"
+                readOnly={readonly}
+                value={hotspotArray[0].imageUrl}
+                onChange={e => {
+                  hotspotArray[0].imageUrl = e.target.value;
+                  this.setState({ hotspotArray }, () =>
+                    this.props.onChange(this.state)
+                  );
+                }}
+              />
+            </Col>
+          </Row>
+          <Row style={{ marginBottom: "8px" }}>
+            <Col>
+              <Label style={{ fontWeight: "normal" }}>热点标题*</Label>
+              <Input
+                type="url"
+                readOnly={readonly}
+                value={hotspotArray[0].title}
+                placeholder="请输入卡牌热点标题"
+                onChange={e => {
+                  hotspotArray[0].title = e.target.value;
+                  this.setState({ hotspotArray }, () =>
+                    this.props.onChange(this.state)
+                  );
+                }}
+              />
+            </Col>
+          </Row>
+          <Row style={{ marginBottom: "8px" }}>
+            <Col>
+              <Label style={{ fontWeight: "normal" }}>气泡点击监控链接</Label>
+              <Input
+                type="url"
+                readOnly={readonly}
+                value={hotspotArray[0].clickTrackLink}
+                placeholder="请输入气泡点击监控链接"
+                onChange={e => {
+                  hotspotArray[0].clickTrackLink = e.target.value;
+                  this.setState({ hotspotArray }, () =>
+                    this.props.onChange(this.state)
+                  );
+                }}
+              />
+            </Col>
+          </Row>
+          <Row style={{ marginBottom: "8px" }}>
+            <Col>
+              <Label style={{ fontWeight: "normal" }}>气泡曝光监控链接</Label>
+              <Input
+                type="url"
+                value={hotspotArray[0].exposureTrackLink}
+                readOnly={readonly}
+                placeholder="请输入气泡曝光监控链接"
+                onChange={e => {
+                  hotspotArray[0].exposureTrackLink = e.target.value;
+                  this.setState({ hotspotArray }, () =>
+                    this.props.onChange(this.state)
+                  );
+                }}
+              />
+            </Col>
+          </Row>
+        </div>
+        <div className="array-item">
           {hotspotArray &&
             hotspotArray.map((hsa, idx) => (
               <Row>
-                <Col>
+                <Col md="10">
                   <Row style={{ marginBottom: "8px" }}>
-                    <Col md="10">
+                    <Col>
                       <Label style={{ fontWeight: "normal" }}>
                         气泡点击监控链接
                       </Label>
