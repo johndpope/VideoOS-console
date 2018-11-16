@@ -184,6 +184,7 @@ const AddMaterial = ({
                 }
                 if (
                   formData &&
+                  formData.hasOwnProperty("messages") &&
                   formData.messages &&
                   formData.messages.length === 0
                 ) {
@@ -192,6 +193,7 @@ const AddMaterial = ({
                 }
                 if (
                   formData &&
+                  formData.hasOwnProperty("voteList") &&
                   formData.voteList &&
                   formData.voteList.length === 0
                 ) {
