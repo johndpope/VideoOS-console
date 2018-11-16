@@ -11,7 +11,7 @@
         "title": {
           "type": "string",
           "title": "热点标题",
-          "maxLength": 5,
+          "maxLength": 10,
           "pattern": "[0-9A-Za-z\u4e00-\u9fa5]+$"
         },
         "exposureTrackLink": {
@@ -78,11 +78,13 @@
     "collect": {
       "type": "object",
       "title": "3.收集成功后续",
-      "required": ["content", "imageUrl", "btn_title", "linkType", "linkUrl"],
+      "required": ["imageUrl", "btn_title", "linkType"],
       "properties": {
         "content": {
           "type": "string",
-          "title": "收集成功弹窗内容"
+          "maxLength": 50,
+          "title": "收集成功弹窗内容",
+          "pattern": "[0-9A-Za-z\u4e00-\u9fa5]+$"
         },
         "imageUrl": {
           "type": "string",
@@ -91,7 +93,9 @@
         },
         "btn_title": {
           "type": "string",
-          "title": "领奖按钮文案"
+          "maxLength": 5,
+          "title": "领奖按钮文案",
+          "pattern": "[0-9A-Za-z\u4e00-\u9fa5]+$"
         },
         "exposureTrackLink": {
           "type": "string",
@@ -106,7 +110,7 @@
         "linkType": {
           "type": "integer",
           "title": "",
-          "defult": 2
+          "default": 2
         },
         "linkUrl": {
           "type": "string",
@@ -119,7 +123,9 @@
       "properties": {
         "title": {
           "type": "string",
-          "title": "领奖成功弹窗标题"
+          "maxLength": 10,
+          "title": "领奖成功弹窗标题",
+          "pattern": "[0-9A-Za-z\u4e00-\u9fa5]+$"
         },
         "imageUrl": {
           "type": "string",
