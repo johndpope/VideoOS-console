@@ -11,8 +11,7 @@
         "title": {
           "type": "string",
           "title": "热点标题",
-          "maxLength": 10,
-          "pattern": "[0-9A-Za-z\u4e00-\u9fa5]+$"
+          "maxLength": 10
         },
         "exposureTrackLink": {
           "type": "string",
@@ -40,8 +39,7 @@
     "creativeName": {
       "title": "素材名称",
       "type": "string",
-      "maxLength": 30,
-      "pattern": "[0-9A-Za-z\u4e00-\u9fa5-]+$"
+      "maxLength": 30
     },
     "interactionTypeId": {
       "title": "所属应用",
@@ -78,24 +76,22 @@
     "collect": {
       "type": "object",
       "title": "3.收集成功后续",
-      "required": ["imageUrl", "btn_title", "linkType"],
+      "required": ["imageUrl", "btnTitle", "linkType"],
       "properties": {
         "content": {
           "type": "string",
           "maxLength": 50,
-          "title": "收集成功弹窗内容",
-          "pattern": "[0-9A-Za-z\u4e00-\u9fa5]+$"
+          "title": "收集成功弹窗内容"
         },
         "imageUrl": {
           "type": "string",
           "title": "奖励图片",
           "format": "uri"
         },
-        "btn_title": {
+        "btnTitle": {
           "type": "string",
           "maxLength": 5,
-          "title": "领奖按钮文案",
-          "pattern": "[0-9A-Za-z\u4e00-\u9fa5]+$"
+          "title": "领奖按钮文案"
         },
         "exposureTrackLink": {
           "type": "string",
@@ -124,8 +120,7 @@
         "title": {
           "type": "string",
           "maxLength": 10,
-          "title": "领奖成功弹窗标题",
-          "pattern": "[0-9A-Za-z\u4e00-\u9fa5]+$"
+          "title": "领奖成功弹窗标题"
         },
         "imageUrl": {
           "type": "string",

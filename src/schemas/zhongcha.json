@@ -11,8 +11,7 @@
     "creativeName": {
       "title": "素材名称",
       "type": "string",
-      "maxLength": 10,
-      "pattern": "[0-9A-Za-z\u4e00-\u9fa5-]+$"
+      "maxLength": 10
     },
     "interactionTypeId": {
       "title": "所属应用",

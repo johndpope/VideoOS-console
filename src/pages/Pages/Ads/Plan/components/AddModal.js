@@ -29,7 +29,8 @@ const AddMaterial = ({
   record,
   materialTypes,
   currentPage,
-  isEdit
+  isEdit,
+  isConflict
 }) => {
   const { opType } = record || {};
   const isRead = opType === "read";
@@ -832,6 +833,15 @@ const AddMaterial = ({
                 !/^[0-9]+$/gi.test(formData.launchLenTime)
               ) {
                 Feedback.toast.error("投放时长为数字");
+                return;
+              }
+              if (
+                isConflict({
+                  launchTime: formData.launchTime,
+                  launchTimeLen: formData.launchLenTime
+                })
+              ) {
+                Feedback.toast.error('"投放时间有冲突"');
                 return;
               }
               // if (formData.interactionTypeName) {
