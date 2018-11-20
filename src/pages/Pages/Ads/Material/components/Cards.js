@@ -191,7 +191,10 @@ export default class Cards extends Component {
                             type="button"
                             className="btn btn-danger array-item-remove"
                             onClick={e => {
-                              hotspotArray[0].imageUrl = "";
+                              hotspotArray[0] = {
+                                ...hotspotArray[0],
+                                imageUrl: ""
+                              };
                               this.setState({ hotspotArray }, () =>
                                 this.props.onChange(this.state)
                               );
@@ -241,8 +244,10 @@ export default class Cards extends Component {
                                   result.data &&
                                   result.data.resCode === "00"
                                 ) {
-                                  hotspotArray[0].imageUrl =
-                                    result.data.fileUrl;
+                                  hotspotArray[0] = {
+                                    ...hotspotArray[0],
+                                    imageUrl: result.data.fileUrl
+                                  };
                                   if (
                                     Array.isArray(creativeIdList) &&
                                     creativeIdList.indexOf(
@@ -299,7 +304,10 @@ export default class Cards extends Component {
                 placeholder="请输入卡牌热点标题"
                 maxLength={10}
                 onChange={e => {
-                  hotspotArray[0].title = e.target.value;
+                  hotspotArray[0] = {
+                    ...hotspotArray[0],
+                    title: e.target.value
+                  };
                   this.setState({ hotspotArray }, () =>
                     this.props.onChange(this.state)
                   );
@@ -326,7 +334,10 @@ export default class Cards extends Component {
                 value={hotspotArray[0].clickTrackLink}
                 placeholder="请输入气泡点击监控链接"
                 onChange={e => {
-                  hotspotArray[0].clickTrackLink = e.target.value;
+                  hotspotArray[0] = {
+                    ...hotspotArray[0],
+                    clickTrackLink: e.target.value
+                  };
                   this.setState({ hotspotArray }, () =>
                     this.props.onChange(this.state)
                   );
@@ -343,7 +354,10 @@ export default class Cards extends Component {
                 readOnly={readonly}
                 placeholder="请输入气泡曝光监控链接"
                 onChange={e => {
-                  hotspotArray[0].exposureTrackLink = e.target.value;
+                  hotspotArray[0] = {
+                    ...hotspotArray[0],
+                    exposureTrackLink: e.target.value
+                  };
                   this.setState({ hotspotArray }, () =>
                     this.props.onChange(this.state)
                   );
