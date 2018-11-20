@@ -902,13 +902,13 @@ export default class Cards extends Component {
         <div className="array-item">
           <Label>领奖按钮文案*</Label>
           <Input
-            value={collect && collect.btn_title}
+            value={collect && collect.btnTitle}
             placeholder="请输入领奖按钮文案"
             maxLength={5}
             required
             readOnly={readonly}
             onChange={e => {
-              collect.btn_title = e.target.value;
+              collect.btnTitle = e.target.value;
               this.setState({ collect }, () => this.props.onChange(this.state));
             }}
           />
