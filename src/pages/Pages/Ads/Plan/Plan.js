@@ -22,7 +22,8 @@ import {
   deletePlan,
   updatePlan,
   setFormData,
-  setCurrentPage
+  setCurrentPage,
+  setEditState
 } from "./actions";
 import reducer from "./reducer";
 import PlanTable from "./components/Table";
@@ -54,7 +55,8 @@ class AdPlan extends Component {
       updatePlan,
       setFormData,
       getAdPlans,
-      setCurrentPage
+      setCurrentPage,
+      setEditState
     } = this.props;
     const modelTypes = adPlan.modelTypes || [];
     const { authorList } = getUserInfoLocal();
@@ -66,10 +68,12 @@ class AdPlan extends Component {
           addPlan={addPlan}
           updatePlan={updatePlan}
           setFormData={setFormData}
+          setEditState={setEditState}
           formData={adPlan && adPlan.formData}
           materialTypes={adPlan && adPlan.materialTypes}
           record={adPlan && adPlan.record}
           currentPage={adPlan && adPlan.currentPage}
+          isEdit={adPlan && adPlan.isEdit}
         />
         <DeletePlan
           toggle={deletePlanModalToggle}
@@ -153,7 +157,8 @@ const mapDispatchToProps = {
   addPlan,
   updatePlan,
   setFormData,
-  setCurrentPage
+  setCurrentPage,
+  setEditState
 };
 
 const mapStateToProps = state => {
