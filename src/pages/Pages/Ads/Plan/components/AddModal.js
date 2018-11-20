@@ -240,7 +240,9 @@ const AddMaterial = ({
                   placeholderText="请选择结束日期"
                 />
               </InputGroup>
-              {formData &&
+              {!isRead &&
+              !isUpdate &&
+              formData &&
               (!formData.hotSpotNum ||
                 (formData.hotSpotNum && formData.hotSpotNum <= 1)) ? (
                 <InputGroup className="mb-4">
@@ -297,6 +299,65 @@ const AddMaterial = ({
               {formData &&
                 formData.hotSpotNum &&
                 formData.hotSpotNum > 1 &&
+                formData.launchTime.map((lt, idx) => (
+                  <InputGroup className="mb-4" key={idx}>
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                        热点
+                        {idx + 1}
+                        投放时间
+                      </InputGroupText>
+                    </InputGroupAddon>
+                    <span
+                      style={{
+                        flex: "1 1 auto",
+                        marginLeft: "8px",
+                        width: "1%",
+                        float: "left"
+                      }}
+                    >
+                      <Row>
+                        <Col md="9">
+                          {lt &&
+                            lt.length > 0 &&
+                            lt.map((time, idx) => (
+                              <MinSec
+                                time={time}
+                                key={time + idx}
+                                launchTimes={lt}
+                                launchTime={formData.launchTime}
+                                idx={idx}
+                                setFormData={setFormData}
+                                isRead={isRead}
+                              />
+                            ))}
+                        </Col>
+
+                        {!isRead ? (
+                          <Col md="1">
+                            <Button
+                              onClick={() => {
+                                if (lt) {
+                                  lt.push("");
+                                } else {
+                                  lt = [""];
+                                }
+
+                                setFormData({
+                                  launchTime: formData.launchTime
+                                });
+                              }}
+                            >
+                              <Icon type="add" />
+                            </Button>
+                          </Col>
+                        ) : null}
+                      </Row>
+                    </span>
+                  </InputGroup>
+                ))}
+              {(isRead || isUpdate) &&
+                formData &&
                 formData.launchTime.map((lt, idx) => (
                   <InputGroup className="mb-4" key={idx}>
                     <InputGroupAddon addonType="prepend">
