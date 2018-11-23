@@ -49,7 +49,8 @@ import {
   // GET_PLAN_INFO_REQUEST,
   // GET_PLAN_INFO_SUCCESS,
   // GET_PLAN_INFO_FAILURE,
-  SET_CURRENT_PAGE
+  SET_CURRENT_PAGE,
+  SET_EDIT_STATE
 } from "./constants";
 
 let newPlanDropDownSwitch = false;
@@ -518,6 +519,13 @@ export const getAdPlanInfo = params => {
 export const setCurrentPage = payload => {
   return {
     type: SET_CURRENT_PAGE,
+    payload
+  };
+};
+
+export const setEditState = payload => {
+  return {
+    type: SET_EDIT_STATE,
     payload
   };
 };

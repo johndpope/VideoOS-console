@@ -22,12 +22,38 @@ import {
   deletePlan,
   updatePlan,
   setFormData,
-  setCurrentPage
+  setCurrentPage,
+  setEditState
 } from "./actions";
 import reducer from "./reducer";
 import PlanTable from "./components/Table";
 import AddPlan from "./components/AddModal";
 import DeletePlan from "./components/DeleteModal";
+
+const isConflict = payload => {
+  let status = false;
+  const { launchTime, launchTimeLen } = payload;
+  const launchTimeLX = launchTime
+    .join(",")
+    .split(",")
+    .map(lt => {
+      const ltArr = lt.split(":");
+      return Number(ltArr[0]) * 60 + Number(ltArr[1]);
+    })
+    .sort();
+  const launchTimeWithIncrement = launchTimeLX.map(
+    ltlx => ltlx + Number(launchTimeLen)
+  );
+  launchTimeWithIncrement.forEach((ltwi, idx) => {
+    if (
+      ltwi >= launchTimeLX[idx + 1] &&
+      idx !== launchTimeWithIncrement.length - 1
+    ) {
+      status = true;
+    }
+  });
+  return status;
+};
 
 class AdPlan extends Component {
   componentDidMount() {
@@ -54,7 +80,8 @@ class AdPlan extends Component {
       updatePlan,
       setFormData,
       getAdPlans,
-      setCurrentPage
+      setCurrentPage,
+      setEditState
     } = this.props;
     const modelTypes = adPlan.modelTypes || [];
     const { authorList } = getUserInfoLocal();
@@ -66,10 +93,13 @@ class AdPlan extends Component {
           addPlan={addPlan}
           updatePlan={updatePlan}
           setFormData={setFormData}
+          setEditState={setEditState}
           formData={adPlan && adPlan.formData}
           materialTypes={adPlan && adPlan.materialTypes}
           record={adPlan && adPlan.record}
           currentPage={adPlan && adPlan.currentPage}
+          isEdit={adPlan && adPlan.isEdit}
+          isConflict={isConflict}
         />
         <DeletePlan
           toggle={deletePlanModalToggle}
@@ -153,7 +183,8 @@ const mapDispatchToProps = {
   addPlan,
   updatePlan,
   setFormData,
-  setCurrentPage
+  setCurrentPage,
+  setEditState
 };
 
 const mapStateToProps = state => {

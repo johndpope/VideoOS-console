@@ -25,20 +25,16 @@ const AddMaterial = ({
   updatePlan,
   formData,
   setFormData,
+  setEditState,
   record,
   materialTypes,
-  currentPage
+  currentPage,
+  isEdit,
+  isConflict
 }) => {
   const { opType } = record || {};
   const isRead = opType === "read";
   const isUpdate = opType === "update";
-  let launchTimes =
-    formData &&
-    formData.launchTimes &&
-    Array.isArray(formData.launchTimes) &&
-    formData.launchTimes.length > 0
-      ? formData.launchTimes
-      : (formData.launchTime && formData.launchTime[0]) || [""];
   if (
     formData &&
     formData.launchDateStart &&
@@ -59,6 +55,19 @@ const AddMaterial = ({
         ? String(formData.launchTimeType)
         : ""
     );
+  }
+  if (isEdit && !(isRead || isUpdate) && formData) {
+    let lts = [];
+    if (formData.hotSpotNum > 1) {
+      for (let i = formData.hotSpotNum; i > 0; i--) {
+        lts.push([""]);
+      }
+    } else {
+      lts = [[""]];
+    }
+    formData.launchTime = lts;
+    setFormData({ launchTime: formData.launchTime });
+    setEditState({ isEdit: false });
   }
   return (
     <Fragment>
@@ -102,9 +111,19 @@ const AddMaterial = ({
             <Input
               type="select"
               disabled={isRead ? "disabled" : false}
-              value={(formData && formData.creativeId) || ""}
+              value={
+                (formData &&
+                  formData.creativeId &&
+                  `${formData.creativeId}**${formData.hotSpotNum}`) ||
+                ""
+              }
               onChange={e => {
-                setFormData({ creativeId: e.target.value });
+                const values = e.target.value.split("**");
+                setEditState({ isEdit: true });
+                setFormData({
+                  creativeId: values[0],
+                  hotSpotNum: Number(values[1])
+                });
               }}
             >
               {isRead ? (
@@ -119,7 +138,10 @@ const AddMaterial = ({
                 Array.isArray(materialTypes) &&
                 materialTypes.length > 0 &&
                 materialTypes.map((mt, idx) => (
-                  <option key={idx} value={mt.creativeId}>
+                  <option
+                    key={idx}
+                    value={`${mt.creativeId}**${mt.hotSpotNum}`}
+                  >
                     {mt.creativeName}
                   </option>
                 ))}
@@ -154,6 +176,13 @@ const AddMaterial = ({
                   : ""
               }
               onChange={e => {
+                if (
+                  formData &&
+                  (!formData.creativeId || formData.creativeId === "")
+                ) {
+                  Feedback.toast.error("请先选择“投放素材”");
+                  return;
+                }
                 setFormData({
                   launchTimeType: e.target.value,
                   launchTimes: []
@@ -212,62 +241,181 @@ const AddMaterial = ({
                   placeholderText="请选择结束日期"
                 />
               </InputGroup>
-              <InputGroup className="mb-4">
-                <InputGroupAddon addonType="prepend">
-                  <InputGroupText>投放时间</InputGroupText>
-                </InputGroupAddon>
-                <span
-                  style={{
-                    flex: "1 1 auto",
-                    marginLeft: "8px",
-                    width: "1%",
-                    float: "left"
-                  }}
-                >
-                  <Row>
-                    <Col md="10">
-                      {launchTimes &&
-                        launchTimes.length > 0 &&
-                        launchTimes.map((lt, idx) => (
-                          <MinSec
-                            time={lt}
-                            key={lt + idx}
-                            launchTimes={launchTimes}
-                            idx={idx}
-                            setFormData={setFormData}
-                            isRead={isRead}
-                          />
-                        ))}
-                    </Col>
-
-                    {!isRead ? (
-                      <Col md="1">
-                        <Button
-                          onClick={() => {
-                            // if (!formData.launchTimes) {
-                            //   Feedback.toast.error("请输入分秒");
-                            //   return;
-                            // }
-                            // if (formData.launchTimes.includes("")) {
-                            //   Feedback.toast.error("输入不完整或存在重复");
-                            //   return;
-                            // }
-                            if (formData && formData.launchTimes) {
-                              formData.launchTimes.push("");
-                            } else {
-                              formData.launchTimes = [""];
-                            }
-
-                            setFormData({ launchTimes });
-                          }}
-                        >
-                          <Icon type="add" />
-                        </Button>
+              {!isRead &&
+              !isUpdate &&
+              formData &&
+              (!formData.hotSpotNum ||
+                (formData.hotSpotNum && formData.hotSpotNum <= 1)) ? (
+                <InputGroup className="mb-4">
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText>投放时间</InputGroupText>
+                  </InputGroupAddon>
+                  <span
+                    style={{
+                      flex: "1 1 auto",
+                      marginLeft: "8px",
+                      width: "1%",
+                      float: "left"
+                    }}
+                  >
+                    <Row>
+                      <Col md="10">
+                        {formData.launchTime &&
+                          formData.launchTime[0] &&
+                          formData.launchTime[0].length > 0 &&
+                          formData.launchTime[0].map((time, idx) => (
+                            <MinSec
+                              time={time}
+                              key={time + idx}
+                              launchTimes={formData.launchTime[0]}
+                              idx={idx}
+                              launchTime={formData.launchTime}
+                              setFormData={setFormData}
+                              isRead={isRead}
+                            />
+                          ))}
                       </Col>
-                    ) : null}
-                  </Row>
-                </span>
-              </InputGroup>
+
+                      {!isRead ? (
+                        <Col md="1">
+                          <Button
+                            onClick={() => {
+                              if (formData && formData.launchTime[0]) {
+                                formData.launchTime[0].push("");
+                              } else {
+                                formData.launchTime[0] = [""];
+                              }
+
+                              setFormData({ launchTime: formData.launchTime });
+                            }}
+                          >
+                            <Icon type="add" />
+                          </Button>
+                        </Col>
+                      ) : null}
+                    </Row>
+                  </span>
+                </InputGroup>
+              ) : null}
+              {formData &&
+                formData.hotSpotNum &&
+                formData.hotSpotNum > 1 &&
+                formData.launchTime.map((lt, idx) => (
+                  <InputGroup className="mb-4" key={idx}>
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                        热点
+                        {idx + 1}
+                        投放时间
+                      </InputGroupText>
+                    </InputGroupAddon>
+                    <span
+                      style={{
+                        flex: "1 1 auto",
+                        marginLeft: "8px",
+                        width: "1%",
+                        float: "left"
+                      }}
+                    >
+                      <Row>
+                        <Col md="9">
+                          {lt &&
+                            lt.length > 0 &&
+                            lt.map((time, idx) => (
+                              <MinSec
+                                time={time}
+                                key={time + idx}
+                                launchTimes={lt}
+                                launchTime={formData.launchTime}
+                                idx={idx}
+                                setFormData={setFormData}
+                                isRead={isRead}
+                              />
+                            ))}
+                        </Col>
+
+                        {!isRead ? (
+                          <Col md="1">
+                            <Button
+                              onClick={() => {
+                                if (lt) {
+                                  lt.push("");
+                                } else {
+                                  lt = [""];
+                                }
+
+                                setFormData({
+                                  launchTime: formData.launchTime
+                                });
+                              }}
+                            >
+                              <Icon type="add" />
+                            </Button>
+                          </Col>
+                        ) : null}
+                      </Row>
+                    </span>
+                  </InputGroup>
+                ))}
+              {(isRead || isUpdate) &&
+                formData &&
+                formData.launchTime.map((lt, idx) => (
+                  <InputGroup className="mb-4" key={idx}>
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                        热点
+                        {idx + 1}
+                        投放时间
+                      </InputGroupText>
+                    </InputGroupAddon>
+                    <span
+                      style={{
+                        flex: "1 1 auto",
+                        marginLeft: "8px",
+                        width: "1%",
+                        float: "left"
+                      }}
+                    >
+                      <Row>
+                        <Col md="9">
+                          {lt &&
+                            lt.length > 0 &&
+                            lt.map((time, idx) => (
+                              <MinSec
+                                time={time}
+                                key={time + idx}
+                                launchTimes={lt}
+                                launchTime={formData.launchTime}
+                                idx={idx}
+                                setFormData={setFormData}
+                                isRead={isRead}
+                              />
+                            ))}
+                        </Col>
+
+                        {!isRead ? (
+                          <Col md="1">
+                            <Button
+                              onClick={() => {
+                                if (lt) {
+                                  lt.push("");
+                                } else {
+                                  lt = [""];
+                                }
+
+                                setFormData({
+                                  launchTime: formData.launchTime
+                                });
+                              }}
+                            >
+                              <Icon type="add" />
+                            </Button>
+                          </Col>
+                        ) : null}
+                      </Row>
+                    </span>
+                  </InputGroup>
+                ))}
               <InputGroup className="mb-4">
                 <InputGroupAddon addonType="prepend">
                   <InputGroupText>投放时长</InputGroupText>
@@ -288,6 +436,9 @@ const AddMaterial = ({
                   秒
                 </span>
               </InputGroup>
+              <p>
+                注：请准确填写投放时长，系统将用于判断投放计划的排期是否冲突
+              </p>
             </Fragment>
           ) : null}
           {formData &&
@@ -313,6 +464,9 @@ const AddMaterial = ({
                   秒
                 </span>
               </InputGroup>
+              <p>
+                注：请准确填写投放时长，系统将用于判断投放计划的排期是否冲突
+              </p>
             </Fragment>
           ) : null}
           {formData &&
@@ -361,98 +515,213 @@ const AddMaterial = ({
                   placeholderText="请选择结束日期"
                 />
               </InputGroup>
-              <InputGroup className="mb-4 full-child-height">
-                <InputGroupAddon addonType="prepend">
-                  <InputGroupText>投放时间</InputGroupText>
-                </InputGroupAddon>
-                <span
-                  style={{
-                    flex: "1 1 auto",
-                    marginLeft: "8px",
-                    width: "1%",
-                    float: "left"
-                  }}
-                >
-                  <Row>
-                    <Col md="10">
-                      {launchTimes &&
-                        launchTimes.length > 0 &&
-                        launchTimes.map((lt, idx) => (
-                          <Row className="full-child-height-bj">
-                            <Col>
-                              <DatePicker
-                                style={{
-                                  height: "31.98px"
-                                }}
-                                key={lt + idx}
-                                disabled={isRead ? true : false}
-                                selected={
-                                  lt && /:/gi.test(lt)
-                                    ? moment(`2018-09-10 ${lt}`)
-                                    : formData &&
-                                      formData.launchTime &&
-                                      (Array.isArray(formData.launchTime)
-                                        ? moment(
-                                            `2018-09-10 ${
-                                              formData.launchTime[0]
-                                            }`
-                                          )
-                                        : formData.launchTime)
-                                }
-                                showTimeSelect
-                                showTimeSelectOnly
-                                timeIntervals={1}
-                                dateFormat="LT"
-                                timeCaption="Time"
-                                onChange={e => {
-                                  const ms_txt = `${
-                                    e.hours() > 9 ? e.hours() : "0" + e.hour()
-                                  }:${
-                                    e.minutes() > 9
-                                      ? e.minutes()
-                                      : "0" + e.minutes()
-                                  }`;
-                                  if (launchTimes) {
-                                    launchTimes[idx] = ms_txt;
-                                  } else {
-                                    launchTimes = [];
-                                    launchTimes.push(ms_txt);
-                                  }
-                                  setFormData({ launchTimes });
-                                }}
-                                placeholderText="请添加投放时间"
-                              />
-                            </Col>
-                            {idx !== 0 && !isRead ? (
+              {formData &&
+              (!formData.hotSpotNum ||
+                (formData.hotSpotNum && formData.hotSpotNum <= 1)) ? (
+                <InputGroup className="mb-4 full-child-height">
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText>投放时间</InputGroupText>
+                  </InputGroupAddon>
+                  <span
+                    style={{
+                      flex: "1 1 auto",
+                      marginLeft: "8px",
+                      width: "1%",
+                      float: "left"
+                    }}
+                  >
+                    <Row>
+                      <Col md="10">
+                        {formData &&
+                          formData.launchTime[0] &&
+                          formData.launchTime[0].map((lt, idx) => (
+                            <Row className="full-child-height-bj">
                               <Col>
-                                <Button
-                                  onClick={() => {
-                                    launchTimes.splice(idx, 1);
-                                    setFormData({ launchTimes });
+                                <DatePicker
+                                  style={{
+                                    height: "31.98px"
                                   }}
-                                >
-                                  <Icon type="ashbin" />
-                                </Button>
+                                  key={lt + idx}
+                                  disabled={isRead ? true : false}
+                                  selected={
+                                    lt && /:/gi.test(lt)
+                                      ? moment(`2018-09-10 ${lt}`)
+                                      : formData &&
+                                        formData.launchTime &&
+                                        (Array.isArray(formData.launchTime)
+                                          ? moment(
+                                              `2018-09-10 ${
+                                                formData.launchTime[0]
+                                              }`
+                                            )
+                                          : formData.launchTime)
+                                  }
+                                  showTimeSelect
+                                  showTimeSelectOnly
+                                  timeIntervals={1}
+                                  dateFormat="LT"
+                                  timeCaption="Time"
+                                  onChange={e => {
+                                    const ms_txt = `${
+                                      e.hours() > 9 ? e.hours() : "0" + e.hour()
+                                    }:${
+                                      e.minutes() > 9
+                                        ? e.minutes()
+                                        : "0" + e.minutes()
+                                    }`;
+                                    if (lt) {
+                                      lt[idx] = ms_txt;
+                                    } else {
+                                      lt = [ms_txt];
+                                    }
+                                    setFormData({
+                                      launchTime: formData.launchTime
+                                    });
+                                  }}
+                                  placeholderText="请添加投放时间"
+                                />
                               </Col>
-                            ) : null}
-                          </Row>
-                        ))}
-                    </Col>
-                    {!isRead ? (
-                      <Col md="1">
-                        <Button
-                          onClick={() => {
-                            formData.launchTimes.push("");
-                            setFormData({ launchTimes });
-                          }}
-                        >
-                          <Icon type="add" />
-                        </Button>
+                              {idx !== 0 && !isRead ? (
+                                <Col>
+                                  <Button
+                                    onClick={() => {
+                                      lt.splice(idx, 1);
+                                      setFormData({
+                                        launchTime: formData.launchTime
+                                      });
+                                    }}
+                                  >
+                                    <Icon type="ashbin" />
+                                  </Button>
+                                </Col>
+                              ) : null}
+                            </Row>
+                          ))}
                       </Col>
-                    ) : null}
-                  </Row>
-                </span>
-              </InputGroup>
+                      {!isRead ? (
+                        <Col md="1">
+                          <Button
+                            onClick={() => {
+                              formData.launchTime[0].push("");
+                              setFormData({ launchTime: formData.launchTime });
+                            }}
+                          >
+                            <Icon type="add" />
+                          </Button>
+                        </Col>
+                      ) : null}
+                    </Row>
+                  </span>
+                </InputGroup>
+              ) : null}
+              {formData &&
+                formData.hotSpotNum &&
+                formData.hotSpotNum > 1 &&
+                formData.launchTime.map((lt, idx) => (
+                  <InputGroup className="mb-4 full-child-height">
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                        热点
+                        {idx + 1}
+                        投放时间
+                      </InputGroupText>
+                    </InputGroupAddon>
+                    <span
+                      style={{
+                        flex: "1 1 auto",
+                        marginLeft: "8px",
+                        width: "1%",
+                        float: "left"
+                      }}
+                    >
+                      <Row>
+                        <Col md="10">
+                          {lt &&
+                            lt.length > 0 &&
+                            lt.map((time, idx) => (
+                              <Row className="full-child-height-bj">
+                                <Col>
+                                  <DatePicker
+                                    style={{
+                                      height: "31.98px"
+                                    }}
+                                    key={time + idx}
+                                    disabled={isRead ? true : false}
+                                    selected={
+                                      lt && /:/gi.test(lt)
+                                        ? moment(`2018-09-10 ${time}`)
+                                        : formData &&
+                                          formData.launchTime &&
+                                          (Array.isArray(formData.launchTime)
+                                            ? moment(
+                                                `2018-09-10 ${
+                                                  formData.launchTime[0]
+                                                }`
+                                              )
+                                            : formData.launchTime)
+                                    }
+                                    showTimeSelect
+                                    showTimeSelectOnly
+                                    timeIntervals={1}
+                                    dateFormat="LT"
+                                    timeCaption="Time"
+                                    onChange={e => {
+                                      const ms_txt = `${
+                                        e.hours() > 9
+                                          ? e.hours()
+                                          : "0" + e.hour()
+                                      }:${
+                                        e.minutes() > 9
+                                          ? e.minutes()
+                                          : "0" + e.minutes()
+                                      }`;
+                                      if (lt) {
+                                        lt[idx] = ms_txt;
+                                      } else {
+                                        lt = [ms_txt];
+                                      }
+                                      setFormData({
+                                        launchTime: formData.launchTime
+                                      });
+                                    }}
+                                    placeholderText="请添加投放时间"
+                                  />
+                                </Col>
+                                {idx !== 0 && !isRead ? (
+                                  <Col>
+                                    <Button
+                                      onClick={() => {
+                                        lt.splice(idx, 1);
+                                        setFormData({
+                                          launchTime: formData.launchTime
+                                        });
+                                      }}
+                                    >
+                                      <Icon type="ashbin" />
+                                    </Button>
+                                  </Col>
+                                ) : null}
+                              </Row>
+                            ))}
+                        </Col>
+                        {!isRead ? (
+                          <Col md="1">
+                            <Button
+                              onClick={() => {
+                                lt.push("");
+                                setFormData({
+                                  launchTime: formData.launchTime
+                                });
+                              }}
+                            >
+                              <Icon type="add" />
+                            </Button>
+                          </Col>
+                        ) : null}
+                      </Row>
+                    </span>
+                  </InputGroup>
+                ))}
               <InputGroup className="mb-4">
                 <InputGroupAddon addonType="prepend">
                   <InputGroupText>投放时长</InputGroupText>
@@ -472,6 +741,9 @@ const AddMaterial = ({
                   秒
                 </span>
               </InputGroup>
+              <p>
+                注：请准确填写投放时长，系统将用于判断投放计划的排期是否冲突
+              </p>
             </Fragment>
           ) : null}
         </ModalBody>
@@ -525,21 +797,23 @@ const AddMaterial = ({
                 }
                 if (
                   !formData.launchTimes ||
-                  !Array.isArray(formData.launchTimes) ||
-                  formData.launchTimes.length === 0
+                  !Array.isArray(formData.launchTime) ||
+                  formData.launchTime.length === 0
                 ) {
                   Feedback.toast.error('"请添加“投放时间”"');
                   return;
                 }
-                formData.launchTimes.forEach((lt, idx) => {
-                  if (!tempHash.includes(lt)) {
-                    tempHash.push(lt);
-                  } else {
-                    repeatState = true;
-                  }
-                  if (!/^[0-9]{1,2}:[0-9]{1,2}$/gi.test(lt)) {
-                    invalidState = true;
-                  }
+                formData.launchTime.forEach((lt, idx) => {
+                  lt.forEach((time, idx) => {
+                    if (!tempHash.includes(time)) {
+                      tempHash.push(time);
+                    } else {
+                      repeatState = true;
+                    }
+                    if (!/^[0-9]{1,2}:[0-9]{1,2}$/gi.test(time)) {
+                      invalidState = true;
+                    }
+                  });
                 });
                 if (invalidState) {
                   Feedback.toast.error('"请输入有效分秒值且不能为空"');
@@ -561,28 +835,23 @@ const AddMaterial = ({
                 Feedback.toast.error("投放时长为数字");
                 return;
               }
+              if (
+                isConflict({
+                  launchTime: formData.launchTime,
+                  launchTimeLen: formData.launchLenTime
+                })
+              ) {
+                Feedback.toast.error('"投放时间有冲突"');
+                return;
+              }
               // if (formData.interactionTypeName) {
               //   delete formData.interactionTypeName;
               // }
               if (isUpdate) {
-                if (formData.launchTimes) {
-                  formData.launchTime = [formData.launchTimes];
-                }
-                // if (formData.launchTimes) {
-                //   delete formData.launchTimes;
-                // }
-                // delete formData.launchTimes;
                 updatePlan({ ...formData, currentPage });
               } else {
-                formData.launchTime = [
-                  formData.launchTimes && formData.launchTimes
-                ];
-                // delete formData.launchTimes;
                 if (formData.v_minutes) delete formData.v_minutes;
                 if (formData.v_seconds) delete formData.v_seconds;
-                // if (formData.launchTimes) {
-                //   delete formData.launchTimes;
-                // }
                 addPlan({ ...formData, currentPage });
               }
             }}

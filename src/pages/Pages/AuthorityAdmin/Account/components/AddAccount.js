@@ -44,7 +44,7 @@ const AddAccount = ({
               <Input
                 type="text"
                 placeholder="6-16位数字或者字母或者数字字母组合"
-                disabled={isRead ? "disabled" : false}
+                disabled={isRead || isUpdate ? "disabled" : false}
                 defaultValue={
                   isRead || isUpdate ? record && record.userName : ""
                 }

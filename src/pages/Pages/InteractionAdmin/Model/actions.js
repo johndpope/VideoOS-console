@@ -17,7 +17,7 @@
 
 // import { push } from 'react-router-redux';
 import { Feedback } from "@icedesign/base";
-import saveFile from "utils/saveFile";
+// import saveFile from "utils/saveFile";
 import * as api from "./api";
 // import { reloadAuthorized } from 'utils/Authorized';
 import {
@@ -47,9 +47,9 @@ import {
   GET_MODEL_INFO_BYID_SUCCESS,
   GET_MODEL_INFO_BYID_FAILURE,
   SET_FORM_DATA,
-  DOWNLOAD_MODEL_TEMPLATE_FILE_REQUEST,
-  DOWNLOAD_MODEL_TEMPLATE_FILE_FAILURE,
-  DOWNLOAD_MODEL_TEMPLATE_FILE_SUCCESS,
+  // DOWNLOAD_MODEL_TEMPLATE_FILE_REQUEST,
+  // DOWNLOAD_MODEL_TEMPLATE_FILE_FAILURE,
+  // DOWNLOAD_MODEL_TEMPLATE_FILE_SUCCESS,
   UPDATE_MODEL_FILE_REQUEST,
   UPDATE_MODEL_FILE_SUCCESS,
   UPDATE_MODEL_FILE_FAILURE,
@@ -260,27 +260,27 @@ const queryAllModelTypesFailure = () => {
   };
 };
 
-const downloadModelTemplateFileRequest = () => {
-  return {
-    type: DOWNLOAD_MODEL_TEMPLATE_FILE_REQUEST,
-    isLoading: true
-  };
-};
+// const downloadModelTemplateFileRequest = () => {
+//   return {
+//     type: DOWNLOAD_MODEL_TEMPLATE_FILE_REQUEST,
+//     isLoading: true
+//   };
+// };
 
-const downloadModelTemplateFileSuccess = payload => {
-  return {
-    type: DOWNLOAD_MODEL_TEMPLATE_FILE_SUCCESS,
-    isLoading: true,
-    payload
-  };
-};
+// const downloadModelTemplateFileSuccess = payload => {
+//   return {
+//     type: DOWNLOAD_MODEL_TEMPLATE_FILE_SUCCESS,
+//     isLoading: true,
+//     payload
+//   };
+// };
 
-const downloadModelTemplateFileFailure = () => {
-  return {
-    type: DOWNLOAD_MODEL_TEMPLATE_FILE_FAILURE,
-    isLoading: true
-  };
-};
+// const downloadModelTemplateFileFailure = () => {
+//   return {
+//     type: DOWNLOAD_MODEL_TEMPLATE_FILE_FAILURE,
+//     isLoading: true
+//   };
+// };
 
 const updateModelFileRequest = () => {
   return {

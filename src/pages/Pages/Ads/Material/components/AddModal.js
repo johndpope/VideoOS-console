@@ -26,7 +26,6 @@ const AddMaterial = ({
   materialSchema,
   addMaterialFile,
   currentPage,
-  fileData,
   setSwitcher,
   uiSchemaConf,
   setMaterialSchema
