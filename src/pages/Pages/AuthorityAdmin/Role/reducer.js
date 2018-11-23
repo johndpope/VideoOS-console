@@ -77,6 +77,9 @@ const initialState = {
     角色管理: {
       read: 64,
       write: 62
+    },
+    日志管理: {
+      read: 51
     }
   }
 };

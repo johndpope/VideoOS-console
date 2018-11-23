@@ -71,7 +71,7 @@ const AddRole = ({
             {roleAuthorities &&
               Object.keys(roleAuthorities).map((key, idx) => (
                 <FormGroup key={idx} row>
-                  <Col>{key}</Col>
+                  <Col md="3">{key}</Col>
                   <Col>
                     <Label htmlFor={`ckb_${idx}_read`}>可读</Label>
                     <Input
@@ -104,38 +104,40 @@ const AddRole = ({
                       }}
                     />
                   </Col>
-                  <Col>
-                    <Label htmlFor={`ckb_${idx}_write`}>可写</Label>
-                    <Input
-                      type="checkbox"
-                      name={`ckb_${idx}`}
-                      id={`ckb_${idx}_write`}
-                      disabled={isRead ? "disabled" : false}
-                      checked={
-                        nodeIdList &&
-                        nodeIdList.includes(roleAuthorities[key].write)
-                          ? "checked"
-                          : false
-                      }
-                      onClick={() => {
-                        if (nodeIdList.includes(roleAuthorities[key].read)) {
-                          nodeIdList.splice(
-                            nodeIdList.indexOf(roleAuthorities[key].read),
-                            1
-                          );
+                  {key !== "日志管理" ? (
+                    <Col>
+                      <Label htmlFor={`ckb_${idx}_write`}>可写</Label>
+                      <Input
+                        type="checkbox"
+                        name={`ckb_${idx}`}
+                        id={`ckb_${idx}_write`}
+                        disabled={isRead ? "disabled" : false}
+                        checked={
+                          nodeIdList &&
+                          nodeIdList.includes(roleAuthorities[key].write)
+                            ? "checked"
+                            : false
                         }
-                        if (nodeIdList.includes(roleAuthorities[key].write)) {
-                          nodeIdList.splice(
-                            nodeIdList.indexOf(roleAuthorities[key].write),
-                            1
-                          );
-                        } else {
-                          nodeIdList.push(roleAuthorities[key].write);
-                        }
-                        setFormData({ nodeIdList });
-                      }}
-                    />
-                  </Col>
+                        onClick={() => {
+                          if (nodeIdList.includes(roleAuthorities[key].read)) {
+                            nodeIdList.splice(
+                              nodeIdList.indexOf(roleAuthorities[key].read),
+                              1
+                            );
+                          }
+                          if (nodeIdList.includes(roleAuthorities[key].write)) {
+                            nodeIdList.splice(
+                              nodeIdList.indexOf(roleAuthorities[key].write),
+                              1
+                            );
+                          } else {
+                            nodeIdList.push(roleAuthorities[key].write);
+                          }
+                          setFormData({ nodeIdList });
+                        }}
+                      />
+                    </Col>
+                  ) : null}
                 </FormGroup>
               ))}
           </Form>
