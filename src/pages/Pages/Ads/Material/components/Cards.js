@@ -327,12 +327,12 @@ export default class Cards extends Component {
           </Row>
           <Row style={{ marginBottom: "8px" }}>
             <Col>
-              <Label style={{ fontWeight: "normal" }}>气泡点击监控链接</Label>
+              <Label style={{ fontWeight: "normal" }}>热点点击监控链接</Label>
               <Input
                 type="url"
                 readOnly={readonly}
                 value={hotspotArray[0].clickTrackLink}
-                placeholder="请输入气泡点击监控链接"
+                placeholder="请输入热点点击监控链接"
                 onChange={e => {
                   hotspotArray[0] = {
                     ...hotspotArray[0],
@@ -347,12 +347,12 @@ export default class Cards extends Component {
           </Row>
           <Row style={{ marginBottom: "8px" }}>
             <Col>
-              <Label style={{ fontWeight: "normal" }}>气泡曝光监控链接</Label>
+              <Label style={{ fontWeight: "normal" }}>热点曝光监控链接</Label>
               <Input
                 type="url"
                 value={hotspotArray[0].exposureTrackLink}
                 readOnly={readonly}
-                placeholder="请输入气泡曝光监控链接"
+                placeholder="请输入热点曝光监控链接"
                 onChange={e => {
                   hotspotArray[0] = {
                     ...hotspotArray[0],
@@ -525,12 +525,12 @@ export default class Cards extends Component {
           </Row>
           <Row style={{ marginBottom: "8px" }}>
             <Col>
-              <Label style={{ fontWeight: "normal" }}>气泡点击监控链接</Label>
+              <Label style={{ fontWeight: "normal" }}>热点点击监控链接</Label>
               <Input
                 type="url"
                 readOnly={readonly}
                 value={hotspotArray[1].clickTrackLink}
-                placeholder="请输入气泡点击监控链接"
+                placeholder="请输入热点点击监控链接"
                 onChange={e => {
                   hotspotArray[1].clickTrackLink = e.target.value;
                   this.setState({ hotspotArray }, () =>
@@ -542,12 +542,12 @@ export default class Cards extends Component {
           </Row>
           <Row style={{ marginBottom: "8px" }}>
             <Col>
-              <Label style={{ fontWeight: "normal" }}>气泡曝光监控链接</Label>
+              <Label style={{ fontWeight: "normal" }}>热点曝光监控链接</Label>
               <Input
                 type="url"
                 value={hotspotArray[1].exposureTrackLink}
                 readOnly={readonly}
-                placeholder="请输入气泡曝光监控链接"
+                placeholder="请输入热点曝光监控链接"
                 onChange={e => {
                   hotspotArray[1].exposureTrackLink = e.target.value;
                   this.setState({ hotspotArray }, () =>
@@ -727,13 +727,13 @@ export default class Cards extends Component {
                   <Row style={{ marginBottom: "8px" }}>
                     <Col>
                       <Label style={{ fontWeight: "normal" }}>
-                        气泡点击监控链接
+                        热点点击监控链接
                       </Label>
                       <Input
                         type="url"
                         readOnly={readonly}
                         value={hsa.clickTrackLink}
-                        placeholder="请输入气泡点击监控链接"
+                        placeholder="请输入热点点击监控链接"
                         onChange={e => {
                           hsa.clickTrackLink = e.target.value;
                           hotspotArray[idx] = hsa;
@@ -747,13 +747,13 @@ export default class Cards extends Component {
                   <Row style={{ marginBottom: "8px" }}>
                     <Col>
                       <Label style={{ fontWeight: "normal" }}>
-                        气泡曝光监控链接
+                        热点曝光监控链接
                       </Label>
                       <Input
                         type="url"
                         value={hsa.exposureTrackLink}
                         readOnly={readonly}
-                        placeholder="请输入气泡曝光监控链接"
+                        placeholder="请输入热点曝光监控链接"
                         onChange={e => {
                           hsa.exposureTrackLink = e.target.value;
                           hotspotArray[idx] = hsa;
