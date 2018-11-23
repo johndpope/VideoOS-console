@@ -279,6 +279,31 @@ const AddMaterial = ({
                     return;
                   }
                 }
+                if (formData && formData.hasOwnProperty("collect")) {
+                  if (formData.collect.linkType === 2) {
+                    if (!formData.collect.linkUrl) {
+                      Feedback.toast.error("“跳转至H5”不能为空哦");
+                      return;
+                    }
+                  } else if (formData.collect.linkType === 1) {
+                    if (!formData.success) {
+                      Feedback.toast.error("必填项不能为空哦");
+                      return;
+                    }
+                    if (!formData.success.itemId) {
+                      Feedback.toast.error("“道具ID”不能为空哦");
+                      return;
+                    }
+                    if (!formData.success.title) {
+                      Feedback.toast.error("“领奖成功弹窗标题”不能为空哦");
+                      return;
+                    }
+                    if (!formData.success.imageUrl) {
+                      Feedback.toast.error("“领奖成功图片”不能为空哦");
+                      return;
+                    }
+                  }
+                }
                 if (isUpdate) {
                   updateMaterial({
                     creativeId: record.creativeId,

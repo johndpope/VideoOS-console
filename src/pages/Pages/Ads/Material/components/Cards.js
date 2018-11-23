@@ -680,6 +680,18 @@ export default class Cards extends Component {
                           )}
                         </Col>
                       </Row>
+                      {errorSchema &&
+                        errorSchema.hotspotArray &&
+                        errorSchema.hotspotArray[idx + 2] &&
+                        errorSchema.hotspotArray[idx + 2].imageUrl &&
+                        errorSchema.hotspotArray[idx + 2].imageUrl.__errors &&
+                        errorSchema.hotspotArray[idx + 2].imageUrl.__errors.map(
+                          (err, idx) => (
+                            <li key={idx} style={{ color: "#f86c6b" }}>
+                              请上传图片
+                            </li>
+                          )
+                        )}
                     </Col>
                   </Row>
                   <Row style={{ marginBottom: "8px" }}>
@@ -698,6 +710,18 @@ export default class Cards extends Component {
                           );
                         }}
                       />
+                      {errorSchema &&
+                        errorSchema.hotspotArray &&
+                        errorSchema.hotspotArray[idx + 2] &&
+                        errorSchema.hotspotArray[idx + 2].title &&
+                        errorSchema.hotspotArray[idx + 2].title.__errors &&
+                        errorSchema.hotspotArray[idx + 2].title.__errors.map(
+                          (err, idx) => (
+                            <li key={idx} style={{ color: "#f86c6b" }}>
+                              {err}
+                            </li>
+                          )
+                        )}
                     </Col>
                   </Row>
                   <Row style={{ marginBottom: "8px" }}>
@@ -764,7 +788,7 @@ export default class Cards extends Component {
             justifyContent: "flex-end"
           }}
         >
-          {!readonly ? (
+          {!readonly && (!hotspotArray || hotspotArray.length < 3) ? (
             <button
               type="button"
               className="btn btn-info btn-add col-md-2"
@@ -898,6 +922,15 @@ export default class Cards extends Component {
               )}
             </Col>
           </Row>
+          {errorSchema &&
+            errorSchema.collect &&
+            errorSchema.collect.imageUrl &&
+            errorSchema.collect.imageUrl.__errors &&
+            errorSchema.collect.imageUrl.__errors.map((err, idx) => (
+              <li key={idx} style={{ color: "#f86c6b" }}>
+                {err}
+              </li>
+            ))}
         </div>
         <div className="array-item">
           <Label>领奖按钮文案*</Label>
@@ -912,6 +945,15 @@ export default class Cards extends Component {
               this.setState({ collect }, () => this.props.onChange(this.state));
             }}
           />
+          {errorSchema &&
+            errorSchema.collect &&
+            errorSchema.collect.btnTitle &&
+            errorSchema.collect.btnTitle.__errors &&
+            errorSchema.collect.btnTitle.__errors.map((err, idx) => (
+              <li key={idx} style={{ color: "#f86c6b" }}>
+                {err}
+              </li>
+            ))}
         </div>
         <div className="array-item">
           <Label>收集成功弹窗的曝光监控链接</Label>
@@ -963,7 +1005,7 @@ export default class Cards extends Component {
                       );
                     }}
                   />
-                  {`  跳转至H5`}
+                  <span style={{ marginLeft: "16px" }}>跳转至H5</span>
                 </Label>
               </div>
               <Input
@@ -1004,7 +1046,7 @@ export default class Cards extends Component {
                       );
                     }}
                   />
-                  {`  直接领取奖励`}
+                  <span style={{ marginLeft: "16px" }}>直接领取奖励</span>
                 </Label>
               </div>
               <Input
@@ -1041,6 +1083,15 @@ export default class Cards extends Component {
                 required
                 readOnly={readonly}
               />
+              {errorSchema &&
+                errorSchema.success &&
+                errorSchema.success.title &&
+                errorSchema.success.title.__errors &&
+                errorSchema.success.title.__errors.map((err, idx) => (
+                  <li key={idx} style={{ color: "#f86c6b" }}>
+                    {err}
+                  </li>
+                ))}
             </div>
             <div className="array-item">
               <Label>领奖成功图片*</Label>
@@ -1152,6 +1203,15 @@ export default class Cards extends Component {
                   )}
                 </Col>
               </Row>
+              {errorSchema &&
+                errorSchema.success &&
+                errorSchema.success.imageUrl &&
+                errorSchema.success.imageUrl.__errors &&
+                errorSchema.success.imageUrl.__errors.map((err, idx) => (
+                  <li key={idx} style={{ color: "#f86c6b" }}>
+                    {err}
+                  </li>
+                ))}
             </div>
           </Fragment>
         ) : null}
