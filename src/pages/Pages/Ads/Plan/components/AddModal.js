@@ -519,7 +519,9 @@ const AddMaterial = ({
                   placeholderText="请选择结束日期"
                 />
               </InputGroup>
-              {formData &&
+              {!isRead &&
+              !isUpdate &&
+              formData &&
               (!formData.hotSpotNum ||
                 (formData.hotSpotNum && formData.hotSpotNum <= 1)) ? (
                 <InputGroup className="mb-4 full-child-height">
@@ -613,6 +615,105 @@ const AddMaterial = ({
               {formData &&
                 formData.hotSpotNum &&
                 formData.hotSpotNum > 1 &&
+                formData.launchTime.map((lt, idx) => (
+                  <InputGroup className="mb-4 full-child-height">
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                        热点
+                        {idx + 1}
+                        投放时间
+                      </InputGroupText>
+                    </InputGroupAddon>
+                    <span
+                      style={{
+                        flex: "1 1 auto",
+                        marginLeft: "8px",
+                        width: "1%",
+                        float: "left"
+                      }}
+                    >
+                      <Row>
+                        <Col md="10">
+                          {lt &&
+                            lt.length > 0 &&
+                            lt.map((time, idx) => (
+                              <Row className="full-child-height-bj">
+                                <Col>
+                                  <DatePicker
+                                    style={{
+                                      height: "31.98px"
+                                    }}
+                                    key={time + idx}
+                                    disabled={isRead ? true : false}
+                                    selected={
+                                      /:/gi.test(time) &&
+                                      moment(`2018-09-10 ${time}`)
+                                    }
+                                    showTimeSelect
+                                    showTimeSelectOnly
+                                    timeIntervals={1}
+                                    dateFormat="LT"
+                                    timeCaption="Time"
+                                    onChange={e => {
+                                      const ms_txt = `${
+                                        e.hours() > 9
+                                          ? e.hours()
+                                          : "0" + e.hour()
+                                      }:${
+                                        e.minutes() > 9
+                                          ? e.minutes()
+                                          : "0" + e.minutes()
+                                      }`;
+                                      if (lt) {
+                                        lt[idx] = ms_txt;
+                                      } else {
+                                        lt = [ms_txt];
+                                      }
+                                      setFormData({
+                                        launchTime: formData.launchTime
+                                      });
+                                    }}
+                                    placeholderText="请添加投放时间"
+                                  />
+                                </Col>
+                                {idx !== 0 && !isRead ? (
+                                  <Col>
+                                    <Button
+                                      onClick={() => {
+                                        lt.splice(idx, 1);
+                                        setFormData({
+                                          launchTime: formData.launchTime
+                                        });
+                                      }}
+                                    >
+                                      <Icon type="ashbin" />
+                                    </Button>
+                                  </Col>
+                                ) : null}
+                              </Row>
+                            ))}
+                        </Col>
+                        {!isRead ? (
+                          <Col md="1">
+                            <Button
+                              onClick={() => {
+                                lt.push("");
+                                setFormData({
+                                  launchTime: formData.launchTime
+                                });
+                              }}
+                            >
+                              <Icon type="add" />
+                            </Button>
+                          </Col>
+                        ) : null}
+                      </Row>
+                    </span>
+                  </InputGroup>
+                ))}
+              {(isRead || isUpdate) &&
+                formData &&
+                formData.launchTime &&
                 formData.launchTime.map((lt, idx) => (
                   <InputGroup className="mb-4 full-child-height">
                     <InputGroupAddon addonType="prepend">
