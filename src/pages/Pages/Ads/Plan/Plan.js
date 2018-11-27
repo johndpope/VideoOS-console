@@ -43,7 +43,11 @@ const isConflict = payload => {
           ? Number(ltArr[0]) * 60 + Number(ltArr[1])
           : Number(ltArr[0]) * 60 * 60 + Number(ltArr[1]) * 60;
       });
-    launchTimeLX = launchTimeLX.sort();
+    launchTimeLX = launchTimeLX.sort((val1, val2) => {
+      if (val1 > val2) return 1;
+      if (val1 === val2) return 0;
+      if (val1 < val2) return -1;
+    });
     const launchTimeWithIncrement = launchTimeLX.map(
       ltlx => ltlx + Number(launchTimeLen)
     );
