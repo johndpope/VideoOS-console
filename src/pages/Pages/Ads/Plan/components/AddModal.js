@@ -548,17 +548,9 @@ const AddMaterial = ({
                                   key={lt + idx}
                                   disabled={isRead ? true : false}
                                   selected={
-                                    lt && /:/gi.test(lt)
-                                      ? moment(`2018-09-10 ${lt}`)
-                                      : formData &&
-                                        formData.launchTime &&
-                                        (Array.isArray(formData.launchTime)
-                                          ? moment(
-                                              `2018-09-10 ${
-                                                formData.launchTime[0]
-                                              }`
-                                            )
-                                          : formData.launchTime)
+                                    lt &&
+                                    /:/gi.test(lt) &&
+                                    moment(`2018-09-10 ${lt}`)
                                   }
                                   showTimeSelect
                                   showTimeSelectOnly
@@ -652,17 +644,8 @@ const AddMaterial = ({
                                     key={time + idx}
                                     disabled={isRead ? true : false}
                                     selected={
-                                      lt && /:/gi.test(lt)
-                                        ? moment(`2018-09-10 ${time}`)
-                                        : formData &&
-                                          formData.launchTime &&
-                                          (Array.isArray(formData.launchTime)
-                                            ? moment(
-                                                `2018-09-10 ${
-                                                  formData.launchTime[0]
-                                                }`
-                                              )
-                                            : formData.launchTime)
+                                      /:/gi.test(time) &&
+                                      moment(`2018-09-10 ${time}`)
                                     }
                                     showTimeSelect
                                     showTimeSelectOnly
@@ -842,7 +825,8 @@ const AddMaterial = ({
               if (
                 isConflict({
                   launchTime: formData.launchTime,
-                  launchTimeLen: formData.launchLenTime
+                  launchTimeLen: formData.launchLenTime,
+                  launchTimeType: formData.launchTimeType
                 })
               ) {
                 Feedback.toast.error('"投放时间有冲突"');

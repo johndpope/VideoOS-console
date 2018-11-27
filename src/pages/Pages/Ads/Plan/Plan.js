@@ -32,14 +32,16 @@ import DeletePlan from "./components/DeleteModal";
 
 const isConflict = payload => {
   let status = false;
-  const { launchTime, launchTimeLen } = payload;
+  const { launchTime, launchTimeLen, launchTimeType } = payload;
   if (Array.isArray(launchTime) && launchTime.length > 1) {
     let launchTimeLX = launchTime
       .join(",")
       .split(",")
       .map(lt => {
         const ltArr = lt.split(":");
-        return Number(ltArr[0]) * 60 + Number(ltArr[1]);
+        return Number(launchTimeType) !== 2
+          ? Number(ltArr[0]) * 60 + Number(ltArr[1])
+          : Number(ltArr[0]) * 60 * 60 + Number(ltArr[1]) * 60;
       });
     launchTimeLX = launchTimeLX.sort();
     const launchTimeWithIncrement = launchTimeLX.map(
