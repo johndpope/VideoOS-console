@@ -116,7 +116,7 @@ export default class Bubbles extends Component {
           <Input
             value={creativeName}
             onChange={this.onChange("creativeName")}
-            maxLength={10}
+            maxLength={30}
             required
             readOnly={readonly}
           />

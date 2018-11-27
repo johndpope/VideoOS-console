@@ -87,7 +87,7 @@ export default class Votes extends Component {
           <Input
             value={creativeName}
             onChange={this.onChange("creativeName")}
-            maxLength={15}
+            maxLength={30}
             required
             readOnly={readonly}
           />

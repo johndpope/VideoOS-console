@@ -11,7 +11,7 @@
     "creativeName": {
       "title": "素材名称",
       "type": "string",
-      "maxLength": 10
+      "maxLength": 30
     },
     "interactionTypeId": {
       "title": "所属应用",
