@@ -21,6 +21,14 @@
         "duration": {
           "type": "number",
           "title": "展示持续时间"
+        },
+        "userType": {
+          "type": "integer",
+          "default": 2
+        },
+        "messageType": {
+          "type": "integer",
+          "default": 1
         }
       }
     }

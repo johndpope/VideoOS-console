@@ -541,13 +541,12 @@ const AddMaterial = ({
                         {formData &&
                           formData.launchTime[0] &&
                           formData.launchTime[0].map((lt, idx) => (
-                            <Row className="full-child-height-bj">
+                            <Row className="full-child-height-bj" key={idx}>
                               <Col>
                                 <DatePicker
                                   style={{
                                     height: "31.98px"
                                   }}
-                                  key={lt + idx}
                                   disabled={isRead ? true : false}
                                   selected={
                                     lt &&
@@ -568,9 +567,9 @@ const AddMaterial = ({
                                         : "0" + e.minutes()
                                     }`;
                                     if (lt) {
-                                      lt[idx] = ms_txt;
+                                      formData.launchTime[0][idx] = ms_txt;
                                     } else {
-                                      lt = [ms_txt];
+                                      formData.launchTime[0] = [ms_txt];
                                     }
                                     setFormData({
                                       launchTime: formData.launchTime
@@ -600,7 +599,7 @@ const AddMaterial = ({
                         <Col md="1">
                           <Button
                             onClick={() => {
-                              formData.launchTime[0].push("");
+                              formData.launchTime[0].push(" ");
                               setFormData({ launchTime: formData.launchTime });
                             }}
                           >
