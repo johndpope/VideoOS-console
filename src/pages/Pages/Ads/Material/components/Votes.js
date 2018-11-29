@@ -87,7 +87,7 @@ export default class Votes extends Component {
           <Input
             value={creativeName}
             onChange={this.onChange("creativeName")}
-            maxLength={10}
+            maxLength={30}
             required
             readOnly={readonly}
           />
@@ -413,6 +413,7 @@ export default class Votes extends Component {
             type="url"
             readOnly={readonly}
             value={voteTitle}
+            maxLength={10}
             placeholder="请输入投票弹窗标题"
             onChange={e => {
               voteTitle = e.target.value;
@@ -501,7 +502,7 @@ export default class Votes extends Component {
                               borderRadius: "0.25rem"
                             }}
                             type="file"
-                            accept="image/png, image/jpg, image/jpeg"
+                            accept="image/png, image/jpg, image/jpeg, image/gif"
                             onChange={e => {
                               if (e.target.files.length > 0) {
                                 addMaterialFile({
@@ -562,7 +563,7 @@ export default class Votes extends Component {
                     <Input
                       type="text"
                       value={vote.title}
-                      maxLength={10}
+                      maxLength={5}
                       readOnly={readonly}
                       placeholder="请输入投票对象名称"
                       onChange={e => {

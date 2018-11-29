@@ -32,26 +32,42 @@ import DeletePlan from "./components/DeleteModal";
 
 const isConflict = payload => {
   let status = false;
-  const { launchTime, launchTimeLen } = payload;
-  const launchTimeLX = launchTime
-    .join(",")
-    .split(",")
-    .map(lt => {
-      const ltArr = lt.split(":");
-      return Number(ltArr[0]) * 60 + Number(ltArr[1]);
-    })
-    .sort();
-  const launchTimeWithIncrement = launchTimeLX.map(
-    ltlx => ltlx + Number(launchTimeLen)
-  );
-  launchTimeWithIncrement.forEach((ltwi, idx) => {
-    if (
-      ltwi >= launchTimeLX[idx + 1] &&
-      idx !== launchTimeWithIncrement.length - 1
-    ) {
-      status = true;
-    }
-  });
+  const { launchTime, launchTimeLen, launchTimeType } = payload;
+  if (Array.isArray(launchTime) && launchTime.length > 1) {
+    let launchTimeLX = launchTime
+      .join(",")
+      .split(",")
+      .map(lt => {
+        const ltArr = lt.split(":");
+        return Number(launchTimeType) !== 2
+          ? Number(ltArr[0]) * 60 + Number(ltArr[1])
+          : Number(ltArr[0]) * 60 * 60 + Number(ltArr[1]) * 60;
+      });
+    launchTimeLX = launchTimeLX.sort((val1, val2) => {
+      let val = 0;
+      if (val1 > val2) {
+        val = 1;
+      }
+      if (val1 === val2) {
+        val = 0;
+      }
+      if (val1 < val2) {
+        val = -1;
+      }
+      return val;
+    });
+    const launchTimeWithIncrement = launchTimeLX.map(
+      ltlx => ltlx + Number(launchTimeLen)
+    );
+    launchTimeWithIncrement.forEach((ltwi, idx) => {
+      if (
+        ltwi >= launchTimeLX[idx + 1] &&
+        idx !== launchTimeWithIncrement.length - 1
+      ) {
+        status = true;
+      }
+    });
+  }
   return status;
 };
 

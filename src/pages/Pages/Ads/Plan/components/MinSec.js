@@ -21,7 +21,7 @@ const MinSec = ({
             disabled={isRead ? "disabled" : false}
             maxLength={2}
             defaultValue={temp_ms[0]}
-            onChange={e => {
+            onBlur={e => {
               temp_ms[0] = e.target.value || "";
               const ms_txt = temp_ms.join(":");
               if (launchTimes) {
@@ -45,7 +45,7 @@ const MinSec = ({
             disabled={isRead ? "disabled" : false}
             maxLength={2}
             defaultValue={temp_ms[1]}
-            onChange={e => {
+            onBlur={e => {
               temp_ms[1] = e.target.value || "";
               const ms_txt = temp_ms.join(":");
               if (launchTimes) {

@@ -199,7 +199,7 @@ const AddModel = ({
                 return;
               }
               if (!formData.interactionTypeId) {
-                Feedback.toast.error("请选择“主题类型”");
+                Feedback.toast.error("请选择“所属应用”");
                 return;
               }
               if (!formData.templateName) {

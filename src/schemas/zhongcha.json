@@ -11,7 +11,7 @@
     "creativeName": {
       "title": "素材名称",
       "type": "string",
-      "maxLength": 10
+      "maxLength": 30
     },
     "interactionTypeId": {
       "title": "所属应用",
@@ -63,6 +63,10 @@
       "type": "string",
       "title": "广告外链链接",
       "format": "uri"
+    },
+    "repeatTimes": {
+      "type": "integer",
+      "default": 1
     }
   }
 }

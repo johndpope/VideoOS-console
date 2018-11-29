@@ -116,7 +116,7 @@ export default class Bubbles extends Component {
           <Input
             value={creativeName}
             onChange={this.onChange("creativeName")}
-            maxLength={10}
+            maxLength={30}
             required
             readOnly={readonly}
           />
@@ -459,7 +459,8 @@ export default class Bubbles extends Component {
                         </Input>
                       </Col>
                     </Row>
-                    {message && message.messageType === 1 ? (
+                    {message &&
+                    (!message.messageType || message.messageType === 1) ? (
                       <Row style={{ marginBottom: "8px" }}>
                         <Col>
                           <textarea

@@ -21,6 +21,14 @@
         "duration": {
           "type": "number",
           "title": "展示持续时间"
+        },
+        "userType": {
+          "type": "integer",
+          "default": 2
+        },
+        "messageType": {
+          "type": "integer",
+          "default": 1
         }
       }
     }
@@ -37,7 +45,7 @@
     "creativeName": {
       "title": "素材名称",
       "type": "string",
-      "maxLength": 10
+      "maxLength": 30
     },
     "interactionTypeId": {
       "title": "所属应用",
