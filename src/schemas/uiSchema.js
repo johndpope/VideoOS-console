@@ -28,6 +28,9 @@ const uiSchema = ({
         "ui:emptyValue": ""
       }
     },
+    repeatTimes: {
+      "ui:widget": "hidden"
+    },
     imageUrl: {
       "ui:widget": props => {
         let switcher = Boolean(uiSchemaConf && uiSchemaConf.avatarSwitcher);
