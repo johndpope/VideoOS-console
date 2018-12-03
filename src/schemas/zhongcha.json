@@ -67,6 +67,10 @@
     "repeatTimes": {
       "type": "integer",
       "default": 1
+    },
+    "priority": {
+      "type": "integer",
+      "default": 10
     }
   }
 }

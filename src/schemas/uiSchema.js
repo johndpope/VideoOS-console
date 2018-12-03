@@ -31,6 +31,9 @@ const uiSchema = ({
     repeatTimes: {
       "ui:widget": "hidden"
     },
+    priority: {
+      "ui:widget": "hidden"
+    },
     imageUrl: {
       "ui:widget": props => {
         let switcher = Boolean(uiSchemaConf && uiSchemaConf.avatarSwitcher);
