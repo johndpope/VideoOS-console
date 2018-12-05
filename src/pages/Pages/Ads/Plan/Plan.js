@@ -3,7 +3,13 @@ import {
   Dropdown,
   DropdownItem,
   DropdownMenu,
-  DropdownToggle
+  DropdownToggle,
+  Row,
+  Col,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  Input
 } from "reactstrap";
 import { Pagination } from "@icedesign/base";
 import IceContainer from "@icedesign/container";
@@ -149,6 +155,63 @@ class AdPlan extends Component {
                 ))}
             </DropdownMenu>
           </Dropdown>
+          <Row style={{ marginTop: "12px" }}>
+            <Col>
+              <InputGroup className="mb-4">
+                <InputGroupAddon addonType="prepend">
+                  <InputGroupText>投放时间类型：</InputGroupText>
+                </InputGroupAddon>
+                <Input
+                  type="select"
+                  onChange={e => {
+                    const params = {
+                      currentPage: (adPlan && adPlan.currentPage) || 1,
+                      pageSize: 20
+                    };
+                    if (e.target.value !== "-1") {
+                      params.launchTimeType = e.target.value;
+                    }
+                    getAdPlans(params);
+                  }}
+                >
+                  <option value="-1">全部</option>
+                  <option value="0">视频时间</option>
+                  <option value="1">即时</option>
+                  <option value="2">北京时间</option>
+                </Input>
+              </InputGroup>
+            </Col>
+            <Col>
+              <InputGroup className="mb-4">
+                <InputGroupAddon addonType="prepend">
+                  <InputGroupText>投放应用：</InputGroupText>
+                </InputGroupAddon>
+                <Input
+                  type="select"
+                  onChange={e => {
+                    const params = {
+                      currentPage: (adPlan && adPlan.currentPage) || 1,
+                      pageSize: 20
+                    };
+                    if (e.target.value !== "-1") {
+                      params.interactionTypeId = e.target.value;
+                    }
+                    getAdPlans(params);
+                  }}
+                >
+                  <option value="-1">全部</option>
+                  {modelTypes &&
+                    Array.isArray(modelTypes) &&
+                    modelTypes.length > 0 &&
+                    modelTypes.map((mt, idx) => (
+                      <option key={idx} value={mt.interactionId}>
+                        {mt.interactionTypeName}
+                      </option>
+                    ))}
+                </Input>
+              </InputGroup>
+            </Col>
+          </Row>
         </IceContainer>
         <PlanTable
           isLoading={adPlan && adPlan.isLoading}
