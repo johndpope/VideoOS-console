@@ -77,6 +77,8 @@ const isConflict = payload => {
   return status;
 };
 
+let params = { pageSize: 20 };
+
 class AdPlan extends Component {
   componentDidMount() {
     const { getAdPlans, queryAllModelTypes } = this.props;
@@ -164,12 +166,14 @@ class AdPlan extends Component {
                 <Input
                   type="select"
                   onChange={e => {
-                    const params = {
-                      currentPage: (adPlan && adPlan.currentPage) || 1,
-                      pageSize: 20
+                    params = {
+                      ...params,
+                      currentPage: (adPlan && adPlan.currentPage) || 1
                     };
                     if (e.target.value !== "-1") {
                       params.launchTimeType = e.target.value;
+                    } else {
+                      delete params.launchTimeType;
                     }
                     getAdPlans(params);
                   }}
@@ -189,12 +193,14 @@ class AdPlan extends Component {
                 <Input
                   type="select"
                   onChange={e => {
-                    const params = {
-                      currentPage: (adPlan && adPlan.currentPage) || 1,
-                      pageSize: 20
+                    params = {
+                      ...params,
+                      currentPage: (adPlan && adPlan.currentPage) || 1
                     };
                     if (e.target.value !== "-1") {
                       params.interactionTypeId = e.target.value;
+                    } else {
+                      delete params.interactionTypeId;
                     }
                     getAdPlans(params);
                   }}
