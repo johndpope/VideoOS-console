@@ -17,23 +17,23 @@ const defaultMenuConfig = {
       children: [
         {
           id: 11,
-          name: "类型管理",
+          name: "应用管理",
           path: "/hd/type"
         },
         {
           id: 13,
-          name: "类型管理",
+          name: "应用管理",
           path: "/hd/type",
           readOnly: true
         },
         {
           id: 12,
-          name: "模版管理",
+          name: "主题管理",
           path: "/hd/model"
         },
         {
           id: 14,
-          name: "模版管理",
+          name: "主题管理",
           path: "/hd/model",
           readOnly: true
         }
@@ -73,6 +73,18 @@ const defaultMenuConfig = {
       path: "/zs",
       icon: "icon-map",
       external: true
+    },
+    {
+      name: "操作日志管理",
+      path: "/rz",
+      icon: "icon-pencil",
+      children: [
+        {
+          id: 51,
+          name: "日志信息管理",
+          path: "/rz/log"
+        }
+      ]
     },
     {
       name: "权限管理",

@@ -52,12 +52,12 @@ export default class TypeTable extends Component {
           />
           <Table.Column title="创建日期" dataIndex="createDate" width={80} />
           <Table.Column
-            title="类型名称"
+            title="应用名称"
             dataIndex="interactionTypeName"
             width={120}
           />
           <Table.Column
-            title="模板"
+            title="主题"
             cell={(value, index, record) => (
               <Link
                 to={{
@@ -65,7 +65,7 @@ export default class TypeTable extends Component {
                   state: { type: record.interactionTypeId }
                 }}
               >
-                模版列表
+                主题列表
               </Link>
             )}
             width={60}

@@ -17,7 +17,7 @@
 
 // import { push } from 'react-router-redux';
 import { Feedback } from "@icedesign/base";
-import saveFile from "utils/saveFile";
+// import saveFile from "utils/saveFile";
 import * as api from "./api";
 // import { reloadAuthorized } from 'utils/Authorized';
 import {
@@ -47,9 +47,9 @@ import {
   GET_MODEL_INFO_BYID_SUCCESS,
   GET_MODEL_INFO_BYID_FAILURE,
   SET_FORM_DATA,
-  DOWNLOAD_MODEL_TEMPLATE_FILE_REQUEST,
-  DOWNLOAD_MODEL_TEMPLATE_FILE_FAILURE,
-  DOWNLOAD_MODEL_TEMPLATE_FILE_SUCCESS,
+  // DOWNLOAD_MODEL_TEMPLATE_FILE_REQUEST,
+  // DOWNLOAD_MODEL_TEMPLATE_FILE_FAILURE,
+  // DOWNLOAD_MODEL_TEMPLATE_FILE_SUCCESS,
   UPDATE_MODEL_FILE_REQUEST,
   UPDATE_MODEL_FILE_SUCCESS,
   UPDATE_MODEL_FILE_FAILURE,
@@ -260,27 +260,27 @@ const queryAllModelTypesFailure = () => {
   };
 };
 
-const downloadModelTemplateFileRequest = () => {
-  return {
-    type: DOWNLOAD_MODEL_TEMPLATE_FILE_REQUEST,
-    isLoading: true
-  };
-};
+// const downloadModelTemplateFileRequest = () => {
+//   return {
+//     type: DOWNLOAD_MODEL_TEMPLATE_FILE_REQUEST,
+//     isLoading: true
+//   };
+// };
 
-const downloadModelTemplateFileSuccess = payload => {
-  return {
-    type: DOWNLOAD_MODEL_TEMPLATE_FILE_SUCCESS,
-    isLoading: true,
-    payload
-  };
-};
+// const downloadModelTemplateFileSuccess = payload => {
+//   return {
+//     type: DOWNLOAD_MODEL_TEMPLATE_FILE_SUCCESS,
+//     isLoading: true,
+//     payload
+//   };
+// };
 
-const downloadModelTemplateFileFailure = () => {
-  return {
-    type: DOWNLOAD_MODEL_TEMPLATE_FILE_FAILURE,
-    isLoading: true
-  };
-};
+// const downloadModelTemplateFileFailure = () => {
+//   return {
+//     type: DOWNLOAD_MODEL_TEMPLATE_FILE_FAILURE,
+//     isLoading: true
+//   };
+// };
 
 const updateModelFileRequest = () => {
   return {
@@ -297,10 +297,11 @@ const updateModelFileSuccess = payload => {
   };
 };
 
-const updateModelFileFailure = () => {
+const updateModelFileFailure = payload => {
   return {
     type: UPDATE_MODEL_FILE_FAILURE,
-    isLoading: false
+    isLoading: false,
+    payload
   };
 };
 
@@ -317,7 +318,18 @@ export const getIaModels = (
       const response = await api.getIaModels(params);
 
       if (response.status === 200 && response.data.resCode === "00") {
-        dispatch(getIaModelsSuccess(response.data));
+        const { totalPage } = response.data;
+        if (totalPage <= 0) {
+          dispatch(getIaModelsSuccess([]));
+          return;
+        }
+        if (params.currentPage <= totalPage) {
+          dispatch(getIaModelsSuccess(response.data));
+        } else {
+          params.currentPage = totalPage;
+          dispatch(setCurrentPage({ currentPage: totalPage }));
+          dispatch(getIaModels(params));
+        }
       } else {
         dispatch(getIaModelsFailure(response.data));
         Feedback.toast.error(response.data && response.data.resMsg);
@@ -523,23 +535,24 @@ export const getModelInfoById = params => {
 };
 
 export const downloadModelTemplateFile = params => {
-  return async dispatch => {
-    dispatch(downloadModelTemplateFileRequest());
-    try {
-      const response = await api.downloadModelTemplateFile(params);
+  return dispatch => {
+    api.downloadModelTemplateFile(params);
+    //dispatch(downloadModelTemplateFileRequest());
+    // try {
+    //   const response = await api.downloadModelTemplateFile(params);
 
-      if (response.status === 200) {
-        saveFile(response.data, "text/latex", "模版文件.lua");
-        dispatch(downloadModelTemplateFileSuccess(response.data));
-      } else {
-        dispatch(downloadModelTemplateFileFailure(response.data));
-        Feedback.toast.error(response.data && response.data.resMsg);
-      }
+    //   if (response.status === 200) {
+    //     saveFile(response.data, "text/latex", "模版文件.lua");
+    //     dispatch(downloadModelTemplateFileSuccess(response.data));
+    //   } else {
+    //     dispatch(downloadModelTemplateFileFailure(response.data));
+    //     Feedback.toast.error(response.data && response.data.resMsg);
+    //   }
 
-      return response.data;
-    } catch (error) {
-      dispatch(downloadModelTemplateFileFailure(error));
-    }
+    //   return response.data;
+    // } catch (error) {
+    //   dispatch(downloadModelTemplateFileFailure(error));
+    // }
   };
 };
 

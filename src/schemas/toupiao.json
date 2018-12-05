@@ -1,109 +1,110 @@
 {
-    "title": "",
-    "definitions": {
-      "InfoItem": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "title": "投票对象名称",  
-            "type": "string"  
-          },
-          "vote_img": {
-            "title": "投票图片",  
-            "type": "string", 
-            "format": "data-url" 
-          }
-        }  
-      }  
-    },
-    "type": "object",
-    "required": ["popular_point_title", "avatar"],
-    "properties": {
-      "creativeName": {
-        "title": "素材名称",  
-        "type": "string"  
-      },
-      "interactionTypeId": {
-        "title": "素材类型",  
-        "type": "string",
-        "default": "请选择",
-        "enum": [
-          "云图",
-          "中插",
-          "红包",
-          "投票"
-        ],
-        "enumNames": [
-          "云图",
-          "中插",
-          "红包",
-          "投票"  
-        ]  
-      },
-      "interactionTemplateId": {
-        "title": "素材模板",
-        "type": "string",
-        "enum": [
-          "请选择"  
-        ],
-        "enumNames": [
-          "请选择"  
-        ]
-      },
-      "popular_point_title": {
-        "type": "string",
-        "title": "热点标题",
-        "default": ""  
-      },
-      "avatar": {
-        "type": "string",
-        "format": "data-url",
-        "title": "热点图片"
-      },
-      "countdown_duration": {
-        "type": "string",
-        "title": "倒计时持续时间",
-        "enum": [
-          "10s",
-          "15s",
-          "20s",
-          "25s",
-          "30s",
-          "自定义"  
-        ],
-        "enumNames": [
-          "10秒",
-          "15秒",
-          "20秒",
-          "25秒",
-          "30秒",
-          "自定义"
-        ]
-      },
-      "show_ad_sign": {
-        "type": "boolean",
-        "title": "广告标识是否可见"  
-      },
-      "infoItems": {
-        "type": "array",
-        "title": "信息选项",
-        "minItems": 1,
-        "items": {
-          "$ref": "#/definitions/InfoItem"  
-        }  
-      },
-      "exposureLinks": {
-        "type": "array",
-        "title": "热点曝光监控链接",
-        "minItems": 1,
-        "items": {
-          "type": "string"  
-        }  
-      },
-      "rules": {
-        "type": "string",
-        "title": "投票规则",
-        "default": ""  
+  "key": "toupiao",
+  "definitions": {
+    "Item": {
+      "type": "object",
+      "properties": {
+        "imageUrl": {
+          "type": "string",
+          "title": ""
+        },
+        "title": {
+          "type": "string",
+          "title": "",
+          "maxLength": 5
+        }
       }
-    }  
+    }
+  },
+  "title": "",
+  "type": "object",
+  "required": [
+    "creativeName",
+    "interactionTypeId",
+    "interactionTemplateId",
+    "imageUrl",
+    "voteImageUrl",
+    "voteTitle",
+    "voteList",
+    "voteBtnImage"
+  ],
+  "properties": {
+    "creativeName": {
+      "title": "素材名称",
+      "type": "string",
+      "maxLength": 30
+    },
+    "interactionTypeId": {
+      "title": "所属应用",
+      "type": "integer",
+      "default": "请选择",
+      "enum": [],
+      "enumNames": []
+    },
+    "interactionTemplateId": {
+      "title": "素材主题",
+      "type": "integer",
+      "enum": [],
+      "enumNames": []
+    },
+    "isShowAds": {
+      "type": "boolean",
+      "title": "关闭按钮是否可见",
+      "default": true
+    },
+    "isShowClose": {
+      "type": "boolean",
+      "title": "关闭按钮是否可见",
+      "default": true
+    },
+    "imageUrl": {
+      "type": "string",
+      "title": "热点图片"
+    },
+    "exposureTrackLink": {
+      "type": "string",
+      "format": "uri",
+      "title": "热点曝光监控链接"
+    },
+    "clickTrackLink": {
+      "type": "string",
+      "format": "uri",
+      "title": "热点点击监控链接"
+    },
+    "voteImageUrl": {
+      "type": "string",
+      "title": "投票弹窗图片"
+    },
+    "voteTitle": {
+      "type": "string",
+      "title": "投票弹窗标题",
+      "maxLength": 10
+    },
+    "voteList": {
+      "type": "array",
+      "title": "信息选项",
+      "items": {
+        "$ref": "#/definitions/Item"
+      }
+    },
+    "voteBtnImage": {
+      "type": "string",
+      "title": "投票按钮图片"
+    },
+    "voteBtnExposureTrackLink": {
+      "type": "string",
+      "format": "uri",
+      "title": "投票按钮曝光的监控链接"
+    },
+    "voteBtnClickTrackLink": {
+      "type": "string",
+      "format": "uri",
+      "title": "投票按钮点击监控链接"
+    },
+    "voteRule": {
+      "type": "string",
+      "title": "投票规则",
+      "maxLength": 100
+    }
   }
+}

@@ -2,7 +2,14 @@ import React, { Fragment } from "react";
 import { Row, Col, Input } from "reactstrap";
 import { Button, Icon, Feedback } from "@icedesign/base";
 
-const MinSec = ({ time, idx, setFormData, isRead, launchTimes }) => {
+const MinSec = ({
+  time,
+  idx,
+  setFormData,
+  isRead,
+  launchTimes,
+  launchTime
+}) => {
   let temp_ms = /:/gi.test(time) ? time.split(":") : ["", ""];
   const firstOne = idx === 0 ? true : false;
   return (
@@ -14,7 +21,7 @@ const MinSec = ({ time, idx, setFormData, isRead, launchTimes }) => {
             disabled={isRead ? "disabled" : false}
             maxLength={2}
             defaultValue={temp_ms[0]}
-            onChange={e => {
+            onBlur={e => {
               temp_ms[0] = e.target.value || "";
               const ms_txt = temp_ms.join(":");
               if (launchTimes) {
@@ -27,7 +34,7 @@ const MinSec = ({ time, idx, setFormData, isRead, launchTimes }) => {
                 Feedback.toast.error("请输入有效分钟数");
                 return;
               }
-              setFormData({ launchTimes });
+              setFormData({ launchTime });
             }}
           />
         </Col>
@@ -38,7 +45,7 @@ const MinSec = ({ time, idx, setFormData, isRead, launchTimes }) => {
             disabled={isRead ? "disabled" : false}
             maxLength={2}
             defaultValue={temp_ms[1]}
-            onChange={e => {
+            onBlur={e => {
               temp_ms[1] = e.target.value || "";
               const ms_txt = temp_ms.join(":");
               if (launchTimes) {
@@ -54,7 +61,7 @@ const MinSec = ({ time, idx, setFormData, isRead, launchTimes }) => {
                 Feedback.toast.error("请输入有效秒数");
                 return;
               }
-              setFormData({ launchTimes });
+              setFormData({ launchTime });
             }}
           />
         </Col>
@@ -64,7 +71,7 @@ const MinSec = ({ time, idx, setFormData, isRead, launchTimes }) => {
             <Button
               onClick={() => {
                 launchTimes.splice(idx, 1);
-                setFormData({ launchTimes });
+                setFormData({ launchTime });
               }}
             >
               <Icon type="ashbin" />

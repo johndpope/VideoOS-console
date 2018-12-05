@@ -10,7 +10,7 @@ import {
   AppNavbarBrand,
   AppSidebarToggler
 } from "@coreui/react";
-import { getUserInfoLocal } from "utils/authority";
+import { getUserInfoLocal, getAuthority } from "utils/authority";
 import { userLogout, resetPasswordModalToggle, resetPassword } from "./actions";
 import reducer from "./reducer";
 import PasswordReset from "./PasswordReset";
@@ -55,7 +55,11 @@ class DefaultHeader extends Component {
               <DropdownItem onClick={resetPasswordModalToggle}>
                 <i className="fa fa-lock" /> 修改密码
               </DropdownItem>
-              <DropdownItem onClick={userLogout}>
+              <DropdownItem
+                onClick={() => {
+                  userLogout({ token: getAuthority() });
+                }}
+              >
                 <i className="fa fa-unlock" /> 退出登录
               </DropdownItem>
             </DropdownMenu>

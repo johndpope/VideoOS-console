@@ -34,29 +34,47 @@ const AddModel = ({
   const { opType } = record || {};
   const isRead = opType === "read";
   const isUpdate = opType === "update";
-
+  if (
+    isUpdate &&
+    formData &&
+    formData.interactionTypeId &&
+    modelTypes &&
+    !JSON.stringify(modelTypes).includes(formData.interactionTypeId)
+  ) {
+    modelTypes.push({
+      interactionId: formData.interactionTypeId,
+      interactionTypeName: formData.interactionTypeName
+    });
+  }
   return (
     <Fragment>
       <Modal isOpen={shouldOpen} toggle={toggle}>
         <ModalHeader toggle={toggle}>
-          {isRead ? "模板信息" : isUpdate ? "模板修改" : "新增模版"}
+          {isRead ? "主题信息" : isUpdate ? "主题修改" : "新增主题"}
         </ModalHeader>
         <ModalBody>
           <Form>
             <InputGroup className="mb-4">
               <InputGroupAddon addonType="prepend">
-                <InputGroupText>模版类型</InputGroupText>
+                <InputGroupText>所属应用</InputGroupText>
               </InputGroupAddon>
               <Input
                 type="select"
                 disabled={isRead ? "disabled" : false}
                 defaultValue={
                   isRead || isUpdate
-                    ? formData && formData.interactionTypeId
+                    ? formData &&
+                      `${formData.interactionTypeId},${
+                        formData.interactionTypeName
+                      }`
                     : ""
                 }
                 onChange={e => {
-                  setFormData({ interactionTypeId: e.target.value });
+                  const values = e.target.value.split(",");
+                  setFormData({
+                    interactionTypeId: values[0],
+                    interactionTypeName: values[1]
+                  });
                 }}
               >
                 <option value="">请选择</option>
@@ -64,7 +82,10 @@ const AddModel = ({
                   Array.isArray(modelTypes) &&
                   modelTypes.length > 0 &&
                   modelTypes.map((mt, idx) => (
-                    <option key={idx} value={mt.interactionId}>
+                    <option
+                      key={idx}
+                      value={`${mt.interactionId},${mt.interactionTypeName}`}
+                    >
                       {mt.interactionTypeName}
                     </option>
                   ))}
@@ -72,17 +93,17 @@ const AddModel = ({
             </InputGroup>
             <InputGroup className="mb-4">
               <InputGroupAddon addonType="prepend">
-                <InputGroupText>模版名称</InputGroupText>
+                <InputGroupText>主题名称</InputGroupText>
               </InputGroupAddon>
               <Input
                 type="text"
-                placeholder="请输入模版名称"
+                placeholder="请输入主题名称"
                 disabled={isRead ? "disabled" : false}
                 defaultValue={
                   isRead || isUpdate ? formData && formData.templateName : ""
                 }
                 onChange={e => {
-                  setFormData({ interactionTemplateName: e.target.value });
+                  setFormData({ templateName: e.target.value });
                 }}
                 maxLength={10}
               />
@@ -90,7 +111,7 @@ const AddModel = ({
             {isRead ? (
               <InputGroup className="mb-4">
                 <InputGroupAddon addonType="prepend">
-                  <InputGroupText>模版文件</InputGroupText>
+                  <InputGroupText>主题文件</InputGroupText>
                 </InputGroupAddon>
                 <span>
                   <Button
@@ -107,7 +128,7 @@ const AddModel = ({
             ) : (
               <InputGroup className="mb-4">
                 <InputGroupAddon addonType="prepend">
-                  <InputGroupText>模版上传</InputGroupText>
+                  <InputGroupText>文件上传</InputGroupText>
                 </InputGroupAddon>
                 <span
                   style={{
@@ -138,20 +159,21 @@ const AddModel = ({
                         const { files } = e.target;
                         const templateFileSourceName =
                           files && files[0] && files[0].name;
-                        if (!/.lua$/gi.test(templateFileSourceName)) {
-                          Feedback.toast.error("请上传*.lua文件");
-                          setUploadModelFileInfo({});
+                        if (!/.zip$/gi.test(templateFileSourceName)) {
+                          Feedback.toast.error("请上传*.zip文件");
                           return;
                         }
-                        setFormData({ templateFileSourceName });
-                        if (isUpdate) {
-                          updateModelFile({
-                            templateId: record && record.templateId,
-                            file: files && files[0]
-                          });
-                        } else {
-                          uploadModelFile({ file: files && files[0] });
-                        }
+                        setFormData({ file: files && files[0] });
+
+                        // setFormData({ templateFileSourceName });
+                        // if (isUpdate) {
+                        //   updateModelFile({
+                        //     templateId: record && record.templateId,
+                        //     file: files && files[0]
+                        //   });
+                        // } else {
+                        //   uploadModelFile({ file: files && files[0] });
+                        // }
                       }}
                     />
                   )}
@@ -159,6 +181,9 @@ const AddModel = ({
               </InputGroup>
             )}
           </Form>
+          <div>
+            注：需上传压缩文件格式(*.zip)。且同一个主题下，文件名不能重名哦。
+          </div>
         </ModalBody>
         <ModalFooter>
           <Button onClick={toggle}>取消</Button>
@@ -174,43 +199,42 @@ const AddModel = ({
                 return;
               }
               if (!formData.interactionTypeId) {
-                Feedback.toast.error("请选择“模版类型”");
+                Feedback.toast.error("请选择“所属应用”");
                 return;
               }
-              if (!formData.interactionTemplateName && !isUpdate) {
-                Feedback.toast.error("请输入“模版名称”");
+              if (!formData.templateName) {
+                Feedback.toast.error("请输入“主题名称”");
                 return;
               }
-              if (!(formData && formData.templateName) && isUpdate) {
-                Feedback.toast.error("请输入“模版名称”");
+              if (
+                uploadModelFileInfo &&
+                uploadModelFileInfo.resMsg &&
+                uploadModelFileInfo.resMsg === "模版在使用中，不能更新"
+              ) {
+                Feedback.toast.error(uploadModelFileInfo.resMsg);
                 return;
               }
-              if (!uploadModelFileInfo.compressFileName && !isUpdate) {
-                Feedback.toast.error("请上传.lua模版文件");
+              if (formData && !formData.file && !isUpdate) {
+                Feedback.toast.error("请上传*.zip文件");
                 return;
               }
               if (isUpdate) {
                 if (
                   showFileIpt
-                    ? !(
-                        uploadModelFileInfo &&
-                        uploadModelFileInfo.compressFileName
-                      )
+                    ? !(formData && formData.file)
                     : !(modelInfo && modelInfo.templateFileSourceName)
                 ) {
-                  Feedback.toast.error("请上传.lua模版文件");
+                  Feedback.toast.error("请上传.zip主题文件");
                   return;
                 }
                 updateModel({
                   interactionTemplateId: record && record.templateId,
                   ...formData,
-                  ...uploadModelFileInfo,
                   currentPage
                 });
-              } else {
+              } else if (!isRead) {
                 addModel({
                   ...formData,
-                  ...uploadModelFileInfo,
                   currentPage
                 });
               }

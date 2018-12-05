@@ -49,7 +49,8 @@ import {
   // GET_PLAN_INFO_REQUEST,
   // GET_PLAN_INFO_SUCCESS,
   // GET_PLAN_INFO_FAILURE,
-  SET_CURRENT_PAGE
+  SET_CURRENT_PAGE,
+  SET_EDIT_STATE
 } from "./constants";
 
 let newPlanDropDownSwitch = false;
@@ -263,7 +264,18 @@ export const getAdPlans = (
       const response = await api.getAdPlans(params);
 
       if (response.status === 200 && response.data.resCode === "00") {
-        dispatch(getAdPlansSuccess(response.data));
+        const { totalPage } = response.data;
+        if (totalPage <= 0) {
+          dispatch(getAdPlansSuccess([]));
+          return;
+        }
+        if (params.currentPage <= totalPage) {
+          dispatch(getAdPlansSuccess(response.data));
+        } else {
+          params.currentPage = totalPage;
+          dispatch(setCurrentPage({ currentPage: totalPage }));
+          dispatch(getAdPlans(params));
+        }
       } else {
         dispatch(getAdPlansFailure(response.data));
         Feedback.toast.error(response.data && response.data.resMsg);
@@ -507,6 +519,13 @@ export const getAdPlanInfo = params => {
 export const setCurrentPage = payload => {
   return {
     type: SET_CURRENT_PAGE,
+    payload
+  };
+};
+
+export const setEditState = payload => {
+  return {
+    type: SET_EDIT_STATE,
     payload
   };
 };

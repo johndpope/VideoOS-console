@@ -11,9 +11,9 @@ const DeleteType = ({
 }) => (
   <Fragment>
     <Modal isOpen={shouldOpen} toggle={toggle}>
-      <ModalHeader toggle={toggle}>删除类型</ModalHeader>
+      <ModalHeader toggle={toggle}>删除应用</ModalHeader>
       <ModalBody>
-        <p>确认删除类型吗？</p>
+        <p>确认删除应用吗？</p>
       </ModalBody>
       <ModalFooter>
         <Button onClick={toggle}>取消</Button>

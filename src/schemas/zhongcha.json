@@ -1,5 +1,5 @@
 {
-  "title": "",
+  "key": "zhangcha",
   "type": "object",
   "required": [
     "creativeName",
@@ -11,17 +11,16 @@
     "creativeName": {
       "title": "素材名称",
       "type": "string",
-      "maxLength": 10,
-      "pattern": "[0-9A-Za-z\u4e00-\u9fa5-]+$"
+      "maxLength": 30
     },
     "interactionTypeId": {
-      "title": "素材类型",
+      "title": "所属应用",
       "type": "integer",
       "enum": [],
       "enumNames": []
     },
     "interactionTemplateId": {
-      "title": "素材模板",
+      "title": "素材主题",
       "type": "integer",
       "enum": ["请选择"],
       "enumNames": ["请选择"]
@@ -64,6 +63,14 @@
       "type": "string",
       "title": "广告外链链接",
       "format": "uri"
+    },
+    "repeatTimes": {
+      "type": "integer",
+      "default": 1
+    },
+    "priority": {
+      "type": "integer",
+      "default": 10
     }
   }
 }

@@ -198,7 +198,18 @@ export const getAccounts = (
       const response = await api.getAaAccounts(params);
 
       if (response.status === 200 && response.data.resCode === "00") {
-        dispatch(getAccountsSuccess(response.data));
+        const { totalPage } = response.data;
+        if (totalPage <= 0) {
+          dispatch(getAccountsSuccess([]));
+          return;
+        }
+        if (params.currentPage <= totalPage) {
+          dispatch(getAccountsSuccess(response.data));
+        } else {
+          params.currentPage = totalPage;
+          dispatch(setCurrentPage({ currentPage: totalPage }));
+          dispatch(getAccounts(params));
+        }
       } else {
         dispatch(getAccountsFail(response.data));
         Feedback.toast.error(response.data && response.data.resMsg);

@@ -4,6 +4,16 @@ import { Modal, ModalBody, ModalHeader } from "reactstrap";
 import { Button, Feedback } from "@icedesign/base";
 import uiSchema from "schemas/uiSchema";
 
+import Bubbles from "./Bubbles";
+import Votes from "./Votes";
+import Cards from "./Cards";
+
+const fieldsMap = {
+  qipao: Bubbles,
+  toupiao: Votes,
+  kapai: Cards
+};
+
 const AddMaterial = ({
   shouldOpen,
   toggle,
@@ -16,7 +26,6 @@ const AddMaterial = ({
   materialSchema,
   addMaterialFile,
   currentPage,
-  fileData,
   setSwitcher,
   uiSchemaConf,
   setMaterialSchema
@@ -24,6 +33,9 @@ const AddMaterial = ({
   const { opType } = record || {};
   const isRead = opType === "read";
   const isUpdate = opType === "update";
+  const isSpecial = ["qipao", "toupiao", "kapai"].includes(
+    materialSchema && materialSchema.key
+  );
   return (
     <Fragment>
       <Modal isOpen={shouldOpen} toggle={toggle}>
@@ -38,17 +50,51 @@ const AddMaterial = ({
               // noValidate
               noHtml5Validate
               showErrorList={false}
-              uiSchema={uiSchema({
-                isRead,
-                isUpdate,
-                setSwitcher,
-                addMaterialFile,
-                uiSchemaConf,
-                formData,
-                saveFormData
-              })}
+              uiSchema={{
+                ...uiSchema({
+                  isRead,
+                  isUpdate,
+                  setSwitcher,
+                  addMaterialFile,
+                  uiSchemaConf,
+                  formData,
+                  saveFormData
+                }),
+                "ui:field": "fields"
+              }}
+              fields={
+                isSpecial
+                  ? { fields: fieldsMap[materialSchema && materialSchema.key] }
+                  : null
+              }
+              ErrorList={props => {
+                const { errors } = props;
+                return (
+                  <div>
+                    {errors.map((error, idx) => {
+                      return <li key={idx}>{error.stack}</li>;
+                    })}
+                  </div>
+                );
+              }}
               transformErrors={errors => {
                 return errors.map(error => {
+                  if (error.name === "type") {
+                    let msg = "";
+                    if (error.params.type === "number") {
+                      msg = "数值类型";
+                    }
+                    if (error.params.type === "integer") {
+                      msg = "整型";
+                    }
+                    if (error.params.type === "boolean") {
+                      msg = "布尔值";
+                    }
+                    if (error.params.type === "string") {
+                      msg = "字符串";
+                    }
+                    error.message = msg;
+                  }
                   if (error.name === "format") {
                     error.message = "必选项";
                   }
@@ -59,10 +105,15 @@ const AddMaterial = ({
                     error.message = "必填项";
                   }
                   if (error.name === "pattern") {
-                    error.message = "汉字、字母、数字、下划线组合";
+                    error.message = "汉字、字母、数字组合";
                   }
                   if (error.name === "maxLength") {
                     error.message = `超过${error.params.limit}字符上限`;
+                  }
+                  if (error.name === "enum") {
+                    if (error.params.allowedValues) {
+                      error.message = "请选择";
+                    }
                   }
                   return error;
                 });
@@ -113,12 +164,7 @@ const AddMaterial = ({
                 saveFormData(formData);
               }}
               onSubmit={({ formData }) => {
-                // const _formData = { ...formData };
-                // if (fileData && Object.keys(fileData).length > 0) {
-                //   for (let key in fileData) {
-                //     _formData[key] = fileData[key];
-                //   }
-                // }
+                let canSubmit = true;
                 if (
                   formData &&
                   formData.hasOwnProperty("imageUrl") &&
@@ -135,6 +181,129 @@ const AddMaterial = ({
                   Feedback.toast.error("请上传视频");
                   return;
                 }
+                if (
+                  formData &&
+                  formData.hasOwnProperty("messages") &&
+                  formData.messages &&
+                  formData.messages.length === 0
+                ) {
+                  Feedback.toast.error("请添加“对话内容”");
+                  return;
+                }
+                if (
+                  formData &&
+                  formData.hasOwnProperty("voteList") &&
+                  formData.voteList &&
+                  formData.voteList.length === 0
+                ) {
+                  Feedback.toast.error("请添加“信息选项”");
+                  return;
+                }
+                if (
+                  formData &&
+                  formData.hasOwnProperty("messages") &&
+                  formData.messages
+                ) {
+                  formData.messages.forEach(msg => {
+                    if (msg.messageType === 1) {
+                      if (!msg.content || typeof msg.content === "object") {
+                        canSubmit = false;
+                        Feedback.toast.error("“对话文本内容”不能为空哦");
+                        return;
+                      }
+                    }
+                    if (msg.messageType === 2) {
+                      if (!msg.content || typeof msg.content !== "object") {
+                        canSubmit = false;
+                        Feedback.toast.error("“气泡图片”不能为空哦");
+                        return;
+                      }
+                    }
+                    if (msg.messageType === 3) {
+                      if (!msg.messageButtons) {
+                        canSubmit = false;
+                        Feedback.toast.error("请输入左侧按钮必填信息");
+                        return;
+                      }
+                      if (!msg.messageButtons[0]) {
+                        canSubmit = false;
+                        Feedback.toast.error("请输入左侧按钮必填信息");
+                        return;
+                      }
+                      if (
+                        msg.messageButtons[0] &&
+                        !Boolean(msg.messageButtons[0].title)
+                      ) {
+                        canSubmit = false;
+                        Feedback.toast.error("“左侧按钮文案”不能为空哦");
+                        return;
+                      }
+                      if (
+                        msg.messageButtons[0] &&
+                        !Boolean(msg.messageButtons[0].link)
+                      ) {
+                        canSubmit = false;
+                        Feedback.toast.error("“左侧按钮外链链接”不能为空哦");
+                        return;
+                      }
+                      if (!msg.messageButtons[1]) {
+                        canSubmit = false;
+                        Feedback.toast.error("请输入右侧按钮必填信息");
+                        return;
+                      }
+                      if (
+                        msg.messageButtons[1] &&
+                        !Boolean(msg.messageButtons[1].title)
+                      ) {
+                        canSubmit = false;
+                        Feedback.toast.error("“右侧按钮文案”不能为空哦");
+                        return;
+                      }
+                      if (
+                        msg.messageButtons[1] &&
+                        !Boolean(msg.messageButtons[1].link)
+                      ) {
+                        canSubmit = false;
+                        Feedback.toast.error("“右侧按钮外链链接”不能为空哦");
+                        return;
+                      }
+                    }
+
+                    if (!msg.duration) {
+                      canSubmit = false;
+                      Feedback.toast.error("“展示持续时间”不能为空哦");
+                      return;
+                    }
+                  });
+                  if (!canSubmit) {
+                    return;
+                  }
+                }
+                if (formData && formData.hasOwnProperty("collect")) {
+                  if (formData.collect.linkType === 2) {
+                    if (!formData.collect.linkUrl) {
+                      Feedback.toast.error("“跳转至H5”不能为空哦");
+                      return;
+                    }
+                  } else if (formData.collect.linkType === 1) {
+                    if (!formData.success) {
+                      Feedback.toast.error("必填项不能为空哦");
+                      return;
+                    }
+                    if (!formData.success.itemId) {
+                      Feedback.toast.error("“道具ID”不能为空哦");
+                      return;
+                    }
+                    if (!formData.success.title) {
+                      Feedback.toast.error("“领奖成功弹窗标题”不能为空哦");
+                      return;
+                    }
+                    if (!formData.success.imageUrl) {
+                      Feedback.toast.error("“领奖成功图片”不能为空哦");
+                      return;
+                    }
+                  }
+                }
                 if (isUpdate) {
                   updateMaterial({
                     creativeId: record.creativeId,
@@ -142,7 +311,24 @@ const AddMaterial = ({
                     interactionTypeId: formData.interactionTypeId,
                     interactionTemplateId: formData.interactionTemplateId,
                     creativeContent: JSON.stringify(formData),
-                    creativeIdList,
+                    interactionTemplateName:
+                      materialSchema &&
+                      materialSchema.properties &&
+                      materialSchema.properties.interactionTemplateId &&
+                      materialSchema.properties.interactionTemplateId
+                        .enumNames &&
+                      materialSchema.properties.interactionTemplateId.enumNames[
+                        materialSchema.properties.interactionTemplateId.enum &&
+                        Array.isArray(
+                          materialSchema.properties.interactionTemplateId.enum
+                        )
+                          ? materialSchema.properties.interactionTemplateId.enum.indexOf(
+                              formData.interactionTemplateId
+                            )
+                          : 0
+                      ],
+                    creativeIdList:
+                      (formData && formData.creativeIdList) || creativeIdList,
                     currentPage
                   });
                 } else if (isRead) {
@@ -154,7 +340,8 @@ const AddMaterial = ({
                     interactionTypeId: formData.interactionTypeId,
                     interactionTemplateId: formData.interactionTemplateId,
                     creativeContent: JSON.stringify(formData),
-                    creativeIdList,
+                    creativeIdList:
+                      (formData && formData.creativeIdList) || creativeIdList,
                     interactionTypeName:
                       materialSchema &&
                       materialSchema.properties &&
