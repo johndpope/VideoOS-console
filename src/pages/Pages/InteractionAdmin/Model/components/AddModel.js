@@ -109,7 +109,7 @@ const AddModel = ({
               />
             </InputGroup>
             {isRead ? (
-              <InputGroup className="mb-4">
+              <InputGroup>
                 <InputGroupAddon addonType="prepend">
                   <InputGroupText>主题文件</InputGroupText>
                 </InputGroupAddon>
@@ -126,7 +126,7 @@ const AddModel = ({
                 </span>
               </InputGroup>
             ) : (
-              <InputGroup className="mb-4">
+              <InputGroup>
                 <InputGroupAddon addonType="prepend">
                   <InputGroupText>文件上传</InputGroupText>
                 </InputGroupAddon>
@@ -181,8 +181,14 @@ const AddModel = ({
               </InputGroup>
             )}
           </Form>
-          <div>
-            注：需上传压缩文件格式(*.zip)。且同一个主题下，文件名不能重名哦。
+          <div style={{ marginLeft: "75px", paddingTop: "8px" }}>
+            注：
+            <br />
+            需上传ZIP的压缩文件格式；
+            <br />
+            须有一个文件名以hotspot.lua结尾；
+            <br />
+            同一个主题下，压缩包里的文件名不能重名哦；
           </div>
         </ModalBody>
         <ModalFooter>
