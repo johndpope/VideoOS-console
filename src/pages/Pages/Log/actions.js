@@ -59,6 +59,10 @@ export const getLogs = (
       const response = await api.getLogs(params);
       if (response.status === 200 && response.data.resCode === "00") {
         const { totalPage } = response.data;
+        if (totalPage === 0) {
+          dispatch(getLogsFailure(response.data));
+          return;
+        }
         if (params.currentPage <= totalPage) {
           dispatch(getLogsSuccess(response.data));
         } else {
