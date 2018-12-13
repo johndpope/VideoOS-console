@@ -122,11 +122,6 @@
           "maxLength": 10,
           "title": "领奖成功弹窗标题"
         },
-        "imageUrl": {
-          "type": "string",
-          "title": "领奖成功图片",
-          "format": "uri"
-        },
         "itemId": {
           "type": "string",
           "title": ""

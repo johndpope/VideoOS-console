@@ -217,7 +217,7 @@ export default class Cards extends Component {
                           lineHeight: "32px"
                         }}
                       >
-                        上传热点图片
+                        上传图片
                         <Input
                           style={{
                             position: "absolute",
@@ -276,6 +276,7 @@ export default class Cards extends Component {
                           }}
                         />
                       </div>
+                      <p>图片尺寸为宽100PX、高135PX</p>
                       {errorSchema &&
                         errorSchema.hotspotArray &&
                         errorSchema.hotspotArray[0] &&
@@ -420,7 +421,7 @@ export default class Cards extends Component {
                           lineHeight: "32px"
                         }}
                       >
-                        上传热点图片
+                        上传图片
                         <Input
                           style={{
                             position: "absolute",
@@ -477,6 +478,7 @@ export default class Cards extends Component {
                           }}
                         />
                       </div>
+                      <p>图片尺寸为宽100PX、高135PX</p>
                       {errorSchema &&
                         errorSchema.hotspotArray &&
                         errorSchema.hotspotArray[1] &&
@@ -619,7 +621,7 @@ export default class Cards extends Component {
                                   lineHeight: "32px"
                                 }}
                               >
-                                上传热点图片
+                                上传图片
                                 <Input
                                   style={{
                                     position: "absolute",
@@ -680,6 +682,7 @@ export default class Cards extends Component {
                           )}
                         </Col>
                       </Row>
+                      <p>图片尺寸为宽100PX、高135PX</p>
                       {errorSchema &&
                         errorSchema.hotspotArray &&
                         errorSchema.hotspotArray[idx + 2] &&
@@ -922,6 +925,7 @@ export default class Cards extends Component {
               )}
             </Col>
           </Row>
+          <p>图片尺寸为宽330PX、高160PX</p>
           {errorSchema &&
             errorSchema.collect &&
             errorSchema.collect.imageUrl &&
@@ -1088,126 +1092,6 @@ export default class Cards extends Component {
                 errorSchema.success.title &&
                 errorSchema.success.title.__errors &&
                 errorSchema.success.title.__errors.map((err, idx) => (
-                  <li key={idx} style={{ color: "#f86c6b" }}>
-                    {err}
-                  </li>
-                ))}
-            </div>
-            <div className="array-item">
-              <Label>领奖成功图片*</Label>
-              <Row style={{ marginBottom: "8px" }}>
-                <Col>
-                  {success && success.imageUrl ? (
-                    <Fragment>
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyMessage: "center",
-                          alignItems: "center"
-                        }}
-                      >
-                        <img
-                          alt=""
-                          src={success.imageUrl}
-                          style={{
-                            maxWidth: "240px",
-                            maxHeight: "240px"
-                          }}
-                        />
-                        {!readonly ? (
-                          <button
-                            type="button"
-                            className="btn btn-danger array-item-remove"
-                            onClick={e => {
-                              success.imageUrl = "";
-                              this.setState({ success }, () =>
-                                this.props.onChange(this.state)
-                              );
-                            }}
-                          >
-                            <i className="glyphicon glyphicon-remove" />
-                          </button>
-                        ) : null}
-                      </div>
-                    </Fragment>
-                  ) : (
-                    <Fragment>
-                      <div
-                        style={{
-                          position: "relative",
-                          width: "120px",
-                          height: "32px",
-                          border: "1px solid #e4e7ea",
-                          textAlign: "center",
-                          lineHeight: "32px"
-                        }}
-                      >
-                        上传图片
-                        <Input
-                          style={{
-                            position: "absolute",
-                            opacity: 0,
-                            top: 0,
-                            left: 0,
-                            width: "100%",
-                            height: "100%",
-                            borderRadius: "0.25rem"
-                          }}
-                          accept="image/png, image/jpg, image/jpeg, image/gif"
-                          type="file"
-                          placeholder="上传图片"
-                          onChange={e => {
-                            const { files } = e.target;
-                            if (!files || files.length <= 0) {
-                              return;
-                            }
-                            addMaterialFile({
-                              file: files[0]
-                            }).then(result => {
-                              if (result.status === 200) {
-                                if (
-                                  result.data &&
-                                  result.data.resCode === "00"
-                                ) {
-                                  success.imageUrl = result.data.fileUrl;
-                                  if (
-                                    Array.isArray(creativeIdList) &&
-                                    creativeIdList.indexOf(
-                                      result.data.creativeFileId
-                                    ) === -1
-                                  ) {
-                                    creativeIdList.push(
-                                      result.data.creativeFileId
-                                    );
-                                  }
-                                  this.setState(
-                                    { success, creativeIdList },
-                                    () => this.props.onChange(this.state)
-                                  );
-                                } else {
-                                  Feedback.toast.error(
-                                    result.data && result.data.resMsg
-                                  );
-                                }
-                              } else {
-                                Feedback.toast.error(
-                                  `${result.status}：上传出错了，请重试`
-                                );
-                              }
-                            });
-                          }}
-                        />
-                      </div>
-                    </Fragment>
-                  )}
-                </Col>
-              </Row>
-              {errorSchema &&
-                errorSchema.success &&
-                errorSchema.success.imageUrl &&
-                errorSchema.success.imageUrl.__errors &&
-                errorSchema.success.imageUrl.__errors.map((err, idx) => (
                   <li key={idx} style={{ color: "#f86c6b" }}>
                     {err}
                   </li>
