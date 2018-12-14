@@ -192,6 +192,7 @@ function adMaterialReducer(state = initialState, action) {
     case ADD_MATERIAL_FILE_SUCCESS:
       if (action && action.payload._type) {
         state.fileData[action.payload._type] = action.payload.fileUrl;
+        state.fileData[`_${action.payload._type}`] = action.payload;
         if (state.fileData && Object.keys(state.fileData).length > 0) {
           for (let key in state.fileData) {
             state.formData[key] = state.fileData[key];

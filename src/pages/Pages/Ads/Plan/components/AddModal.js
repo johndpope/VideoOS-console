@@ -149,11 +149,11 @@ const AddMaterial = ({
           </InputGroup>
           <InputGroup className="mb-4">
             <InputGroupAddon addonType="prepend">
-              <InputGroupText>投放视频id</InputGroupText>
+              <InputGroupText>视频/直播间的ID/URL</InputGroupText>
             </InputGroupAddon>
             <Input
               type="text"
-              placeholder="请输入投放视频id"
+              placeholder="请输入视频/直播间的ID/URL"
               disabled={isRead ? "disabled" : false}
               defaultValue={
                 isRead || isUpdate ? formData && formData.launchVideoId : ""
@@ -163,6 +163,7 @@ const AddMaterial = ({
               }}
             />
           </InputGroup>
+          <p>如需填写多个ID/URL，请用英文的“,”分隔即可</p>
           <InputGroup className="mb-4">
             <InputGroupAddon addonType="prepend">
               <InputGroupText>投放时间类型</InputGroupText>

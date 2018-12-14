@@ -60,7 +60,7 @@ const AddModel = ({
               </InputGroupAddon>
               <Input
                 type="select"
-                disabled={isRead ? "disabled" : false}
+                disabled={isRead || isUpdate ? "disabled" : false}
                 defaultValue={
                   isRead || isUpdate
                     ? formData &&
