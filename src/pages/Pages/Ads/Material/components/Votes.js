@@ -476,7 +476,7 @@ export default class Votes extends Component {
                       <div
                         style={{
                           display: "flex",
-                          flexDirection: "row",
+                          flexDirection: "column",
                           justifyMessage: "center",
                           alignItems: "center"
                         }}
@@ -545,19 +545,21 @@ export default class Votes extends Component {
                               }
                             }}
                           />
-                          <p>图片尺寸为宽60PX*高60PX</p>
-                          {errorSchema &&
-                          errorSchema.voteList &&
-                          errorSchema.voteList[idx]
-                            ? errorSchema.voteList[idx].imageUrl.__errors.map(
-                                (err, idx) => (
-                                  <li key={idx} style={{ color: "#f86c6b" }}>
-                                    未上传投票图片
-                                  </li>
-                                )
-                              )
-                            : null}
                         </div>
+                        {errorSchema &&
+                        errorSchema.voteList &&
+                        errorSchema.voteList[idx]
+                          ? errorSchema.voteList[idx].imageUrl.__errors.map(
+                              (err, idx) => (
+                                <li key={idx} style={{ color: "#f86c6b" }}>
+                                  未上传投票图片
+                                </li>
+                              )
+                            )
+                          : null}
+                        <p style={{ fontSize: "12px" }}>
+                          图片尺寸为宽60PX*高60PX
+                        </p>
                       </div>
                     )}
                   </Col>

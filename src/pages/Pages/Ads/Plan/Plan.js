@@ -246,6 +246,7 @@ class AdPlan extends Component {
                   currentPage
                 });
                 getAdPlans({
+                  ...params,
                   currentPage,
                   pageSize: 20
                 });
