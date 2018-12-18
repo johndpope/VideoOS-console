@@ -11,9 +11,9 @@ const DeleteType = ({
 }) => (
   <Fragment>
     <Modal isOpen={shouldOpen} toggle={toggle}>
-      <ModalHeader toggle={toggle}>删除应用</ModalHeader>
+      <ModalHeader toggle={toggle}>警告</ModalHeader>
       <ModalBody>
-        <p>确认删除应用吗？</p>
+        <p>警告删除应用后，与该主题绑定的素材也将删除。</p>
       </ModalBody>
       <ModalFooter>
         <Button onClick={toggle}>取消</Button>
