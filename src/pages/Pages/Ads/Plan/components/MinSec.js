@@ -15,7 +15,7 @@ const MinSec = ({
   return (
     <Fragment>
       <Row>
-        <Col md="3">
+        <Col md="4">
           <Input
             type="tel"
             disabled={isRead ? "disabled" : false}
@@ -39,7 +39,7 @@ const MinSec = ({
           />
         </Col>
         <Col md="1">分</Col>
-        <Col md="3">
+        <Col md="4">
           <Input
             type="tel"
             disabled={isRead ? "disabled" : false}
