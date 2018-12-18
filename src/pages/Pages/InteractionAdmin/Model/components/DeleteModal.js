@@ -11,9 +11,9 @@ const DeleteRole = ({
 }) => (
   <Fragment>
     <Modal isOpen={shouldOpen} toggle={toggle}>
-      <ModalHeader toggle={toggle}>删除主题</ModalHeader>
+      <ModalHeader toggle={toggle}>警告</ModalHeader>
       <ModalBody>
-        <p>确定删除该主题</p>
+        <p>删除主题后，与该应用绑定的主题和素材也将删除。</p>
       </ModalBody>
       <ModalFooter>
         <Button onClick={toggle}>取消</Button>
@@ -23,7 +23,7 @@ const DeleteRole = ({
             deleteModel({ ...record, currentPage });
           }}
         >
-          确认
+          确认删除
         </Button>
       </ModalFooter>
     </Modal>
