@@ -58,13 +58,13 @@ export default class PlanTable extends Component {
           />
           <Table.Column title="投放名称" dataIndex="launchName" width={120} />
           <Table.Column
-            title="投放素材名称"
-            dataIndex="creativeName"
+            title="投放应用"
+            dataIndex="interactionTypeName"
             width={120}
           />
           <Table.Column
-            title="投放应用"
-            dataIndex="interactionTypeName"
+            title="投放素材名称"
+            dataIndex="creativeName"
             width={120}
           />
           <Table.Column
