@@ -298,10 +298,6 @@ const AddMaterial = ({
                       Feedback.toast.error("“领奖成功弹窗标题”不能为空哦");
                       return;
                     }
-                    if (!formData.success.imageUrl) {
-                      Feedback.toast.error("“领奖成功图片”不能为空哦");
-                      return;
-                    }
                   }
                 }
                 if (isUpdate) {
