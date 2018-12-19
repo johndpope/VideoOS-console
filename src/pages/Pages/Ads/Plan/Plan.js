@@ -131,6 +131,7 @@ class AdPlan extends Component {
           deletePlan={deletePlan}
           record={adPlan && adPlan.record}
           currentPage={adPlan && adPlan.currentPage}
+          params={params}
         />
         <IceContainer style={{ overflow: "visible" }}>
           <Dropdown
