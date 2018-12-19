@@ -13,7 +13,7 @@ const DeleteType = ({
     <Modal isOpen={shouldOpen} toggle={toggle}>
       <ModalHeader toggle={toggle}>警告</ModalHeader>
       <ModalBody>
-        <p>删除应用后，与该主题绑定的素材也将删除。</p>
+        <p>删除应用后，与该应用绑定的主题和素材也将删除。</p>
       </ModalBody>
       <ModalFooter>
         <Button onClick={toggle}>取消</Button>
