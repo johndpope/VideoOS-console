@@ -375,6 +375,8 @@ export const deletePlan = params => {
     dispatch(deletePlanRequest());
     try {
       const currentPage = (params && params.currentPage) || 1;
+      const launchTimeType = params && params.launchTimeType;
+      const interactionTypeId = params && params.interactionTypeId;
       delete params.currentPage;
       const response = await api.deletePlan(params);
 
@@ -384,7 +386,9 @@ export const deletePlan = params => {
         dispatch(
           getAdPlans({
             currentPage,
-            pageSize: 20
+            pageSize: 20,
+            interactionTypeId,
+            launchTimeType
           })
         );
         Feedback.toast.show(response.data && response.data.resMsg);

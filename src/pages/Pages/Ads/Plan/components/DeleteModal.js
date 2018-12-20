@@ -7,7 +7,8 @@ const DeletePlan = ({
   toggle,
   deletePlan,
   record,
-  currentPage
+  currentPage,
+  params
 }) => (
   <Fragment>
     <Modal isOpen={shouldOpen} toggle={toggle}>
@@ -20,7 +21,7 @@ const DeletePlan = ({
         <Button
           type="primary"
           onClick={() => {
-            deletePlan({ ...record, currentPage });
+            deletePlan({ ...record, ...params, currentPage });
           }}
         >
           确认

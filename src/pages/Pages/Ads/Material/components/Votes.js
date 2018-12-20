@@ -68,7 +68,6 @@ export default class Votes extends Component {
       voteTitle,
       exposureTrackLink,
       clickTrackLink,
-      voteBtnImage,
       voteBtnExposureTrackLink,
       voteBtnClickTrackLink,
       voteRule,
@@ -156,7 +155,7 @@ export default class Votes extends Component {
         </div>
         <div>
           <Label>热点图片*</Label>
-          <Row style={{ marginBottom: "8px" }}>
+          <Row>
             <Col>
               {imageUrl ? (
                 <Fragment>
@@ -255,6 +254,7 @@ export default class Votes extends Component {
               )}
             </Col>
           </Row>
+          <p>图片尺寸为宽200PX*高75PX</p>
           {errorSchema &&
             errorSchema.imageUrl &&
             errorSchema.imageUrl.__errors &&
@@ -394,6 +394,7 @@ export default class Votes extends Component {
                       }}
                     />
                   </div>
+                  <p>图片尺寸为宽30PX*高30PX</p>
                   {errorSchema &&
                     errorSchema.voteImageUrl &&
                     errorSchema.voteImageUrl.__errors &&
@@ -475,7 +476,7 @@ export default class Votes extends Component {
                       <div
                         style={{
                           display: "flex",
-                          flexDirection: "row",
+                          flexDirection: "column",
                           justifyMessage: "center",
                           alignItems: "center"
                         }}
@@ -544,18 +545,21 @@ export default class Votes extends Component {
                               }
                             }}
                           />
-                          {errorSchema &&
-                          errorSchema.voteList &&
-                          errorSchema.voteList[idx]
-                            ? errorSchema.voteList[idx].imageUrl.__errors.map(
-                                (err, idx) => (
-                                  <li key={idx} style={{ color: "#f86c6b" }}>
-                                    未上传投票图片
-                                  </li>
-                                )
-                              )
-                            : null}
                         </div>
+                        {errorSchema &&
+                        errorSchema.voteList &&
+                        errorSchema.voteList[idx]
+                          ? errorSchema.voteList[idx].imageUrl.__errors.map(
+                              (err, idx) => (
+                                <li key={idx} style={{ color: "#f86c6b" }}>
+                                  未上传投票图片
+                                </li>
+                              )
+                            )
+                          : null}
+                        <p style={{ fontSize: "12px" }}>
+                          图片尺寸为宽60PX*高60PX
+                        </p>
                       </div>
                     )}
                   </Col>
@@ -630,119 +634,6 @@ export default class Votes extends Component {
               </button>
             ) : null}
           </div>
-        </div>
-        <div>
-          <Label>投票按钮图片*</Label>
-          <Row style={{ marginBottom: "8px" }}>
-            <Col>
-              {voteBtnImage ? (
-                <Fragment>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyMessage: "center",
-                      alignItems: "center"
-                    }}
-                  >
-                    <img
-                      alt=""
-                      src={voteBtnImage}
-                      style={{
-                        maxWidth: "84px",
-                        maxHeight: "84px"
-                      }}
-                    />
-                    {!readonly ? (
-                      <button
-                        type="button"
-                        className="btn btn-danger array-item-remove"
-                        onClick={e => {
-                          this.setState({ voteBtnImage: "" }, () =>
-                            this.props.onChange(this.state)
-                          );
-                        }}
-                      >
-                        <i className="glyphicon glyphicon-remove" />
-                      </button>
-                    ) : null}
-                  </div>
-                </Fragment>
-              ) : (
-                <Fragment>
-                  <div
-                    style={{
-                      position: "relative",
-                      width: "120px",
-                      height: "32px",
-                      border: "1px solid #e4e7ea",
-                      textAlign: "center",
-                      lineHeight: "32px"
-                    }}
-                  >
-                    上传图片
-                    <Input
-                      style={{
-                        position: "absolute",
-                        opacity: 0,
-                        top: 0,
-                        left: 0,
-                        width: "100%",
-                        height: "100%",
-                        borderRadius: "0.25rem"
-                      }}
-                      accept="image/png, image/jpg, image/jpeg, image/gif"
-                      type="file"
-                      placeholder="上传图片"
-                      onChange={e => {
-                        const { files } = e.target;
-                        if (!files || files.length <= 0) {
-                          return;
-                        }
-                        addMaterialFile({
-                          file: files[0]
-                        }).then(result => {
-                          if (result.status === 200) {
-                            if (result.data && result.data.resCode === "00") {
-                              voteBtnImage = result.data.fileUrl;
-                              if (
-                                Array.isArray(creativeIdList) &&
-                                creativeIdList.indexOf(
-                                  result.data.creativeFileId
-                                ) === -1
-                              ) {
-                                creativeIdList.push(result.data.creativeFileId);
-                              }
-                              this.setState(
-                                { voteBtnImage, creativeIdList },
-                                () => this.props.onChange(this.state)
-                              );
-                            } else {
-                              Feedback.toast.error(
-                                result.data && result.data.resMsg
-                              );
-                            }
-                          } else {
-                            Feedback.toast.error(
-                              `${result.status}：上传出错了，请重试`
-                            );
-                          }
-                        });
-                      }}
-                    />
-                  </div>
-                  {errorSchema &&
-                    errorSchema.voteBtnImage &&
-                    errorSchema.voteBtnImage.__errors &&
-                    errorSchema.voteBtnImage.__errors.map((err, idx) => (
-                      <li key={idx} style={{ color: "#f86c6b" }}>
-                        {err}
-                      </li>
-                    ))}
-                </Fragment>
-              )}
-            </Col>
-          </Row>
         </div>
         <div className="array-item">
           <Label>投票按钮曝光的监控链接</Label>
