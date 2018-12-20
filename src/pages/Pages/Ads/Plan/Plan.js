@@ -91,6 +91,7 @@ class AdPlan extends Component {
     setCurrentPage({
       currentPage: 1
     });
+    params = { pageSize: 20 };
   }
 
   render() {
