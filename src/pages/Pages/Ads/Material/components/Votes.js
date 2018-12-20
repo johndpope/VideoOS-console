@@ -155,7 +155,7 @@ export default class Votes extends Component {
         </div>
         <div>
           <Label>热点图片*</Label>
-          <Row style={{ marginBottom: "8px" }}>
+          <Row>
             <Col>
               {imageUrl ? (
                 <Fragment>

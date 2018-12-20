@@ -147,7 +147,7 @@ const AddMaterial = ({
                 ))}
             </Input>
           </InputGroup>
-          <InputGroup className="mb-4">
+          <InputGroup>
             <InputGroupAddon addonType="prepend">
               <InputGroupText>视频/直播间的ID/URL</InputGroupText>
             </InputGroupAddon>
