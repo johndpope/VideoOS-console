@@ -9,6 +9,7 @@ import AdMaterial from "Pages/Ads/Material";
 import AdPlan from "Pages/Ads/Plan";
 import License from "Pages/License";
 import Log from "Pages/Log";
+import MaterialCRUD from "Pages/MaterialCRUD/MaterialCRUD";
 
 const routerConfig = [
   {
@@ -68,6 +69,11 @@ const routerConfig = [
     path: "/rz/log",
     name: "日志信息管理",
     component: Log
+  },
+  {
+    path: "/sc/crud",
+    name: "创建素材",
+    component: MaterialCRUD
   }
 ];
 

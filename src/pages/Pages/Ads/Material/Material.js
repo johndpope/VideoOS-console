@@ -15,21 +15,14 @@ import injectReducer from "utils/injectReducer";
 import {
   getAdMaterials,
   addMaterialToggle,
-  addMaterial,
-  updateMaterial,
   deleteMaterial,
   newMaterialDropDownToggle,
   deleteMaterialModalToggle,
   queryAllModelTypes,
-  addMaterialFile,
-  saveFormData,
-  setCurrentPage,
-  setSwitcher,
-  setMaterialSchema
+  setCurrentPage
 } from "./actions";
 import reducer from "./reducer";
 import MaterialTable from "./components/Table";
-import AddMaterial from "./components/AddModal";
 import DeleteMaterial from "./components/DeleteModal";
 
 class AdMaterial extends Component {
@@ -50,40 +43,16 @@ class AdMaterial extends Component {
     const {
       adMaterial,
       addMaterialToggle,
-      addMaterial,
-      updateMaterial,
       deleteMaterial,
       newMaterialDropDownToggle,
       deleteMaterialModalToggle,
-      addMaterialFile,
-      saveFormData,
       getAdMaterials,
-      setCurrentPage,
-      setSwitcher,
-      setMaterialSchema
+      setCurrentPage
     } = this.props;
     const modelTypes = adMaterial.modelTypes || [];
     const { authorList } = getUserInfoLocal();
     return (
       <div className="app">
-        <AddMaterial
-          toggle={addMaterialToggle}
-          materialSchema={adMaterial && adMaterial.materialSchema}
-          formData={adMaterial && adMaterial.formData}
-          shouldOpen={adMaterial && adMaterial.shouldAddMaterialOpen}
-          addMaterialFile={addMaterialFile}
-          addMaterial={addMaterial}
-          updateMaterial={updateMaterial}
-          adMaterial={adMaterial}
-          saveFormData={saveFormData}
-          creativeIdList={adMaterial && adMaterial.creativeIdList}
-          record={adMaterial && adMaterial.record}
-          currentPage={adMaterial && adMaterial.currentPage}
-          fileData={adMaterial && adMaterial.fileData}
-          setSwitcher={setSwitcher}
-          uiSchemaConf={adMaterial && adMaterial.uiSchemaConf}
-          setMaterialSchema={setMaterialSchema}
-        />
         <DeleteMaterial
           deleteMaterial={deleteMaterial}
           toggle={deleteMaterialModalToggle}
@@ -159,15 +128,9 @@ const mapDispatchToProps = {
   deleteMaterialModalToggle,
   addMaterialToggle,
   queryAllModelTypes,
-  addMaterialFile,
-  addMaterial,
-  updateMaterial,
-  saveFormData,
   getAdMaterials,
   deleteMaterial,
-  setCurrentPage,
-  setSwitcher,
-  setMaterialSchema
+  setCurrentPage
 };
 
 const mapStateToProps = state => {

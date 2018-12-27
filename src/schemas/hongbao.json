@@ -1,92 +1,62 @@
 {
-    "title": "",
-    "type": "object",
-    "required": ["creativeName"],
-    "properties": {
-      "creativeName": {
-        "title": "素材名称",  
-        "type": "string"  
-      },
-      "interactionTypeId": {
-        "title": "素材类型",  
-        "type": "integer",
-        "enum": [
-        ],
-        "enumNames": [
-        ]  
-      },
-      "interactionTemplateId": {
-        "title": "素材模板",  
-        "type": "integer",
-        "enum": [ 
-        ],
-        "enumNames": [
-        ]  
-      },
-      "popular_point_title": {
-        "type": "string",
-        "title": "热点标题",
-        "default": ""  
-      },
-      "countdown_img": {
-        "type": "string",
-        "format": "data-url",
-        "title": "倒计时图片"
-      },
-      "countdown_duration": {
-        "type": "string",
-        "title": "倒计时持续时间",
-        "enum": [
-          "10",
-          "15",
-          "20",
-          "25",
-          "30",
-          "自定义"  
-        ],
-        "enumNames": [
-          "10秒",
-          "15秒",
-          "20秒",
-          "25秒",
-          "30秒",
-          "自定义"
-        ]
-      },
-      "show_close_btn": {
-        "type": "boolean",
-        "title": "倒计时关闭按钮是否可见"  
-      },
-      "display_img": {
-        "type": "string",
-        "format": "data-url",
-        "title": "显示图片"
-      },
-      "award_img": {
-        "type": "string",
-        "format": "data-url",
-        "title": "中奖图片"
-      },
-      "monitorLinks": {
-        "type": "array",
-        "title": "曝光监控链接",
-        "minItems": 1,
-        "items": {
-          "type": "string"  
-        }  
-      },
-      "exposureLinks": {
-        "type": "array",
-        "title": "入口点击监控链接",
-        "minItems": 1,
-        "items": {
-          "type": "string"  
-        }  
-      },
-      "target_link": {
-        "type": "string",
-        "title": "外链点击监控链接",
-        "default": ""  
+  "title": "",
+  "type": "object",
+  "required": ["creativeName"],
+  "properties": {
+    "creativeName": {
+      "title": "素材名称",
+      "type": "string"
+    },
+    "interactionTemplateId": {
+      "title": "素材主题",
+      "type": "integer",
+      "enum": [],
+      "enumNames": []
+    },
+    "popular_point_title": {
+      "type": "string",
+      "title": "热点标题",
+      "default": ""
+    },
+    "countdown_img": {
+      "type": "string",
+      "format": "data-url",
+      "title": "倒计时图片"
+    },
+    "show_close_btn": {
+      "type": "boolean",
+      "title": "倒计时关闭按钮是否可见"
+    },
+    "display_img": {
+      "type": "string",
+      "format": "data-url",
+      "title": "显示图片"
+    },
+    "award_img": {
+      "type": "string",
+      "format": "data-url",
+      "title": "中奖图片"
+    },
+    "monitorLinks": {
+      "type": "array",
+      "title": "曝光监控链接",
+      "minItems": 1,
+      "items": {
+        "type": "string"
       }
-    }  
+    },
+    "exposureLinks": {
+      "type": "array",
+      "title": "入口点击监控链接",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "target_link": {
+      "type": "string",
+      "title": "外链点击监控链接",
+      "default": ""
+    }
   }
+}
