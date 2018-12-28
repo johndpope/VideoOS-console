@@ -1,4 +1,5 @@
 import { Feedback } from "@icedesign/base";
+import { goBack as _goBack, push } from "react-router-redux";
 import * as api from "./api";
 import {
   QUERY_ALL_MODELTYPES_REQUEST,
@@ -49,5 +50,21 @@ export const queryAllModelTypes = params => {
     } catch (error) {
       dispatch(queryAllModelTypesFailure(error));
     }
+  };
+};
+
+export const goBack = () => {
+  return dispatch => {
+    dispatch(_goBack());
+  };
+};
+
+export const gotoCRUD = ({ interactionId, interactionTypeName }) => {
+  return dispatch => {
+    dispatch(
+      push(
+        `/tf/material/crud?id=${interactionId}&interactionTypeName=${interactionTypeName}`
+      )
+    );
   };
 };

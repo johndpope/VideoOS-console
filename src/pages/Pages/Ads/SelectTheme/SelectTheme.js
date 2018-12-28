@@ -4,11 +4,11 @@ import querystring from "querystring";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import injectReducer from "utils/injectReducer";
-import { Button, Feedback } from "@icedesign/base";
+import { Button, Feedback, Icon } from "@icedesign/base";
 
 import ThemeCard from "./components/Card";
 
-import { queryAllModelTypes } from "./actions";
+import { queryAllModelTypes, goBack, gotoCRUD } from "./actions";
 import reducer from "./reducer";
 
 class SelectTheme extends Component {
@@ -22,11 +22,19 @@ class SelectTheme extends Component {
   }
 
   render() {
-    const { selectThemeResult } = this.props;
+    const { selectThemeResult, goBack, gotoCRUD } = this.props;
     return (
       <div className="app">
-        <IceContainer>
+        <IceContainer
+          style={{
+            display: "flex",
+            justifyContent: "space-between"
+          }}
+        >
           <h3 style={{ color: "#20a8d8" }}>请选择互动应用</h3>
+          <Button onClick={goBack}>
+            <Icon type="ashbin" />
+          </Button>
         </IceContainer>
         <div
           style={{
@@ -40,7 +48,7 @@ class SelectTheme extends Component {
             selectThemeResult.modelTypes &&
             Array.isArray(selectThemeResult.modelTypes) &&
             selectThemeResult.modelTypes.map((mt, idx) => (
-              <ThemeCard key={idx} info={mt} />
+              <ThemeCard key={idx} info={mt} gotoCRUD={gotoCRUD} />
             ))}
         </div>
       </div>
@@ -49,7 +57,9 @@ class SelectTheme extends Component {
 }
 
 const mapDispatchToProps = {
-  queryAllModelTypes
+  queryAllModelTypes,
+  goBack,
+  gotoCRUD
 };
 
 const mapStateToProps = state => {

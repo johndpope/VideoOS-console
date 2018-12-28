@@ -6,6 +6,8 @@ import { createHashHistory } from "history";
 
 import configureStore from "./configureStore";
 // Styles
+// bootstrap
+import "venders/bootstrap/dist/css/bootstrap.min.css";
 // CoreUI Icons Set
 import "@coreui/icons/css/coreui-icons.min.css";
 // Import Flag Icons Set
@@ -14,8 +16,6 @@ import "flag-icon-css/css/flag-icon.min.css";
 import "font-awesome/css/font-awesome.min.css";
 // Import Simple Line Icons Set
 import "simple-line-icons/css/simple-line-icons.css";
-// bootstrap
-import "venders/bootstrap/dist/css/bootstrap.min.css";
 
 import "./App.css";
 

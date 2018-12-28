@@ -1,6 +1,6 @@
 import React from "react";
 
-const ThemeCard = ({ info = {}, style }) => {
+const ThemeCard = ({ info = {}, style, gotoCRUD }) => {
   const { interactionTypeName, imgUrl } = info;
   return (
     <div
@@ -14,6 +14,7 @@ const ThemeCard = ({ info = {}, style }) => {
         backgroundColor: "#fff",
         borderRadius: "4px"
       }}
+      onClick={gotoCRUD.bind(this, info)}
     >
       <div
         style={{

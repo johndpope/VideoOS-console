@@ -43,8 +43,11 @@ class MaterialCRUD extends Component {
     });
     if (qs && ["read", "update"].includes(qs.opType)) {
       getAdMaterialInfo({ creativeId: qs && qs.creativeId });
+    } else {
     }
   }
+
+  componentWillUnmount() {}
 
   render() {
     const {
