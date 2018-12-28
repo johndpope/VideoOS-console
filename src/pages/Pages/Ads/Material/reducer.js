@@ -12,18 +12,12 @@
 import {
   SHOW_DELETE_MATERIAL_MODAL,
   HIDE_DELETE_MATERIAL_MODAL,
-  SHOW_NEW_MATERIAL_DROPDOWN,
-  HIDE_NEW_MATERIAL_DROPDOWN,
   GET_AD_METERIALS_REQUEST,
   GET_AD_METERIALS_SUCCESS,
   GET_AD_METERIALS_FAILURE,
-  QUERY_ALL_MODELTYPES_REQUEST,
-  QUERY_ALL_MODELTYPES_SUCCESS,
-  QUERY_ALL_MODELTYPES_FAILURE,
   DELETE_METERIAL_REQUEST,
   DELETE_METERIAL_SUCCESS,
-  DELETE_METERIAL_FAILURE,
-  SET_CURRENT_PAGE
+  DELETE_METERIAL_FAILURE
 } from "./constants";
 
 // The initial state of the material
@@ -56,19 +50,6 @@ function adMaterialReducer(state = initialState, action) {
         isLoading: action.isLoading
       });
     case GET_AD_METERIALS_FAILURE:
-      return Object.assign({}, state, {
-        isLoading: action.isLoading
-      });
-    case QUERY_ALL_MODELTYPES_REQUEST:
-      return Object.assign({}, state, {
-        isLoading: action.isLoading
-      });
-    case QUERY_ALL_MODELTYPES_SUCCESS:
-      return Object.assign({}, state, {
-        modelTypes: action.payload,
-        isLoading: action.isLoading
-      });
-    case QUERY_ALL_MODELTYPES_FAILURE:
       return Object.assign({}, state, {
         isLoading: action.isLoading
       });

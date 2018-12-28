@@ -1,9 +1,5 @@
 import React, { Component } from "react";
 import {
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
   Row,
   Col,
   InputGroup,
@@ -11,7 +7,7 @@ import {
   InputGroupText,
   Input
 } from "reactstrap";
-import { Pagination } from "@icedesign/base";
+import { Pagination, Button } from "@icedesign/base";
 import IceContainer from "@icedesign/container";
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -134,31 +130,8 @@ class AdPlan extends Component {
           currentPage={adPlan && adPlan.currentPage}
           params={params}
         />
-        <IceContainer style={{ overflow: "visible" }}>
-          <Dropdown
-            isOpen={adPlan && adPlan.shouldNewPlanDropDownOpen}
-            toggle={newPlanDropDownToggle}
-          >
-            <DropdownToggle caret>新增投放计划</DropdownToggle>
-            <DropdownMenu>
-              {modelTypes &&
-                Array.isArray(modelTypes) &&
-                modelTypes.length > 0 &&
-                modelTypes.map((mt, idx) => (
-                  <DropdownItem
-                    key={idx}
-                    onClick={() => {
-                      addPlanModalToggle({
-                        interactionTypeId: mt.interactionId,
-                        interactionTypeName: mt.interactionTypeName
-                      });
-                    }}
-                  >
-                    {mt.interactionTypeName}
-                  </DropdownItem>
-                ))}
-            </DropdownMenu>
-          </Dropdown>
+        <IceContainer>
+          <Button onClick={newPlanDropDownToggle}>新增投放计划</Button>
           <Row style={{ marginTop: "12px" }}>
             <Col>
               <InputGroup className="mb-4">

@@ -1,31 +1,31 @@
-import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
-import { createHashHistory } from 'history';
+import React, { Component } from "react";
+import { Route, Switch } from "react-router-dom";
+import { Provider } from "react-redux";
+import { ConnectedRouter } from "react-router-redux";
+import { createHashHistory } from "history";
 
-import configureStore from './configureStore';
+import configureStore from "./configureStore";
 // Styles
-// bootstrap
-import 'bootstrap/dist/css/bootstrap.min.css';
 // CoreUI Icons Set
-import '@coreui/icons/css/coreui-icons.min.css';
+import "@coreui/icons/css/coreui-icons.min.css";
 // Import Flag Icons Set
-import 'flag-icon-css/css/flag-icon.min.css';
+import "flag-icon-css/css/flag-icon.min.css";
 // Import Font Awesome Icons Set
-import 'font-awesome/css/font-awesome.min.css';
+import "font-awesome/css/font-awesome.min.css";
 // Import Simple Line Icons Set
-import 'simple-line-icons/css/simple-line-icons.css';
+import "simple-line-icons/css/simple-line-icons.css";
+// bootstrap
+import "venders/bootstrap/dist/css/bootstrap.min.css";
 
-import './App.css';
+import "./App.css";
 
 // Import Main styles for this application
-import './scss/style.css';
+import "./scss/style.css";
 
 // layouts
-import DefaultLayout from './layouts';
+import DefaultLayout from "./layouts";
 // Pages
-import { Login, Page404, Page500, Register } from './pages/Pages';
+import { Login, Page404, Page500, Register } from "./pages/Pages";
 
 // Create redux store with history
 const initialState = {};
@@ -33,7 +33,6 @@ const history = createHashHistory();
 const store = configureStore(initialState, history);
 
 class App extends Component {
-
   render() {
     return (
       <Provider store={store}>

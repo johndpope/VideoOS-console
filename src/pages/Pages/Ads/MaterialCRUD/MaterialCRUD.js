@@ -70,7 +70,7 @@ class MaterialCRUD extends Component {
       <div className="app flex-row align-items-center">
         {Boolean(materialSchema) ? (
           <Form
-            style={{width: '100%'}}
+            style={{ width: "100%" }}
             formData={formData}
             schema={materialSchema}
             noHtml5Validate

@@ -16,14 +16,13 @@
  */
 
 import { Feedback } from "@icedesign/base";
+import { push } from "react-router-redux";
 import * as api from "./api";
 import {
   SHOW_ADD_PLAN,
   HIDE_ADD_PLAN,
   SHOW_DELETE_PLAN,
   HIDE_DELETE_PLAN,
-  SHOW_NEW_PLAN_DROPDOWN,
-  HIDE_NEW_PLAN_DROPDOWN,
   GET_AD_PLANS_REQUEST,
   GET_AD_PLANS_SUCCESS,
   GET_AD_PLANS_FAILURE,
@@ -46,30 +45,12 @@ import {
   GET_AD_METERIALS_REQUEST,
   GET_AD_METERIALS_SUCCESS,
   GET_AD_METERIALS_FAILURE,
-  // GET_PLAN_INFO_REQUEST,
-  // GET_PLAN_INFO_SUCCESS,
-  // GET_PLAN_INFO_FAILURE,
   SET_CURRENT_PAGE,
   SET_EDIT_STATE
 } from "./constants";
 
-let newPlanDropDownSwitch = false;
 let addPlanSwitch = false;
 let deletePlanSwitch = false;
-
-const showNewPlanDropDown = () => {
-  return {
-    type: SHOW_NEW_PLAN_DROPDOWN,
-    shouldOpen: true
-  };
-};
-
-const hideNewPlanDropDown = () => {
-  return {
-    type: HIDE_NEW_PLAN_DROPDOWN,
-    shouldOpen: false
-  };
-};
 
 const showAddPlan = payload => {
   return {
@@ -440,12 +421,7 @@ export const deletePlanModalToggle = payload => {
 
 export const newPlanDropDownToggle = () => {
   return dispatch => {
-    newPlanDropDownSwitch = !newPlanDropDownSwitch;
-    if (newPlanDropDownSwitch) {
-      dispatch(showNewPlanDropDown());
-    } else {
-      dispatch(hideNewPlanDropDown());
-    }
+    dispatch(push(`/tf/plan/selT`));
   };
 };
 

@@ -7,9 +7,10 @@ import AAAccount from "Pages/AuthorityAdmin/Account";
 import AARole from "Pages/AuthorityAdmin/Role";
 import AdMaterial from "Pages/Ads/Material";
 import AdPlan from "Pages/Ads/Plan";
+import MaterialCRUD from "Pages/Ads/MaterialCRUD/MaterialCRUD";
+import SelectTheme from "Pages/Ads/SelectTheme/SelectTheme";
 import License from "Pages/License";
 import Log from "Pages/Log";
-import MaterialCRUD from "Pages/MaterialCRUD/MaterialCRUD";
 
 const routerConfig = [
   {
@@ -52,13 +53,30 @@ const routerConfig = [
   },
   {
     path: "/tf/plan",
+    exact: true,
     name: "投放计划管理",
     component: AdPlan
   },
   {
+    path: "/tf/plan/selT",
+    name: "选择互动应用",
+    component: SelectTheme
+  },
+  {
     path: "/tf/material",
+    exact: true,
     name: "投放素材管理",
     component: AdMaterial
+  },
+  {
+    path: "/tf/material/crud/",
+    name: "创建素材",
+    component: MaterialCRUD
+  },
+  {
+    path: "/tf/material/selT",
+    name: "选择互动应用",
+    component: SelectTheme
   },
   {
     path: "/zs",
@@ -69,11 +87,6 @@ const routerConfig = [
     path: "/rz/log",
     name: "日志信息管理",
     component: Log
-  },
-  {
-    path: "/sc/crud",
-    name: "创建素材",
-    component: MaterialCRUD
   }
 ];
 

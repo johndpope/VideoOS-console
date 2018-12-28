@@ -17,13 +17,10 @@
 
 import { push } from "react-router-redux";
 import { Feedback } from "@icedesign/base";
-import querystring from "querystring";
 import * as api from "./api";
 import {
   SHOW_DELETE_MATERIAL_MODAL,
   HIDE_DELETE_MATERIAL_MODAL,
-  SHOW_NEW_MATERIAL_DROPDOWN,
-  HIDE_NEW_MATERIAL_DROPDOWN,
   GET_AD_METERIALS_REQUEST,
   GET_AD_METERIALS_SUCCESS,
   GET_AD_METERIALS_FAILURE,
@@ -36,23 +33,7 @@ import {
   SET_CURRENT_PAGE
 } from "./constants";
 
-let newMaterialDropDownSwitch = false;
-let addMaterialSwitch = false;
 let deleteMaterialModalSwitch = false;
-
-const showNewMaterialDropDown = () => {
-  return {
-    type: SHOW_NEW_MATERIAL_DROPDOWN,
-    shouldOpen: true
-  };
-};
-
-const hideNewMaterialDropDown = () => {
-  return {
-    type: HIDE_NEW_MATERIAL_DROPDOWN,
-    shouldOpen: false
-  };
-};
 
 const showDeleteMaterialModal = payload => {
   return {
@@ -87,28 +68,6 @@ const getAdMaterialsSuccess = payload => {
 const getAdMaterialsFailure = () => {
   return {
     type: GET_AD_METERIALS_FAILURE,
-    isLoading: false
-  };
-};
-
-const queryAllModelTypesRequest = () => {
-  return {
-    type: QUERY_ALL_MODELTYPES_REQUEST,
-    isLoading: true
-  };
-};
-
-const queryAllModelTypesSuccess = payload => {
-  return {
-    type: QUERY_ALL_MODELTYPES_SUCCESS,
-    payload,
-    isLoading: false
-  };
-};
-
-const queryAllModelTypesFailure = () => {
-  return {
-    type: QUERY_ALL_MODELTYPES_FAILURE,
     isLoading: false
   };
 };
@@ -170,30 +129,6 @@ export const getAdMaterials = (
   };
 };
 
-export const queryAllModelTypes = params => {
-  return async dispatch => {
-    dispatch(queryAllModelTypesRequest());
-    try {
-      const response = await api.queryAllModelTypes(params);
-
-      if (response.status === 200 && response.data.resCode === "00") {
-        dispatch(
-          queryAllModelTypesSuccess(
-            response.data && response.data.interactionInfoList
-          )
-        );
-      } else {
-        dispatch(queryAllModelTypesFailure(response.data));
-        Feedback.toast.error(response.data && response.data.resMsg);
-      }
-
-      return response.data;
-    } catch (error) {
-      dispatch(queryAllModelTypesFailure(error));
-    }
-  };
-};
-
 export const deleteMaterial = params => {
   return async dispatch => {
     dispatch(deleteMaterialRequest());
@@ -228,14 +163,13 @@ export const addMaterialToggle = payload => {
   return dispatch => {
     dispatch(
       push(
-        `/sc/crud?id=${(payload && payload.interactionTypeId) ||
+        `/tf/material/crud?id=${(payload && payload.interactionTypeId) ||
           payload.interactionId}&interactionTypeName=${encodeURIComponent(
           payload && payload.interactionTypeName
         )}&opType=${payload && payload.opType}&creativeId=${payload &&
           payload.creativeId}`
       )
     );
-    // dispatch(push(`/sc/crud?${querystring.stringify(payload)}`));
   };
 };
 
@@ -252,12 +186,7 @@ export const deleteMaterialModalToggle = payload => {
 
 export const newMaterialDropDownToggle = () => {
   return dispatch => {
-    newMaterialDropDownSwitch = !newMaterialDropDownSwitch;
-    if (newMaterialDropDownSwitch) {
-      dispatch(showNewMaterialDropDown());
-    } else {
-      dispatch(hideNewMaterialDropDown());
-    }
+    dispatch(push(`/tf/material/selT`));
   };
 };
 

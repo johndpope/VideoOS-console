@@ -5,7 +5,7 @@ import {
   DropdownMenu,
   DropdownToggle
 } from "reactstrap";
-import { Pagination } from "@icedesign/base";
+import { Pagination, Button } from "@icedesign/base";
 import IceContainer from "@icedesign/container";
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -18,7 +18,6 @@ import {
   deleteMaterial,
   newMaterialDropDownToggle,
   deleteMaterialModalToggle,
-  queryAllModelTypes,
   setCurrentPage
 } from "./actions";
 import reducer from "./reducer";
@@ -27,8 +26,7 @@ import DeleteMaterial from "./components/DeleteModal";
 
 class AdMaterial extends Component {
   componentDidMount() {
-    const { queryAllModelTypes, getAdMaterials } = this.props;
-    queryAllModelTypes();
+    const { getAdMaterials } = this.props;
     getAdMaterials();
   }
 
@@ -60,31 +58,8 @@ class AdMaterial extends Component {
           record={adMaterial && adMaterial.record}
           currentPage={adMaterial && adMaterial.currentPage}
         />
-        <IceContainer style={{ overflow: "visible" }}>
-          <Dropdown
-            isOpen={adMaterial && adMaterial.shouldNewMaterialDropDownOpen}
-            toggle={newMaterialDropDownToggle}
-          >
-            <DropdownToggle caret>新增素材</DropdownToggle>
-            <DropdownMenu>
-              {modelTypes &&
-                Array.isArray(modelTypes) &&
-                modelTypes.length > 0 &&
-                modelTypes.map((mt, idx) => (
-                  <DropdownItem
-                    key={idx}
-                    onClick={() => {
-                      addMaterialToggle({
-                        interactionTypeId: mt.interactionId,
-                        interactionTypeName: mt.interactionTypeName
-                      });
-                    }}
-                  >
-                    {mt.interactionTypeName}
-                  </DropdownItem>
-                ))}
-            </DropdownMenu>
-          </Dropdown>
+        <IceContainer>
+          <Button onClick={newMaterialDropDownToggle}>新增素材</Button>
         </IceContainer>
         <MaterialTable
           isLoading={adMaterial && adMaterial.isLoading}
@@ -127,7 +102,6 @@ const mapDispatchToProps = {
   newMaterialDropDownToggle,
   deleteMaterialModalToggle,
   addMaterialToggle,
-  queryAllModelTypes,
   getAdMaterials,
   deleteMaterial,
   setCurrentPage
