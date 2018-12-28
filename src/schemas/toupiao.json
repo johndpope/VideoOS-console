@@ -20,7 +20,6 @@
   "type": "object",
   "required": [
     "creativeName",
-    "interactionTypeId",
     "interactionTemplateId",
     "imageUrl",
     "voteImageUrl",
@@ -32,13 +31,6 @@
       "title": "素材名称",
       "type": "string",
       "maxLength": 30
-    },
-    "interactionTypeId": {
-      "title": "所属应用",
-      "type": "integer",
-      "default": "请选择",
-      "enum": [],
-      "enumNames": []
     },
     "interactionTemplateId": {
       "title": "素材主题",
