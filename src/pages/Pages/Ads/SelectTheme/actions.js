@@ -59,11 +59,13 @@ export const goBack = () => {
   };
 };
 
-export const gotoCRUD = ({ interactionId, interactionTypeName }) => {
+export const gotoCRUD = ({ interactionId, interactionTypeName, isAddPlan }) => {
   return dispatch => {
     dispatch(
       push(
-        `/tf/material/crud?id=${interactionId}&interactionTypeName=${interactionTypeName}`
+        `/tf/${
+          isAddPlan ? "plan/selT/crud" : "material"
+        }/crud?id=${interactionId}&interactionTypeName=${interactionTypeName}`
       )
     );
   };

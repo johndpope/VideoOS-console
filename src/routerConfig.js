@@ -11,6 +11,7 @@ import MaterialCRUD from "Pages/Ads/MaterialCRUD/MaterialCRUD";
 import SelectTheme from "Pages/Ads/SelectTheme/SelectTheme";
 import License from "Pages/License";
 import Log from "Pages/Log";
+import PlanCRUD from "./pages/Pages/Ads/PlanCRUD/PlanCRUD";
 
 const routerConfig = [
   {
@@ -59,8 +60,14 @@ const routerConfig = [
   },
   {
     path: "/tf/plan/selT",
+    exact: true,
     name: "选择互动应用",
     component: SelectTheme
+  },
+  {
+    path: "/tf/plan/selT/crud",
+    name: "新增投放计划",
+    component: PlanCRUD
   },
   {
     path: "/tf/material",

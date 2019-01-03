@@ -10,6 +10,7 @@ import ThemeCard from "./components/Card";
 
 import { queryAllModelTypes, goBack, gotoCRUD } from "./actions";
 import reducer from "./reducer";
+let isAddPlan = false;
 
 class SelectTheme extends Component {
   constructor(props) {
@@ -17,7 +18,12 @@ class SelectTheme extends Component {
   }
 
   componentDidMount() {
-    const { queryAllModelTypes } = this.props;
+    const { queryAllModelTypes, location } = this.props;
+    if (location && location.pathname === "/tf/plan/selT") {
+      isAddPlan = true;
+    } else {
+      isAddPlan = false;
+    }
     queryAllModelTypes();
   }
 
@@ -48,7 +54,11 @@ class SelectTheme extends Component {
             selectThemeResult.modelTypes &&
             Array.isArray(selectThemeResult.modelTypes) &&
             selectThemeResult.modelTypes.map((mt, idx) => (
-              <ThemeCard key={idx} info={mt} gotoCRUD={gotoCRUD} />
+              <ThemeCard
+                key={idx}
+                info={{ ...mt, isAddPlan }}
+                gotoCRUD={gotoCRUD}
+              />
             ))}
         </div>
       </div>
