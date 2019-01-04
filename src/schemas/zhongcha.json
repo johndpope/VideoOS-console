@@ -1,7 +1,12 @@
 {
   "key": "zhongcha",
   "type": "object",
-  "required": ["creativeName", "interactionTemplateId", "videoUrl"],
+  "required": [
+    "creativeName",
+    "interactionTemplateId",
+    "videoUrl",
+    "closeAfter"
+  ],
   "properties": {
     "SECTION": {
       "title": "基础配置",

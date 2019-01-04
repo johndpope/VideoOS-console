@@ -36,6 +36,7 @@ const fieldsMap = {
 };
 
 let opType;
+let qs;
 
 class MaterialCRUD extends Component {
   constructor(props) {
@@ -43,19 +44,28 @@ class MaterialCRUD extends Component {
   }
 
   componentDidMount() {
-    const { getIaTypeById, getAdMaterialInfo, location } = this.props;
-    const qs = querystring.parse(location && location.search.substring(1));
+    const {
+      getIaTypeById,
+      getAdMaterialInfo,
+      location,
+      saveFormData
+    } = this.props;
+    qs = querystring.parse(location && location.search.substring(1));
     getIaTypeById({
       interactionId: qs.id,
       interactionTypeName: qs.interactionTypeName
     });
     if (qs && ["read", "update"].includes(qs.opType)) {
       opType = qs.opType;
+      saveFormData({ creativeId: qs && qs.creativeId });
       getAdMaterialInfo({ creativeId: qs && qs.creativeId });
     }
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    qs = null;
+    opType = null;
+  }
 
   render() {
     const {
@@ -83,6 +93,7 @@ class MaterialCRUD extends Component {
     ].includes(materialSchema && materialSchema.key);
     return (
       <div className="app">
+        <h3>{(qs && qs.interactionTypeName) || ""}</h3>
         {Boolean(materialSchema) ? (
           <Form
             style={{ width: "100%" }}
@@ -328,7 +339,7 @@ class MaterialCRUD extends Component {
               }
               if (isUpdate) {
                 updateMaterial({
-                  creativeId: record.creativeId,
+                  creativeId: formData.creativeId,
                   creativeName: formData.creativeName,
                   interactionTypeId: formData.interactionTypeId,
                   interactionTemplateId: formData.interactionTemplateId,

@@ -265,7 +265,7 @@ export default class MidVideo extends Component {
               value={closeAfter}
               placeholder=""
               onChange={e => {
-                exposureTrackLink = e.target.value;
+                closeAfter = Number(e.target.value);
                 this.setState({ closeAfter }, () =>
                   this.props.onChange(this.state)
                 );
@@ -276,6 +276,14 @@ export default class MidVideo extends Component {
               <br />
               如果填0，则表示该广告随时可关闭.
             </p>
+            {errorSchema &&
+              errorSchema.closeAfter &&
+              errorSchema.closeAfter.__errors &&
+              errorSchema.closeAfter.__errors.map((err, idx) => (
+                <li key={idx} style={{ color: "#f86c6b" }}>
+                  {err}
+                </li>
+              ))}
           </div>
           <div className="array-item">
             <Label>广告外链链接</Label>

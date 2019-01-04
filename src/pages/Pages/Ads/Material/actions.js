@@ -24,9 +24,6 @@ import {
   GET_AD_METERIALS_REQUEST,
   GET_AD_METERIALS_SUCCESS,
   GET_AD_METERIALS_FAILURE,
-  QUERY_ALL_MODELTYPES_REQUEST,
-  QUERY_ALL_MODELTYPES_SUCCESS,
-  QUERY_ALL_MODELTYPES_FAILURE,
   DELETE_METERIAL_REQUEST,
   DELETE_METERIAL_SUCCESS,
   DELETE_METERIAL_FAILURE,
@@ -163,7 +160,9 @@ export const addMaterialToggle = payload => {
   return dispatch => {
     dispatch(
       push(
-        `/tf/material/crud?id=${(payload && payload.interactionTypeId) ||
+        `/tf/material/${
+          payload && payload.opType === "read" ? "read" : "update"
+        }?id=${(payload && payload.interactionTypeId) ||
           payload.interactionId}&interactionTypeName=${encodeURIComponent(
           payload && payload.interactionTypeName
         )}&opType=${payload && payload.opType}&creativeId=${payload &&

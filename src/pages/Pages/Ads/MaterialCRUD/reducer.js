@@ -57,7 +57,9 @@ function materialCRUDReducer(state = initialState, action) {
         isLoading: action.isLoading
       });
     case GET_MATERIAL_INFO_SUCCESS:
-      state.formData = action.payload || {};
+      state.formData = action.payload.creativeContent
+        ? JSON.parse(action.payload.creativeContent)
+        : {};
       return Object.assign({}, state, {
         creativeContent: action.payload.creativeContent || [],
         isLoading: action.isLoading

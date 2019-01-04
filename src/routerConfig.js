@@ -87,6 +87,16 @@ const routerConfig = [
     component: MaterialCRUD
   },
   {
+    path: "/tf/material/read/",
+    name: "素材详情",
+    component: MaterialCRUD
+  },
+  {
+    path: "/tf/material/update/",
+    name: "修改素材",
+    component: MaterialCRUD
+  },
+  {
     path: "/zs",
     name: "license申请",
     component: License

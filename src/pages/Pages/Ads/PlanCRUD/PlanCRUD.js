@@ -22,8 +22,51 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import MinSec from "./components/MinSec";
 
-import { goBack } from "./actions";
+import { goBack, setFormData, queryAllModelTypes } from "./actions";
 import reducer from "./reducer";
+
+const isConflict = payload => {
+  let status = false;
+  const { launchTime, launchTimeLen, launchTimeType } = payload;
+  if (Array.isArray(launchTime) && launchTime.length > 1) {
+    let launchTimeLX = launchTime
+      .join(",")
+      .split(",")
+      .map(lt => {
+        const ltArr = lt.split(":");
+        return Number(launchTimeType) !== 2
+          ? Number(ltArr[0]) * 60 + Number(ltArr[1])
+          : Number(ltArr[0]) * 60 * 60 + Number(ltArr[1]) * 60;
+      });
+    launchTimeLX = launchTimeLX.sort((val1, val2) => {
+      let val = 0;
+      if (val1 > val2) {
+        val = 1;
+      }
+      if (val1 === val2) {
+        val = 0;
+      }
+      if (val1 < val2) {
+        val = -1;
+      }
+      return val;
+    });
+    const launchTimeWithIncrement = launchTimeLX.map(
+      ltlx => ltlx + Number(launchTimeLen)
+    );
+    launchTimeWithIncrement.forEach((ltwi, idx) => {
+      if (
+        ltwi >= launchTimeLX[idx + 1] &&
+        idx !== launchTimeWithIncrement.length - 1
+      ) {
+        status = true;
+      }
+    });
+  }
+  return status;
+};
+
+let params = { pageSize: 20 };
 
 class SelectTheme extends Component {
   constructor(props) {
@@ -31,7 +74,8 @@ class SelectTheme extends Component {
   }
 
   componentDidMount() {
-    const {} = this.props;
+    const { queryAllModelTypes } = this.props;
+    queryAllModelTypes();
   }
 
   render() {
@@ -40,9 +84,11 @@ class SelectTheme extends Component {
       isRead,
       isUpdate,
       setEditState,
-      goBack
+      goBack,
+      setFormData,
+      queryAllModelTypes
     } = this.props;
-    const { formData, setFormData, materialTypes } = planCRUDResult;
+    const { formData, materialTypes } = planCRUDResult;
     return (
       <div className="app">
         <IceContainer>
@@ -802,7 +848,9 @@ class SelectTheme extends Component {
 }
 
 const mapDispatchToProps = {
-  goBack
+  goBack,
+  setFormData,
+  queryAllModelTypes
 };
 
 const mapStateToProps = state => {
