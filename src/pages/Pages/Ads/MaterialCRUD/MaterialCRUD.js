@@ -16,18 +16,26 @@ import {
   setSwitcher,
   setMaterialSchema,
   getIaTypeById,
-  getAdMaterialInfo
+  getAdMaterialInfo,
+  goBack
 } from "./actions";
 import reducer from "./reducer";
+
+import Poster from "./components/Poster";
+import MidVideo from "./components/MidVideo";
 import Bubbles from "./components/Bubbles";
 import Votes from "./components/Votes";
 import Cards from "./components/Cards";
 
 const fieldsMap = {
+  yuntu: Poster,
+  zhongcha: MidVideo,
   qipao: Bubbles,
   toupiao: Votes,
   kapai: Cards
 };
+
+let opType;
 
 class MaterialCRUD extends Component {
   constructor(props) {
@@ -42,8 +50,8 @@ class MaterialCRUD extends Component {
       interactionTypeName: qs.interactionTypeName
     });
     if (qs && ["read", "update"].includes(qs.opType)) {
+      opType = qs.opType;
       getAdMaterialInfo({ creativeId: qs && qs.creativeId });
-    } else {
     }
   }
 
@@ -60,15 +68,19 @@ class MaterialCRUD extends Component {
       setMaterialSchema,
       updateMaterial,
       creativeIdList,
-      addMaterial
+      addMaterial,
+      goBack
     } = this.props;
-    const { opType } = record || {};
     const { formData = {}, materialSchema } = materialCRUDResult;
     const isRead = opType === "read";
     const isUpdate = opType === "update";
-    const isSpecial = ["qipao", "toupiao", "kapai"].includes(
-      materialSchema && materialSchema.key
-    );
+    const isSpecial = [
+      "yuntu",
+      "zhongcha",
+      "qipao",
+      "toupiao",
+      "kapai"
+    ].includes(materialSchema && materialSchema.key);
     return (
       <div className="app">
         {Boolean(materialSchema) ? (
@@ -381,13 +393,7 @@ class MaterialCRUD extends Component {
                 justifyContent: "flex-end"
               }}
             >
-              <Button
-                onClick={() => {
-                  // toggle();
-                }}
-              >
-                取消
-              </Button>
+              <Button onClick={goBack}>返回</Button>
               <Button
                 type="primary"
                 htmlType="submit"
@@ -412,7 +418,8 @@ const mapDispatchToProps = {
   setSwitcher,
   setMaterialSchema,
   getIaTypeById,
-  getAdMaterialInfo
+  getAdMaterialInfo,
+  goBack
 };
 
 const mapStateToProps = state => {

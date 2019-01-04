@@ -64,8 +64,8 @@ export const gotoCRUD = ({ interactionId, interactionTypeName, isAddPlan }) => {
     dispatch(
       push(
         `/tf/${
-          isAddPlan ? "plan/selT/crud" : "material"
-        }/crud?id=${interactionId}&interactionTypeName=${interactionTypeName}`
+          isAddPlan ? "plan" : "material"
+        }/selT/crud?id=${interactionId}&interactionTypeName=${interactionTypeName}`
       )
     );
   };

@@ -76,14 +76,15 @@ const routerConfig = [
     component: AdMaterial
   },
   {
-    path: "/tf/material/crud/",
-    name: "创建素材",
-    component: MaterialCRUD
-  },
-  {
     path: "/tf/material/selT",
+    exact: true,
     name: "选择互动应用",
     component: SelectTheme
+  },
+  {
+    path: "/tf/material/selT/crud/",
+    name: "创建素材",
+    component: MaterialCRUD
   },
   {
     path: "/zs",

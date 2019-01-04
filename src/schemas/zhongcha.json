@@ -1,5 +1,5 @@
 {
-  "key": "zhangcha",
+  "key": "zhongcha",
   "type": "object",
   "required": ["creativeName", "interactionTemplateId", "videoUrl"],
   "properties": {

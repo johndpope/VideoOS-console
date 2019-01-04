@@ -15,7 +15,7 @@
  *    }
  */
 
-import { push } from "react-router-redux";
+import { goBack as _goBack } from "react-router-redux";
 import { Feedback } from "@icedesign/base";
 import * as api from "./api";
 import {
@@ -211,10 +211,6 @@ export const getIaTypeById = params => {
             );
             template.properties.interactionTemplateId.enum.push(ti.templateId);
           });
-          template.properties.interactionTypeId.enum = [params.interactionId];
-          template.properties.interactionTypeId.enumNames = [
-            params.interactionTypeName
-          ];
         }
         dispatch(getIaTypeByIdSuccess(template));
       } else {
@@ -368,5 +364,11 @@ export const setMaterialSchema = payload => {
   return {
     type: SET_MATERIAL_SCHEMA,
     payload
+  };
+};
+
+export const goBack = () => {
+  return dispatch => {
+    dispatch(_goBack());
   };
 };
