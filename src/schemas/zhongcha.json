@@ -1,23 +1,21 @@
 {
-  "key": "zhangcha",
+  "key": "zhongcha",
   "type": "object",
   "required": [
     "creativeName",
-    "interactionTypeId",
     "interactionTemplateId",
-    "videoUrl"
+    "videoUrl",
+    "closeAfter"
   ],
   "properties": {
+    "SECTION": {
+      "title": "基础配置",
+      "type": "string"
+    },
     "creativeName": {
       "title": "素材名称",
       "type": "string",
       "maxLength": 30
-    },
-    "interactionTypeId": {
-      "title": "所属应用",
-      "type": "integer",
-      "enum": [],
-      "enumNames": []
     },
     "interactionTemplateId": {
       "title": "素材主题",

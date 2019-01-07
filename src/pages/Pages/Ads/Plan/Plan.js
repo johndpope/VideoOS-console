@@ -1,9 +1,5 @@
 import React, { Component } from "react";
 import {
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
   Row,
   Col,
   InputGroup,
@@ -11,7 +7,7 @@ import {
   InputGroupText,
   Input
 } from "reactstrap";
-import { Pagination } from "@icedesign/base";
+import { Pagination, Button } from "@icedesign/base";
 import IceContainer from "@icedesign/container";
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -33,7 +29,6 @@ import {
 } from "./actions";
 import reducer from "./reducer";
 import PlanTable from "./components/Table";
-import AddPlan from "./components/AddModal";
 import DeletePlan from "./components/DeleteModal";
 
 const isConflict = payload => {
@@ -105,27 +100,12 @@ class AdPlan extends Component {
       updatePlan,
       setFormData,
       getAdPlans,
-      setCurrentPage,
-      setEditState
+      setCurrentPage
     } = this.props;
     const modelTypes = adPlan.modelTypes || [];
     const { authorList } = getUserInfoLocal();
     return (
       <div className="app">
-        <AddPlan
-          toggle={() => addPlanModalToggle({})}
-          shouldOpen={adPlan && adPlan.shouldAddPlanModalOpen}
-          addPlan={addPlan}
-          updatePlan={updatePlan}
-          setFormData={setFormData}
-          setEditState={setEditState}
-          formData={adPlan && adPlan.formData}
-          materialTypes={adPlan && adPlan.materialTypes}
-          record={adPlan && adPlan.record}
-          currentPage={adPlan && adPlan.currentPage}
-          isEdit={adPlan && adPlan.isEdit}
-          isConflict={isConflict}
-        />
         <DeletePlan
           toggle={deletePlanModalToggle}
           shouldOpen={adPlan && adPlan.shouldDeletePlanModalOpen}
@@ -134,31 +114,8 @@ class AdPlan extends Component {
           currentPage={adPlan && adPlan.currentPage}
           params={params}
         />
-        <IceContainer style={{ overflow: "visible" }}>
-          <Dropdown
-            isOpen={adPlan && adPlan.shouldNewPlanDropDownOpen}
-            toggle={newPlanDropDownToggle}
-          >
-            <DropdownToggle caret>新增投放计划</DropdownToggle>
-            <DropdownMenu>
-              {modelTypes &&
-                Array.isArray(modelTypes) &&
-                modelTypes.length > 0 &&
-                modelTypes.map((mt, idx) => (
-                  <DropdownItem
-                    key={idx}
-                    onClick={() => {
-                      addPlanModalToggle({
-                        interactionTypeId: mt.interactionId,
-                        interactionTypeName: mt.interactionTypeName
-                      });
-                    }}
-                  >
-                    {mt.interactionTypeName}
-                  </DropdownItem>
-                ))}
-            </DropdownMenu>
-          </Dropdown>
+        <IceContainer>
+          <Button onClick={newPlanDropDownToggle}>新增投放计划</Button>
           <Row style={{ marginTop: "12px" }}>
             <Col>
               <InputGroup className="mb-4">
@@ -271,8 +228,7 @@ const mapDispatchToProps = {
   addPlan,
   updatePlan,
   setFormData,
-  setCurrentPage,
-  setEditState
+  setCurrentPage
 };
 
 const mapStateToProps = state => {

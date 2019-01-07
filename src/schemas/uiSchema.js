@@ -151,6 +151,25 @@ const uiSchema = ({
       "ui:description":
         "该时间需要小于中插视频时间；如果填0，则表示该广告随时可关闭",
       "ui:placeholder": "请填写数字，单位：秒"
+    },
+    SECTION: {
+      "ui:widget": props => {
+        return (
+          <div
+            style={{
+              position: "relative"
+            }}
+          >
+            <div
+              style={{
+                width: "100%",
+                height: 0,
+                border: "1px solid #ccc"
+              }}
+            />
+          </div>
+        );
+      }
     }
   };
   if (isRead) {

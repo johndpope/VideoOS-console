@@ -29,24 +29,12 @@
   },
   "title": "",
   "type": "object",
-  "required": [
-    "creativeName",
-    "interactionTypeId",
-    "interactionTemplateId",
-    "hotspotArray"
-  ],
+  "required": ["creativeName", "interactionTemplateId", "hotspotArray"],
   "properties": {
     "creativeName": {
       "title": "素材名称",
       "type": "string",
       "maxLength": 30
-    },
-    "interactionTypeId": {
-      "title": "所属应用",
-      "type": "integer",
-      "default": "请选择",
-      "enum": [],
-      "enumNames": []
     },
     "interactionTemplateId": {
       "title": "素材主题",

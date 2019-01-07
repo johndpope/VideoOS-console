@@ -38,16 +38,6 @@ export async function getIaTypeById(params) {
   });
 }
 
-export async function queryAllModelTypes() {
-  return axios({
-    headers: {
-      token: getAuthority()
-    },
-    url: `${OS_API}/interactionType/queryAll `,
-    method: "get"
-  });
-}
-
 export async function deleteMaterial(params) {
   return axios({
     headers: {
