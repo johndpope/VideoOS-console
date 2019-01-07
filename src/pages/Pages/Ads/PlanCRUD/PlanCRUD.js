@@ -75,8 +75,9 @@ class SelectTheme extends Component {
   }
 
   componentDidMount() {
-    const { getAdMaterials, location } = this.props;
+    const { getAdMaterials, location, setFormData } = this.props;
     let qs = querystring.parse(location && location.search.substring(1));
+    setFormData({ interactionTypeName: qs && qs.interactionTypeName });
     getAdMaterials({ interactionType: qs && qs.id });
   }
 

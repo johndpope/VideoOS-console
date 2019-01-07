@@ -57,6 +57,7 @@ class MaterialCRUD extends Component {
       interactionId: qs.id,
       interactionTypeName: qs.interactionTypeName
     });
+    saveFormData({ interactionTypeName: qs.interactionTypeName });
     if (qs && ["read", "update"].includes(qs.opType)) {
       opType = qs.opType;
       saveFormData({ creativeId: qs && qs.creativeId });
@@ -376,12 +377,7 @@ class MaterialCRUD extends Component {
                   creativeContent: JSON.stringify(formData),
                   creativeIdList:
                     (formData && formData.creativeIdList) || creativeIdList,
-                  interactionTypeName:
-                    materialSchema &&
-                    materialSchema.properties &&
-                    materialSchema.properties.interactionTypeId &&
-                    materialSchema.properties.interactionTypeId.enumNames &&
-                    materialSchema.properties.interactionTypeId.enumNames[0],
+                  interactionTypeName: formData.interactionTypeName,
                   interactionTemplateName:
                     materialSchema &&
                     materialSchema.properties &&
