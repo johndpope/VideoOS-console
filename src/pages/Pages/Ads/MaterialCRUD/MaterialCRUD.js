@@ -65,13 +65,14 @@ class MaterialCRUD extends Component {
   }
 
   componentWillUnmount() {
+    const { saveFormData } = this.props;
     qs = null;
     opType = null;
+    saveFormData({});
   }
 
   render() {
     const {
-      record = {},
       materialCRUDResult,
       setSwitcher,
       addMaterialFile,

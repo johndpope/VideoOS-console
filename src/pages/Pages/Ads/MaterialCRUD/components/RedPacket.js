@@ -63,7 +63,7 @@ export default class RedPacket extends Component {
     let {
       readonly,
       imageUrl,
-      voteImageUrl,
+      infoImageUrl,
       title,
       infoTitle,
       infoWord,
@@ -290,7 +290,7 @@ export default class RedPacket extends Component {
             <Label>图片icon*</Label>
             <Row style={{ marginBottom: "8px" }}>
               <Col>
-                {voteImageUrl ? (
+                {infoImageUrl ? (
                   <Fragment>
                     <div
                       style={{
@@ -302,7 +302,7 @@ export default class RedPacket extends Component {
                     >
                       <img
                         alt=""
-                        src={voteImageUrl}
+                        src={infoImageUrl}
                         style={{
                           maxWidth: "240px",
                           maxHeight: "240px"
@@ -313,7 +313,7 @@ export default class RedPacket extends Component {
                           type="button"
                           className="btn btn-danger array-item-remove"
                           onClick={e => {
-                            this.setState({ voteImageUrl: "" }, () =>
+                            this.setState({ infoImageUrl: "" }, () =>
                               this.props.onChange(this.state)
                             );
                           }}
@@ -359,7 +359,7 @@ export default class RedPacket extends Component {
                           }).then(result => {
                             if (result.status === 200) {
                               if (result.data && result.data.resCode === "00") {
-                                voteImageUrl = result.data.fileUrl;
+                                infoImageUrl = result.data.fileUrl;
                                 if (
                                   Array.isArray(creativeIdList) &&
                                   creativeIdList.indexOf(
@@ -371,7 +371,7 @@ export default class RedPacket extends Component {
                                   );
                                 }
                                 this.setState(
-                                  { voteImageUrl, creativeIdList },
+                                  { infoImageUrl, creativeIdList },
                                   () => this.props.onChange(this.state)
                                 );
                               } else {
@@ -390,9 +390,9 @@ export default class RedPacket extends Component {
                     </div>
                     <p>图片尺寸为宽30PX*高30PX</p>
                     {errorSchema &&
-                      errorSchema.voteImageUrl &&
-                      errorSchema.voteImageUrl.__errors &&
-                      errorSchema.voteImageUrl.__errors.map((err, idx) => (
+                      errorSchema.infoImageUrl &&
+                      errorSchema.infoImageUrl.__errors &&
+                      errorSchema.infoImageUrl.__errors.map((err, idx) => (
                         <li key={idx} style={{ color: "#f86c6b" }}>
                           {err}
                         </li>
@@ -416,6 +416,14 @@ export default class RedPacket extends Component {
                 );
               }}
             />
+            {errorSchema &&
+              errorSchema.infoTitle &&
+              errorSchema.infoTitle.__errors &&
+              errorSchema.infoTitle.__errors.map((err, idx) => (
+                <li key={idx} style={{ color: "#f86c6b" }}>
+                  {err}
+                </li>
+              ))}
           </div>
           <div className="array-item">
             <Label>红包口令*</Label>
@@ -431,6 +439,14 @@ export default class RedPacket extends Component {
                 );
               }}
             />
+            {errorSchema &&
+              errorSchema.infoWord &&
+              errorSchema.infoWord.__errors &&
+              errorSchema.infoWord.__errors.map((err, idx) => (
+                <li key={idx} style={{ color: "#f86c6b" }}>
+                  {err}
+                </li>
+              ))}
           </div>
           <div className="array-item">
             <Label>兑换说明</Label>
