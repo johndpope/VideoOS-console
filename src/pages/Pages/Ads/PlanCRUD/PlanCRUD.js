@@ -26,6 +26,9 @@ import MinSec from "./components/MinSec";
 import { goBack, setFormData, getAdMaterials, setEditState } from "./actions";
 import reducer from "./reducer";
 
+let opType;
+let qs;
+
 const isConflict = payload => {
   let status = false;
   const { launchTime, launchTimeLen, launchTimeType } = payload;
@@ -82,15 +85,44 @@ class SelectTheme extends Component {
   }
 
   render() {
-    const {
-      planCRUDResult,
-      isRead,
-      isUpdate,
-      setEditState,
-      goBack,
-      setFormData
-    } = this.props;
-    const { formData, materialTypes } = planCRUDResult;
+    const { setEditState, goBack, setFormData, planCRUDResult } = this.props;
+    const { formData, materialTypes, isEdit } = planCRUDResult;
+    const isRead = opType === "read";
+    const isUpdate = opType === "update";
+    if (
+      formData &&
+      formData.launchDateStart &&
+      typeof formData.launchDateStart === "string"
+    ) {
+      formData.launchDateStart = moment(formData.launchDateStart);
+    }
+    if (
+      formData &&
+      formData.launchDateEnd &&
+      typeof formData.launchDateEnd === "string"
+    ) {
+      formData.launchDateEnd = moment(formData.launchDateEnd);
+    }
+    if (formData) {
+      formData.launchTimeType = String(
+        formData && formData.hasOwnProperty("launchTimeType")
+          ? String(formData.launchTimeType)
+          : ""
+      );
+    }
+    if (isEdit && !(isRead || isUpdate) && formData) {
+      let lts = [];
+      if (formData.hotSpotNum > 1) {
+        for (let i = formData.hotSpotNum; i > 0; i--) {
+          lts.push([""]);
+        }
+      } else {
+        lts = [[""]];
+      }
+      formData.launchTime = lts;
+      setFormData({ launchTime: formData.launchTime });
+      setEditState({ isEdit: false });
+    }
     return (
       <div className="app">
         <IceContainer>
@@ -301,7 +333,11 @@ class SelectTheme extends Component {
                       <Col md="1">
                         <Button
                           onClick={() => {
-                            if (formData && formData.launchTime[0]) {
+                            if (
+                              formData &&
+                              formData.launchTime &&
+                              formData.launchTime[0]
+                            ) {
                               formData.launchTime[0].push("");
                             } else {
                               formData.launchTime[0] = [""];
