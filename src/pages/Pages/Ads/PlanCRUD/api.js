@@ -15,3 +15,13 @@ export async function queryAllModelTypes() {
     method: "get"
   });
 }
+
+export const getAdMaterials = params => {
+  return axios({
+    headers: {
+      token: getAuthority()
+    },
+    url: `${OS_API}/creative/queryAll?${qs.stringify(params)}`,
+    method: "get"
+  });
+};

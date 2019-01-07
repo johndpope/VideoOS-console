@@ -13,7 +13,11 @@ import {
   SET_FORM_DATA,
   QUERY_ALL_MODELTYPES_REQUEST,
   QUERY_ALL_MODELTYPES_SUCCESS,
-  QUERY_ALL_MODELTYPES_FAILURE
+  QUERY_ALL_MODELTYPES_FAILURE,
+  GET_AD_METERIALS_REQUEST,
+  GET_AD_METERIALS_SUCCESS,
+  GET_AD_METERIALS_FAILURE,
+  SET_EDIT_STATE
 } from "./constants";
 
 // The initial state of the plan
@@ -52,6 +56,24 @@ function planCRUDReducer(state = initialState, action) {
         ...state,
         isLoading: action.isLoading
       };
+    case GET_AD_METERIALS_REQUEST:
+      return {
+        ...state,
+        isLoading: action.isLoading
+      };
+    case GET_AD_METERIALS_SUCCESS:
+      return {
+        ...state,
+        isLoading: action.isLoading,
+        materialTypes: action.payload.creativeInfoList || []
+      };
+    case GET_AD_METERIALS_FAILURE:
+      return {
+        ...state,
+        isLoading: action.isLoading
+      };
+    case SET_EDIT_STATE:
+      return { ...state, isEdit: action.payload.isEdit };
     default:
       return state;
   }

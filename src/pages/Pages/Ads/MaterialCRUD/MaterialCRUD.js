@@ -26,13 +26,15 @@ import MidVideo from "./components/MidVideo";
 import Bubbles from "./components/Bubbles";
 import Votes from "./components/Votes";
 import Cards from "./components/Cards";
+import RedPacket from "./components/RedPacket";
 
 const fieldsMap = {
   yuntu: Poster,
   zhongcha: MidVideo,
   qipao: Bubbles,
   toupiao: Votes,
-  kapai: Cards
+  kapai: Cards,
+  hongbao: RedPacket
 };
 
 let opType;
@@ -89,7 +91,8 @@ class MaterialCRUD extends Component {
       "zhongcha",
       "qipao",
       "toupiao",
-      "kapai"
+      "kapai",
+      "hongbao"
     ].includes(materialSchema && materialSchema.key);
     return (
       <div className="app">

@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import querystring from "querystring";
 import {
   Row,
   Col,
@@ -22,7 +23,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import MinSec from "./components/MinSec";
 
-import { goBack, setFormData, queryAllModelTypes } from "./actions";
+import { goBack, setFormData, getAdMaterials, setEditState } from "./actions";
 import reducer from "./reducer";
 
 const isConflict = payload => {
@@ -74,8 +75,9 @@ class SelectTheme extends Component {
   }
 
   componentDidMount() {
-    const { queryAllModelTypes } = this.props;
-    queryAllModelTypes();
+    const { getAdMaterials, location } = this.props;
+    let qs = querystring.parse(location && location.search.substring(1));
+    getAdMaterials({ interactionType: qs && qs.id });
   }
 
   render() {
@@ -85,8 +87,7 @@ class SelectTheme extends Component {
       isUpdate,
       setEditState,
       goBack,
-      setFormData,
-      queryAllModelTypes
+      setFormData
     } = this.props;
     const { formData, materialTypes } = planCRUDResult;
     return (
@@ -850,7 +851,8 @@ class SelectTheme extends Component {
 const mapDispatchToProps = {
   goBack,
   setFormData,
-  queryAllModelTypes
+  getAdMaterials,
+  setEditState
 };
 
 const mapStateToProps = state => {

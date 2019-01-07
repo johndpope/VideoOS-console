@@ -1,4 +1,5 @@
 {
+  "key": "hongbao",
   "title": "",
   "type": "object",
   "required": ["creativeName"],
@@ -13,49 +14,42 @@
       "enum": [],
       "enumNames": []
     },
-    "popular_point_title": {
+    "imageUrl": {
+      "type": "string",
+      "format": "data-url",
+      "title": "热点图片"
+    },
+    "title": {
       "type": "string",
       "title": "热点标题",
       "default": ""
     },
-    "countdown_img": {
-      "type": "string",
-      "format": "data-url",
-      "title": "倒计时图片"
-    },
-    "show_close_btn": {
+    "isShowAds": {
       "type": "boolean",
-      "title": "倒计时关闭按钮是否可见"
+      "title": "广告标识是否可见"
     },
-    "display_img": {
+    "isShowClose": {
+      "type": "boolean",
+      "title": "关闭按钮是否可见"
+    },
+    "infoTitle": {
+      "type": "string",
+      "title": "红包标题",
+      "default": ""
+    },
+    "infoImageUrl": {
       "type": "string",
       "format": "data-url",
-      "title": "显示图片"
+      "title": "图片icon"
     },
-    "award_img": {
+    "infoWord": {
       "type": "string",
-      "format": "data-url",
-      "title": "中奖图片"
+      "title": "红包口令",
+      "default": ""
     },
-    "monitorLinks": {
-      "type": "array",
-      "title": "曝光监控链接",
-      "minItems": 1,
-      "items": {
-        "type": "string"
-      }
-    },
-    "exposureLinks": {
-      "type": "array",
-      "title": "入口点击监控链接",
-      "minItems": 1,
-      "items": {
-        "type": "string"
-      }
-    },
-    "target_link": {
+    "infoInstructions": {
       "type": "string",
-      "title": "外链点击监控链接",
+      "title": "兑换说明",
       "default": ""
     }
   }

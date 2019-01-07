@@ -502,10 +502,3 @@ export const setCurrentPage = payload => {
     payload
   };
 };
-
-export const setEditState = payload => {
-  return {
-    type: SET_EDIT_STATE,
-    payload
-  };
-};

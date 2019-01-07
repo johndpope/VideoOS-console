@@ -29,7 +29,6 @@ import {
 } from "./actions";
 import reducer from "./reducer";
 import PlanTable from "./components/Table";
-import AddPlan from "./components/AddModal";
 import DeletePlan from "./components/DeleteModal";
 
 const isConflict = payload => {
@@ -101,27 +100,12 @@ class AdPlan extends Component {
       updatePlan,
       setFormData,
       getAdPlans,
-      setCurrentPage,
-      setEditState
+      setCurrentPage
     } = this.props;
     const modelTypes = adPlan.modelTypes || [];
     const { authorList } = getUserInfoLocal();
     return (
       <div className="app">
-        <AddPlan
-          toggle={() => addPlanModalToggle({})}
-          shouldOpen={adPlan && adPlan.shouldAddPlanModalOpen}
-          addPlan={addPlan}
-          updatePlan={updatePlan}
-          setFormData={setFormData}
-          setEditState={setEditState}
-          formData={adPlan && adPlan.formData}
-          materialTypes={adPlan && adPlan.materialTypes}
-          record={adPlan && adPlan.record}
-          currentPage={adPlan && adPlan.currentPage}
-          isEdit={adPlan && adPlan.isEdit}
-          isConflict={isConflict}
-        />
         <DeletePlan
           toggle={deletePlanModalToggle}
           shouldOpen={adPlan && adPlan.shouldDeletePlanModalOpen}
@@ -244,8 +228,7 @@ const mapDispatchToProps = {
   addPlan,
   updatePlan,
   setFormData,
-  setCurrentPage,
-  setEditState
+  setCurrentPage
 };
 
 const mapStateToProps = state => {
