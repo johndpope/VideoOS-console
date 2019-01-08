@@ -88,15 +88,24 @@ class SelectTheme extends Component {
     getAdMaterials({ interactionType: qs && qs.id });
   }
 
+  _goBack() {
+    const { planCRUDResult, goBack, setWhichStep } = this.props;
+    if (planCRUDResult) {
+      if (planCRUDResult.whichStep === 1) {
+        goBack();
+      } else if (planCRUDResult.whichStep === 2) {
+        setWhichStep({ whichStep: 1 });
+      }
+    }
+  }
+
+  _gotoNext() {
+    const { gotoNext } = this.props;
+    gotoNext({});
+  }
+
   render() {
-    const {
-      setEditState,
-      goBack,
-      setFormData,
-      planCRUDResult,
-      gotoNext,
-      setWhichStep
-    } = this.props;
+    const { setEditState, setFormData, planCRUDResult } = this.props;
     const { formData, materialTypes, isEdit, whichStep } = planCRUDResult;
     const isRead = opType === "read";
     const isUpdate = opType === "update";
@@ -937,8 +946,8 @@ class SelectTheme extends Component {
         ) : null}
         {whichStep === 2 ? <Fragment>step 2</Fragment> : null}
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
-          <Button onClick={goBack}>返回</Button>
-          <Button onClick={gotoNext}>
+          <Button onClick={this._goBack.bind(this)}>返回</Button>
+          <Button onClick={this._gotoNext.bind(this)}>
             {whichStep === 1 ? "下一步" : "确定"}
           </Button>
         </div>
