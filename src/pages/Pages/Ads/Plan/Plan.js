@@ -20,12 +20,8 @@ import {
   getAdPlans,
   queryAllModelTypes,
   deletePlanModalToggle,
-  addPlan,
   deletePlan,
-  updatePlan,
-  setFormData,
-  setCurrentPage,
-  setEditState
+  setCurrentPage
 } from "./actions";
 import reducer from "./reducer";
 import PlanTable from "./components/Table";
@@ -95,10 +91,7 @@ class AdPlan extends Component {
       addPlanModalToggle,
       newPlanDropDownToggle,
       deletePlanModalToggle,
-      addPlan,
       deletePlan,
-      updatePlan,
-      setFormData,
       getAdPlans,
       setCurrentPage
     } = this.props;
@@ -225,9 +218,6 @@ const mapDispatchToProps = {
   queryAllModelTypes,
   deletePlanModalToggle,
   deletePlan,
-  addPlan,
-  updatePlan,
-  setFormData,
   setCurrentPage
 };
 

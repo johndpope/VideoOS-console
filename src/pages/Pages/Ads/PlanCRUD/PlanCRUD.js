@@ -27,7 +27,9 @@ import {
   queryInteractionInfo,
   gotoNext,
   setWhichStep,
-  getAdPlanInfo
+  getAdPlanInfo,
+  addPlan,
+  updatePlan
 } from "./actions";
 import reducer from "./reducer";
 
@@ -117,7 +119,7 @@ class SelectTheme extends Component {
   }
 
   _gotoNext() {
-    const { gotoNext, planCRUDResult } = this.props;
+    const { gotoNext, planCRUDResult, addPlan, updatePlan } = this.props;
     if (
       !planCRUDResult ||
       !planCRUDResult.formData ||
@@ -126,12 +128,115 @@ class SelectTheme extends Component {
       Feedback.toast.error("请先选择投放素材");
       return;
     }
-    gotoNext({
-      creativeId:
-        planCRUDResult &&
-        planCRUDResult.formData &&
-        planCRUDResult.formData.creativeId
-    });
+    if (planCRUDResult.whichStep === 1) {
+      gotoNext({
+        creativeId:
+          planCRUDResult &&
+          planCRUDResult.formData &&
+          planCRUDResult.formData.creativeId
+      });
+    } else {
+      const tempHash = [];
+      const { formData } = planCRUDResult;
+      let repeatState = false;
+      let invalidState = false;
+
+      const isRead = opType === "read";
+      const isUpdate = opType === "update";
+      if (isRead) {
+        return;
+      }
+      if (!formData) {
+        Feedback.toast.error("请输入完整信息");
+        return;
+      }
+      if (!formData.launchPlanName) {
+        Feedback.toast.error("请输入“投放名称”");
+        return;
+      }
+      if (!formData.interactionTypeName) {
+        Feedback.toast.error("“投放类型”缺失");
+        return;
+      }
+      if (!formData.creativeId) {
+        Feedback.toast.error("请选择“投放素材”");
+        return;
+      }
+      if (!formData.launchVideoId) {
+        Feedback.toast.error("请输入“投放视频id”");
+        return;
+      }
+      if (!formData.launchTimeType) {
+        Feedback.toast.error("请选择“投放时间类型”");
+        return;
+      }
+      if (formData.launchTimeType === "0" || formData.launchTimeType === "2") {
+        if (!formData.launchDateStart) {
+          Feedback.toast.error('"请选择“投放开始日期”"');
+          return;
+        }
+        if (!formData.launchDateEnd) {
+          Feedback.toast.error('"请选择“投放结束日期”"');
+          return;
+        }
+        if (
+          !formData.launchTimes ||
+          !Array.isArray(formData.launchTime) ||
+          formData.launchTime.length === 0
+        ) {
+          Feedback.toast.error('"请添加“投放时间”"');
+          return;
+        }
+        formData.launchTime.forEach((lt, idx) => {
+          lt.forEach((time, idx) => {
+            if (!tempHash.includes(time)) {
+              tempHash.push(time);
+            } else {
+              repeatState = true;
+            }
+            if (!/^[0-9]{1,2}:[0-9]{1,2}$/gi.test(time)) {
+              invalidState = true;
+            }
+          });
+        });
+        if (invalidState) {
+          Feedback.toast.error('"请输入有效分秒值且不能为空"');
+          return;
+        }
+        if (repeatState) {
+          Feedback.toast.error('"投放时间有重复"');
+          return;
+        }
+      }
+      if (!formData.launchLenTime) {
+        Feedback.toast.error("请输入“投放时长”");
+        return;
+      }
+      if (
+        formData.launchLenTime &&
+        !/^[0-9]+$/gi.test(formData.launchLenTime)
+      ) {
+        Feedback.toast.error("投放时长为数字");
+        return;
+      }
+      if (
+        isConflict({
+          launchTime: formData.launchTime,
+          launchTimeLen: formData.launchLenTime,
+          launchTimeType: formData.launchTimeType
+        })
+      ) {
+        Feedback.toast.error('"投放时间有冲突"');
+        return;
+      }
+      if (isUpdate) {
+        updatePlan({ ...formData });
+      } else {
+        if (formData.v_minutes) delete formData.v_minutes;
+        if (formData.v_seconds) delete formData.v_seconds;
+        addPlan({ ...formData });
+      }
+    }
   }
 
   render() {
@@ -1086,7 +1191,9 @@ const mapDispatchToProps = {
   queryInteractionInfo,
   gotoNext,
   setWhichStep,
-  getAdPlanInfo
+  getAdPlanInfo,
+  addPlan,
+  updatePlan
 };
 
 const mapStateToProps = state => {

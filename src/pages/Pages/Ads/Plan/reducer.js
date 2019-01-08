@@ -74,30 +74,6 @@ function adPlanReducer(state = initialState, action) {
       return Object.assign({}, state, {
         isLoading: action.isLoading
       });
-    case ADD_PLAN_REQUEST:
-      return Object.assign({}, state, {
-        isLoading: action.isLoading
-      });
-    case ADD_PLAN_SUCCESS:
-      return Object.assign({}, state, {
-        isLoading: action.isLoading
-      });
-    case ADD_PLAN_FAILURE:
-      return Object.assign({}, state, {
-        isLoading: action.isLoading
-      });
-    case UPDATE_PLAN_REQUEST:
-      return Object.assign({}, state, {
-        isLoading: action.isLoading
-      });
-    case UPDATE_PLAN_SUCCESS:
-      return Object.assign({}, state, {
-        isLoading: action.isLoading
-      });
-    case UPDATE_PLAN_FAILURE:
-      return Object.assign({}, state, {
-        isLoading: action.isLoading
-      });
     case DELETE_PLAN_REQUEST:
       return Object.assign({}, state, {
         isLoading: action.isLoading

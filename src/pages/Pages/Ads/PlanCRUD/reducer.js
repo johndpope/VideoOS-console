@@ -12,6 +12,12 @@
 import moment from "moment";
 import {
   SET_FORM_DATA,
+  ADD_PLAN_REQUEST,
+  ADD_PLAN_SUCCESS,
+  ADD_PLAN_FAILURE,
+  UPDATE_PLAN_REQUEST,
+  UPDATE_PLAN_SUCCESS,
+  UPDATE_PLAN_FAILURE,
   QUERY_ALL_MODELTYPES_REQUEST,
   QUERY_ALL_MODELTYPES_SUCCESS,
   QUERY_ALL_MODELTYPES_FAILURE,
@@ -118,6 +124,30 @@ function planCRUDReducer(state = initialState, action) {
         ...state,
         isLoading: false
       };
+    case ADD_PLAN_REQUEST:
+      return Object.assign({}, state, {
+        isLoading: action.isLoading
+      });
+    case ADD_PLAN_SUCCESS:
+      return Object.assign({}, state, {
+        isLoading: action.isLoading
+      });
+    case ADD_PLAN_FAILURE:
+      return Object.assign({}, state, {
+        isLoading: action.isLoading
+      });
+    case UPDATE_PLAN_REQUEST:
+      return Object.assign({}, state, {
+        isLoading: action.isLoading
+      });
+    case UPDATE_PLAN_SUCCESS:
+      return Object.assign({}, state, {
+        isLoading: action.isLoading
+      });
+    case UPDATE_PLAN_FAILURE:
+      return Object.assign({}, state, {
+        isLoading: action.isLoading
+      });
     case SET_EDIT_STATE:
       return { ...state, isEdit: action.payload.isEdit };
     case SET_WHICH_STEP:

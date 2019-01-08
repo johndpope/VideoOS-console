@@ -28,28 +28,6 @@ export async function deletePlan(params) {
   });
 }
 
-export async function addPlan(params) {
-  return axios({
-    headers: {
-      token: getAuthority()
-    },
-    url: `${OS_API}/launchplan/add`,
-    method: "post",
-    data: params
-  });
-}
-
-export async function updatePlan(params) {
-  return axios({
-    headers: {
-      token: getAuthority()
-    },
-    url: `${OS_API}/launchplan/modify`,
-    method: "post",
-    data: params
-  });
-}
-
 export async function queryAllModelTypes() {
   return axios({
     headers: {
