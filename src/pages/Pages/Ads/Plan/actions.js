@@ -17,6 +17,7 @@
 
 import { Feedback } from "@icedesign/base";
 import { push } from "react-router-redux";
+import qs from "querystring";
 import * as api from "./api";
 import {
   SHOW_ADD_PLAN,
@@ -26,9 +27,6 @@ import {
   GET_AD_PLANS_REQUEST,
   GET_AD_PLANS_SUCCESS,
   GET_AD_PLANS_FAILURE,
-  GET_AD_PLAN_BYID_REQUEST,
-  GET_AD_PLAN_BYID_SUCCESS,
-  GET_AD_PLAN_BYID_FAILURE,
   ADD_PLAN_REQUEST,
   ADD_PLAN_SUCCESS,
   ADD_PLAN_FAILURE,
@@ -100,28 +98,6 @@ const getAdPlansSuccess = payload => {
 const getAdPlansFailure = () => {
   return {
     type: GET_AD_PLANS_FAILURE,
-    isLoading: false
-  };
-};
-
-const getAdPlanByIdRequest = () => {
-  return {
-    type: GET_AD_PLAN_BYID_REQUEST,
-    isLoading: true
-  };
-};
-
-const getAdPlanByIdSuccess = payload => {
-  return {
-    type: GET_AD_PLAN_BYID_SUCCESS,
-    isLoading: false,
-    payload
-  };
-};
-
-const getAdPlanByIdFailure = () => {
-  return {
-    type: GET_AD_PLAN_BYID_FAILURE,
     isLoading: false
   };
 };
@@ -387,24 +363,17 @@ export const deletePlan = params => {
 
 export const addPlanModalToggle = payload => {
   return dispatch => {
-    addPlanSwitch = !addPlanSwitch;
-    if (addPlanSwitch) {
-      if (payload && payload.opType) {
-        dispatch(
-          getAdPlanInfo({ launchPlanId: payload && payload.launchPlanId })
-        );
-      }
-      if (payload && payload.interactionTypeId) {
-        dispatch(
-          getAdMaterials({ interactionType: payload.interactionTypeId })
-        );
-      }
-      dispatch(setFormData(payload));
-      dispatch(showAddPlan(payload));
-    } else {
-      dispatch(setFormData({}));
-      dispatch(hideAddPlan());
-    }
+    dispatch(
+      push(
+        `/tf/plan/read?${qs.stringify({
+          launchPlanId: payload.launchPlanId,
+          opType: payload.opType,
+          interactionTypeName: payload.interactionTypeName
+            ? payload.interactionTypeName
+            : ""
+        })}`
+      )
+    );
   };
 };
 
@@ -472,26 +441,6 @@ export const getAdMaterials = params => {
       return response.data;
     } catch (error) {
       dispatch(getAdMaterialsFailure(error));
-    }
-  };
-};
-
-export const getAdPlanInfo = params => {
-  return async dispatch => {
-    dispatch(getAdPlanByIdRequest());
-    try {
-      const response = await api.getAdPlanInfo(params);
-
-      if (response.status === 200 && response.data.resCode === "00") {
-        dispatch(getAdPlanByIdSuccess(response.data));
-      } else {
-        dispatch(getAdPlanByIdFailure(response.data));
-        Feedback.toast.error(response.data && response.data.resMsg);
-      }
-
-      return response.data;
-    } catch (error) {
-      dispatch(getAdPlanByIdFailure(error));
     }
   };
 };

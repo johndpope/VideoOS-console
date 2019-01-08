@@ -9,14 +9,21 @@
  * case YOUR_ACTION_CONSTANT:
  *   return state.set('yourStateVariable', true);
  */
+import moment from "moment";
 import {
   SET_FORM_DATA,
   QUERY_ALL_MODELTYPES_REQUEST,
   QUERY_ALL_MODELTYPES_SUCCESS,
   QUERY_ALL_MODELTYPES_FAILURE,
+  GET_AD_PLAN_BYID_REQUEST,
+  GET_AD_PLAN_BYID_SUCCESS,
+  GET_AD_PLAN_BYID_FAILURE,
   GET_AD_METERIALS_REQUEST,
   GET_AD_METERIALS_SUCCESS,
   GET_AD_METERIALS_FAILURE,
+  QUERY_INTERACTION_INFO_SUCCESS,
+  QUERY_INTERACTION_INFO_REQUEST,
+  QUERY_INTERACTION_INFO_FAILURE,
   SET_EDIT_STATE,
   SET_WHICH_STEP
 } from "./constants";
@@ -73,6 +80,41 @@ function planCRUDReducer(state = initialState, action) {
       return {
         ...state,
         isLoading: action.isLoading
+      };
+    case GET_AD_PLAN_BYID_REQUEST:
+      return {
+        ...state,
+        isLoading: action.isLoading
+      };
+    case GET_AD_PLAN_BYID_SUCCESS:
+      const _payload = action.payload;
+      _payload.launchDateStart = moment(_payload.launchDateStart);
+      _payload.launchDateEnd = moment(_payload.launchDateEnd);
+      return {
+        ...state,
+        formData: _payload,
+        isLoading: action.isLoading
+      };
+    case GET_AD_PLAN_BYID_FAILURE:
+      return {
+        ...state,
+        isLoading: action.isLoading
+      };
+    case QUERY_INTERACTION_INFO_REQUEST:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case QUERY_INTERACTION_INFO_SUCCESS:
+      return {
+        ...state,
+        monitorLinkInfo: action.payload,
+        isLoading: false
+      };
+    case QUERY_INTERACTION_INFO_FAILURE:
+      return {
+        ...state,
+        isLoading: false
       };
     case SET_EDIT_STATE:
       return { ...state, isEdit: action.payload.isEdit };

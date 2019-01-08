@@ -17,17 +17,6 @@ export const getAdPlans = params => {
   });
 };
 
-export const getAdPlanInfo = params => {
-  return axios({
-    headers: {
-      token: getAuthority()
-    },
-    url: `${OS_API}/launchplan/queryDetail?${qs.stringify(params)}`,
-    method: "get",
-    data: params
-  });
-};
-
 export async function deletePlan(params) {
   return axios({
     headers: {

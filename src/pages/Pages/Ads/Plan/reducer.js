@@ -20,9 +20,6 @@ import {
   GET_AD_PLANS_REQUEST,
   GET_AD_PLANS_SUCCESS,
   GET_AD_PLANS_FAILURE,
-  GET_AD_PLAN_BYID_REQUEST,
-  GET_AD_PLAN_BYID_SUCCESS,
-  GET_AD_PLAN_BYID_FAILURE,
   ADD_PLAN_REQUEST,
   ADD_PLAN_SUCCESS,
   ADD_PLAN_FAILURE,
@@ -74,22 +71,6 @@ function adPlanReducer(state = initialState, action) {
         isLoading: action.isLoading
       });
     case GET_AD_PLANS_FAILURE:
-      return Object.assign({}, state, {
-        isLoading: action.isLoading
-      });
-    case GET_AD_PLAN_BYID_REQUEST:
-      return Object.assign({}, state, {
-        isLoading: action.isLoading
-      });
-    case GET_AD_PLAN_BYID_SUCCESS:
-      const _payload = action.payload;
-      _payload.launchDateStart = moment(_payload.launchDateStart);
-      _payload.launchDateEnd = moment(_payload.launchDateEnd);
-      return Object.assign({}, state, {
-        formData: _payload,
-        isLoading: action.isLoading
-      });
-    case GET_AD_PLAN_BYID_FAILURE:
       return Object.assign({}, state, {
         isLoading: action.isLoading
       });

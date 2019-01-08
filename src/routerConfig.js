@@ -70,6 +70,11 @@ const routerConfig = [
     component: PlanCRUD
   },
   {
+    path: "/tf/plan/read",
+    name: "投放计划详情",
+    component: PlanCRUD
+  },
+  {
     path: "/tf/material",
     exact: true,
     name: "投放素材管理",

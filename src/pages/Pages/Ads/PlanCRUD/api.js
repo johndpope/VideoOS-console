@@ -31,9 +31,20 @@ export const queryInteractionInfo = params => {
     headers: {
       token: getAuthority()
     },
-    url: `${OS_API}/creative/interactionType/queryInteractionInfo?${qs.stringify(
+    url: `${OS_API}/interactionType/queryInteractionInfo?${qs.stringify(
       params
     )}`,
     method: "get"
+  });
+};
+
+export const getAdPlanInfo = params => {
+  return axios({
+    headers: {
+      token: getAuthority()
+    },
+    url: `${OS_API}/launchplan/queryDetail?${qs.stringify(params)}`,
+    method: "get",
+    data: params
   });
 };

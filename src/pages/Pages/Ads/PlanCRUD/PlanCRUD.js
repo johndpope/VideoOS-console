@@ -26,7 +26,8 @@ import {
   setEditState,
   queryInteractionInfo,
   gotoNext,
-  setWhichStep
+  setWhichStep,
+  getAdPlanInfo
 } from "./actions";
 import reducer from "./reducer";
 
@@ -82,10 +83,26 @@ class SelectTheme extends Component {
   }
 
   componentDidMount() {
-    const { getAdMaterials, location, setFormData } = this.props;
+    const {
+      getAdMaterials,
+      location,
+      setFormData,
+      getAdPlanInfo,
+      setWhichStep
+    } = this.props;
     let qs = querystring.parse(location && location.search.substring(1));
+    opType = qs && qs.opType;
     setFormData({ interactionTypeName: qs && qs.interactionTypeName });
-    getAdMaterials({ interactionType: qs && qs.id });
+    setWhichStep({ whichStep: 1 });
+    getAdMaterials({ interactionType: (qs && qs.launchPlanId) || qs.id });
+    if (qs && qs.launchPlanId) {
+      getAdPlanInfo({ launchPlanId: qs.launchPlanId });
+    }
+  }
+
+  componentWillUnmount() {
+    const { setFormData } = this.props;
+    setFormData({});
   }
 
   _goBack() {
@@ -100,13 +117,24 @@ class SelectTheme extends Component {
   }
 
   _gotoNext() {
-    const { gotoNext } = this.props;
-    gotoNext({});
+    const { gotoNext, planCRUDResult } = this.props;
+    gotoNext({
+      creativeId:
+        planCRUDResult &&
+        planCRUDResult.formData &&
+        planCRUDResult.formData.creativeId
+    });
   }
 
   render() {
     const { setEditState, setFormData, planCRUDResult } = this.props;
-    const { formData, materialTypes, isEdit, whichStep } = planCRUDResult;
+    const {
+      formData,
+      materialTypes,
+      isEdit,
+      whichStep,
+      monitorLinkInfo
+    } = planCRUDResult;
     const isRead = opType === "read";
     const isUpdate = opType === "update";
     if (
@@ -145,14 +173,16 @@ class SelectTheme extends Component {
     }
     return (
       <div className="app">
-        <IceContainer>
-          <h4>
-            新增投放计划（
-            {whichStep}
-            /2）
-          </h4>
-        </IceContainer>
-        {whichStep === 1 ? (
+        {!isRead ? (
+          <IceContainer>
+            <h4>
+              新增投放计划（
+              {whichStep}
+              /2）
+            </h4>
+          </IceContainer>
+        ) : null}
+        {isRead || isUpdate || whichStep === 1 ? (
           <Fragment>
             <InputGroup className="mb-4">
               <InputGroupAddon addonType="prepend">
@@ -162,7 +192,7 @@ class SelectTheme extends Component {
                 type="text"
                 placeholder="请输入投放名称"
                 disabled={isRead ? "disabled" : false}
-                defaultValue={
+                value={
                   isRead || isUpdate ? formData && formData.launchPlanName : ""
                 }
                 onChange={e => {
@@ -944,7 +974,61 @@ class SelectTheme extends Component {
             ) : null}
           </Fragment>
         ) : null}
-        {whichStep === 2 ? <Fragment>step 2</Fragment> : null}
+        {isRead || isUpdate || whichStep === 2 ? (
+          <Fragment>
+            {(() => {
+              for (
+                let i = 0;
+                i < (monitorLinkInfo && Number(monitorLinkInfo.hotspot));
+                i++
+              ) {
+                return (
+                  <div>
+                    <h5>{`${(formData && formData.interactionTypeName) ||
+                      ""}热点${i !== 0 ? i + 1 : ""}`}</h5>
+                    <InputGroup className="mb-4">
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>曝光监控链接：</InputGroupText>
+                      </InputGroupAddon>
+                      <Input
+                        type="url"
+                        disabled={isRead ? "disabled" : false}
+                        value={
+                          isRead || isUpdate
+                            ? formData && formData.launchLenTime
+                            : ""
+                        }
+                        placeholder="请输入链接"
+                        onChange={e => {
+                          setFormData({ launchLenTime: e.target.value });
+                        }}
+                      />
+                    </InputGroup>
+                    <InputGroup className="mb-4">
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>点击监控链接：</InputGroupText>
+                      </InputGroupAddon>
+                      <Input
+                        type="url"
+                        disabled={isRead ? "disabled" : false}
+                        value={
+                          isRead || isUpdate
+                            ? formData && formData.launchLenTime
+                            : ""
+                        }
+                        placeholder="请输入链接"
+                        onChange={e => {
+                          setFormData({ launchLenTime: e.target.value });
+                        }}
+                      />
+                    </InputGroup>
+                  </div>
+                );
+              }
+            })()}
+            {}
+          </Fragment>
+        ) : null}
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <Button onClick={this._goBack.bind(this)}>返回</Button>
           <Button onClick={this._gotoNext.bind(this)}>
@@ -963,7 +1047,8 @@ const mapDispatchToProps = {
   setEditState,
   queryInteractionInfo,
   gotoNext,
-  setWhichStep
+  setWhichStep,
+  getAdPlanInfo
 };
 
 const mapStateToProps = state => {

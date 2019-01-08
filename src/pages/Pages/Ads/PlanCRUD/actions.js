@@ -6,11 +6,17 @@ import {
   QUERY_ALL_MODELTYPES_REQUEST,
   QUERY_ALL_MODELTYPES_SUCCESS,
   QUERY_ALL_MODELTYPES_FAILURE,
+  GET_AD_PLAN_BYID_REQUEST,
+  GET_AD_PLAN_BYID_SUCCESS,
+  GET_AD_PLAN_BYID_FAILURE,
   GET_AD_METERIALS_REQUEST,
   GET_AD_METERIALS_SUCCESS,
   GET_AD_METERIALS_FAILURE,
   SET_WHICH_STEP,
-  SET_EDIT_STATE
+  SET_EDIT_STATE,
+  QUERY_INTERACTION_INFO_SUCCESS,
+  QUERY_INTERACTION_INFO_REQUEST,
+  QUERY_INTERACTION_INFO_FAILURE
 } from "./constants";
 
 const queryAllModelTypesRequest = () => {
@@ -59,21 +65,44 @@ const getAdMaterialsFailure = () => {
 
 const queryInteractiveInfoRequest = () => {
   return {
-    type: QUERY_ALL_MODELTYPES_REQUEST,
+    type: QUERY_INTERACTION_INFO_REQUEST,
     isLoading: true
   };
 };
 
-const queryInteractiveInfoSuccess = () => {
+const queryInteractiveInfoSuccess = payload => {
   return {
-    type: QUERY_ALL_MODELTYPES_SUCCESS,
-    isLoading: false
+    type: QUERY_INTERACTION_INFO_SUCCESS,
+    isLoading: false,
+    payload
   };
 };
 
 const queryInteractiveInfoFailure = () => {
   return {
-    type: QUERY_ALL_MODELTYPES_FAILURE,
+    type: QUERY_INTERACTION_INFO_FAILURE,
+    isLoading: false
+  };
+};
+
+const getAdPlanByIdRequest = () => {
+  return {
+    type: GET_AD_PLAN_BYID_REQUEST,
+    isLoading: true
+  };
+};
+
+const getAdPlanByIdSuccess = payload => {
+  return {
+    type: GET_AD_PLAN_BYID_SUCCESS,
+    isLoading: false,
+    payload
+  };
+};
+
+const getAdPlanByIdFailure = () => {
+  return {
+    type: GET_AD_PLAN_BYID_FAILURE,
     isLoading: false
   };
 };
@@ -137,7 +166,7 @@ export const getAdMaterials = params => {
 
 export const queryInteractionInfo = params => {
   return async dispatch => {
-    dispatch(queryAllModelTypesRequest());
+    dispatch(queryInteractiveInfoRequest());
     try {
       const response = await api.queryInteractionInfo(params);
       if (response.status === 200 && response.data.resCode === "00") {
@@ -150,6 +179,26 @@ export const queryInteractionInfo = params => {
       return response.data;
     } catch (error) {
       dispatch(queryInteractiveInfoFailure(error));
+    }
+  };
+};
+
+export const getAdPlanInfo = params => {
+  return async dispatch => {
+    dispatch(getAdPlanByIdRequest());
+    try {
+      const response = await api.getAdPlanInfo(params);
+
+      if (response.status === 200 && response.data.resCode === "00") {
+        dispatch(getAdPlanByIdSuccess(response.data));
+      } else {
+        dispatch(getAdPlanByIdFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch (error) {
+      dispatch(getAdPlanByIdFailure(error));
     }
   };
 };
