@@ -305,9 +305,7 @@ class SelectTheme extends Component {
                 type="text"
                 placeholder="请输入投放名称"
                 disabled={isRead ? "disabled" : false}
-                value={
-                  isRead || isUpdate ? formData && formData.launchPlanName : ""
-                }
+                value={(formData && formData.launchPlanName) || ""}
                 onChange={e => {
                   setFormData({ launchPlanName: e.target.value });
                 }}
