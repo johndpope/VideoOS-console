@@ -94,7 +94,10 @@ class SelectTheme extends Component {
     } = this.props;
     let qs = querystring.parse(location && location.search.substring(1));
     opType = qs && qs.opType;
-    setFormData({ interactionTypeName: qs && qs.interactionTypeName });
+    setFormData({
+      interactionTypeName: qs && qs.interactionTypeName,
+      interactionTypeId: qs && (qs.id || qs.launchPlanId)
+    });
     setWhichStep({ whichStep: 1 });
     getAdMaterials({ interactionType: (qs && qs.launchPlanId) || qs.id });
     if (qs && qs.launchPlanId) {
@@ -1105,10 +1108,11 @@ class SelectTheme extends Component {
                         type="url"
                         disabled={isRead ? "disabled" : false}
                         value={
-                          isRead || isUpdate
-                            ? formData &&
-                              formData.hotspotTrackLink[i].exposureTrackLink
-                            : ""
+                          (formData &&
+                            Array.isArray(formData.hotspotTrackLink) &&
+                            formData.hotspotTrackLink[i] &&
+                            formData.hotspotTrackLink[i].exposureTrackLink) ||
+                          ""
                         }
                         placeholder="请输入链接"
                         onChange={e => {
@@ -1121,7 +1125,8 @@ class SelectTheme extends Component {
                               e.target.value;
                           } else {
                             formData.hotspotTrackLink[i] = {
-                              exposureTrackLink: e.target.value
+                              exposureTrackLink: e.target.value,
+                              clickTrackLink: ""
                             };
                           }
                           setFormData({
@@ -1138,10 +1143,11 @@ class SelectTheme extends Component {
                         type="url"
                         disabled={isRead ? "disabled" : false}
                         value={
-                          isRead || isUpdate
-                            ? formData &&
-                              formData.hotspotTrackLink[i].clickTrackLink
-                            : ""
+                          (formData &&
+                            Array.isArray(formData.hotspotTrackLink) &&
+                            formData.hotspotTrackLink[i] &&
+                            formData.hotspotTrackLink[i].clickTrackLink) ||
+                          ""
                         }
                         placeholder="请输入链接"
                         onChange={e => {
@@ -1154,6 +1160,7 @@ class SelectTheme extends Component {
                               e.target.value;
                           } else {
                             formData.hotspotTrackLink[i] = {
+                              exposureTrackLink: "",
                               clickTrackLink: e.target.value
                             };
                           }

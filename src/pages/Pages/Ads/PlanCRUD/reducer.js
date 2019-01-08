@@ -36,11 +36,12 @@ import {
 
 // The initial state of the plan
 const initialState = {
-  formData: {},
+  formData: {
+    hotspotTrackLink: [],
+    infoTrackLink: []
+  },
   isEdit: false,
-  whichStep: 1,
-  hotspotTrackLink: [],
-  infoTrackLink: []
+  whichStep: 1
 };
 
 function planCRUDReducer(state = initialState, action) {
