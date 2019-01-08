@@ -25,3 +25,15 @@ export const getAdMaterials = params => {
     method: "get"
   });
 };
+
+export const queryInteractionInfo = params => {
+  return axios({
+    headers: {
+      token: getAuthority()
+    },
+    url: `${OS_API}/creative/interactionType/queryInteractionInfo?${qs.stringify(
+      params
+    )}`,
+    method: "get"
+  });
+};

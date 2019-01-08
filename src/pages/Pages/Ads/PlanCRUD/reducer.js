@@ -17,13 +17,15 @@ import {
   GET_AD_METERIALS_REQUEST,
   GET_AD_METERIALS_SUCCESS,
   GET_AD_METERIALS_FAILURE,
-  SET_EDIT_STATE
+  SET_EDIT_STATE,
+  SET_WHICH_STEP
 } from "./constants";
 
 // The initial state of the plan
 const initialState = {
   formData: {},
-  isEdit: false
+  isEdit: false,
+  whichStep: 1
 };
 
 function planCRUDReducer(state = initialState, action) {
@@ -74,6 +76,8 @@ function planCRUDReducer(state = initialState, action) {
       };
     case SET_EDIT_STATE:
       return { ...state, isEdit: action.payload.isEdit };
+    case SET_WHICH_STEP:
+      return { ...state, whichStep: action.payload.whichStep };
     default:
       return state;
   }

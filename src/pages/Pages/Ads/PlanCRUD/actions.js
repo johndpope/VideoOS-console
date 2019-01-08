@@ -9,6 +9,7 @@ import {
   GET_AD_METERIALS_REQUEST,
   GET_AD_METERIALS_SUCCESS,
   GET_AD_METERIALS_FAILURE,
+  SET_WHICH_STEP,
   SET_EDIT_STATE
 } from "./constants";
 
@@ -52,6 +53,27 @@ const getAdMaterialsSuccess = payload => {
 const getAdMaterialsFailure = () => {
   return {
     type: GET_AD_METERIALS_FAILURE,
+    isLoading: false
+  };
+};
+
+const queryInteractiveInfoRequest = () => {
+  return {
+    type: QUERY_ALL_MODELTYPES_REQUEST,
+    isLoading: true
+  };
+};
+
+const queryInteractiveInfoSuccess = () => {
+  return {
+    type: QUERY_ALL_MODELTYPES_SUCCESS,
+    isLoading: false
+  };
+};
+
+const queryInteractiveInfoFailure = () => {
+  return {
+    type: QUERY_ALL_MODELTYPES_FAILURE,
     isLoading: false
   };
 };
@@ -113,9 +135,42 @@ export const getAdMaterials = params => {
   };
 };
 
+export const queryInteractionInfo = params => {
+  return async dispatch => {
+    dispatch(queryAllModelTypesRequest());
+    try {
+      const response = await api.queryInteractionInfo(params);
+      if (response.status === 200 && response.data.resCode === "00") {
+        dispatch(queryInteractiveInfoSuccess(response.data));
+      } else {
+        dispatch(queryInteractiveInfoFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch (error) {
+      dispatch(queryInteractiveInfoFailure(error));
+    }
+  };
+};
+
 export const setEditState = payload => {
   return {
     type: SET_EDIT_STATE,
     payload
+  };
+};
+
+export const setWhichStep = payload => {
+  return {
+    type: SET_WHICH_STEP,
+    payload
+  };
+};
+
+export const gotoNext = params => {
+  return async dispatch => {
+    dispatch(setWhichStep({ whichStep: 2 }));
+    dispatch(queryInteractionInfo(params));
   };
 };
