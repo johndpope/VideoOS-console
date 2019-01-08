@@ -118,6 +118,14 @@ class SelectTheme extends Component {
 
   _gotoNext() {
     const { gotoNext, planCRUDResult } = this.props;
+    if (
+      !planCRUDResult ||
+      !planCRUDResult.formData ||
+      !planCRUDResult.formData.creativeId
+    ) {
+      Feedback.toast.error("请先选择投放素材");
+      return;
+    }
     gotoNext({
       creativeId:
         planCRUDResult &&
@@ -995,12 +1003,27 @@ class SelectTheme extends Component {
                         disabled={isRead ? "disabled" : false}
                         value={
                           isRead || isUpdate
-                            ? formData && formData.launchLenTime
+                            ? formData &&
+                              formData.hotspotTrackLink[i].exposureTrackLink
                             : ""
                         }
                         placeholder="请输入链接"
                         onChange={e => {
-                          setFormData({ launchLenTime: e.target.value });
+                          if (
+                            formData &&
+                            Array.isArray(formData.hotspotTrackLink) &&
+                            formData.hotspotTrackLink[i]
+                          ) {
+                            formData.hotspotTrackLink[i].exposureTrackLink =
+                              e.target.value;
+                          } else {
+                            formData.hotspotTrackLink[i] = {
+                              exposureTrackLink: e.target.value
+                            };
+                          }
+                          setFormData({
+                            hotspotTrackLink: formData.hotspotTrackLink
+                          });
                         }}
                       />
                     </InputGroup>
@@ -1013,12 +1036,27 @@ class SelectTheme extends Component {
                         disabled={isRead ? "disabled" : false}
                         value={
                           isRead || isUpdate
-                            ? formData && formData.launchLenTime
+                            ? formData &&
+                              formData.hotspotTrackLink[i].clickTrackLink
                             : ""
                         }
                         placeholder="请输入链接"
                         onChange={e => {
-                          setFormData({ launchLenTime: e.target.value });
+                          if (
+                            formData &&
+                            Array.isArray(formData.hotspotTrackLink) &&
+                            formData.hotspotTrackLink[i]
+                          ) {
+                            formData.hotspotTrackLink[i].clickTrackLink =
+                              e.target.value;
+                          } else {
+                            formData.hotspotTrackLink[i] = {
+                              clickTrackLink: e.target.value
+                            };
+                          }
+                          setFormData({
+                            hotspotTrackLink: formData.hotspotTrackLink
+                          });
                         }}
                       />
                     </InputGroup>
