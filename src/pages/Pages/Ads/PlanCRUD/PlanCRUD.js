@@ -400,6 +400,7 @@ class SelectTheme extends Component {
                     Feedback.toast.error("请先选择“投放素材”");
                     return;
                   }
+                  setEditState({ isEdit: true });
                   setFormData({
                     launchTimeType: e.target.value,
                     launchTime: [],
@@ -1084,6 +1085,7 @@ class SelectTheme extends Component {
         ) : null}
         {isRead || isUpdate || whichStep === 2 ? (
           <Fragment>
+            <h4>数据监控（非必填）</h4>
             {(() => {
               for (
                 let i = 0;

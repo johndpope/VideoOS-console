@@ -38,7 +38,8 @@ import {
 const initialState = {
   formData: {
     hotspotTrackLink: [],
-    infoTrackLink: []
+    infoTrackLink: [],
+    launchTime: [[""]]
   },
   isEdit: false,
   whichStep: 1
