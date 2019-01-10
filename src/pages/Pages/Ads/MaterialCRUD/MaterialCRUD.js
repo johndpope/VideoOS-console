@@ -69,7 +69,7 @@ class MaterialCRUD extends Component {
     const { saveFormData } = this.props;
     qs = null;
     opType = null;
-    saveFormData({});
+    saveFormData("refresh");
   }
 
   render() {
