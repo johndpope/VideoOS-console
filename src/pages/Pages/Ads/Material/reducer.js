@@ -21,7 +21,6 @@ import {
 } from "./constants";
 
 // The initial state of the material
-let tempFormData = null;
 const initialState = {
   formData: {},
   fileData: {},

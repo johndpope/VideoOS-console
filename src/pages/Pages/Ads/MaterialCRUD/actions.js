@@ -240,7 +240,6 @@ export const addMaterial = params => {
   return async dispatch => {
     dispatch(addMaterialRequest());
     try {
-      const currentPage = (params && params.currentPage) || 1;
       delete params.currentPage;
       const response = await api.addMaterial(params);
 
@@ -264,7 +263,6 @@ export const updateMaterial = params => {
   return async dispatch => {
     dispatch(updateMaterialRequest());
     try {
-      const currentPage = (params && params.currentPage) || 1;
       delete params.currentPage;
       const response = await api.updateMaterial(params);
 

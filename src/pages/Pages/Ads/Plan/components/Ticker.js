@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react";
 
 let launchTm;
 let currentTm;
-let st;
 
 class Ticker extends Component {
   constructor(props) {
@@ -21,15 +20,17 @@ class Ticker extends Component {
         ? Math.floor((launchTm + launchLenTime * 1000 - currentTm) / 1000)
         : 0;
     this.setState({ INTERVEL });
-    st = setInterval(() => {
-      launchTm = new Date("2019-01-11 14:20").getTime();
+    let st = setInterval(() => {
       currentTm = new Date().getTime();
       INTERVEL =
         launchTm + launchLenTime * 1000 - currentTm > 0
           ? Math.floor((launchTm + launchLenTime * 1000 - currentTm) / 1000)
           : 0;
       this.setState({ INTERVEL });
-      if (INTERVEL === 0) clearTimeout(st);
+      if (INTERVEL === 0) {
+        // setReLaunch({reLaunch: true});
+        clearTimeout(st);
+      }
     }, 1000);
   }
 
