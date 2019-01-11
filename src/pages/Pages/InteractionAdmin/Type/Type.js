@@ -6,17 +6,7 @@ import { compose } from "redux";
 import injectReducer from "utils/injectReducer";
 import { AUTH_KEYS } from "src/maps";
 import { getUserInfoLocal } from "utils/authority";
-import {
-  getIaTypes,
-  addTypeToggle,
-  deleteTypeToggle,
-  deleteType,
-  addType,
-  updateType,
-  setFormData,
-  setFileIptState,
-  setCurrentPage
-} from "./actions";
+import * as actions from "./actions";
 import reducer from "./reducer";
 import TypeTable from "./components/Table";
 import AddType from "./components/AddType";
@@ -119,15 +109,7 @@ class IAType extends Component {
 }
 
 const mapDispatchToProps = {
-  getIaTypes,
-  addTypeToggle,
-  deleteTypeToggle,
-  deleteType,
-  addType,
-  updateType,
-  setFormData,
-  setFileIptState,
-  setCurrentPage
+  ...actions
 };
 
 const mapStateToProps = state => {

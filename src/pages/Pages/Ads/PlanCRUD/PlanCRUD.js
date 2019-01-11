@@ -19,18 +19,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import MinSec from "./components/MinSec";
 
-import {
-  goBack,
-  setFormData,
-  getAdMaterials,
-  setEditState,
-  queryInteractionInfo,
-  gotoNext,
-  setWhichStep,
-  getAdPlanInfo,
-  addPlan,
-  updatePlan
-} from "./actions";
+import * as actions from "./actions";
 import reducer from "./reducer";
 
 let opType;
@@ -1440,16 +1429,7 @@ class SelectTheme extends Component {
 }
 
 const mapDispatchToProps = {
-  goBack,
-  setFormData,
-  getAdMaterials,
-  setEditState,
-  queryInteractionInfo,
-  gotoNext,
-  setWhichStep,
-  getAdPlanInfo,
-  addPlan,
-  updatePlan
+  ...actions
 };
 
 const mapStateToProps = state => {

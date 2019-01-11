@@ -6,14 +6,7 @@ import { compose } from "redux";
 import { AUTH_KEYS } from "src/maps";
 import { getUserInfoLocal } from "utils/authority";
 import injectReducer from "utils/injectReducer";
-import {
-  getAdMaterials,
-  addMaterialToggle,
-  deleteMaterial,
-  newMaterialDropDownToggle,
-  deleteMaterialModalToggle,
-  setCurrentPage
-} from "./actions";
+import * as actions from "./actions";
 import reducer from "./reducer";
 import MaterialTable from "./components/Table";
 import DeleteMaterial from "./components/DeleteModal";
@@ -92,12 +85,7 @@ class AdMaterial extends Component {
 }
 
 const mapDispatchToProps = {
-  newMaterialDropDownToggle,
-  deleteMaterialModalToggle,
-  addMaterialToggle,
-  getAdMaterials,
-  deleteMaterial,
-  setCurrentPage
+  ...actions
 };
 
 const mapStateToProps = state => {

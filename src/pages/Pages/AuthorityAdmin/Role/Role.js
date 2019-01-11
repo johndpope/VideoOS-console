@@ -6,17 +6,7 @@ import { compose } from "redux";
 import { AUTH_KEYS } from "src/maps";
 import { getUserInfoLocal } from "utils/authority";
 import injectReducer from "utils/injectReducer";
-import {
-  getRoles,
-  addRoleModalToggle,
-  addRole,
-  queryAllRoleTypes,
-  deleteRoleModalToggle,
-  deleteRole,
-  updateRole,
-  setCurrentPage,
-  setFormData
-} from "./actions";
+import * as actions from "./actions";
 import reducer from "./reducer";
 import RoleTable from "./components/Table";
 import AddRole from "./components/AddRole";
@@ -115,15 +105,7 @@ class AARole extends Component {
 }
 
 const mapDispatchToProps = {
-  getRoles,
-  addRoleModalToggle,
-  addRole,
-  queryAllRoleTypes,
-  deleteRoleModalToggle,
-  deleteRole,
-  updateRole,
-  setCurrentPage,
-  setFormData
+  ...actions
 };
 
 const mapStateToProps = state => {
