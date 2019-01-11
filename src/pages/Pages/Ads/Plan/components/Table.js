@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Table, Button } from "@icedesign/base";
+import Ticker from "./Ticker";
 
 export default class PlanTable extends Component {
   renderOperator = (value, index, record) => {
@@ -20,6 +21,20 @@ export default class PlanTable extends Component {
         </Button>
         {!readOnly ? (
           <Fragment>
+            {record &&
+            record.launchStatus === 1 &&
+            record.launchTimeType === 1 ? (
+              <Button
+                disabled
+                style={{ color: "rgb(51, 51, 51)" }}
+                onClick={() => {
+                  launchPlanModalToggle(record);
+                }}
+              >
+                {/*投放中*/}
+                <Ticker launchLenTime={record.launchLenTime} />
+              </Button>
+            ) : null}
             {record && record.launchStatus == 2 ? (
               <Button
                 onClick={() => {
@@ -105,11 +120,11 @@ export default class PlanTable extends Component {
                 return <span>可投放</span>;
               }
               if (value === 3) {
-                return <span>关闭</span>;
+                return <span>已下线</span>;
               }
             }}
           />
-          <Table.Column title="操作" cell={this.renderOperator} width={140} />
+          <Table.Column title="操作" cell={this.renderOperator} width={180} />
         </Table>
       </div>
     );
