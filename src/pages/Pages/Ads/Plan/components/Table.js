@@ -3,7 +3,12 @@ import { Table, Button } from "@icedesign/base";
 
 export default class PlanTable extends Component {
   renderOperator = (value, index, record) => {
-    const { addPlanModalToggle, deletePlanModalToggle, readOnly } = this.props;
+    const {
+      addPlanModalToggle,
+      launchPlanModalToggle,
+      deletePlanModalToggle,
+      readOnly
+    } = this.props;
     return (
       <div>
         <Button
@@ -15,13 +20,15 @@ export default class PlanTable extends Component {
         </Button>
         {!readOnly ? (
           <Fragment>
-            {/*<Button
-              onClick={() => {
-                addPlanModalToggle({ ...record, opType: "update" });
-              }}
-            >
-              修改
-            </Button>*/}
+            {record && record.launchStatus == 2 ? (
+              <Button
+                onClick={() => {
+                  launchPlanModalToggle(record);
+                }}
+              >
+                投放
+              </Button>
+            ) : null}
             {record && record.launchStatus !== 3 ? (
               <Button
                 onClick={() => {
@@ -63,6 +70,22 @@ export default class PlanTable extends Component {
             width={120}
           />
           <Table.Column
+            title="投放时间类型"
+            dataIndex="launchTimeType"
+            width={80}
+            cell={value => {
+              if (value === 0) {
+                return <span>视频时间</span>;
+              }
+              if (value === 1) {
+                return <span>即时</span>;
+              }
+              if (value === 2) {
+                return <span>北京时间</span>;
+              }
+            }}
+          />
+          <Table.Column
             title="投放素材名称"
             dataIndex="creativeName"
             width={120}
@@ -79,7 +102,7 @@ export default class PlanTable extends Component {
                 return <span>投放中</span>;
               }
               if (value === 2) {
-                return <span>待审核</span>;
+                return <span>可投放</span>;
               }
               if (value === 3) {
                 return <span>关闭</span>;

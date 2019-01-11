@@ -64,7 +64,7 @@
     "collect": {
       "type": "object",
       "title": "3.收集成功后续",
-      "required": ["imageUrl", "btnTitle", "linkType"],
+      "required": ["imageUrl", "btnTitle", "linkType", "content"],
       "properties": {
         "content": {
           "type": "string",

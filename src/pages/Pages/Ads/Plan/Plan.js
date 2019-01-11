@@ -16,20 +16,19 @@ import { getUserInfoLocal } from "utils/authority";
 import injectReducer from "utils/injectReducer";
 import {
   addPlanModalToggle,
+  launchPlanModalToggle,
   newPlanDropDownToggle,
   getAdPlans,
   queryAllModelTypes,
   deletePlanModalToggle,
-  addPlan,
   deletePlan,
-  updatePlan,
-  setFormData,
-  setCurrentPage,
-  setEditState
+  launchPlan,
+  setCurrentPage
 } from "./actions";
 import reducer from "./reducer";
 import PlanTable from "./components/Table";
 import DeletePlan from "./components/DeleteModal";
+import LaunchPlan from "./components/LaunchModal";
 
 const isConflict = payload => {
   let status = false;
@@ -95,10 +94,9 @@ class AdPlan extends Component {
       addPlanModalToggle,
       newPlanDropDownToggle,
       deletePlanModalToggle,
-      addPlan,
+      launchPlanModalToggle,
       deletePlan,
-      updatePlan,
-      setFormData,
+      launchPlan,
       getAdPlans,
       setCurrentPage
     } = this.props;
@@ -110,6 +108,14 @@ class AdPlan extends Component {
           toggle={deletePlanModalToggle}
           shouldOpen={adPlan && adPlan.shouldDeletePlanModalOpen}
           deletePlan={deletePlan}
+          record={adPlan && adPlan.record}
+          currentPage={adPlan && adPlan.currentPage}
+          params={params}
+        />
+        <LaunchPlan
+          toggle={launchPlanModalToggle}
+          shouldOpen={adPlan && adPlan.shouldLaunchPlanModalOpen}
+          launchPlan={launchPlan}
           record={adPlan && adPlan.record}
           currentPage={adPlan && adPlan.currentPage}
           params={params}
@@ -182,6 +188,7 @@ class AdPlan extends Component {
           isLoading={adPlan && adPlan.isLoading}
           dataSource={(adPlan && adPlan.planResult) || []}
           deletePlanModalToggle={deletePlanModalToggle}
+          launchPlanModalToggle={launchPlanModalToggle}
           addPlanModalToggle={addPlanModalToggle}
           readOnly={
             authorList ? authorList.includes(AUTH_KEYS.PLAN_READ) : false
@@ -221,13 +228,12 @@ class AdPlan extends Component {
 const mapDispatchToProps = {
   newPlanDropDownToggle,
   addPlanModalToggle,
+  launchPlanModalToggle,
   getAdPlans,
   queryAllModelTypes,
   deletePlanModalToggle,
   deletePlan,
-  addPlan,
-  updatePlan,
-  setFormData,
+  launchPlan,
   setCurrentPage
 };
 

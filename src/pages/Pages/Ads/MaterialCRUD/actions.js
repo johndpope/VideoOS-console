@@ -15,7 +15,7 @@
  *    }
  */
 
-import { goBack as _goBack } from "react-router-redux";
+import { goBack as _goBack, push } from "react-router-redux";
 import { Feedback } from "@icedesign/base";
 import * as api from "./api";
 import {
@@ -247,6 +247,7 @@ export const addMaterial = params => {
       if (response.status === 200 && response.data.resCode === "00") {
         dispatch(addMaterialSuccess(response.data));
         Feedback.toast.show(response.data && response.data.resMsg);
+        dispatch(push("/tf/material"));
       } else {
         dispatch(addMaterialFailure(response.data));
         Feedback.toast.error(response.data && response.data.resMsg);

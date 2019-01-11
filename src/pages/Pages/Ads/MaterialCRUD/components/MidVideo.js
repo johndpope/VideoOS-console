@@ -257,34 +257,36 @@ export default class MidVideo extends Component {
               广告是否可以关闭
             </Label>
           </div>
-          <div className="array-item">
-            <Label>广告播放多久后可关闭*</Label>
-            <Input
-              type="url"
-              readOnly={readonly}
-              value={closeAfter}
-              placeholder=""
-              onChange={e => {
-                closeAfter = Number(e.target.value);
-                this.setState({ closeAfter }, () =>
-                  this.props.onChange(this.state)
-                );
-              }}
-            />
-            <p>
-              该时间需要小于中插视频时间；
-              <br />
-              如果填0，则表示该广告随时可关闭.
-            </p>
-            {errorSchema &&
-              errorSchema.closeAfter &&
-              errorSchema.closeAfter.__errors &&
-              errorSchema.closeAfter.__errors.map((err, idx) => (
-                <li key={idx} style={{ color: "#f86c6b" }}>
-                  {err}
-                </li>
-              ))}
-          </div>
+          {isShowClose ? (
+            <div className="array-item">
+              <Label>广告播放多久后可关闭*</Label>
+              <Input
+                type="url"
+                readOnly={readonly}
+                value={closeAfter}
+                placeholder=""
+                onChange={e => {
+                  closeAfter = Number(e.target.value);
+                  this.setState({ closeAfter }, () =>
+                    this.props.onChange(this.state)
+                  );
+                }}
+              />
+              <p>
+                该时间需要小于中插视频时间；
+                <br />
+                如果填0，则表示该广告随时可关闭.
+              </p>
+              {errorSchema &&
+                errorSchema.closeAfter &&
+                errorSchema.closeAfter.__errors &&
+                errorSchema.closeAfter.__errors.map((err, idx) => (
+                  <li key={idx} style={{ color: "#f86c6b" }}>
+                    {err}
+                  </li>
+                ))}
+            </div>
+          ) : null}
           <div className="array-item">
             <Label>广告外链链接</Label>
             <Input

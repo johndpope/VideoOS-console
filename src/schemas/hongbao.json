@@ -2,7 +2,13 @@
   "key": "hongbao",
   "title": "",
   "type": "object",
-  "required": ["creativeName"],
+  "required": [
+    "creativeName",
+    "imageUrl",
+    "title",
+    "infoTitle",
+    "infoImageUrl"
+  ],
   "properties": {
     "creativeName": {
       "title": "素材名称",
@@ -16,12 +22,12 @@
     },
     "imageUrl": {
       "type": "string",
-      "format": "data-url",
       "title": "热点图片"
     },
     "title": {
       "type": "string",
       "title": "热点标题",
+      "maxLength": 10,
       "default": ""
     },
     "isShowAds": {
@@ -35,11 +41,11 @@
     "infoTitle": {
       "type": "string",
       "title": "红包标题",
+      "maxLength": 10,
       "default": ""
     },
     "infoImageUrl": {
       "type": "string",
-      "format": "data-url",
       "title": "图片icon"
     },
     "infoWord": {

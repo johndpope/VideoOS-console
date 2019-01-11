@@ -9,21 +9,40 @@
  * case YOUR_ACTION_CONSTANT:
  *   return state.set('yourStateVariable', true);
  */
+import moment from "moment";
 import {
   SET_FORM_DATA,
+  ADD_PLAN_REQUEST,
+  ADD_PLAN_SUCCESS,
+  ADD_PLAN_FAILURE,
+  UPDATE_PLAN_REQUEST,
+  UPDATE_PLAN_SUCCESS,
+  UPDATE_PLAN_FAILURE,
   QUERY_ALL_MODELTYPES_REQUEST,
   QUERY_ALL_MODELTYPES_SUCCESS,
   QUERY_ALL_MODELTYPES_FAILURE,
+  GET_AD_PLAN_BYID_REQUEST,
+  GET_AD_PLAN_BYID_SUCCESS,
+  GET_AD_PLAN_BYID_FAILURE,
   GET_AD_METERIALS_REQUEST,
   GET_AD_METERIALS_SUCCESS,
   GET_AD_METERIALS_FAILURE,
-  SET_EDIT_STATE
+  QUERY_INTERACTION_INFO_SUCCESS,
+  QUERY_INTERACTION_INFO_REQUEST,
+  QUERY_INTERACTION_INFO_FAILURE,
+  SET_EDIT_STATE,
+  SET_WHICH_STEP
 } from "./constants";
 
 // The initial state of the plan
 const initialState = {
-  formData: {},
-  isEdit: false
+  formData: {
+    hotspotTrackLink: [],
+    infoTrackLink: [],
+    launchTime: [[""]]
+  },
+  isEdit: false,
+  whichStep: 1
 };
 
 function planCRUDReducer(state = initialState, action) {
@@ -72,8 +91,69 @@ function planCRUDReducer(state = initialState, action) {
         ...state,
         isLoading: action.isLoading
       };
+    case GET_AD_PLAN_BYID_REQUEST:
+      return {
+        ...state,
+        isLoading: action.isLoading
+      };
+    case GET_AD_PLAN_BYID_SUCCESS:
+      const _payload = action.payload;
+      _payload.launchDateStart = moment(_payload.launchDateStart);
+      _payload.launchDateEnd = moment(_payload.launchDateEnd);
+      return {
+        ...state,
+        formData: _payload,
+        isLoading: action.isLoading
+      };
+    case GET_AD_PLAN_BYID_FAILURE:
+      return {
+        ...state,
+        isLoading: action.isLoading
+      };
+    case QUERY_INTERACTION_INFO_REQUEST:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case QUERY_INTERACTION_INFO_SUCCESS:
+      return {
+        ...state,
+        monitorLinkInfo: action.payload,
+        isLoading: false
+      };
+    case QUERY_INTERACTION_INFO_FAILURE:
+      return {
+        ...state,
+        isLoading: false
+      };
+    case ADD_PLAN_REQUEST:
+      return Object.assign({}, state, {
+        isLoading: action.isLoading
+      });
+    case ADD_PLAN_SUCCESS:
+      return Object.assign({}, state, {
+        isLoading: action.isLoading
+      });
+    case ADD_PLAN_FAILURE:
+      return Object.assign({}, state, {
+        isLoading: action.isLoading
+      });
+    case UPDATE_PLAN_REQUEST:
+      return Object.assign({}, state, {
+        isLoading: action.isLoading
+      });
+    case UPDATE_PLAN_SUCCESS:
+      return Object.assign({}, state, {
+        isLoading: action.isLoading
+      });
+    case UPDATE_PLAN_FAILURE:
+      return Object.assign({}, state, {
+        isLoading: action.isLoading
+      });
     case SET_EDIT_STATE:
       return { ...state, isEdit: action.payload.isEdit };
+    case SET_WHICH_STEP:
+      return { ...state, whichStep: action.payload.whichStep };
     default:
       return state;
   }
