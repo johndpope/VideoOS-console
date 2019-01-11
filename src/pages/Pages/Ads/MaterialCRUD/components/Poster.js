@@ -224,7 +224,6 @@ export default class Poster extends Component {
                 )}
               </Col>
             </Row>
-            <p>图片尺寸为宽200PX*高75PX</p>
             {errorSchema &&
               errorSchema.imageUrl &&
               errorSchema.imageUrl.__errors &&
