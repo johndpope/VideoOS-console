@@ -16,40 +16,14 @@
  */
 import { Feedback } from "@icedesign/base";
 import * as api from "./api";
-import {
-  GET_ROLES_REQUEST,
-  GET_ROLES_SUCCESS,
-  GET_ROLES_FAILURE,
-  SHOW_ADDROLE_MODAL,
-  HIDE_ADDROLE_MODAL,
-  ADD_ROLE_REQUEST,
-  ADD_ROLE_SUCCESS,
-  ADD_ROLE_FAILURE,
-  UPDATE_ROLE_REQUEST,
-  UPDATE_ROLE_SUCCESS,
-  UPDATE_ROLE_FAILURE,
-  DELETE_ROLE_REQUEST,
-  DELETE_ROLE_SUCCESS,
-  DELETE_ROLE_FAILURE,
-  QUERY_ALL_ROLETYPES_REQUEST,
-  QUERY_ALL_ROLETYPES_SUCCESS,
-  QUERY_ALL_ROLETYPES_FAILURE,
-  SHOW_DELETEROLE_MODAL,
-  HIDE_DELETEROLE_MODAL,
-  SET_CURRENT_PAGE,
-  SET_FORM_DATA,
-  QUERY_USER_ROLE_REQUEST,
-  QUERY_USER_ROLE_SUCCESS,
-  QUERY_USER_ROLE_FAILURE,
-  SET_NODE_ID_LIST
-} from "./constants";
+import * as constants from "./constants";
 
 let addRoleModalSwitch = false;
 let deleteRoleModalSwitch = false;
 
 const showAddRoleModal = payload => {
   return {
-    type: SHOW_ADDROLE_MODAL,
+    type: constants.SHOW_ADDROLE_MODAL,
     payload,
     shouldOpen: true
   };
@@ -57,14 +31,14 @@ const showAddRoleModal = payload => {
 
 const hideAddRoleModal = () => {
   return {
-    type: HIDE_ADDROLE_MODAL,
+    type: constants.HIDE_ADDROLE_MODAL,
     shouldOpen: false
   };
 };
 
 const showDeleteRoleModal = payload => {
   return {
-    type: SHOW_DELETEROLE_MODAL,
+    type: constants.SHOW_DELETEROLE_MODAL,
     payload,
     shouldOpen: true
   };
@@ -72,21 +46,21 @@ const showDeleteRoleModal = payload => {
 
 const hideDeleteRoleModal = () => {
   return {
-    type: HIDE_DELETEROLE_MODAL,
+    type: constants.HIDE_DELETEROLE_MODAL,
     shouldOpen: false
   };
 };
 
 const getRolesRequest = () => {
   return {
-    type: GET_ROLES_REQUEST,
+    type: constants.GET_ROLES_REQUEST,
     isLoading: true
   };
 };
 
 const getRolesSuccess = payload => {
   return {
-    type: GET_ROLES_SUCCESS,
+    type: constants.GET_ROLES_SUCCESS,
     payload,
     isLoading: false
   };
@@ -94,21 +68,21 @@ const getRolesSuccess = payload => {
 
 const getRolesFail = () => {
   return {
-    type: GET_ROLES_FAILURE,
+    type: constants.GET_ROLES_FAILURE,
     isLoading: false
   };
 };
 
 const addRoleRequest = () => {
   return {
-    type: ADD_ROLE_REQUEST,
+    type: constants.ADD_ROLE_REQUEST,
     isLoading: true
   };
 };
 
 const addRoleSuccess = payload => {
   return {
-    type: ADD_ROLE_SUCCESS,
+    type: constants.ADD_ROLE_SUCCESS,
     payload,
     isLoading: false
   };
@@ -116,21 +90,21 @@ const addRoleSuccess = payload => {
 
 const addRoleFailure = () => {
   return {
-    type: ADD_ROLE_FAILURE,
+    type: constants.ADD_ROLE_FAILURE,
     isLoading: false
   };
 };
 
 const updateRoleRequest = () => {
   return {
-    type: UPDATE_ROLE_REQUEST,
+    type: constants.UPDATE_ROLE_REQUEST,
     isLoading: true
   };
 };
 
 const updateRoleSuccess = payload => {
   return {
-    type: UPDATE_ROLE_SUCCESS,
+    type: constants.UPDATE_ROLE_SUCCESS,
     payload,
     isLoading: false
   };
@@ -138,21 +112,21 @@ const updateRoleSuccess = payload => {
 
 const updateRoleFailure = () => {
   return {
-    type: UPDATE_ROLE_FAILURE,
+    type: constants.UPDATE_ROLE_FAILURE,
     isLoading: false
   };
 };
 
 const deleteRoleRequest = () => {
   return {
-    type: DELETE_ROLE_REQUEST,
+    type: constants.DELETE_ROLE_REQUEST,
     isLoading: true
   };
 };
 
 const deleteRoleSuccess = payload => {
   return {
-    type: DELETE_ROLE_SUCCESS,
+    type: constants.DELETE_ROLE_SUCCESS,
     payload,
     isLoading: false
   };
@@ -160,21 +134,21 @@ const deleteRoleSuccess = payload => {
 
 const deleteRoleFailure = () => {
   return {
-    type: DELETE_ROLE_FAILURE,
+    type: constants.DELETE_ROLE_FAILURE,
     isLoading: false
   };
 };
 
 const queryAllRoleTypesRequest = () => {
   return {
-    type: QUERY_ALL_ROLETYPES_REQUEST,
+    type: constants.QUERY_ALL_ROLETYPES_REQUEST,
     isLoading: true
   };
 };
 
 const queryAllRoleTypesSuccess = payload => {
   return {
-    type: QUERY_ALL_ROLETYPES_SUCCESS,
+    type: constants.QUERY_ALL_ROLETYPES_SUCCESS,
     payload,
     isLoading: true
   };
@@ -182,21 +156,21 @@ const queryAllRoleTypesSuccess = payload => {
 
 const queryAllRoleTypesFailure = () => {
   return {
-    type: QUERY_ALL_ROLETYPES_FAILURE,
+    type: constants.QUERY_ALL_ROLETYPES_FAILURE,
     isLoading: true
   };
 };
 
 const queryUserRoleRequest = () => {
   return {
-    type: QUERY_USER_ROLE_REQUEST,
+    type: constants.QUERY_USER_ROLE_REQUEST,
     isLoading: true
   };
 };
 
 const queryUserRoleSuccess = payload => {
   return {
-    type: QUERY_USER_ROLE_SUCCESS,
+    type: constants.QUERY_USER_ROLE_SUCCESS,
     isLoading: false,
     payload
   };
@@ -204,7 +178,7 @@ const queryUserRoleSuccess = payload => {
 
 const queryUserRoleFailure = () => {
   return {
-    type: QUERY_USER_ROLE_FAILURE,
+    type: constants.QUERY_USER_ROLE_FAILURE,
     isLoading: false
   };
 };
@@ -389,21 +363,21 @@ export const queryAllRoleTypes = params => {
 
 export const setCurrentPage = payload => {
   return {
-    type: SET_CURRENT_PAGE,
+    type: constants.SET_CURRENT_PAGE,
     payload
   };
 };
 
 export const setFormData = payload => {
   return {
-    type: SET_FORM_DATA,
+    type: constants.SET_FORM_DATA,
     payload
   };
 };
 
 export const setNodeIdList = payload => {
   return {
-    type: SET_NODE_ID_LIST,
+    type: constants.SET_NODE_ID_LIST,
     payload
   };
 };

@@ -18,23 +18,18 @@
 import { Feedback } from "@icedesign/base";
 import * as api from "./api";
 
-import {
-  GET_LOGS_REQUEST,
-  GET_LOGS_SUCCESS,
-  GET_LOGS_FAILURE,
-  SET_CURRENT_PAGE
-} from "./constants";
+import * as constants from "./constants";
 
 const getLogsRequest = () => {
   return {
-    type: GET_LOGS_REQUEST,
+    type: constants.GET_LOGS_REQUEST,
     isLoading: true
   };
 };
 
 const getLogsSuccess = payload => {
   return {
-    type: GET_LOGS_SUCCESS,
+    type: constants.GET_LOGS_SUCCESS,
     isLoading: false,
     payload
   };
@@ -42,7 +37,7 @@ const getLogsSuccess = payload => {
 
 const getLogsFailure = () => {
   return {
-    type: GET_LOGS_FAILURE,
+    type: constants.GET_LOGS_FAILURE,
     isLoading: false
   };
 };
@@ -83,7 +78,7 @@ export const getLogs = (
 
 export const setCurrentPage = payload => {
   return {
-    type: SET_CURRENT_PAGE,
+    type: constants.SET_CURRENT_PAGE,
     payload
   };
 };

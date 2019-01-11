@@ -20,16 +20,7 @@ import { Feedback } from "@icedesign/base";
 import * as api from "./api";
 import { getAuthority, setAuthority, setUserInfoLocal } from "utils/authority";
 // import { reloadAuthorized } from 'utils/Authorized';
-import {
-  // USER_LOGOUT_REQUEST,
-  // USER_LOGOUT_SUCCESS,
-  // USER_LOGOUT_FAILURE,
-  SHOW_PASSWORD_RESET_MODEL,
-  HIDE_PASSWORD_RESET_MODEL,
-  RESET_PASSWORD_REQUEST,
-  RESET_PASSWORD_SUCCESS,
-  RESET_PASSWORD_FAILURE
-} from "./constants";
+import * as constants from "./constants";
 
 /**
  * Changes the input field of the form
@@ -68,35 +59,35 @@ let resetPasswordModalSwitch = false;
 
 const showPasswordResetModal = () => {
   return {
-    type: SHOW_PASSWORD_RESET_MODEL,
+    type: constants.SHOW_PASSWORD_RESET_MODEL,
     shouldOpen: true
   };
 };
 
 const hidePasswordResetModal = () => {
   return {
-    type: HIDE_PASSWORD_RESET_MODEL,
+    type: constants.HIDE_PASSWORD_RESET_MODEL,
     shouldOpen: false
   };
 };
 
 const resetPasswordRequest = () => {
   return {
-    type: RESET_PASSWORD_REQUEST,
+    type: constants.RESET_PASSWORD_REQUEST,
     isLoading: true
   };
 };
 
 const resetPasswordSuccess = () => {
   return {
-    type: RESET_PASSWORD_SUCCESS,
+    type: constants.RESET_PASSWORD_SUCCESS,
     isLoading: true
   };
 };
 
 const resetPasswordFailure = () => {
   return {
-    type: RESET_PASSWORD_FAILURE,
+    type: constants.RESET_PASSWORD_FAILURE,
     isLoading: true
   };
 };

@@ -18,30 +18,7 @@
 import { Feedback } from "@icedesign/base";
 import * as api from "./api";
 // import { reloadAuthorized } from 'utils/Authorized';
-import {
-  GET_IATYPE_REQUEST,
-  GET_IATYPE_SUCCESS,
-  GET_IATYPE_FAILURE,
-  SHOW_ADDTYPE_MODAL,
-  HIDDEN_ADDTYPE_MODAL,
-  SHOW_DELETETYPE_MODAL,
-  HIDE_DELETETYPE_MODAL,
-  ADD_TYPE_REQUEST,
-  ADD_TYPE_SUCCESS,
-  ADD_TYPE_FAILURE,
-  DELETE_TYPE_REQUEST,
-  DELETE_TYPE_SUCCESS,
-  DELETE_TYPE_FAILURE,
-  UPDATE_TYPE_REQUEST,
-  UPDATE_TYPE_SUCCESS,
-  UPDATE_TYPE_FAILURE,
-  GET_IATYPE_BYID_REQUEST,
-  GET_IATYPE_BYID_SUCCESS,
-  GET_IATYPE_BYID_FAILURE,
-  SET_FORM_DATA,
-  SET_FILE_IPT_STATE,
-  SET_CURRENT_PAGE
-} from "./constants";
+import * as constants from "./constants";
 
 /**
  * Changes the input field of the form
@@ -55,7 +32,7 @@ let deleteTypeSwitch = false;
 
 const showAddTypeModal = payload => {
   return {
-    type: SHOW_ADDTYPE_MODAL,
+    type: constants.SHOW_ADDTYPE_MODAL,
     shouldOpen: true,
     payload
   };
@@ -63,14 +40,14 @@ const showAddTypeModal = payload => {
 
 const hideAddTypeModal = () => {
   return {
-    type: HIDDEN_ADDTYPE_MODAL,
+    type: constants.HIDDEN_ADDTYPE_MODAL,
     shouldOpen: false
   };
 };
 
 const showDeleteTypeModal = payload => {
   return {
-    type: SHOW_DELETETYPE_MODAL,
+    type: constants.SHOW_DELETETYPE_MODAL,
     shouldOpen: true,
     payload
   };
@@ -78,21 +55,21 @@ const showDeleteTypeModal = payload => {
 
 const hideDeleteTypeModal = () => {
   return {
-    type: HIDE_DELETETYPE_MODAL,
+    type: constants.HIDE_DELETETYPE_MODAL,
     shouldOpen: false
   };
 };
 
 const getIaTypesRequest = () => {
   return {
-    type: GET_IATYPE_REQUEST,
+    type: constants.GET_IATYPE_REQUEST,
     isLoading: true
   };
 };
 
 const getIaTypesSuccess = payload => {
   return {
-    type: GET_IATYPE_SUCCESS,
+    type: constants.GET_IATYPE_SUCCESS,
     payload,
     isLoading: false
   };
@@ -100,7 +77,7 @@ const getIaTypesSuccess = payload => {
 
 const getIaTypesFailure = payload => {
   return {
-    type: GET_IATYPE_FAILURE,
+    type: constants.GET_IATYPE_FAILURE,
     payload,
     isLoading: false
   };
@@ -108,14 +85,14 @@ const getIaTypesFailure = payload => {
 
 const getIaTypeByIdRequest = () => {
   return {
-    type: GET_IATYPE_BYID_REQUEST,
+    type: constants.GET_IATYPE_BYID_REQUEST,
     isLoading: true
   };
 };
 
 const getIaTypeByIdSuccess = payload => {
   return {
-    type: GET_IATYPE_BYID_SUCCESS,
+    type: constants.GET_IATYPE_BYID_SUCCESS,
     payload,
     isLoading: false
   };
@@ -123,7 +100,7 @@ const getIaTypeByIdSuccess = payload => {
 
 const getIaTypeByIdFailure = payload => {
   return {
-    type: GET_IATYPE_BYID_FAILURE,
+    type: constants.GET_IATYPE_BYID_FAILURE,
     payload,
     isLoading: false
   };
@@ -131,63 +108,63 @@ const getIaTypeByIdFailure = payload => {
 
 const deleteTypeRequest = () => {
   return {
-    type: DELETE_TYPE_REQUEST,
+    type: constants.DELETE_TYPE_REQUEST,
     isLoading: true
   };
 };
 
 const deleteTypeSuccess = () => {
   return {
-    type: DELETE_TYPE_SUCCESS,
+    type: constants.DELETE_TYPE_SUCCESS,
     isLoading: false
   };
 };
 
 const deleteTypeFailure = () => {
   return {
-    type: DELETE_TYPE_FAILURE,
+    type: constants.DELETE_TYPE_FAILURE,
     isLoading: false
   };
 };
 
 const addTypeRequest = () => {
   return {
-    type: ADD_TYPE_REQUEST,
+    type: constants.ADD_TYPE_REQUEST,
     isLoading: true
   };
 };
 
 const addTypeSuccess = () => {
   return {
-    type: ADD_TYPE_SUCCESS,
+    type: constants.ADD_TYPE_SUCCESS,
     isLoading: false
   };
 };
 
 const addTypeFailure = () => {
   return {
-    type: ADD_TYPE_FAILURE,
+    type: constants.ADD_TYPE_FAILURE,
     isLoading: false
   };
 };
 
 const updateTypeRequest = () => {
   return {
-    type: UPDATE_TYPE_REQUEST,
+    type: constants.UPDATE_TYPE_REQUEST,
     isLoading: true
   };
 };
 
 const updateTypeSuccess = () => {
   return {
-    type: UPDATE_TYPE_SUCCESS,
+    type: constants.UPDATE_TYPE_SUCCESS,
     isLoading: false
   };
 };
 
 const updateTypeFailure = () => {
   return {
-    type: UPDATE_TYPE_FAILURE,
+    type: constants.UPDATE_TYPE_FAILURE,
     isLoading: false
   };
 };
@@ -363,21 +340,21 @@ export const updateType = params => {
 
 export const setFormData = payload => {
   return {
-    type: SET_FORM_DATA,
+    type: constants.SET_FORM_DATA,
     payload
   };
 };
 
 export const setFileIptState = payload => {
   return {
-    type: SET_FILE_IPT_STATE,
+    type: constants.SET_FILE_IPT_STATE,
     payload
   };
 };
 
 export const setCurrentPage = payload => {
   return {
-    type: SET_CURRENT_PAGE,
+    type: constants.SET_CURRENT_PAGE,
     payload
   };
 };

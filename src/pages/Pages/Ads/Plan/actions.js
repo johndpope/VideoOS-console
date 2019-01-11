@@ -19,37 +19,14 @@ import { Feedback } from "@icedesign/base";
 import { push } from "react-router-redux";
 import qs from "querystring";
 import * as api from "./api";
-import {
-  SHOW_DELETE_PLAN,
-  HIDE_DELETE_PLAN,
-  SHOW_LAUNCH_PLAN,
-  HIDE_LAUNCH_PLAN,
-  GET_AD_PLANS_REQUEST,
-  GET_AD_PLANS_SUCCESS,
-  GET_AD_PLANS_FAILURE,
-  DELETE_PLAN_REQUEST,
-  DELETE_PLAN_SUCCESS,
-  DELETE_PLAN_FAILURE,
-  LAUNCH_PLAN_REQUEST,
-  LAUNCH_PLAN_SUCCESS,
-  LAUNCH_PLAN_FAILURE,
-  QUERY_ALL_MODELTYPES_REQUEST,
-  QUERY_ALL_MODELTYPES_SUCCESS,
-  QUERY_ALL_MODELTYPES_FAILURE,
-  SET_FORM_DATA,
-  GET_AD_METERIALS_REQUEST,
-  GET_AD_METERIALS_SUCCESS,
-  GET_AD_METERIALS_FAILURE,
-  SET_CURRENT_PAGE,
-  SET_RELAUNCH
-} from "./constants";
+import * as constants from "./constants";
 
 let deletePlanSwitch = false;
 let launchPlanSwitch = false;
 
 const showDeletePlan = payload => {
   return {
-    type: SHOW_DELETE_PLAN,
+    type: constants.SHOW_DELETE_PLAN,
     shouldOpen: true,
     payload
   };
@@ -57,14 +34,14 @@ const showDeletePlan = payload => {
 
 const hideDeletePlan = () => {
   return {
-    type: HIDE_DELETE_PLAN,
+    type: constants.HIDE_DELETE_PLAN,
     shouldOpen: false
   };
 };
 
 const showLaunchPlan = payload => {
   return {
-    type: SHOW_LAUNCH_PLAN,
+    type: constants.SHOW_LAUNCH_PLAN,
     shouldOpen: true,
     payload
   };
@@ -72,21 +49,21 @@ const showLaunchPlan = payload => {
 
 const hideLaunchPlan = () => {
   return {
-    type: HIDE_LAUNCH_PLAN,
+    type: constants.HIDE_LAUNCH_PLAN,
     shouldOpen: false
   };
 };
 
 const getAdPlansRequest = () => {
   return {
-    type: GET_AD_PLANS_REQUEST,
+    type: constants.GET_AD_PLANS_REQUEST,
     isLoading: true
   };
 };
 
 const getAdPlansSuccess = payload => {
   return {
-    type: GET_AD_PLANS_SUCCESS,
+    type: constants.GET_AD_PLANS_SUCCESS,
     isLoading: false,
     payload
   };
@@ -94,63 +71,63 @@ const getAdPlansSuccess = payload => {
 
 const getAdPlansFailure = () => {
   return {
-    type: GET_AD_PLANS_FAILURE,
+    type: constants.GET_AD_PLANS_FAILURE,
     isLoading: false
   };
 };
 
 const deletePlanRequest = () => {
   return {
-    type: DELETE_PLAN_REQUEST,
+    type: constants.DELETE_PLAN_REQUEST,
     isLoading: true
   };
 };
 
 const deletePlanSuccess = () => {
   return {
-    type: DELETE_PLAN_SUCCESS,
+    type: constants.DELETE_PLAN_SUCCESS,
     isLoading: false
   };
 };
 
 const deletePlanFailure = () => {
   return {
-    type: DELETE_PLAN_FAILURE,
+    type: constants.DELETE_PLAN_FAILURE,
     isLoading: false
   };
 };
 
 const launchPlanRequest = () => {
   return {
-    type: LAUNCH_PLAN_REQUEST,
+    type: constants.LAUNCH_PLAN_REQUEST,
     isLoading: true
   };
 };
 
 const launchPlanSuccess = () => {
   return {
-    type: LAUNCH_PLAN_SUCCESS,
+    type: constants.LAUNCH_PLAN_SUCCESS,
     isLoading: false
   };
 };
 
 const launchPlanFailure = () => {
   return {
-    type: LAUNCH_PLAN_FAILURE,
+    type: constants.LAUNCH_PLAN_FAILURE,
     isLoading: false
   };
 };
 
 const queryAllModelTypesRequest = () => {
   return {
-    type: QUERY_ALL_MODELTYPES_REQUEST,
+    type: constants.QUERY_ALL_MODELTYPES_REQUEST,
     isLoading: true
   };
 };
 
 const queryAllModelTypesSuccess = payload => {
   return {
-    type: QUERY_ALL_MODELTYPES_SUCCESS,
+    type: constants.QUERY_ALL_MODELTYPES_SUCCESS,
     payload,
     isLoading: false
   };
@@ -158,21 +135,21 @@ const queryAllModelTypesSuccess = payload => {
 
 const queryAllModelTypesFailure = () => {
   return {
-    type: QUERY_ALL_MODELTYPES_FAILURE,
+    type: constants.QUERY_ALL_MODELTYPES_FAILURE,
     isLoading: false
   };
 };
 
 const getAdMaterialsRequest = () => {
   return {
-    type: GET_AD_METERIALS_REQUEST,
+    type: constants.GET_AD_METERIALS_REQUEST,
     isLoading: true
   };
 };
 
 const getAdMaterialsSuccess = payload => {
   return {
-    type: GET_AD_METERIALS_SUCCESS,
+    type: constants.GET_AD_METERIALS_SUCCESS,
     isLoading: false,
     payload
   };
@@ -180,7 +157,7 @@ const getAdMaterialsSuccess = payload => {
 
 const getAdMaterialsFailure = () => {
   return {
-    type: GET_AD_METERIALS_FAILURE,
+    type: constants.GET_AD_METERIALS_FAILURE,
     isLoading: false
   };
 };
@@ -359,7 +336,7 @@ export const queryAllModelTypes = params => {
 
 export const setFormData = payload => {
   return {
-    type: SET_FORM_DATA,
+    type: constants.SET_FORM_DATA,
     payload
   };
 };
@@ -386,14 +363,14 @@ export const getAdMaterials = params => {
 
 export const setCurrentPage = payload => {
   return {
-    type: SET_CURRENT_PAGE,
+    type: constants.SET_CURRENT_PAGE,
     payload
   };
 };
 
 export const setReLaunch = payload => {
   return {
-    type: SET_RELAUNCH,
+    type: constants.SET_RELAUNCH,
     payload
   };
 };

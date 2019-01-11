@@ -18,23 +18,13 @@
 import { push } from "react-router-redux";
 import { Feedback } from "@icedesign/base";
 import * as api from "./api";
-import {
-  SHOW_DELETE_MATERIAL_MODAL,
-  HIDE_DELETE_MATERIAL_MODAL,
-  GET_AD_METERIALS_REQUEST,
-  GET_AD_METERIALS_SUCCESS,
-  GET_AD_METERIALS_FAILURE,
-  DELETE_METERIAL_REQUEST,
-  DELETE_METERIAL_SUCCESS,
-  DELETE_METERIAL_FAILURE,
-  SET_CURRENT_PAGE
-} from "./constants";
+import * as constants from "./constants";
 
 let deleteMaterialModalSwitch = false;
 
 const showDeleteMaterialModal = payload => {
   return {
-    type: SHOW_DELETE_MATERIAL_MODAL,
+    type: constants.SHOW_DELETE_MATERIAL_MODAL,
     payload,
     shouldOpen: true
   };
@@ -42,21 +32,21 @@ const showDeleteMaterialModal = payload => {
 
 const hideDeleteMaterialModal = () => {
   return {
-    type: HIDE_DELETE_MATERIAL_MODAL,
+    type: constants.HIDE_DELETE_MATERIAL_MODAL,
     shouldOpen: false
   };
 };
 
 const getAdMaterialsRequest = () => {
   return {
-    type: GET_AD_METERIALS_REQUEST,
+    type: constants.GET_AD_METERIALS_REQUEST,
     isLoading: true
   };
 };
 
 const getAdMaterialsSuccess = payload => {
   return {
-    type: GET_AD_METERIALS_SUCCESS,
+    type: constants.GET_AD_METERIALS_SUCCESS,
     isLoading: false,
     payload
   };
@@ -64,28 +54,28 @@ const getAdMaterialsSuccess = payload => {
 
 const getAdMaterialsFailure = () => {
   return {
-    type: GET_AD_METERIALS_FAILURE,
+    type: constants.GET_AD_METERIALS_FAILURE,
     isLoading: false
   };
 };
 
 const deleteMaterialRequest = () => {
   return {
-    type: DELETE_METERIAL_REQUEST,
+    type: constants.DELETE_METERIAL_REQUEST,
     isLoading: true
   };
 };
 
 const deleteMaterialSuccess = () => {
   return {
-    type: DELETE_METERIAL_SUCCESS,
+    type: constants.DELETE_METERIAL_SUCCESS,
     isLoading: false
   };
 };
 
 const deleteMaterialFailure = () => {
   return {
-    type: DELETE_METERIAL_FAILURE,
+    type: constants.DELETE_METERIAL_FAILURE,
     isLoading: false
   };
 };
@@ -191,7 +181,7 @@ export const newMaterialDropDownToggle = () => {
 
 export const setCurrentPage = payload => {
   return {
-    type: SET_CURRENT_PAGE,
+    type: constants.SET_CURRENT_PAGE,
     payload
   };
 };
