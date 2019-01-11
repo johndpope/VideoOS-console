@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import injectReducer from "utils/injectReducer";
 import reducer from "./reducer";
-import { getLogs, setCurrentPage } from "./actions";
+import * as actions from "./actions";
 import LogTable from "./components/Table";
 
 class Log extends Component {
@@ -58,8 +58,7 @@ class Log extends Component {
 }
 
 const mapDispatchToProps = {
-  getLogs,
-  setCurrentPage
+  ...actions
 };
 
 const mapStateToProps = state => {

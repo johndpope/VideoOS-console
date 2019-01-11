@@ -6,17 +6,7 @@ import { compose } from "redux";
 import { AUTH_KEYS } from "src/maps";
 import { getUserInfoLocal } from "utils/authority";
 import injectReducer from "utils/injectReducer";
-import {
-  getAccounts,
-  addAccountModalToggle,
-  addAccount,
-  updateAccount,
-  queryAllAccountTypes,
-  deleteAccount,
-  deleteAccountModalToggle,
-  setCurrentPage,
-  setFormData
-} from "./actions";
+import * as actions from "./actions";
 import reducer from "./reducer";
 import AccountTable from "./components/Table";
 import AddAccount from "./components/AddAccount";
@@ -115,15 +105,7 @@ class AAAcount extends Component {
 }
 
 const mapDispatchToProps = {
-  getAccounts,
-  addAccountModalToggle,
-  addAccount,
-  queryAllAccountTypes,
-  deleteAccount,
-  deleteAccountModalToggle,
-  updateAccount,
-  setCurrentPage,
-  setFormData
+  ...actions
 };
 
 const mapStateToProps = state => {

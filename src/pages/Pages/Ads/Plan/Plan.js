@@ -14,18 +14,7 @@ import { compose } from "redux";
 import { AUTH_KEYS } from "src/maps";
 import { getUserInfoLocal } from "utils/authority";
 import injectReducer from "utils/injectReducer";
-import {
-  addPlanModalToggle,
-  launchPlanModalToggle,
-  newPlanDropDownToggle,
-  getAdPlans,
-  queryAllModelTypes,
-  deletePlanModalToggle,
-  deletePlan,
-  launchPlan,
-  setCurrentPage,
-  setReLaunch
-} from "./actions";
+import * as actions from "./actions";
 import reducer from "./reducer";
 import PlanTable from "./components/Table";
 import DeletePlan from "./components/DeleteModal";
@@ -188,16 +177,7 @@ class AdPlan extends Component {
 }
 
 const mapDispatchToProps = {
-  newPlanDropDownToggle,
-  addPlanModalToggle,
-  launchPlanModalToggle,
-  getAdPlans,
-  queryAllModelTypes,
-  deletePlanModalToggle,
-  deletePlan,
-  launchPlan,
-  setCurrentPage,
-  setReLaunch
+  ...actions
 };
 
 const mapStateToProps = state => {

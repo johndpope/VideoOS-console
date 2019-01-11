@@ -7,7 +7,7 @@ import { Button, Icon } from "@icedesign/base";
 
 import ThemeCard from "./components/Card";
 
-import { queryAllModelTypes, goBack, gotoCRUD } from "./actions";
+import * as actions from "./actions";
 import reducer from "./reducer";
 let isAddPlan = false;
 
@@ -62,9 +62,7 @@ class SelectTheme extends Component {
 }
 
 const mapDispatchToProps = {
-  queryAllModelTypes,
-  goBack,
-  gotoCRUD
+  ...actions
 };
 
 const mapStateToProps = state => {

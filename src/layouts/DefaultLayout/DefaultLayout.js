@@ -5,7 +5,7 @@ import injectReducer from "utils/injectReducer";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { Container } from "reactstrap";
 import { createHashHistory } from "history";
-import { isTokenValid } from "./actions";
+import * as actions from "./actions";
 import {
   AppBreadcrumb,
   AppHeader,
@@ -116,7 +116,7 @@ class DefaultLayout extends Component {
 
 // export default DefaultLayout;
 const mapDispatchToProps = {
-  isTokenValid
+  ...actions
 };
 
 const mapStateToProps = state => {

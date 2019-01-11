@@ -7,18 +7,7 @@ import injectReducer from "utils/injectReducer";
 import { Button, Feedback } from "@icedesign/base";
 import uiSchema from "schemas/uiSchema";
 
-import {
-  addMaterial,
-  updateMaterial,
-  deleteMaterialModalToggle,
-  addMaterialFile,
-  saveFormData,
-  setSwitcher,
-  setMaterialSchema,
-  getIaTypeById,
-  getAdMaterialInfo,
-  goBack
-} from "./actions";
+import * as actions from "./actions";
 import reducer from "./reducer";
 
 import Poster from "./components/Poster";
@@ -417,16 +406,7 @@ class MaterialCRUD extends Component {
 }
 
 const mapDispatchToProps = {
-  deleteMaterialModalToggle,
-  addMaterialFile,
-  addMaterial,
-  updateMaterial,
-  saveFormData,
-  setSwitcher,
-  setMaterialSchema,
-  getIaTypeById,
-  getAdMaterialInfo,
-  goBack
+  ...actions
 };
 
 const mapStateToProps = state => {
