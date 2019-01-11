@@ -141,8 +141,8 @@ export default class Poster extends Component {
                         alt=""
                         src={imageUrl}
                         style={{
-                          maxWidth: "64px",
-                          maxHeight: "64px"
+                          maxWidth: "360px",
+                          maxHeight: "360px"
                         }}
                       />
                       {!readonly ? (

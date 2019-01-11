@@ -28,6 +28,17 @@ export async function deletePlan(params) {
   });
 }
 
+export async function launchPlan(params) {
+  return axios({
+    headers: {
+      token: getAuthority()
+    },
+    url: `${OS_API}/launchplan/launch`,
+    method: "post",
+    data: params
+  });
+}
+
 export async function queryAllModelTypes() {
   return axios({
     headers: {

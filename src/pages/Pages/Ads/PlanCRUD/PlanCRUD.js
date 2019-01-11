@@ -1083,7 +1083,175 @@ class SelectTheme extends Component {
             ) : null}
           </Fragment>
         ) : null}
-        {isRead || isUpdate || whichStep === 2 ? (
+        {(isRead || isUpdate) &&
+          formData &&
+          formData.hotspotTrackLink &&
+          Array.isArray(formData.hotspotTrackLink) &&
+          formData.hotspotTrackLink.map((hstl, idx) => (
+            <div>
+              <h5>{`${(formData && formData.interactionTypeName) || ""}热点${
+                idx !== 0 ? idx + 1 : ""
+              }`}</h5>
+              <InputGroup className="mb-4">
+                <InputGroupAddon addonType="prepend">
+                  <InputGroupText>曝光监控链接：</InputGroupText>
+                </InputGroupAddon>
+                <Input
+                  type="url"
+                  disabled={isRead ? "disabled" : false}
+                  value={
+                    (formData &&
+                      Array.isArray(formData.hotspotTrackLink) &&
+                      formData.hotspotTrackLink[idx] &&
+                      formData.hotspotTrackLink[idx].exposureTrackLink) ||
+                    ""
+                  }
+                  placeholder="请输入链接"
+                  onChange={e => {
+                    if (
+                      formData &&
+                      Array.isArray(formData.hotspotTrackLink) &&
+                      formData.hotspotTrackLink[idx]
+                    ) {
+                      formData.hotspotTrackLink[idx].exposureTrackLink =
+                        e.target.value;
+                    } else {
+                      if (!Array.isArray(formData.hotspotTrackLink)) {
+                        formData.hotspotTrackLink = [];
+                      }
+                      formData.hotspotTrackLink[idx] = {
+                        exposureTrackLink: e.target.value,
+                        clickTrackLink: ""
+                      };
+                    }
+                    setFormData({
+                      hotspotTrackLink: formData.hotspotTrackLink
+                    });
+                  }}
+                />
+              </InputGroup>
+              <InputGroup className="mb-4">
+                <InputGroupAddon addonType="prepend">
+                  <InputGroupText>点击监控链接：</InputGroupText>
+                </InputGroupAddon>
+                <Input
+                  type="url"
+                  disabled={isRead ? "disabled" : false}
+                  value={
+                    (formData &&
+                      Array.isArray(formData.hotspotTrackLink) &&
+                      formData.hotspotTrackLink[idx] &&
+                      formData.hotspotTrackLink[idx].clickTrackLink) ||
+                    ""
+                  }
+                  placeholder="请输入链接"
+                  onChange={e => {
+                    if (
+                      formData &&
+                      Array.isArray(formData.hotspotTrackLink) &&
+                      formData.hotspotTrackLink[idx]
+                    ) {
+                      formData.hotspotTrackLink[idx].clickTrackLink =
+                        e.target.value;
+                    } else {
+                      formData.hotspotTrackLink[idx] = {
+                        exposureTrackLink: "",
+                        clickTrackLink: e.target.value
+                      };
+                    }
+                    setFormData({
+                      hotspotTrackLink: formData.hotspotTrackLink
+                    });
+                  }}
+                />
+              </InputGroup>
+            </div>
+          ))}
+        {(isRead || isUpdate) &&
+          formData &&
+          formData.infoTrackLink &&
+          Array.isArray(formData.infoTrackLink) &&
+          formData.infoTrackLink.map((hstl, idx) => (
+            <div>
+              <h5>{`${(formData && formData.interactionTypeName) || ""}热点${
+                idx !== 0 ? idx + 1 : ""
+              }`}</h5>
+              <InputGroup className="mb-4">
+                <InputGroupAddon addonType="prepend">
+                  <InputGroupText>曝光监控链接：</InputGroupText>
+                </InputGroupAddon>
+                <Input
+                  type="url"
+                  disabled={isRead ? "disabled" : false}
+                  value={
+                    (formData &&
+                      Array.isArray(formData.infoTrackLink) &&
+                      formData.infoTrackLink[idx] &&
+                      formData.infoTrackLink[idx].exposureTrackLink) ||
+                    ""
+                  }
+                  placeholder="请输入链接"
+                  onChange={e => {
+                    if (
+                      formData &&
+                      Array.isArray(formData.infoTrackLink) &&
+                      formData.infoTrackLink[idx]
+                    ) {
+                      formData.infoTrackLink[idx].exposureTrackLink =
+                        e.target.value;
+                    } else {
+                      if (!Array.isArray(formData.infoTrackLink)) {
+                        formData.infoTrackLink = [];
+                      }
+                      formData.infoTrackLink[idx] = {
+                        exposureTrackLink: e.target.value,
+                        clickTrackLink: ""
+                      };
+                    }
+                    setFormData({
+                      infoTrackLink: formData.infoTrackLink
+                    });
+                  }}
+                />
+              </InputGroup>
+              <InputGroup className="mb-4">
+                <InputGroupAddon addonType="prepend">
+                  <InputGroupText>点击监控链接：</InputGroupText>
+                </InputGroupAddon>
+                <Input
+                  type="url"
+                  disabled={isRead ? "disabled" : false}
+                  value={
+                    (formData &&
+                      Array.isArray(formData.infoTrackLink) &&
+                      formData.infoTrackLink[idx] &&
+                      formData.infoTrackLink[idx].clickTrackLink) ||
+                    ""
+                  }
+                  placeholder="请输入链接"
+                  onChange={e => {
+                    if (
+                      formData &&
+                      Array.isArray(formData.infoTrackLink) &&
+                      formData.infoTrackLink[idx]
+                    ) {
+                      formData.infoTrackLink[idx].clickTrackLink =
+                        e.target.value;
+                    } else {
+                      formData.infoTrackLink[idx] = {
+                        exposureTrackLink: "",
+                        clickTrackLink: e.target.value
+                      };
+                    }
+                    setFormData({
+                      infoTrackLink: formData.infoTrackLink
+                    });
+                  }}
+                />
+              </InputGroup>
+            </div>
+          ))}
+        {whichStep === 2 ? (
           <Fragment>
             <h4>数据监控（非必填）</h4>
             {(() => {

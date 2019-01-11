@@ -802,7 +802,7 @@ export default class Cards extends Component {
         <div style={{ marginTop: "2rem" }}>信息层编辑</div>
         <div style={{ border: "1px solid #ccc", padding: "1rem" }}>
           <div className="array-item">
-            <Label>收集成功弹窗内容</Label>
+            <Label>收集成功弹窗内容*</Label>
             <textarea
               style={{
                 border: "1px solid #e4e7ea",
@@ -821,6 +821,15 @@ export default class Cards extends Component {
                 );
               }}
             />
+            {errorSchema &&
+              errorSchema.collect &&
+              errorSchema.collect.content &&
+              errorSchema.collect.content.__errors &&
+              errorSchema.collect.content.__errors.map((err, idx) => (
+                <li key={idx} style={{ color: "#f86c6b" }}>
+                  {err}
+                </li>
+              ))}
           </div>
           <div className="array-item">
             <Label>奖励图片*</Label>

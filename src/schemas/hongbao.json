@@ -27,6 +27,7 @@
     "title": {
       "type": "string",
       "title": "热点标题",
+      "maxLength": 10,
       "default": ""
     },
     "isShowAds": {
@@ -40,6 +41,7 @@
     "infoTitle": {
       "type": "string",
       "title": "红包标题",
+      "maxLength": 10,
       "default": ""
     },
     "infoImageUrl": {

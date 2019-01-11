@@ -284,6 +284,7 @@ export const addPlan = params => {
       if (response.status === 200 && response.data.resCode === "00") {
         dispatch(addPlanSuccess(response.data));
         Feedback.toast.show(response.data && response.data.resMsg);
+        dispatch(push("/tf/plan"));
       } else {
         dispatch(addPlanFailure(response.data));
         Feedback.toast.error(response.data && response.data.resMsg);
@@ -305,6 +306,7 @@ export const updatePlan = params => {
       if (response.status === 200 && response.data.resCode === "00") {
         dispatch(updatePlanSuccess(response.data));
         Feedback.toast.show(response.data && response.data.resMsg);
+        dispatch(push("/tf/plan"));
       } else {
         dispatch(updatePlanFailure(response.data));
         Feedback.toast.error(response.data && response.data.resMsg);

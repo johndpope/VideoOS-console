@@ -24,12 +24,17 @@ import {
   HIDE_ADD_PLAN,
   SHOW_DELETE_PLAN,
   HIDE_DELETE_PLAN,
+  SHOW_LAUNCH_PLAN,
+  HIDE_LAUNCH_PLAN,
   GET_AD_PLANS_REQUEST,
   GET_AD_PLANS_SUCCESS,
   GET_AD_PLANS_FAILURE,
   DELETE_PLAN_REQUEST,
   DELETE_PLAN_SUCCESS,
   DELETE_PLAN_FAILURE,
+  LAUNCH_PLAN_REQUEST,
+  LAUNCH_PLAN_SUCCESS,
+  LAUNCH_PLAN_FAILURE,
   QUERY_ALL_MODELTYPES_REQUEST,
   QUERY_ALL_MODELTYPES_SUCCESS,
   QUERY_ALL_MODELTYPES_FAILURE,
@@ -43,21 +48,7 @@ import {
 
 let addPlanSwitch = false;
 let deletePlanSwitch = false;
-
-const showAddPlan = payload => {
-  return {
-    type: SHOW_ADD_PLAN,
-    shouldOpen: true,
-    payload
-  };
-};
-
-const hideAddPlan = () => {
-  return {
-    type: HIDE_ADD_PLAN,
-    shouldOpen: false
-  };
-};
+let launchPlanSwitch = false;
 
 const showDeletePlan = payload => {
   return {
@@ -70,6 +61,21 @@ const showDeletePlan = payload => {
 const hideDeletePlan = () => {
   return {
     type: HIDE_DELETE_PLAN,
+    shouldOpen: false
+  };
+};
+
+const showLaunchPlan = payload => {
+  return {
+    type: SHOW_LAUNCH_PLAN,
+    shouldOpen: true,
+    payload
+  };
+};
+
+const hideLaunchPlan = () => {
+  return {
+    type: HIDE_LAUNCH_PLAN,
     shouldOpen: false
   };
 };
@@ -113,6 +119,27 @@ const deletePlanSuccess = () => {
 const deletePlanFailure = () => {
   return {
     type: DELETE_PLAN_FAILURE,
+    isLoading: false
+  };
+};
+
+const launchPlanRequest = () => {
+  return {
+    type: LAUNCH_PLAN_REQUEST,
+    isLoading: true
+  };
+};
+
+const launchPlanSuccess = () => {
+  return {
+    type: LAUNCH_PLAN_SUCCESS,
+    isLoading: false
+  };
+};
+
+const launchPlanFailure = () => {
+  return {
+    type: LAUNCH_PLAN_FAILURE,
     isLoading: false
   };
 };
@@ -231,6 +258,40 @@ export const deletePlan = params => {
   };
 };
 
+export const launchPlan = params => {
+  return async dispatch => {
+    dispatch(launchPlanRequest());
+    try {
+      const currentPage = (params && params.currentPage) || 1;
+      const launchTimeType = params && params.launchTimeType;
+      const interactionTypeId = params && params.interactionTypeId;
+      delete params.currentPage;
+      const response = await api.launchPlan(params);
+
+      if (response.status === 200 && response.data.resCode === "00") {
+        dispatch(launchPlanSuccess(response.data));
+        dispatch(launchPlanModalToggle());
+        dispatch(
+          getAdPlans({
+            currentPage,
+            pageSize: 20,
+            interactionTypeId,
+            launchTimeType
+          })
+        );
+        Feedback.toast.show(response.data && response.data.resMsg);
+      } else {
+        dispatch(launchPlanFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch (error) {
+      dispatch(launchPlanFailure());
+    }
+  };
+};
+
 export const addPlanModalToggle = payload => {
   return dispatch => {
     dispatch(
@@ -254,6 +315,17 @@ export const deletePlanModalToggle = payload => {
       dispatch(showDeletePlan(payload));
     } else {
       dispatch(hideDeletePlan());
+    }
+  };
+};
+
+export const launchPlanModalToggle = payload => {
+  return dispatch => {
+    launchPlanSwitch = !launchPlanSwitch;
+    if (launchPlanSwitch) {
+      dispatch(showLaunchPlan(payload));
+    } else {
+      dispatch(hideLaunchPlan());
     }
   };
 };

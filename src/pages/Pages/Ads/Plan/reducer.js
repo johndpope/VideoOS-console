@@ -20,15 +20,14 @@ import {
   GET_AD_PLANS_REQUEST,
   GET_AD_PLANS_SUCCESS,
   GET_AD_PLANS_FAILURE,
-  ADD_PLAN_REQUEST,
-  ADD_PLAN_SUCCESS,
-  ADD_PLAN_FAILURE,
-  UPDATE_PLAN_REQUEST,
-  UPDATE_PLAN_SUCCESS,
-  UPDATE_PLAN_FAILURE,
+  SHOW_LAUNCH_PLAN,
+  HIDE_LAUNCH_PLAN,
   DELETE_PLAN_REQUEST,
   DELETE_PLAN_SUCCESS,
   DELETE_PLAN_FAILURE,
+  LAUNCH_PLAN_REQUEST,
+  LAUNCH_PLAN_SUCCESS,
+  LAUNCH_PLAN_FAILURE,
   QUERY_ALL_MODELTYPES_REQUEST,
   QUERY_ALL_MODELTYPES_SUCCESS,
   QUERY_ALL_MODELTYPES_FAILURE,
@@ -51,6 +50,12 @@ function adPlanReducer(state = initialState, action) {
       return Object.assign({}, state, {
         record: action.payload,
         shouldAddPlanModalOpen: action.shouldOpen
+      });
+    case SHOW_LAUNCH_PLAN:
+    case HIDE_LAUNCH_PLAN:
+      return Object.assign({}, state, {
+        record: action.payload,
+        shouldLaunchPlanModalOpen: action.shouldOpen
       });
     case SHOW_NEW_PLAN_DROPDOWN:
       return Object.assign({}, state, {
@@ -83,6 +88,18 @@ function adPlanReducer(state = initialState, action) {
         isLoading: action.isLoading
       });
     case DELETE_PLAN_FAILURE:
+      return Object.assign({}, state, {
+        isLoading: action.isLoading
+      });
+    case LAUNCH_PLAN_REQUEST:
+      return Object.assign({}, state, {
+        isLoading: action.isLoading
+      });
+    case LAUNCH_PLAN_SUCCESS:
+      return Object.assign({}, state, {
+        isLoading: action.isLoading
+      });
+    case LAUNCH_PLAN_FAILURE:
       return Object.assign({}, state, {
         isLoading: action.isLoading
       });
