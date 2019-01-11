@@ -92,6 +92,11 @@
       "type": "string",
       "title": "投票规则",
       "maxLength": 100
+    },
+    "infoTrackLink": {
+      "type": "integer",
+      "title": "“投票”按钮",
+      "default": 1
     }
   }
 }

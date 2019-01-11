@@ -672,7 +672,7 @@ export default class Votes extends Component {
               }}
               readOnly={readonly}
               value={voteRule}
-              placeholder="请输入投票规则"
+              placeholder="请输入投票规则内容，不填则不展示投票规则"
               onChange={e => {
                 voteRule = e.target.value;
                 this.setState({ voteRule }, () =>

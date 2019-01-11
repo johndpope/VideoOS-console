@@ -1341,7 +1341,98 @@ class SelectTheme extends Component {
                 );
               }
             })()}
-            {}
+            {(() => {
+              const interactionInfo =
+                monitorLinkInfo && monitorLinkInfo.interactionInfo
+                  ? JSON.parse(monitorLinkInfo.interactionInfo)
+                  : {};
+              if (
+                interactionInfo.properties &&
+                interactionInfo.properties &&
+                interactionInfo.properties.infoTrackLink
+              ) {
+                return (
+                  <div>
+                    <h5>
+                      {interactionInfo.properties.infoTrackLink.title || ""}
+                    </h5>
+                    <InputGroup className="mb-4">
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>曝光监控链接：</InputGroupText>
+                      </InputGroupAddon>
+                      <Input
+                        type="url"
+                        disabled={isRead ? "disabled" : false}
+                        value={
+                          (formData &&
+                            Array.isArray(formData.infoTrackLink) &&
+                            formData.infoTrackLink[0] &&
+                            formData.infoTrackLink[0].exposureTrackLink) ||
+                          ""
+                        }
+                        placeholder="请输入链接"
+                        onChange={e => {
+                          if (
+                            formData &&
+                            Array.isArray(formData.infoTrackLink) &&
+                            formData.infoTrackLink[0]
+                          ) {
+                            formData.infoTrackLink[0].exposureTrackLink =
+                              e.target.value;
+                          } else {
+                            if (!Array.isArray(formData.infoTrackLink)) {
+                              formData.infoTrackLink = [];
+                            }
+                            formData.infoTrackLink[0] = {
+                              exposureTrackLink: e.target.value,
+                              clickTrackLink: ""
+                            };
+                          }
+                          setFormData({
+                            infoTrackLink: formData.infoTrackLink[0]
+                          });
+                        }}
+                      />
+                    </InputGroup>
+                    <InputGroup className="mb-4">
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>点击监控链接：</InputGroupText>
+                      </InputGroupAddon>
+                      <Input
+                        type="url"
+                        disabled={isRead ? "disabled" : false}
+                        value={
+                          (formData &&
+                            Array.isArray(formData.infoTrackLink) &&
+                            formData.infoTrackLink[0] &&
+                            formData.infoTrackLink[0].clickTrackLink) ||
+                          ""
+                        }
+                        placeholder="请输入链接"
+                        onChange={e => {
+                          if (
+                            formData &&
+                            Array.isArray(formData.infoTrackLink) &&
+                            formData.infoTrackLink[0]
+                          ) {
+                            formData.infoTrackLink[0].clickTrackLink =
+                              e.target.value;
+                          } else {
+                            formData.infoTrackLink[0] = {
+                              exposureTrackLink: "",
+                              clickTrackLink: e.target.value
+                            };
+                          }
+                          setFormData({
+                            infoTrackLink: formData.infoTrackLink
+                          });
+                        }}
+                      />
+                    </InputGroup>
+                  </div>
+                );
+              }
+            })()}
           </Fragment>
         ) : null}
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
