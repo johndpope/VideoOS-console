@@ -1,40 +1,18 @@
 import { Feedback } from "@icedesign/base";
 import { goBack as _goBack, push } from "react-router-redux";
 import * as api from "./api";
-import {
-  SET_FORM_DATA,
-  ADD_PLAN_REQUEST,
-  ADD_PLAN_SUCCESS,
-  ADD_PLAN_FAILURE,
-  UPDATE_PLAN_REQUEST,
-  UPDATE_PLAN_SUCCESS,
-  UPDATE_PLAN_FAILURE,
-  QUERY_ALL_MODELTYPES_REQUEST,
-  QUERY_ALL_MODELTYPES_SUCCESS,
-  QUERY_ALL_MODELTYPES_FAILURE,
-  GET_AD_PLAN_BYID_REQUEST,
-  GET_AD_PLAN_BYID_SUCCESS,
-  GET_AD_PLAN_BYID_FAILURE,
-  GET_AD_METERIALS_REQUEST,
-  GET_AD_METERIALS_SUCCESS,
-  GET_AD_METERIALS_FAILURE,
-  SET_WHICH_STEP,
-  SET_EDIT_STATE,
-  QUERY_INTERACTION_INFO_SUCCESS,
-  QUERY_INTERACTION_INFO_REQUEST,
-  QUERY_INTERACTION_INFO_FAILURE
-} from "./constants";
+import * as constants from "./constants";
 
 const queryAllModelTypesRequest = () => {
   return {
-    type: QUERY_ALL_MODELTYPES_REQUEST,
+    type: constants.QUERY_ALL_MODELTYPES_REQUEST,
     isLoading: true
   };
 };
 
 const queryAllModelTypesSuccess = payload => {
   return {
-    type: QUERY_ALL_MODELTYPES_SUCCESS,
+    type: constants.QUERY_ALL_MODELTYPES_SUCCESS,
     payload,
     isLoading: false
   };
@@ -42,21 +20,21 @@ const queryAllModelTypesSuccess = payload => {
 
 const queryAllModelTypesFailure = () => {
   return {
-    type: QUERY_ALL_MODELTYPES_FAILURE,
+    type: constants.QUERY_ALL_MODELTYPES_FAILURE,
     isLoading: false
   };
 };
 
 const getAdMaterialsRequest = () => {
   return {
-    type: GET_AD_METERIALS_REQUEST,
+    type: constants.GET_AD_METERIALS_REQUEST,
     isLoading: true
   };
 };
 
 const getAdMaterialsSuccess = payload => {
   return {
-    type: GET_AD_METERIALS_SUCCESS,
+    type: constants.GET_AD_METERIALS_SUCCESS,
     isLoading: false,
     payload
   };
@@ -64,21 +42,21 @@ const getAdMaterialsSuccess = payload => {
 
 const getAdMaterialsFailure = () => {
   return {
-    type: GET_AD_METERIALS_FAILURE,
+    type: constants.GET_AD_METERIALS_FAILURE,
     isLoading: false
   };
 };
 
 const queryInteractiveInfoRequest = () => {
   return {
-    type: QUERY_INTERACTION_INFO_REQUEST,
+    type: constants.QUERY_INTERACTION_INFO_REQUEST,
     isLoading: true
   };
 };
 
 const queryInteractiveInfoSuccess = payload => {
   return {
-    type: QUERY_INTERACTION_INFO_SUCCESS,
+    type: constants.QUERY_INTERACTION_INFO_SUCCESS,
     isLoading: false,
     payload
   };
@@ -86,21 +64,21 @@ const queryInteractiveInfoSuccess = payload => {
 
 const queryInteractiveInfoFailure = () => {
   return {
-    type: QUERY_INTERACTION_INFO_FAILURE,
+    type: constants.QUERY_INTERACTION_INFO_FAILURE,
     isLoading: false
   };
 };
 
 const getAdPlanByIdRequest = () => {
   return {
-    type: GET_AD_PLAN_BYID_REQUEST,
+    type: constants.GET_AD_PLAN_BYID_REQUEST,
     isLoading: true
   };
 };
 
 const getAdPlanByIdSuccess = payload => {
   return {
-    type: GET_AD_PLAN_BYID_SUCCESS,
+    type: constants.GET_AD_PLAN_BYID_SUCCESS,
     isLoading: false,
     payload
   };
@@ -108,56 +86,56 @@ const getAdPlanByIdSuccess = payload => {
 
 const getAdPlanByIdFailure = () => {
   return {
-    type: GET_AD_PLAN_BYID_FAILURE,
+    type: constants.GET_AD_PLAN_BYID_FAILURE,
     isLoading: false
   };
 };
 
 const addPlanRequest = () => {
   return {
-    type: ADD_PLAN_REQUEST,
+    type: constants.ADD_PLAN_REQUEST,
     isLoading: true
   };
 };
 
 const addPlanSuccess = () => {
   return {
-    type: ADD_PLAN_SUCCESS,
+    type: constants.ADD_PLAN_SUCCESS,
     isLoading: false
   };
 };
 
 const addPlanFailure = () => {
   return {
-    type: ADD_PLAN_FAILURE,
+    type: constants.ADD_PLAN_FAILURE,
     isLoading: false
   };
 };
 
 const updatePlanRequest = () => {
   return {
-    type: UPDATE_PLAN_REQUEST,
+    type: constants.UPDATE_PLAN_REQUEST,
     isLoading: true
   };
 };
 
 const updatePlanSuccess = () => {
   return {
-    type: UPDATE_PLAN_SUCCESS,
+    type: constants.UPDATE_PLAN_SUCCESS,
     isLoading: false
   };
 };
 
 const updatePlanFailure = () => {
   return {
-    type: UPDATE_PLAN_FAILURE,
+    type: constants.UPDATE_PLAN_FAILURE,
     isLoading: false
   };
 };
 
 export const setFormData = payload => {
   return {
-    type: SET_FORM_DATA,
+    type: constants.SET_FORM_DATA,
     payload
   };
 };
@@ -320,14 +298,14 @@ export const updatePlan = params => {
 
 export const setEditState = payload => {
   return {
-    type: SET_EDIT_STATE,
+    type: constants.SET_EDIT_STATE,
     payload
   };
 };
 
 export const setWhichStep = payload => {
   return {
-    type: SET_WHICH_STEP,
+    type: constants.SET_WHICH_STEP,
     payload
   };
 };

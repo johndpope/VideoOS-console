@@ -10,29 +10,7 @@
  *   return state.set('yourStateVariable', true);
  */
 import moment from "moment";
-import {
-  SET_FORM_DATA,
-  ADD_PLAN_REQUEST,
-  ADD_PLAN_SUCCESS,
-  ADD_PLAN_FAILURE,
-  UPDATE_PLAN_REQUEST,
-  UPDATE_PLAN_SUCCESS,
-  UPDATE_PLAN_FAILURE,
-  QUERY_ALL_MODELTYPES_REQUEST,
-  QUERY_ALL_MODELTYPES_SUCCESS,
-  QUERY_ALL_MODELTYPES_FAILURE,
-  GET_AD_PLAN_BYID_REQUEST,
-  GET_AD_PLAN_BYID_SUCCESS,
-  GET_AD_PLAN_BYID_FAILURE,
-  GET_AD_METERIALS_REQUEST,
-  GET_AD_METERIALS_SUCCESS,
-  GET_AD_METERIALS_FAILURE,
-  QUERY_INTERACTION_INFO_SUCCESS,
-  QUERY_INTERACTION_INFO_REQUEST,
-  QUERY_INTERACTION_INFO_FAILURE,
-  SET_EDIT_STATE,
-  SET_WHICH_STEP
-} from "./constants";
+import * as constants from "./constants";
 
 // The initial state of the plan
 const initialState = {
@@ -47,7 +25,7 @@ const initialState = {
 
 function planCRUDReducer(state = initialState, action) {
   switch (action.type) {
-    case SET_FORM_DATA:
+    case constants.SET_FORM_DATA:
       const payload = action.payload;
       if (typeof payload === "object") {
         if (Object.keys(payload).length === 0) {
@@ -59,44 +37,44 @@ function planCRUDReducer(state = initialState, action) {
         }
       }
       return { ...state };
-    case QUERY_ALL_MODELTYPES_REQUEST:
+    case constants.QUERY_ALL_MODELTYPES_REQUEST:
       return {
         ...state,
         isLoading: action.isLoading
       };
-    case QUERY_ALL_MODELTYPES_SUCCESS:
+    case constants.QUERY_ALL_MODELTYPES_SUCCESS:
       return {
         ...state,
         modelTypes: action.payload,
         isLoading: action.isLoading
       };
-    case QUERY_ALL_MODELTYPES_FAILURE:
+    case constants.QUERY_ALL_MODELTYPES_FAILURE:
       return {
         ...state,
         isLoading: action.isLoading
       };
-    case GET_AD_METERIALS_REQUEST:
+    case constants.GET_AD_METERIALS_REQUEST:
       return {
         ...state,
         isLoading: action.isLoading
       };
-    case GET_AD_METERIALS_SUCCESS:
+    case constants.GET_AD_METERIALS_SUCCESS:
       return {
         ...state,
         isLoading: action.isLoading,
         materialTypes: action.payload.creativeInfoList || []
       };
-    case GET_AD_METERIALS_FAILURE:
+    case constants.GET_AD_METERIALS_FAILURE:
       return {
         ...state,
         isLoading: action.isLoading
       };
-    case GET_AD_PLAN_BYID_REQUEST:
+    case constants.GET_AD_PLAN_BYID_REQUEST:
       return {
         ...state,
         isLoading: action.isLoading
       };
-    case GET_AD_PLAN_BYID_SUCCESS:
+    case constants.GET_AD_PLAN_BYID_SUCCESS:
       const _payload = action.payload;
       _payload.launchDateStart = moment(_payload.launchDateStart);
       _payload.launchDateEnd = moment(_payload.launchDateEnd);
@@ -105,54 +83,60 @@ function planCRUDReducer(state = initialState, action) {
         formData: _payload,
         isLoading: action.isLoading
       };
-    case GET_AD_PLAN_BYID_FAILURE:
+    case constants.GET_AD_PLAN_BYID_FAILURE:
       return {
         ...state,
         isLoading: action.isLoading
       };
-    case QUERY_INTERACTION_INFO_REQUEST:
+    case constants.QUERY_INTERACTION_INFO_REQUEST:
       return {
         ...state,
         isLoading: true
       };
-    case QUERY_INTERACTION_INFO_SUCCESS:
+    case constants.QUERY_INTERACTION_INFO_SUCCESS:
       return {
         ...state,
         monitorLinkInfo: action.payload,
         isLoading: false
       };
-    case QUERY_INTERACTION_INFO_FAILURE:
+    case constants.QUERY_INTERACTION_INFO_FAILURE:
       return {
         ...state,
         isLoading: false
       };
-    case ADD_PLAN_REQUEST:
-      return Object.assign({}, state, {
+    case constants.ADD_PLAN_REQUEST:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case ADD_PLAN_SUCCESS:
-      return Object.assign({}, state, {
+      };
+    case constants.ADD_PLAN_SUCCESS:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case ADD_PLAN_FAILURE:
-      return Object.assign({}, state, {
+      };
+    case constants.ADD_PLAN_FAILURE:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case UPDATE_PLAN_REQUEST:
-      return Object.assign({}, state, {
+      };
+    case constants.UPDATE_PLAN_REQUEST:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case UPDATE_PLAN_SUCCESS:
-      return Object.assign({}, state, {
+      };
+    case constants.UPDATE_PLAN_SUCCESS:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case UPDATE_PLAN_FAILURE:
-      return Object.assign({}, state, {
+      };
+    case constants.UPDATE_PLAN_FAILURE:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case SET_EDIT_STATE:
+      };
+    case constants.SET_EDIT_STATE:
       return { ...state, isEdit: action.payload.isEdit };
-    case SET_WHICH_STEP:
+    case constants.SET_WHICH_STEP:
       return { ...state, whichStep: action.payload.whichStep };
     default:
       return state;

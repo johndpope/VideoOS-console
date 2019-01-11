@@ -9,26 +9,22 @@
  * case YOUR_ACTION_CONSTANT:
  *   return state.set('yourStateVariable', true);
  */
-import {
-  QUERY_ALL_MODELTYPES_REQUEST,
-  QUERY_ALL_MODELTYPES_SUCCESS,
-  QUERY_ALL_MODELTYPES_FAILURE
-} from "./constants";
+import * as constants from "./constants";
 
 // The initial state of the material
 const initialState = {};
 
 function selectThemeReducer(state = initialState, action) {
   switch (action.type) {
-    case QUERY_ALL_MODELTYPES_REQUEST:
+    case constants.QUERY_ALL_MODELTYPES_REQUEST:
       return { ...state, isLoading: false };
-    case QUERY_ALL_MODELTYPES_SUCCESS:
+    case constants.QUERY_ALL_MODELTYPES_SUCCESS:
       return {
         ...state,
         modelTypes: action.payload,
         isLoading: action.isLoading
       };
-    case QUERY_ALL_MODELTYPES_FAILURE:
+    case constants.QUERY_ALL_MODELTYPES_FAILURE:
       return { ...state, isLoading: action.isLoading };
     default:
       return state;

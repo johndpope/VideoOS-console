@@ -20,11 +20,7 @@ import { Feedback } from "@icedesign/base";
 import { login } from "./api";
 import { setAuthority, setUserInfoLocal } from "utils/authority";
 // import { reloadAuthorized } from 'utils/Authorized';
-import {
-  USER_LOGIN_REQUEST,
-  USER_LOGIN_SUCCESS,
-  USER_LOGIN_FAILURE
-} from "./constants";
+import * as constants from "./constants";
 
 /**
  * Changes the input field of the form
@@ -35,14 +31,14 @@ import {
  */
 const userLoginRequest = () => {
   return {
-    type: USER_LOGIN_REQUEST,
+    type: constants.USER_LOGIN_REQUEST,
     isLoading: true
   };
 };
 
 const userLoginSuccess = payload => {
   return {
-    type: USER_LOGIN_SUCCESS,
+    type: constants.USER_LOGIN_SUCCESS,
     payload,
     isLoading: false
   };
@@ -50,7 +46,7 @@ const userLoginSuccess = payload => {
 
 const userLoginFailure = payload => {
   return {
-    type: USER_LOGIN_FAILURE,
+    type: constants.USER_LOGIN_FAILURE,
     payload,
     isLoading: false
   };

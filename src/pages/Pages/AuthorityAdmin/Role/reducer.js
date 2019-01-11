@@ -10,33 +10,7 @@
  *   return state.set('yourStateVariable', true);
  */
 
-import {
-  GET_ROLES_REQUEST,
-  GET_ROLES_SUCCESS,
-  GET_ROLES_FAILURE,
-  SHOW_ADDROLE_MODAL,
-  HIDE_ADDROLE_MODAL,
-  QUERY_ALL_ROLETYPES_REQUEST,
-  QUERY_ALL_ROLETYPES_SUCCESS,
-  QUERY_ALL_ROLETYPES_FAILURE,
-  SHOW_DELETEROLE_MODAL,
-  HIDE_DELETEROLE_MODAL,
-  ADD_ROLE_REQUEST,
-  ADD_ROLE_SUCCESS,
-  ADD_ROLE_FAILURE,
-  UPDATE_ROLE_REQUEST,
-  UPDATE_ROLE_SUCCESS,
-  UPDATE_ROLE_FAILURE,
-  DELETE_ROLE_REQUEST,
-  DELETE_ROLE_SUCCESS,
-  DELETE_ROLE_FAILURE,
-  SET_CURRENT_PAGE,
-  SET_FORM_DATA,
-  SET_NODE_ID_LIST,
-  QUERY_USER_ROLE_REQUEST,
-  QUERY_USER_ROLE_SUCCESS,
-  QUERY_USER_ROLE_FAILURE
-} from "./constants";
+import * as constants from "./constants";
 
 // The initial state of the account
 const initialState = {
@@ -86,84 +60,101 @@ const initialState = {
 
 function aaRoleReducer(state = initialState, action) {
   switch (action.type) {
-    case GET_ROLES_REQUEST:
-      return Object.assign({}, state, {
+    case constants.GET_ROLES_REQUEST:
+      return {
+        ...state,
         isLoading: true
-      });
-    case GET_ROLES_SUCCESS:
-      return Object.assign({}, state, {
+      };
+    case constants.GET_ROLES_SUCCESS:
+      return {
+        ...state,
         isLoading: false,
         roleResult: action.payload.roleInfoList || [],
         total: action.payload.totalRecord
-      });
-    case GET_ROLES_FAILURE:
-      return Object.assign({}, state, {
+      };
+    case constants.GET_ROLES_FAILURE:
+      return {
+        ...state,
         isLoading: false
-      });
-    case QUERY_ALL_ROLETYPES_REQUEST:
-      return Object.assign({}, state, {
+      };
+    case constants.QUERY_ALL_ROLETYPES_REQUEST:
+      return {
+        ...state,
         isLoading: true
-      });
-    case QUERY_ALL_ROLETYPES_SUCCESS:
-      return Object.assign({}, state, {
+      };
+    case constants.QUERY_ALL_ROLETYPES_SUCCESS:
+      return {
+        ...state,
         roleTypes: action.payload,
         isLoading: false
-      });
-    case QUERY_ALL_ROLETYPES_FAILURE:
-      return Object.assign({}, state, {
+      };
+    case constants.QUERY_ALL_ROLETYPES_FAILURE:
+      return {
+        ...state,
         isLoading: false
-      });
-    case ADD_ROLE_REQUEST:
-      return Object.assign({}, state, {
+      };
+    case constants.ADD_ROLE_REQUEST:
+      return {
+        ...state,
         isLoading: true
-      });
-    case ADD_ROLE_SUCCESS:
-      return Object.assign({}, state, {
+      };
+    case constants.ADD_ROLE_SUCCESS:
+      return {
+        ...state,
         isLoading: false
-      });
-    case ADD_ROLE_FAILURE:
-      return Object.assign({}, state, {
+      };
+    case constants.ADD_ROLE_FAILURE:
+      return {
+        ...state,
         isLoading: false
-      });
-    case UPDATE_ROLE_REQUEST:
-      return Object.assign({}, state, {
+      };
+    case constants.UPDATE_ROLE_REQUEST:
+      return {
+        ...state,
         isLoading: true
-      });
-    case UPDATE_ROLE_SUCCESS:
-      return Object.assign({}, state, {
+      };
+    case constants.UPDATE_ROLE_SUCCESS:
+      return {
+        ...state,
         isLoading: false
-      });
-    case UPDATE_ROLE_FAILURE:
-      return Object.assign({}, state, {
+      };
+    case constants.UPDATE_ROLE_FAILURE:
+      return {
+        ...state,
         isLoading: false
-      });
-    case DELETE_ROLE_REQUEST:
-      return Object.assign({}, state, {
+      };
+    case constants.DELETE_ROLE_REQUEST:
+      return {
+        ...state,
         isLoading: true
-      });
-    case DELETE_ROLE_SUCCESS:
-      return Object.assign({}, state, {
+      };
+    case constants.DELETE_ROLE_SUCCESS:
+      return {
+        ...state,
         isLoading: false
-      });
-    case DELETE_ROLE_FAILURE:
-      return Object.assign({}, state, {
+      };
+    case constants.DELETE_ROLE_FAILURE:
+      return {
+        ...state,
         isLoading: false
-      });
-    case SHOW_ADDROLE_MODAL:
-    case HIDE_ADDROLE_MODAL:
-      return Object.assign({}, state, {
+      };
+    case constants.SHOW_ADDROLE_MODAL:
+    case constants.HIDE_ADDROLE_MODAL:
+      return {
+        ...state,
         record: action.payload,
         shouldAddRoleModalOpen: action.shouldOpen
-      });
-    case SHOW_DELETEROLE_MODAL:
-    case HIDE_DELETEROLE_MODAL:
-      return Object.assign({}, state, {
+      };
+    case constants.SHOW_DELETEROLE_MODAL:
+    case constants.HIDE_DELETEROLE_MODAL:
+      return {
+        ...state,
         record: { roleId: (action.payload && action.payload.roleId) || "" },
         shouldDeleteRoleModalOpen: action.shouldOpen
-      });
-    case SET_CURRENT_PAGE:
+      };
+    case constants.SET_CURRENT_PAGE:
       return { ...state, currentPage: action.payload.currentPage };
-    case SET_FORM_DATA:
+    case constants.SET_FORM_DATA:
       const payload = action.payload;
       if (typeof payload === "object") {
         if (Object.keys(payload).length === 0) {
@@ -174,24 +165,24 @@ function aaRoleReducer(state = initialState, action) {
           });
         }
       }
-      return Object.assign({}, state);
-    case QUERY_USER_ROLE_REQUEST:
+      return { ...state };
+    case constants.QUERY_USER_ROLE_REQUEST:
       return {
         ...state,
         isLoading: action.isLoading
       };
-    case QUERY_USER_ROLE_SUCCESS:
+    case constants.QUERY_USER_ROLE_SUCCESS:
       return {
         ...state,
         isLoading: action.isLoading,
         userRoleInfo: action.payload
       };
-    case QUERY_USER_ROLE_FAILURE:
+    case constants.QUERY_USER_ROLE_FAILURE:
       return {
         ...state,
         isLoading: action.isLoading
       };
-    case SET_NODE_ID_LIST:
+    case constants.SET_NODE_ID_LIST:
       return {
         ...state,
         userRoleInfo: action.payload

@@ -20,43 +20,7 @@ import { Feedback } from "@icedesign/base";
 // import saveFile from "utils/saveFile";
 import * as api from "./api";
 // import { reloadAuthorized } from 'utils/Authorized';
-import {
-  GET_IAMODEL_REQUEST,
-  GET_IAMODEL_SUCCESS,
-  GET_IAMODEL_FAILURE,
-  SHOW_ADDMODEL_MODAL,
-  HIDE_ADDMODEL_MODAL,
-  SHOW_DELETEMODEL_MODAL,
-  HIDE_DELETEMODEL_MODAL,
-  ADD_MODEL_REQUEST,
-  ADD_MODEL_SUCCESS,
-  ADD_MODEL_FAILURE,
-  DELETE_MODEL_REQUEST,
-  DELETE_MODEL_SUCCESS,
-  DELETE_MODEL_FAILURE,
-  UPDATE_MODEL_REQUEST,
-  UPDATE_MODEL_SUCCESS,
-  UPDATE_MODEL_FAILURE,
-  UPLOAD_MODEL_FILE_REQUEST,
-  UPLOAD_MODEL_FILE_SUCCESS,
-  UPLOAD_MODEL_FILE_FAILURE,
-  QUERY_ALL_MODELTYPES_REQUEST,
-  QUERY_ALL_MODELTYPES_SUCCESS,
-  QUERY_ALL_MODELTYPES_FAILURE,
-  GET_MODEL_INFO_BYID_REQUEST,
-  GET_MODEL_INFO_BYID_SUCCESS,
-  GET_MODEL_INFO_BYID_FAILURE,
-  SET_FORM_DATA,
-  // DOWNLOAD_MODEL_TEMPLATE_FILE_REQUEST,
-  // DOWNLOAD_MODEL_TEMPLATE_FILE_FAILURE,
-  // DOWNLOAD_MODEL_TEMPLATE_FILE_SUCCESS,
-  UPDATE_MODEL_FILE_REQUEST,
-  UPDATE_MODEL_FILE_SUCCESS,
-  UPDATE_MODEL_FILE_FAILURE,
-  SET_CURRENT_PAGE,
-  SET_FILE_IPT_STATE,
-  SET_UPLOAD_MODEL_FILE_INFO
-} from "./constants";
+import * as constants from "./constants";
 
 let addModelSwitch = false;
 let deleteModelSwitch = false;
@@ -70,7 +34,7 @@ let deleteModelSwitch = false;
 
 const showAddModelModal = payload => {
   return {
-    type: SHOW_ADDMODEL_MODAL,
+    type: constants.SHOW_ADDMODEL_MODAL,
     payload,
     shouldOpen: true
   };
@@ -78,14 +42,14 @@ const showAddModelModal = payload => {
 
 const hideAddModelModal = () => {
   return {
-    type: HIDE_ADDMODEL_MODAL,
+    type: constants.HIDE_ADDMODEL_MODAL,
     shouldOpen: false
   };
 };
 
 const showDeleteModelModal = payload => {
   return {
-    type: SHOW_DELETEMODEL_MODAL,
+    type: constants.SHOW_DELETEMODEL_MODAL,
     payload,
     shouldOpen: true
   };
@@ -93,21 +57,21 @@ const showDeleteModelModal = payload => {
 
 const hideDeleteModelModal = () => {
   return {
-    type: HIDE_DELETEMODEL_MODAL,
+    type: constants.HIDE_DELETEMODEL_MODAL,
     shouldOpen: false
   };
 };
 
 const getIaModelsRequest = () => {
   return {
-    type: GET_IAMODEL_REQUEST,
+    type: constants.GET_IAMODEL_REQUEST,
     isLoading: true
   };
 };
 
 const getIaModelsSuccess = payload => {
   return {
-    type: GET_IAMODEL_SUCCESS,
+    type: constants.GET_IAMODEL_SUCCESS,
     payload,
     isLoading: false
   };
@@ -115,7 +79,7 @@ const getIaModelsSuccess = payload => {
 
 const getIaModelsFailure = payload => {
   return {
-    type: GET_IAMODEL_FAILURE,
+    type: constants.GET_IAMODEL_FAILURE,
     payload,
     isLoading: false
   };
@@ -123,14 +87,14 @@ const getIaModelsFailure = payload => {
 
 const getModelInfoByIdRequest = () => {
   return {
-    type: GET_MODEL_INFO_BYID_REQUEST,
+    type: constants.GET_MODEL_INFO_BYID_REQUEST,
     isLoading: true
   };
 };
 
 const getModelInfoByIdSuccess = payload => {
   return {
-    type: GET_MODEL_INFO_BYID_SUCCESS,
+    type: constants.GET_MODEL_INFO_BYID_SUCCESS,
     payload,
     isLoading: false
   };
@@ -138,7 +102,7 @@ const getModelInfoByIdSuccess = payload => {
 
 const getModelInfoByIdFailure = payload => {
   return {
-    type: GET_MODEL_INFO_BYID_FAILURE,
+    type: constants.GET_MODEL_INFO_BYID_FAILURE,
     payload,
     isLoading: false
   };
@@ -146,7 +110,7 @@ const getModelInfoByIdFailure = payload => {
 
 const addModelRequest = payload => {
   return {
-    type: ADD_MODEL_REQUEST,
+    type: constants.ADD_MODEL_REQUEST,
     payload,
     isLoading: true
   };
@@ -154,7 +118,7 @@ const addModelRequest = payload => {
 
 const addModelSuccess = payload => {
   return {
-    type: ADD_MODEL_SUCCESS,
+    type: constants.ADD_MODEL_SUCCESS,
     payload,
     isLoading: false
   };
@@ -162,7 +126,7 @@ const addModelSuccess = payload => {
 
 const addModelFailure = payload => {
   return {
-    type: ADD_MODEL_FAILURE,
+    type: constants.ADD_MODEL_FAILURE,
     payload,
     isLoading: false
   };
@@ -170,7 +134,7 @@ const addModelFailure = payload => {
 
 const updateModelRequest = payload => {
   return {
-    type: UPDATE_MODEL_REQUEST,
+    type: constants.UPDATE_MODEL_REQUEST,
     payload,
     isLoading: true
   };
@@ -178,7 +142,7 @@ const updateModelRequest = payload => {
 
 const updateModelSuccess = payload => {
   return {
-    type: UPDATE_MODEL_SUCCESS,
+    type: constants.UPDATE_MODEL_SUCCESS,
     payload,
     isLoading: false
   };
@@ -186,7 +150,7 @@ const updateModelSuccess = payload => {
 
 const updateModelFailure = payload => {
   return {
-    type: UPDATE_MODEL_FAILURE,
+    type: constants.UPDATE_MODEL_FAILURE,
     payload,
     isLoading: false
   };
@@ -194,7 +158,7 @@ const updateModelFailure = payload => {
 
 const deleteModelRequest = payload => {
   return {
-    type: DELETE_MODEL_REQUEST,
+    type: constants.DELETE_MODEL_REQUEST,
     payload,
     isLoading: true
   };
@@ -202,7 +166,7 @@ const deleteModelRequest = payload => {
 
 const deleteModelSuccess = payload => {
   return {
-    type: DELETE_MODEL_SUCCESS,
+    type: constants.DELETE_MODEL_SUCCESS,
     payload,
     isLoading: false
   };
@@ -210,7 +174,7 @@ const deleteModelSuccess = payload => {
 
 const deleteModelFailure = payload => {
   return {
-    type: DELETE_MODEL_FAILURE,
+    type: constants.DELETE_MODEL_FAILURE,
     payload,
     isLoading: false
   };
@@ -218,14 +182,14 @@ const deleteModelFailure = payload => {
 
 const uploadModelFileRequest = () => {
   return {
-    type: UPLOAD_MODEL_FILE_REQUEST,
+    type: constants.UPLOAD_MODEL_FILE_REQUEST,
     isLoading: true
   };
 };
 
 const uploadModelFileSuccess = payload => {
   return {
-    type: UPLOAD_MODEL_FILE_SUCCESS,
+    type: constants.UPLOAD_MODEL_FILE_SUCCESS,
     payload,
     isLoading: false
   };
@@ -233,21 +197,21 @@ const uploadModelFileSuccess = payload => {
 
 const uploadModelFileFailure = () => {
   return {
-    type: UPLOAD_MODEL_FILE_FAILURE,
+    type: constants.UPLOAD_MODEL_FILE_FAILURE,
     isLoading: false
   };
 };
 
 const queryAllModelTypesRequest = () => {
   return {
-    type: QUERY_ALL_MODELTYPES_REQUEST,
+    type: constants.QUERY_ALL_MODELTYPES_REQUEST,
     isLoading: true
   };
 };
 
 const queryAllModelTypesSuccess = payload => {
   return {
-    type: QUERY_ALL_MODELTYPES_SUCCESS,
+    type: constants.QUERY_ALL_MODELTYPES_SUCCESS,
     payload,
     isLoading: false
   };
@@ -255,7 +219,7 @@ const queryAllModelTypesSuccess = payload => {
 
 const queryAllModelTypesFailure = () => {
   return {
-    type: QUERY_ALL_MODELTYPES_FAILURE,
+    type: constants.QUERY_ALL_MODELTYPES_FAILURE,
     isLoading: false
   };
 };
@@ -284,14 +248,14 @@ const queryAllModelTypesFailure = () => {
 
 const updateModelFileRequest = () => {
   return {
-    type: UPDATE_MODEL_FILE_REQUEST,
+    type: constants.UPDATE_MODEL_FILE_REQUEST,
     isLoading: true
   };
 };
 
 const updateModelFileSuccess = payload => {
   return {
-    type: UPDATE_MODEL_FILE_SUCCESS,
+    type: constants.UPDATE_MODEL_FILE_SUCCESS,
     isLoading: false,
     payload
   };
@@ -299,7 +263,7 @@ const updateModelFileSuccess = payload => {
 
 const updateModelFileFailure = payload => {
   return {
-    type: UPDATE_MODEL_FILE_FAILURE,
+    type: constants.UPDATE_MODEL_FILE_FAILURE,
     isLoading: false,
     payload
   };
@@ -509,7 +473,7 @@ export const queryAllModelTypes = params => {
 
 export const setFormData = payload => {
   return {
-    type: SET_FORM_DATA,
+    type: constants.SET_FORM_DATA,
     payload
   };
 };
@@ -537,22 +501,6 @@ export const getModelInfoById = params => {
 export const downloadModelTemplateFile = params => {
   return dispatch => {
     api.downloadModelTemplateFile(params);
-    //dispatch(downloadModelTemplateFileRequest());
-    // try {
-    //   const response = await api.downloadModelTemplateFile(params);
-
-    //   if (response.status === 200) {
-    //     saveFile(response.data, "text/latex", "模版文件.lua");
-    //     dispatch(downloadModelTemplateFileSuccess(response.data));
-    //   } else {
-    //     dispatch(downloadModelTemplateFileFailure(response.data));
-    //     Feedback.toast.error(response.data && response.data.resMsg);
-    //   }
-
-    //   return response.data;
-    // } catch (error) {
-    //   dispatch(downloadModelTemplateFileFailure(error));
-    // }
   };
 };
 
@@ -579,21 +527,21 @@ export const updateModelFile = params => {
 
 export const setFileIptState = payload => {
   return {
-    type: SET_FILE_IPT_STATE,
+    type: constants.SET_FILE_IPT_STATE,
     payload
   };
 };
 
 export const setCurrentPage = payload => {
   return {
-    type: SET_CURRENT_PAGE,
+    type: constants.SET_CURRENT_PAGE,
     payload
   };
 };
 
 export const setUploadModelFileInfo = payload => {
   return {
-    type: SET_UPLOAD_MODEL_FILE_INFO,
+    type: constants.SET_UPLOAD_MODEL_FILE_INFO,
     payload
   };
 };

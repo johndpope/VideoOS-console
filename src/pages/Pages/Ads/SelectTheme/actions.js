@@ -1,22 +1,18 @@
 import { Feedback } from "@icedesign/base";
 import { goBack as _goBack, push } from "react-router-redux";
 import * as api from "./api";
-import {
-  QUERY_ALL_MODELTYPES_REQUEST,
-  QUERY_ALL_MODELTYPES_SUCCESS,
-  QUERY_ALL_MODELTYPES_FAILURE
-} from "./constants";
+import * as constants from "./constants";
 
 const queryAllModelTypesRequest = () => {
   return {
-    type: QUERY_ALL_MODELTYPES_REQUEST,
+    type: constants.QUERY_ALL_MODELTYPES_REQUEST,
     isLoading: true
   };
 };
 
 const queryAllModelTypesSuccess = payload => {
   return {
-    type: QUERY_ALL_MODELTYPES_SUCCESS,
+    type: constants.QUERY_ALL_MODELTYPES_SUCCESS,
     payload,
     isLoading: false
   };
@@ -24,7 +20,7 @@ const queryAllModelTypesSuccess = payload => {
 
 const queryAllModelTypesFailure = () => {
   return {
-    type: QUERY_ALL_MODELTYPES_FAILURE,
+    type: constants.QUERY_ALL_MODELTYPES_FAILURE,
     isLoading: false
   };
 };

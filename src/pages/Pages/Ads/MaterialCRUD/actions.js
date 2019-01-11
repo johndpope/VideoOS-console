@@ -18,35 +18,13 @@
 import { goBack as _goBack, push } from "react-router-redux";
 import { Feedback } from "@icedesign/base";
 import * as api from "./api";
-import {
-  SHOW_DELETE_MATERIAL_MODAL,
-  HIDE_DELETE_MATERIAL_MODAL,
-  GET_IATYPE_BYID_REQUEST,
-  GET_IATYPE_BYID_SUCCESS,
-  GET_IATYPE_BYID_FAILURE,
-  ADD_METERIAL_REQUEST,
-  ADD_METERIAL_SUCCESS,
-  ADD_METERIAL_FAILURE,
-  UPDATE_METERIAL_REQUEST,
-  UPDATE_METERIAL_SUCCESS,
-  UPDATE_METERIAL_FAILURE,
-  ADD_MATERIAL_FILE_REQUEST,
-  ADD_MATERIAL_FILE_SUCCESS,
-  ADD_MATERIAL_FILE_FAILURE,
-  SAVE_FORM_DATA,
-  GET_MATERIAL_INFO_REQUEST,
-  GET_MATERIAL_INFO_SUCCESS,
-  GET_MATERIAL_INFO_FAILURE,
-  SET_FILE_DATA,
-  SET_SWITCHER,
-  SET_MATERIAL_SCHEMA
-} from "./constants";
+import * as constants from "./constants";
 
 let deleteMaterialModalSwitch = false;
 
 const showDeleteMaterialModal = payload => {
   return {
-    type: SHOW_DELETE_MATERIAL_MODAL,
+    type: constants.SHOW_DELETE_MATERIAL_MODAL,
     payload,
     shouldOpen: true
   };
@@ -54,21 +32,21 @@ const showDeleteMaterialModal = payload => {
 
 const hideDeleteMaterialModal = () => {
   return {
-    type: HIDE_DELETE_MATERIAL_MODAL,
+    type: constants.HIDE_DELETE_MATERIAL_MODAL,
     shouldOpen: false
   };
 };
 
 const getAdMaterialInfoRequest = () => {
   return {
-    type: GET_MATERIAL_INFO_REQUEST,
+    type: constants.GET_MATERIAL_INFO_REQUEST,
     isLoading: true
   };
 };
 
 const getAdMaterialInfoSuccess = payload => {
   return {
-    type: GET_MATERIAL_INFO_SUCCESS,
+    type: constants.GET_MATERIAL_INFO_SUCCESS,
     isLoading: false,
     payload
   };
@@ -76,21 +54,21 @@ const getAdMaterialInfoSuccess = payload => {
 
 const getAdMaterialInfoFailure = () => {
   return {
-    type: GET_MATERIAL_INFO_FAILURE,
+    type: constants.GET_MATERIAL_INFO_FAILURE,
     isLoading: false
   };
 };
 
 const getIaTypeByIdRequest = () => {
   return {
-    type: GET_IATYPE_BYID_REQUEST,
+    type: constants.GET_IATYPE_BYID_REQUEST,
     isLoading: true
   };
 };
 
 const getIaTypeByIdSuccess = payload => {
   return {
-    type: GET_IATYPE_BYID_SUCCESS,
+    type: constants.GET_IATYPE_BYID_SUCCESS,
     payload,
     isLoading: false
   };
@@ -98,7 +76,7 @@ const getIaTypeByIdSuccess = payload => {
 
 const getIaTypeByIdFailure = payload => {
   return {
-    type: GET_IATYPE_BYID_FAILURE,
+    type: constants.GET_IATYPE_BYID_FAILURE,
     payload,
     isLoading: false
   };
@@ -106,56 +84,56 @@ const getIaTypeByIdFailure = payload => {
 
 const addMaterialRequest = () => {
   return {
-    type: ADD_METERIAL_REQUEST,
+    type: constants.ADD_METERIAL_REQUEST,
     isLoading: true
   };
 };
 
 const addMaterialSuccess = () => {
   return {
-    type: ADD_METERIAL_SUCCESS,
+    type: constants.ADD_METERIAL_SUCCESS,
     isLoading: false
   };
 };
 
 const addMaterialFailure = () => {
   return {
-    type: ADD_METERIAL_FAILURE,
+    type: constants.ADD_METERIAL_FAILURE,
     isLoading: false
   };
 };
 
 const updateMaterialRequest = () => {
   return {
-    type: UPDATE_METERIAL_REQUEST,
+    type: constants.UPDATE_METERIAL_REQUEST,
     isLoading: true
   };
 };
 
 const updateMaterialSuccess = () => {
   return {
-    type: UPDATE_METERIAL_SUCCESS,
+    type: constants.UPDATE_METERIAL_SUCCESS,
     isLoading: false
   };
 };
 
 const updateMaterialFailure = () => {
   return {
-    type: UPDATE_METERIAL_FAILURE,
+    type: constants.UPDATE_METERIAL_FAILURE,
     isLoading: false
   };
 };
 
 const addMaterialFileRequest = () => {
   return {
-    type: ADD_MATERIAL_FILE_REQUEST
+    type: constants.ADD_MATERIAL_FILE_REQUEST
     // isLoading: true
   };
 };
 
 const addMaterialFileSuccess = payload => {
   return {
-    type: ADD_MATERIAL_FILE_SUCCESS,
+    type: constants.ADD_MATERIAL_FILE_SUCCESS,
     // isLoading: false,
     payload
   };
@@ -163,14 +141,14 @@ const addMaterialFileSuccess = payload => {
 
 const addMaterialFileFailure = () => {
   return {
-    type: ADD_MATERIAL_FILE_FAILURE
+    type: constants.ADD_MATERIAL_FILE_FAILURE
     // isLoading: false
   };
 };
 
 const _setSwitcher = payload => {
   return {
-    type: SET_SWITCHER,
+    type: constants.SET_SWITCHER,
     payload
   };
 };
@@ -317,7 +295,7 @@ export const addMaterialFile = params => {
 
 export const saveFormData = payload => {
   return {
-    type: SAVE_FORM_DATA,
+    type: constants.SAVE_FORM_DATA,
     payload
   };
 };
@@ -344,7 +322,7 @@ export const getAdMaterialInfo = params => {
 
 export const setFileData = payload => {
   return {
-    type: SET_FILE_DATA,
+    type: constants.SET_FILE_DATA,
     payload
   };
 };
@@ -361,7 +339,7 @@ export const setSwitcher = payload => {
 
 export const setMaterialSchema = payload => {
   return {
-    type: SET_MATERIAL_SCHEMA,
+    type: constants.SET_MATERIAL_SCHEMA,
     payload
   };
 };

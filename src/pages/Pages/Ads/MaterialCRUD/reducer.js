@@ -9,29 +9,7 @@
  * case YOUR_ACTION_CONSTANT:
  *   return state.set('yourStateVariable', true);
  */
-import {
-  SHOW_DELETE_MATERIAL_MODAL,
-  HIDE_DELETE_MATERIAL_MODAL,
-  GET_IATYPE_BYID_REQUEST,
-  GET_IATYPE_BYID_SUCCESS,
-  GET_IATYPE_BYID_FAILURE,
-  ADD_METERIAL_REQUEST,
-  ADD_METERIAL_SUCCESS,
-  ADD_METERIAL_FAILURE,
-  UPDATE_METERIAL_REQUEST,
-  UPDATE_METERIAL_SUCCESS,
-  UPDATE_METERIAL_FAILURE,
-  ADD_MATERIAL_FILE_REQUEST,
-  ADD_MATERIAL_FILE_SUCCESS,
-  ADD_MATERIAL_FILE_FAILURE,
-  SAVE_FORM_DATA,
-  GET_MATERIAL_INFO_REQUEST,
-  GET_MATERIAL_INFO_SUCCESS,
-  GET_MATERIAL_INFO_FAILURE,
-  SET_FILE_DATA,
-  SET_SWITCHER,
-  SET_MATERIAL_SCHEMA
-} from "./constants";
+import * as constants from "./constants";
 
 // The initial state of the material
 let tempFormData = null;
@@ -44,72 +22,86 @@ const initialState = {
 
 function materialCRUDReducer(state = initialState, action) {
   switch (action.type) {
-    case SHOW_DELETE_MATERIAL_MODAL:
-    case HIDE_DELETE_MATERIAL_MODAL:
-      return Object.assign({}, state, {
+    case constants.SHOW_DELETE_MATERIAL_MODAL:
+    case constants.HIDE_DELETE_MATERIAL_MODAL:
+      return {
+        ...state,
         record: {
           creativeId: (action.payload && action.payload.creativeId) || ""
         },
         shouldDeleteMaterialOpen: action.shouldOpen
-      });
-    case GET_MATERIAL_INFO_REQUEST:
-      return Object.assign({}, state, {
+      };
+    case constants.GET_MATERIAL_INFO_REQUEST:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case GET_MATERIAL_INFO_SUCCESS:
+      };
+    case constants.GET_MATERIAL_INFO_SUCCESS:
       state.formData = action.payload.creativeContent
         ? JSON.parse(action.payload.creativeContent)
         : {};
-      return Object.assign({}, state, {
+      return {
+        ...state,
         creativeContent: action.payload.creativeContent || [],
         isLoading: action.isLoading
-      });
-    case GET_MATERIAL_INFO_FAILURE:
-      return Object.assign({}, state, {
+      };
+    case constants.GET_MATERIAL_INFO_FAILURE:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case GET_IATYPE_BYID_REQUEST:
-      return Object.assign({}, state, {
+      };
+    case constants.GET_IATYPE_BYID_REQUEST:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case GET_IATYPE_BYID_SUCCESS:
-      return Object.assign({}, state, {
+      };
+    case constants.GET_IATYPE_BYID_SUCCESS:
+      return {
+        ...state,
         materialSchema: action.payload,
         isLoading: action.isLoading
-      });
-    case GET_IATYPE_BYID_FAILURE:
-      return Object.assign({}, state, {
+      };
+    case constants.GET_IATYPE_BYID_FAILURE:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case ADD_METERIAL_REQUEST:
-      return Object.assign({}, state, {
+      };
+    case constants.ADD_METERIAL_REQUEST:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case ADD_METERIAL_SUCCESS:
-      return Object.assign({}, state, {
+      };
+    case constants.ADD_METERIAL_SUCCESS:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case ADD_METERIAL_FAILURE:
-      return Object.assign({}, state, {
+      };
+    case constants.ADD_METERIAL_FAILURE:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case UPDATE_METERIAL_REQUEST:
-      return Object.assign({}, state, {
+      };
+    case constants.UPDATE_METERIAL_REQUEST:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case UPDATE_METERIAL_SUCCESS:
-      return Object.assign({}, state, {
+      };
+    case constants.UPDATE_METERIAL_SUCCESS:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case UPDATE_METERIAL_FAILURE:
-      return Object.assign({}, state, {
+      };
+    case constants.UPDATE_METERIAL_FAILURE:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case ADD_MATERIAL_FILE_REQUEST:
-      return Object.assign({}, state, {
+      };
+    case constants.ADD_MATERIAL_FILE_REQUEST:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case ADD_MATERIAL_FILE_SUCCESS:
+      };
+    case constants.ADD_MATERIAL_FILE_SUCCESS:
       if (action && action.payload._type) {
         state.fileData[action.payload._type] = action.payload.fileUrl;
         state.fileData[`_${action.payload._type}`] = action.payload;
@@ -125,12 +117,13 @@ function materialCRUDReducer(state = initialState, action) {
           state.creativeIdList.push(action.payload.creativeFileId);
         }
       }
-      return Object.assign({}, state);
-    case ADD_MATERIAL_FILE_FAILURE:
-      return Object.assign({}, state, {
+      return { ...state };
+    case constants.ADD_MATERIAL_FILE_FAILURE:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case SAVE_FORM_DATA:
+      };
+    case constants.SAVE_FORM_DATA:
       const _payload = action.payload;
       if (_payload === "refresh") {
         const { formData } = state;
@@ -151,11 +144,11 @@ function materialCRUDReducer(state = initialState, action) {
         }
       }
       // state.formData = action.payload;
-      return Object.assign({}, state);
-    case SET_FILE_DATA:
+      return { ...state };
+    case constants.SET_FILE_DATA:
       state.fileData = action.payload;
       return { ...state };
-    case SET_SWITCHER:
+    case constants.SET_SWITCHER:
       const payload = action.payload;
       if (payload === "refresh") {
         for (let key in state.uiSchemaConf) {
@@ -172,7 +165,7 @@ function materialCRUDReducer(state = initialState, action) {
         }
       }
       return { ...state };
-    case SET_MATERIAL_SCHEMA:
+    case constants.SET_MATERIAL_SCHEMA:
       return { ...state, materialSchema: action.payload };
     default:
       return state;
