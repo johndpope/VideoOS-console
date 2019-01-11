@@ -20,8 +20,6 @@ import { push } from "react-router-redux";
 import qs from "querystring";
 import * as api from "./api";
 import {
-  SHOW_ADD_PLAN,
-  HIDE_ADD_PLAN,
   SHOW_DELETE_PLAN,
   HIDE_DELETE_PLAN,
   SHOW_LAUNCH_PLAN,
@@ -43,10 +41,9 @@ import {
   GET_AD_METERIALS_SUCCESS,
   GET_AD_METERIALS_FAILURE,
   SET_CURRENT_PAGE,
-  SET_EDIT_STATE
+  SET_RELAUNCH
 } from "./constants";
 
-let addPlanSwitch = false;
 let deletePlanSwitch = false;
 let launchPlanSwitch = false;
 
@@ -390,6 +387,13 @@ export const getAdMaterials = params => {
 export const setCurrentPage = payload => {
   return {
     type: SET_CURRENT_PAGE,
+    payload
+  };
+};
+
+export const setReLaunch = payload => {
+  return {
+    type: SET_RELAUNCH,
     payload
   };
 };

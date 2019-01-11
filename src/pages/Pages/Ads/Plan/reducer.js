@@ -9,7 +9,6 @@
  * case YOUR_ACTION_CONSTANT:
  *   return state.set('yourStateVariable', true);
  */
-import moment from "moment";
 import {
   SHOW_ADD_PLAN,
   HIDE_ADD_PLAN,
@@ -35,12 +34,14 @@ import {
   GET_AD_METERIALS_REQUEST,
   GET_AD_METERIALS_SUCCESS,
   GET_AD_METERIALS_FAILURE,
-  SET_CURRENT_PAGE
+  SET_CURRENT_PAGE,
+  SET_RELAUNCH
 } from "./constants";
 // The initial state of the plan
 const initialState = {
   formData: {},
-  isEdit: false
+  isEdit: false,
+  reLaunch: true
 };
 
 function adPlanReducer(state = initialState, action) {
@@ -97,7 +98,8 @@ function adPlanReducer(state = initialState, action) {
       });
     case LAUNCH_PLAN_SUCCESS:
       return Object.assign({}, state, {
-        isLoading: action.isLoading
+        isLoading: action.isLoading,
+        reLaunch: false
       });
     case LAUNCH_PLAN_FAILURE:
       return Object.assign({}, state, {
@@ -149,6 +151,8 @@ function adPlanReducer(state = initialState, action) {
       });
     case SET_CURRENT_PAGE:
       return { ...state, currentPage: action.payload.currentPage };
+    case SET_RELAUNCH:
+      return { ...state, reLaunch: action.payload.reLaunch };
     default:
       return state;
   }

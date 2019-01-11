@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import querystring from "querystring";
 import Form from "react-jsonschema-form";
 import { connect } from "react-redux";
@@ -41,10 +41,6 @@ let opType;
 let qs;
 
 class MaterialCRUD extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     const {
       getIaTypeById,

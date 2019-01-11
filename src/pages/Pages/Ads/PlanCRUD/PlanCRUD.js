@@ -34,7 +34,6 @@ import {
 import reducer from "./reducer";
 
 let opType;
-let qs;
 
 /**
  * 判断投放时间是否冲突
@@ -82,13 +81,7 @@ const isConflict = payload => {
   return status;
 };
 
-let params = { pageSize: 20 };
-
 class SelectTheme extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     const {
       getAdMaterials,

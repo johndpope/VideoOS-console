@@ -1,10 +1,9 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import IceContainer from "@icedesign/container";
-import querystring from "querystring";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import injectReducer from "utils/injectReducer";
-import { Button, Feedback, Icon } from "@icedesign/base";
+import { Button, Icon } from "@icedesign/base";
 
 import ThemeCard from "./components/Card";
 
@@ -13,10 +12,6 @@ import reducer from "./reducer";
 let isAddPlan = false;
 
 class SelectTheme extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     const { queryAllModelTypes, location } = this.props;
     if (location && location.pathname === "/tf/plan/selT") {

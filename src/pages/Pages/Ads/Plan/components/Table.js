@@ -8,7 +8,8 @@ export default class PlanTable extends Component {
       addPlanModalToggle,
       launchPlanModalToggle,
       deletePlanModalToggle,
-      readOnly
+      readOnly,
+      setReLaunch
     } = this.props;
     return (
       <div>
@@ -25,17 +26,20 @@ export default class PlanTable extends Component {
             record.launchStatus === 1 &&
             record.launchTimeType === 1 ? (
               <Button
-                disabled
                 style={{ color: "rgb(51, 51, 51)" }}
                 onClick={() => {
                   launchPlanModalToggle(record);
                 }}
               >
                 {/*投放中*/}
-                <Ticker launchLenTime={record.launchLenTime} />
+                <Ticker
+                  launchLenTime={record.launchLenTime}
+                  launchStartTime={record.launchStartTime}
+                  setReLaunch={setReLaunch}
+                />
               </Button>
             ) : null}
-            {record && record.launchStatus == 2 ? (
+            {record && record.launchStatus === 2 ? (
               <Button
                 onClick={() => {
                   launchPlanModalToggle(record);

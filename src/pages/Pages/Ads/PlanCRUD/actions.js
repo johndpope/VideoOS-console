@@ -255,7 +255,6 @@ export const addPlan = params => {
   return async dispatch => {
     dispatch(addPlanRequest());
     try {
-      const currentPage = (params && params.currentPage) || 1;
       delete params.currentPage;
       const _params = { ...params };
       if (_params.launchTimeType === "0" || _params.launchTimeType === "2") {

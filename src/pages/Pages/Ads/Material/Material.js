@@ -1,10 +1,4 @@
 import React, { Component } from "react";
-import {
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle
-} from "reactstrap";
 import { Pagination, Button } from "@icedesign/base";
 import IceContainer from "@icedesign/container";
 import { connect } from "react-redux";
@@ -47,7 +41,6 @@ class AdMaterial extends Component {
       getAdMaterials,
       setCurrentPage
     } = this.props;
-    const modelTypes = adMaterial.modelTypes || [];
     const { authorList } = getUserInfoLocal();
     return (
       <div className="app">
