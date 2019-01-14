@@ -84,6 +84,7 @@ export default class Cards extends Component {
               maxLength={30}
               required
               readOnly={readonly}
+              placeholder="请输入素材名称"
             />
             {errorSchema &&
               errorSchema.creativeName &&

@@ -83,6 +83,7 @@ export default class MidVideo extends Component {
               maxLength={30}
               required
               readOnly={readonly}
+              placeholder="请输入素材名称"
             />
             {errorSchema &&
               errorSchema.creativeName &&
