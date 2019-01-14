@@ -183,7 +183,7 @@ export default class MidVideo extends Component {
                         height: "100%",
                         borderRadius: "0.25rem"
                       }}
-                      accept="video/*"
+                      accept="video/mp4, video/mov, video/MOV, video/avi"
                       type="file"
                       onChange={e => {
                         const { files } = e.target;
