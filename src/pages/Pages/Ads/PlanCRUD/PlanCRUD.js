@@ -1324,15 +1324,14 @@ class SelectTheme extends Component {
               }
             })()}
             {(() => {
-              const interactionInfo =
-                monitorLinkInfo && monitorLinkInfo.interactionInfo
-                  ? JSON.parse(monitorLinkInfo.interactionInfo)
-                  : {};
               if (
-                interactionInfo.properties &&
-                interactionInfo.properties &&
-                interactionInfo.properties.infoTrackLink
+                /infoTrackLink/gi.test(
+                  monitorLinkInfo && monitorLinkInfo.interactionInfo
+                )
               ) {
+                const interactionInfo = JSON.parse(
+                  monitorLinkInfo.interactionInfo
+                );
                 return (
                   <div>
                     <h5>
@@ -1371,7 +1370,7 @@ class SelectTheme extends Component {
                             };
                           }
                           setFormData({
-                            infoTrackLink: formData.infoTrackLink[0]
+                            infoTrackLink: formData.infoTrackLink
                           });
                         }}
                       />

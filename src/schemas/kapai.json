@@ -99,11 +99,6 @@
         "linkUrl": {
           "type": "string",
           "title": ""
-        },
-        "infoTrackLink": {
-          "type": "integer",
-          "title": "“领奖成功”按钮",
-          "default": 1
         }
       }
     },
@@ -120,6 +115,11 @@
           "title": ""
         }
       }
+    },
+    "infoTrackLink": {
+      "type": "integer",
+      "title": "“领奖成功”按钮",
+      "default": 1
     }
   }
 }

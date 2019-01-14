@@ -57,6 +57,11 @@
       "type": "string",
       "title": "兑换说明",
       "default": ""
+    },
+    "infoTrackLink": {
+      "type": "integer",
+      "title": "“点击复制”按钮",
+      "default": 1
     }
   }
 }
