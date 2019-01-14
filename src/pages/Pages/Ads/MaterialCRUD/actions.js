@@ -247,6 +247,7 @@ export const updateMaterial = params => {
       if (response.status === 200 && response.data.resCode === "00") {
         dispatch(updateMaterialSuccess(response.data));
         Feedback.toast.show(response.data && response.data.resMsg);
+        dispatch(push("/tf/material"));
       } else {
         dispatch(updateMaterialFailure(response.data));
         Feedback.toast.error(response.data && response.data.resMsg);
