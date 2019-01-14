@@ -56,7 +56,8 @@
     "infoInstructions": {
       "type": "string",
       "title": "兑换说明",
-      "default": ""
+      "default": "",
+      "maxLength": 50
     },
     "infoTrackLink": {
       "type": "integer",
