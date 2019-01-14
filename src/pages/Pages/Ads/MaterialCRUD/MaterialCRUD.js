@@ -329,7 +329,7 @@ class MaterialCRUD extends Component {
               }
               if (isUpdate) {
                 updateMaterial({
-                  creativeId: formData.creativeId,
+                  creativeId: formData.creativeId || (qs && qs.creativeId),
                   creativeName: formData.creativeName,
                   interactionTypeId: formData.interactionTypeId,
                   interactionTemplateId: formData.interactionTemplateId,
