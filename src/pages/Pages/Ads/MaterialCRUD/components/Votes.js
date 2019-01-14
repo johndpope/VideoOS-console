@@ -189,7 +189,7 @@ export default class Votes extends Component {
                       position: "relative",
                       width: "120px",
                       height: "32px",
-                      border: "1px solid #e4e7ea",
+                      border: "1px solid rgb(204, 204, 204)",
                       textAlign: "center",
                       lineHeight: "32px"
                     }}
@@ -334,7 +334,7 @@ export default class Votes extends Component {
                         position: "relative",
                         width: "120px",
                         height: "32px",
-                        border: "1px solid #e4e7ea",
+                        border: "1px solid rgb(204, 204, 204)",
                         textAlign: "center",
                         lineHeight: "32px"
                       }}
@@ -484,7 +484,7 @@ export default class Votes extends Component {
                               position: "relative",
                               width: "120px",
                               height: "32px",
-                              border: "1px solid #e4e7ea",
+                              border: "1px solid rgb(204, 204, 204)",
                               textAlign: "center",
                               lineHeight: "32px"
                             }}
@@ -667,7 +667,7 @@ export default class Votes extends Component {
             <Label>投票规则</Label>
             <textarea
               style={{
-                border: "1px solid #e4e7ea",
+                border: "1px solid rgb(204, 204, 204)",
                 borderRadius: "0.25rem",
                 width: "100%"
               }}

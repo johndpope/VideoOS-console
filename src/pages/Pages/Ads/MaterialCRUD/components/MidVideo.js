@@ -167,7 +167,7 @@ export default class MidVideo extends Component {
                       position: "relative",
                       width: "120px",
                       height: "32px",
-                      border: "1px solid #e4e7ea",
+                      border: "1px solid rgb(204, 204, 204)",
                       textAlign: "center",
                       lineHeight: "32px"
                     }}
