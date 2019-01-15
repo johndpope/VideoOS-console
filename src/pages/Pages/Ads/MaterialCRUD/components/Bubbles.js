@@ -615,46 +615,6 @@ export default class Bubbles extends Component {
                               />
                             </Col>
                           </Row>
-                          <Row style={{ marginBottom: "8px" }}>
-                            <Col>
-                              <Label style={{ fontWeight: "normal" }}>
-                                气泡点击监控链接
-                              </Label>
-                              <Input
-                                type="url"
-                                readOnly={readonly}
-                                value={message.clickTrackLink}
-                                placeholder="请输入气泡点击监控链接"
-                                onChange={e => {
-                                  message.clickTrackLink = e.target.value;
-                                  messages[idx] = message;
-                                  this.setState({ messages }, () =>
-                                    this.props.onChange(this.state)
-                                  );
-                                }}
-                              />
-                            </Col>
-                          </Row>
-                          <Row style={{ marginBottom: "8px" }}>
-                            <Col>
-                              <Label style={{ fontWeight: "normal" }}>
-                                气泡曝光监控链接
-                              </Label>
-                              <Input
-                                type="url"
-                                value={message.exposureTrackLink}
-                                readOnly={readonly}
-                                placeholder="请输入气泡曝光监控链接"
-                                onChange={e => {
-                                  message.exposureTrackLink = e.target.value;
-                                  messages[idx] = message;
-                                  this.setState({ messages }, () =>
-                                    this.props.onChange(this.state)
-                                  );
-                                }}
-                              />
-                            </Col>
-                          </Row>
                         </Fragment>
                       ) : null}
                       {message && message.messageType === 3 ? (
@@ -732,76 +692,6 @@ export default class Bubbles extends Component {
                                   } else {
                                     message.messageButtons = [
                                       { link: e.target.value }
-                                    ];
-                                  }
-                                  messages[idx] = message;
-                                  this.setState(
-                                    {
-                                      messages
-                                    },
-                                    () => this.props.onChange(this.state)
-                                  );
-                                }}
-                              />
-                            </Col>
-                          </Row>
-                          <Row style={{ marginBottom: "8px" }}>
-                            <Col>
-                              <Label style={{ fontWeight: "normal" }}>
-                                点击监控链接
-                              </Label>
-                              <Input
-                                type="url"
-                                value={
-                                  message &&
-                                  message.messageButtons &&
-                                  message.messageButtons[0] &&
-                                  message.messageButtons[0].clickTrackLink
-                                }
-                                readOnly={readonly}
-                                placeholder="请输入气泡点击监控链接"
-                                onChange={e => {
-                                  if (message.messageButtons) {
-                                    message.messageButtons[0].clickTrackLink =
-                                      e.target.value;
-                                  } else {
-                                    message.messageButtons = [
-                                      { clickTrackLink: e.target.value }
-                                    ];
-                                  }
-                                  messages[idx] = message;
-                                  this.setState(
-                                    {
-                                      messages
-                                    },
-                                    () => this.props.onChange(this.state)
-                                  );
-                                }}
-                              />
-                            </Col>
-                          </Row>
-                          <Row style={{ marginBottom: "8px" }}>
-                            <Col>
-                              <Label style={{ fontWeight: "normal" }}>
-                                曝光监控链接
-                              </Label>
-                              <Input
-                                type="url"
-                                value={
-                                  message &&
-                                  message.messageButtons &&
-                                  message.messageButtons[0] &&
-                                  message.messageButtons[0].exposureTrackLink
-                                }
-                                readOnly={readonly}
-                                placeholder="请输入气泡曝光监控链接"
-                                onChange={e => {
-                                  if (message.messageButtons) {
-                                    message.messageButtons[0].exposureTrackLink =
-                                      e.target.value;
-                                  } else {
-                                    message.messageButtons = [
-                                      { exposureTrackLink: e.target.value }
                                     ];
                                   }
                                   messages[idx] = message;

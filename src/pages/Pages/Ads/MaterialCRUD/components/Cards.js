@@ -318,46 +318,6 @@ export default class Cards extends Component {
                   ))}
               </Col>
             </Row>
-            <Row style={{ marginBottom: "8px" }}>
-              <Col>
-                <Label style={{ fontWeight: "normal" }}>热点点击监控链接</Label>
-                <Input
-                  type="url"
-                  readOnly={readonly}
-                  value={hotspotArray[0].clickTrackLink}
-                  placeholder="请输入热点点击监控链接"
-                  onChange={e => {
-                    hotspotArray[0] = {
-                      ...hotspotArray[0],
-                      clickTrackLink: e.target.value
-                    };
-                    this.setState({ hotspotArray }, () =>
-                      this.props.onChange(this.state)
-                    );
-                  }}
-                />
-              </Col>
-            </Row>
-            <Row style={{ marginBottom: "8px" }}>
-              <Col>
-                <Label style={{ fontWeight: "normal" }}>热点曝光监控链接</Label>
-                <Input
-                  type="url"
-                  value={hotspotArray[0].exposureTrackLink}
-                  readOnly={readonly}
-                  placeholder="请输入热点曝光监控链接"
-                  onChange={e => {
-                    hotspotArray[0] = {
-                      ...hotspotArray[0],
-                      exposureTrackLink: e.target.value
-                    };
-                    this.setState({ hotspotArray }, () =>
-                      this.props.onChange(this.state)
-                    );
-                  }}
-                />
-              </Col>
-            </Row>
           </div>
           <div className="array-item">
             <Label>热点2：</Label>
@@ -515,40 +475,6 @@ export default class Cards extends Component {
                       {err}
                     </li>
                   ))}
-              </Col>
-            </Row>
-            <Row style={{ marginBottom: "8px" }}>
-              <Col>
-                <Label style={{ fontWeight: "normal" }}>热点点击监控链接</Label>
-                <Input
-                  type="url"
-                  readOnly={readonly}
-                  value={hotspotArray[1].clickTrackLink}
-                  placeholder="请输入热点点击监控链接"
-                  onChange={e => {
-                    hotspotArray[1].clickTrackLink = e.target.value;
-                    this.setState({ hotspotArray }, () =>
-                      this.props.onChange(this.state)
-                    );
-                  }}
-                />
-              </Col>
-            </Row>
-            <Row style={{ marginBottom: "8px" }}>
-              <Col>
-                <Label style={{ fontWeight: "normal" }}>热点曝光监控链接</Label>
-                <Input
-                  type="url"
-                  value={hotspotArray[1].exposureTrackLink}
-                  readOnly={readonly}
-                  placeholder="请输入热点曝光监控链接"
-                  onChange={e => {
-                    hotspotArray[1].exposureTrackLink = e.target.value;
-                    this.setState({ hotspotArray }, () =>
-                      this.props.onChange(this.state)
-                    );
-                  }}
-                />
               </Col>
             </Row>
           </div>
@@ -723,46 +649,6 @@ export default class Cards extends Component {
                               </li>
                             )
                           )}
-                      </Col>
-                    </Row>
-                    <Row style={{ marginBottom: "8px" }}>
-                      <Col>
-                        <Label style={{ fontWeight: "normal" }}>
-                          热点点击监控链接
-                        </Label>
-                        <Input
-                          type="url"
-                          readOnly={readonly}
-                          value={hsa.clickTrackLink}
-                          placeholder="请输入热点点击监控链接"
-                          onChange={e => {
-                            hsa.clickTrackLink = e.target.value;
-                            hotspotArray[idx] = hsa;
-                            this.setState({ hotspotArray }, () =>
-                              this.props.onChange(this.state)
-                            );
-                          }}
-                        />
-                      </Col>
-                    </Row>
-                    <Row style={{ marginBottom: "8px" }}>
-                      <Col>
-                        <Label style={{ fontWeight: "normal" }}>
-                          热点曝光监控链接
-                        </Label>
-                        <Input
-                          type="url"
-                          value={hsa.exposureTrackLink}
-                          readOnly={readonly}
-                          placeholder="请输入热点曝光监控链接"
-                          onChange={e => {
-                            hsa.exposureTrackLink = e.target.value;
-                            hotspotArray[idx] = hsa;
-                            this.setState({ hotspotArray }, () =>
-                              this.props.onChange(this.state)
-                            );
-                          }}
-                        />
                       </Col>
                     </Row>
                   </Col>
@@ -973,36 +859,6 @@ export default class Cards extends Component {
                   {err}
                 </li>
               ))}
-          </div>
-          <div className="array-item">
-            <Label>收集成功弹窗的曝光监控链接</Label>
-            <Input
-              value={collect && collect.exposureTrackLink}
-              placeholder="请输入链接"
-              required
-              readOnly={readonly}
-              onChange={e => {
-                collect.exposureTrackLink = e.target.value;
-                this.setState({ collect }, () =>
-                  this.props.onChange(this.state)
-                );
-              }}
-            />
-          </div>
-          <div className="array-item">
-            <Label>“领取”奖励按钮点击监控链接</Label>
-            <Input
-              value={collect && collect.clickTrackLink}
-              placeholder="请输入链接"
-              required
-              readOnly={readonly}
-              onChange={e => {
-                collect.clickTrackLink = e.target.value;
-                this.setState({ collect }, () =>
-                  this.props.onChange(this.state)
-                );
-              }}
-            />
           </div>
           <div className="array-item">
             <Label>领奖按钮跳转链接*</Label>
