@@ -72,6 +72,7 @@
     "watch-css": "npm run build-css && node-sass-chokidar --include-path ./node_modules ./src/scss -o ./src/scss --watch --recursive",
     "start-js": "react-app-rewired start",
     "start": "export OS_ENV=dev && npm-run-all -p watch-css start-js",
+    "start-test": "export OS_ENV=test && npm-run-all -p watch-css start-js",
     "start-dev-remote": "export OS_ENV=dev && npm run build && pm2 startOrReload ecosystem.config.js",
     "start-test-remote": "export OS_ENV=test && npm run build && pm2 startOrReload ecosystem.config.js",
     "start-prod-remote": "export OS_ENV=prod && npm run build && pm2 startOrReload ecosystem.config.js",

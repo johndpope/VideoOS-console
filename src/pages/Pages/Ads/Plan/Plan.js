@@ -48,7 +48,8 @@ class AdPlan extends Component {
       launchPlan,
       getAdPlans,
       setCurrentPage,
-      setReLaunch
+      setReLaunch,
+      setPlanResult
     } = this.props;
     const modelTypes = adPlan.modelTypes || [];
     const { authorList } = getUserInfoLocal();
@@ -141,6 +142,7 @@ class AdPlan extends Component {
           launchPlanModalToggle={launchPlanModalToggle}
           addPlanModalToggle={addPlanModalToggle}
           setReLaunch={setReLaunch}
+          setPlanResult={setPlanResult}
           readOnly={
             authorList ? authorList.includes(AUTH_KEYS.PLAN_READ) : false
           }

@@ -66,7 +66,7 @@ export default class MidVideo extends Component {
       closeAfter,
       isShowAds = true,
       isShowClose = true,
-      exposureTrackLink,
+      linkUrl,
       creativeIdList = []
     } = this.state;
     const { creativeName, interactionTemplateId } = this.state;
@@ -293,11 +293,11 @@ export default class MidVideo extends Component {
             <Input
               type="url"
               readOnly={readonly}
-              value={exposureTrackLink}
+              value={linkUrl}
               placeholder="请输入中插外链链接"
               onChange={e => {
-                exposureTrackLink = e.target.value;
-                this.setState({ exposureTrackLink }, () =>
+                linkUrl = e.target.value;
+                this.setState({ linkUrl }, () =>
                   this.props.onChange(this.state)
                 );
               }}

@@ -28,22 +28,6 @@
       "title": "关闭按钮是否可见",
       "default": true
     },
-    "monitorLinks": {
-      "type": "array",
-      "title": "点击监控链接",
-      "items": {
-        "type": "string",
-        "format": "uri"
-      }
-    },
-    "exposureLinks": {
-      "type": "array",
-      "title": "曝光监控链接",
-      "items": {
-        "type": "string",
-        "format": "uri"
-      }
-    },
     "linkUrl": {
       "type": "string",
       "format": "uri",

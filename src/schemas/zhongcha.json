@@ -32,22 +32,6 @@
       "title": "广告关闭按钮是否可见",
       "default": true
     },
-    "exposureLinks": {
-      "type": "array",
-      "title": "广告曝光监控链接",
-      "items": {
-        "type": "string",
-        "format": "uri"
-      }
-    },
-    "monitorLinks": {
-      "type": "array",
-      "title": "广告点击监控链接",
-      "items": {
-        "type": "string",
-        "format": "uri"
-      }
-    },
     "linkUrl": {
       "type": "string",
       "title": "广告外链链接",

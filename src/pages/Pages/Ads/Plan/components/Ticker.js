@@ -12,7 +12,13 @@ class Ticker extends Component {
   }
 
   componentDidMount() {
-    const { launchLenTime, launchStartTime } = this.props;
+    const {
+      launchLenTime,
+      launchStartTime,
+      setPlanResult,
+      planResult,
+      index
+    } = this.props;
     launchTm = new Date(launchStartTime).getTime();
     currentTm = new Date().getTime();
     let INTERVEL =
@@ -29,6 +35,10 @@ class Ticker extends Component {
       this.setState({ INTERVEL });
       if (INTERVEL === 0) {
         // setReLaunch({reLaunch: true});
+        if (Array.isArray(planResult)) {
+          planResult[index].launchStatus = 2;
+          setPlanResult({ planResult });
+        }
         clearTimeout(st);
       }
     }, 1000);

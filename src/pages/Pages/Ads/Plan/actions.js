@@ -374,3 +374,10 @@ export const setReLaunch = payload => {
     payload
   };
 };
+
+export const setPlanResult = payload => {
+  return {
+    type: constants.SET_PLAN_RESULT,
+    payload
+  };
+};
