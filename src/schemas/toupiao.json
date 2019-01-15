@@ -52,16 +52,6 @@
       "type": "string",
       "title": "热点图片"
     },
-    "exposureTrackLink": {
-      "type": "string",
-      "format": "uri",
-      "title": "热点曝光监控链接"
-    },
-    "clickTrackLink": {
-      "type": "string",
-      "format": "uri",
-      "title": "热点点击监控链接"
-    },
     "voteImageUrl": {
       "type": "string",
       "title": "投票弹窗图片"
@@ -77,16 +67,6 @@
       "items": {
         "$ref": "#/definitions/Item"
       }
-    },
-    "voteBtnExposureTrackLink": {
-      "type": "string",
-      "format": "uri",
-      "title": "投票按钮曝光的监控链接"
-    },
-    "voteBtnClickTrackLink": {
-      "type": "string",
-      "format": "uri",
-      "title": "投票按钮点击监控链接"
     },
     "voteRule": {
       "type": "string",

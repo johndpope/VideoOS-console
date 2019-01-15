@@ -66,10 +66,6 @@ export default class Votes extends Component {
       imageUrl,
       voteImageUrl,
       voteTitle,
-      exposureTrackLink,
-      clickTrackLink,
-      voteBtnExposureTrackLink,
-      voteBtnClickTrackLink,
       voteRule,
       creativeIdList = []
     } = this.state;
@@ -261,37 +257,7 @@ export default class Votes extends Component {
         <div style={{ marginTop: "2rem" }}>信息层编辑</div>
         <div style={{ border: "1px solid #ccc", padding: "1rem" }}>
           <div className="array-item">
-            <Label>热点曝光监控链接</Label>
-            <Input
-              type="url"
-              readOnly={readonly}
-              value={exposureTrackLink}
-              placeholder="请输入链接"
-              onChange={e => {
-                exposureTrackLink = e.target.value;
-                this.setState({ exposureTrackLink }, () =>
-                  this.props.onChange(this.state)
-                );
-              }}
-            />
-          </div>
-          <div className="array-item">
-            <Label>热点点击监控链接</Label>
-            <Input
-              type="url"
-              readOnly={readonly}
-              value={clickTrackLink}
-              placeholder="请输入链接"
-              onChange={e => {
-                clickTrackLink = e.target.value;
-                this.setState({ clickTrackLink }, () =>
-                  this.props.onChange(this.state)
-                );
-              }}
-            />
-          </div>
-          <div className="array-item">
-            <Label>投票弹窗图片*</Label>
+            <Label>投票弹窗icon*</Label>
             <Row style={{ marginBottom: "8px" }}>
               <Col>
                 {voteImageUrl ? (
@@ -632,36 +598,6 @@ export default class Votes extends Component {
                 </button>
               ) : null}
             </div>
-          </div>
-          <div className="array-item">
-            <Label>投票按钮曝光的监控链接</Label>
-            <Input
-              type="url"
-              readOnly={readonly}
-              value={voteBtnExposureTrackLink}
-              placeholder="请输入链接"
-              onChange={e => {
-                voteBtnExposureTrackLink = e.target.value;
-                this.setState({ voteBtnExposureTrackLink }, () =>
-                  this.props.onChange(this.state)
-                );
-              }}
-            />
-          </div>
-          <div className="array-item">
-            <Label>投票按钮点击监控链接</Label>
-            <Input
-              type="url"
-              readOnly={readonly}
-              value={voteBtnClickTrackLink}
-              placeholder="请输入链接"
-              onChange={e => {
-                voteBtnClickTrackLink = e.target.value;
-                this.setState({ voteBtnClickTrackLink }, () =>
-                  this.props.onChange(this.state)
-                );
-              }}
-            />
           </div>
           <div className="array-item">
             <Label>投票规则</Label>
