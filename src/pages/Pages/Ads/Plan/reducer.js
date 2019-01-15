@@ -146,6 +146,8 @@ function adPlanReducer(state = initialState, action) {
       return { ...state, currentPage: action.payload.currentPage };
     case constants.SET_RELAUNCH:
       return { ...state, reLaunch: action.payload.reLaunch };
+    case constants.SET_PLAN_RESULT:
+      return { ...state, planResult: action.payload.planResult };
     default:
       return state;
   }

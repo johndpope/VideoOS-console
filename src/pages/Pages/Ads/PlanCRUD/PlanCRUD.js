@@ -86,6 +86,7 @@ class SelectTheme extends Component {
       interactionTypeId: qs && (qs.id || qs.launchPlanId)
     });
     setWhichStep({ whichStep: 1 });
+
     getAdMaterials({ interactionType: (qs && qs.launchPlanId) || qs.id });
     if (qs && qs.launchPlanId) {
       getAdPlanInfo({ launchPlanId: qs.launchPlanId });
@@ -94,6 +95,7 @@ class SelectTheme extends Component {
 
   componentWillUnmount() {
     const { setFormData } = this.props;
+    opType = null;
     setFormData({});
   }
 
@@ -1418,9 +1420,11 @@ class SelectTheme extends Component {
         ) : null}
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <Button onClick={this._goBack.bind(this)}>返回</Button>
-          <Button onClick={this._gotoNext.bind(this)}>
-            {whichStep === 1 ? "下一步" : "确定"}
-          </Button>
+          {opType !== "read" && opType !== "update" ? (
+            <Button onClick={this._gotoNext.bind(this)}>
+              {whichStep === 1 ? "下一步" : "确定"}
+            </Button>
+          ) : null}
         </div>
       </div>
     );
