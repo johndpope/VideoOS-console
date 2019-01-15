@@ -161,7 +161,7 @@ const AddModel = ({
                           files && files[0] && files[0].name;
                         if (!/.zip$/gi.test(templateFileSourceName)) {
                           Feedback.toast.error("请上传*.zip文件");
-                          return;
+                          // return;
                         }
                         setFormData({ file: files && files[0] });
 
