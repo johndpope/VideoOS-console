@@ -292,11 +292,12 @@ export default class Bubbles extends Component {
                             />
                             {errorSchema &&
                               errorSchema.roles &&
-                              Object.keys(errorSchema.roles).map(
+                              errorSchema.roles[idx] &&
+                              Object.keys(errorSchema.roles[idx]).map(
                                 key =>
-                                  errorSchema.roles[key].roleAvatar
+                                  key === "roleAvatar"
                                     ? errorSchema.roles[
-                                        key
+                                        idx
                                       ].roleAvatar.__errors.map((err, idx) => (
                                         <li
                                           key={idx}
@@ -333,10 +334,11 @@ export default class Bubbles extends Component {
                       />
                       {errorSchema &&
                         errorSchema.roles &&
-                        Object.keys(errorSchema.roles).map(
+                        errorSchema.roles[idx] &&
+                        Object.keys(errorSchema.roles[idx]).map(
                           key =>
-                            errorSchema.roles[key].roleName
-                              ? errorSchema.roles[key].roleName.__errors.map(
+                            key === "roleName"
+                              ? errorSchema.roles[idx].roleName.__errors.map(
                                   (err, idx) => (
                                     <li key={idx} style={{ color: "#f86c6b" }}>
                                       {err}
