@@ -1,12 +1,7 @@
 {
   "key": "zhongcha",
   "type": "object",
-  "required": [
-    "creativeName",
-    "interactionTemplateId",
-    "videoUrl",
-    "closeAfter"
-  ],
+  "required": ["creativeName", "interactionTemplateId", "videoUrl"],
   "properties": {
     "SECTION": {
       "title": "基础配置",
@@ -37,10 +32,6 @@
       "title": "广告关闭按钮是否可见",
       "default": true
     },
-    "closeAfter": {
-      "type": "integer",
-      "title": "广告播放多久后可关闭"
-    },
     "exposureLinks": {
       "type": "array",
       "title": "广告曝光监控链接",
@@ -69,6 +60,17 @@
     "priority": {
       "type": "integer",
       "default": 10
+    },
+    "dependencies": {
+      "isShowClose": {
+        "properties": {
+          "closeAfter": {
+            "type": "integer",
+            "title": "广告播放多久后可关闭"
+          }
+        },
+        "required": ["closeAfter"]
+      }
     }
   }
 }
