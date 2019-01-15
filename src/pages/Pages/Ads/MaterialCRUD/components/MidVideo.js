@@ -66,7 +66,7 @@ export default class MidVideo extends Component {
       closeAfter,
       isShowAds = true,
       isShowClose = true,
-      exposureTrackLink,
+      linkUrl,
       creativeIdList = []
     } = this.state;
     const { creativeName, interactionTemplateId } = this.state;
