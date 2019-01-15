@@ -62,6 +62,11 @@ function adMaterialReducer(state = initialState, action) {
         ...state,
         isLoading: action.isLoading
       };
+    case constants.SET_CURRENT_PAGE:
+      return {
+        ...state,
+        currentPage: action.payload.currentPage
+      };
     default:
       return state;
   }
