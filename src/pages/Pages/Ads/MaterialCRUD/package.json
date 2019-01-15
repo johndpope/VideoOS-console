@@ -1,0 +1,6 @@
+{
+  "name": "MaterialCRUD",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./MaterialCRUD.js"
+}

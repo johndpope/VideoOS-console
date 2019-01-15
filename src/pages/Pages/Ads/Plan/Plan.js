@@ -1,9 +1,5 @@
 import React, { Component } from "react";
 import {
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
   Row,
   Col,
   InputGroup,
@@ -11,71 +7,18 @@ import {
   InputGroupText,
   Input
 } from "reactstrap";
-import { Pagination } from "@icedesign/base";
+import { Pagination, Button } from "@icedesign/base";
 import IceContainer from "@icedesign/container";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { AUTH_KEYS } from "src/maps";
 import { getUserInfoLocal } from "utils/authority";
 import injectReducer from "utils/injectReducer";
-import {
-  addPlanModalToggle,
-  newPlanDropDownToggle,
-  getAdPlans,
-  queryAllModelTypes,
-  deletePlanModalToggle,
-  addPlan,
-  deletePlan,
-  updatePlan,
-  setFormData,
-  setCurrentPage,
-  setEditState
-} from "./actions";
+import * as actions from "./actions";
 import reducer from "./reducer";
 import PlanTable from "./components/Table";
-import AddPlan from "./components/AddModal";
 import DeletePlan from "./components/DeleteModal";
-
-const isConflict = payload => {
-  let status = false;
-  const { launchTime, launchTimeLen, launchTimeType } = payload;
-  if (Array.isArray(launchTime) && launchTime.length > 1) {
-    let launchTimeLX = launchTime
-      .join(",")
-      .split(",")
-      .map(lt => {
-        const ltArr = lt.split(":");
-        return Number(launchTimeType) !== 2
-          ? Number(ltArr[0]) * 60 + Number(ltArr[1])
-          : Number(ltArr[0]) * 60 * 60 + Number(ltArr[1]) * 60;
-      });
-    launchTimeLX = launchTimeLX.sort((val1, val2) => {
-      let val = 0;
-      if (val1 > val2) {
-        val = 1;
-      }
-      if (val1 === val2) {
-        val = 0;
-      }
-      if (val1 < val2) {
-        val = -1;
-      }
-      return val;
-    });
-    const launchTimeWithIncrement = launchTimeLX.map(
-      ltlx => ltlx + Number(launchTimeLen)
-    );
-    launchTimeWithIncrement.forEach((ltwi, idx) => {
-      if (
-        ltwi >= launchTimeLX[idx + 1] &&
-        idx !== launchTimeWithIncrement.length - 1
-      ) {
-        status = true;
-      }
-    });
-  }
-  return status;
-};
+import LaunchPlan from "./components/LaunchModal";
 
 let params = { pageSize: 20 };
 
@@ -100,32 +43,17 @@ class AdPlan extends Component {
       addPlanModalToggle,
       newPlanDropDownToggle,
       deletePlanModalToggle,
-      addPlan,
+      launchPlanModalToggle,
       deletePlan,
-      updatePlan,
-      setFormData,
+      launchPlan,
       getAdPlans,
       setCurrentPage,
-      setEditState
+      setReLaunch
     } = this.props;
     const modelTypes = adPlan.modelTypes || [];
     const { authorList } = getUserInfoLocal();
     return (
       <div className="app">
-        <AddPlan
-          toggle={() => addPlanModalToggle({})}
-          shouldOpen={adPlan && adPlan.shouldAddPlanModalOpen}
-          addPlan={addPlan}
-          updatePlan={updatePlan}
-          setFormData={setFormData}
-          setEditState={setEditState}
-          formData={adPlan && adPlan.formData}
-          materialTypes={adPlan && adPlan.materialTypes}
-          record={adPlan && adPlan.record}
-          currentPage={adPlan && adPlan.currentPage}
-          isEdit={adPlan && adPlan.isEdit}
-          isConflict={isConflict}
-        />
         <DeletePlan
           toggle={deletePlanModalToggle}
           shouldOpen={adPlan && adPlan.shouldDeletePlanModalOpen}
@@ -134,31 +62,16 @@ class AdPlan extends Component {
           currentPage={adPlan && adPlan.currentPage}
           params={params}
         />
-        <IceContainer style={{ overflow: "visible" }}>
-          <Dropdown
-            isOpen={adPlan && adPlan.shouldNewPlanDropDownOpen}
-            toggle={newPlanDropDownToggle}
-          >
-            <DropdownToggle caret>新增投放计划</DropdownToggle>
-            <DropdownMenu>
-              {modelTypes &&
-                Array.isArray(modelTypes) &&
-                modelTypes.length > 0 &&
-                modelTypes.map((mt, idx) => (
-                  <DropdownItem
-                    key={idx}
-                    onClick={() => {
-                      addPlanModalToggle({
-                        interactionTypeId: mt.interactionId,
-                        interactionTypeName: mt.interactionTypeName
-                      });
-                    }}
-                  >
-                    {mt.interactionTypeName}
-                  </DropdownItem>
-                ))}
-            </DropdownMenu>
-          </Dropdown>
+        <LaunchPlan
+          toggle={launchPlanModalToggle}
+          shouldOpen={adPlan && adPlan.shouldLaunchPlanModalOpen}
+          launchPlan={launchPlan}
+          record={adPlan && adPlan.record}
+          currentPage={adPlan && adPlan.currentPage}
+          params={params}
+        />
+        <IceContainer>
+          <Button onClick={newPlanDropDownToggle}>新增投放计划</Button>
           <Row style={{ marginTop: "12px" }}>
             <Col>
               <InputGroup className="mb-4">
@@ -225,7 +138,9 @@ class AdPlan extends Component {
           isLoading={adPlan && adPlan.isLoading}
           dataSource={(adPlan && adPlan.planResult) || []}
           deletePlanModalToggle={deletePlanModalToggle}
+          launchPlanModalToggle={launchPlanModalToggle}
           addPlanModalToggle={addPlanModalToggle}
+          setReLaunch={setReLaunch}
           readOnly={
             authorList ? authorList.includes(AUTH_KEYS.PLAN_READ) : false
           }
@@ -262,17 +177,7 @@ class AdPlan extends Component {
 }
 
 const mapDispatchToProps = {
-  newPlanDropDownToggle,
-  addPlanModalToggle,
-  getAdPlans,
-  queryAllModelTypes,
-  deletePlanModalToggle,
-  deletePlan,
-  addPlan,
-  updatePlan,
-  setFormData,
-  setCurrentPage,
-  setEditState
+  ...actions
 };
 
 const mapStateToProps = state => {

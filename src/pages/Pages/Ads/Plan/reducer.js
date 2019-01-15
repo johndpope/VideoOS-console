@@ -9,147 +9,112 @@
  * case YOUR_ACTION_CONSTANT:
  *   return state.set('yourStateVariable', true);
  */
-import moment from "moment";
-import {
-  SHOW_ADD_PLAN,
-  HIDE_ADD_PLAN,
-  SHOW_DELETE_PLAN,
-  HIDE_DELETE_PLAN,
-  SHOW_NEW_PLAN_DROPDOWN,
-  HIDE_NEW_PLAN_DROPDOWN,
-  GET_AD_PLANS_REQUEST,
-  GET_AD_PLANS_SUCCESS,
-  GET_AD_PLANS_FAILURE,
-  GET_AD_PLAN_BYID_REQUEST,
-  GET_AD_PLAN_BYID_SUCCESS,
-  GET_AD_PLAN_BYID_FAILURE,
-  ADD_PLAN_REQUEST,
-  ADD_PLAN_SUCCESS,
-  ADD_PLAN_FAILURE,
-  UPDATE_PLAN_REQUEST,
-  UPDATE_PLAN_SUCCESS,
-  UPDATE_PLAN_FAILURE,
-  DELETE_PLAN_REQUEST,
-  DELETE_PLAN_SUCCESS,
-  DELETE_PLAN_FAILURE,
-  QUERY_ALL_MODELTYPES_REQUEST,
-  QUERY_ALL_MODELTYPES_SUCCESS,
-  QUERY_ALL_MODELTYPES_FAILURE,
-  SET_FORM_DATA,
-  GET_AD_METERIALS_REQUEST,
-  GET_AD_METERIALS_SUCCESS,
-  GET_AD_METERIALS_FAILURE,
-  SET_CURRENT_PAGE,
-  SET_EDIT_STATE
-} from "./constants";
+import * as constants from "./constants";
 // The initial state of the plan
 const initialState = {
   formData: {},
-  isEdit: false
+  isEdit: false,
+  reLaunch: true
 };
 
 function adPlanReducer(state = initialState, action) {
   switch (action.type) {
-    case SHOW_ADD_PLAN:
-    case HIDE_ADD_PLAN:
-      return Object.assign({}, state, {
+    case constants.SHOW_ADD_PLAN:
+    case constants.HIDE_ADD_PLAN:
+      return {
+        ...state,
         record: action.payload,
         shouldAddPlanModalOpen: action.shouldOpen
-      });
-    case SHOW_NEW_PLAN_DROPDOWN:
-      return Object.assign({}, state, {
+      };
+    case constants.SHOW_LAUNCH_PLAN:
+    case constants.HIDE_LAUNCH_PLAN:
+      return {
+        ...state,
+        record: action.payload,
+        shouldLaunchPlanModalOpen: action.shouldOpen
+      };
+    case constants.SHOW_NEW_PLAN_DROPDOWN:
+      return {
+        ...state,
         shouldNewPlanDropDownOpen: action.shouldOpen
-      });
-    case HIDE_NEW_PLAN_DROPDOWN:
-      return Object.assign({}, state, {
+      };
+    case constants.HIDE_NEW_PLAN_DROPDOWN:
+      return {
+        ...state,
         shouldNewPlanDropDownOpen: action.shouldOpen
-      });
-    case GET_AD_PLANS_REQUEST:
-      return Object.assign({}, state, {
+      };
+    case constants.GET_AD_PLANS_REQUEST:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case GET_AD_PLANS_SUCCESS:
-      return Object.assign({}, state, {
+      };
+    case constants.GET_AD_PLANS_SUCCESS:
+      return {
+        ...state,
         total: action.payload.totalRecord || 0,
         planResult: action.payload.launchPlanList || [],
         isLoading: action.isLoading
-      });
-    case GET_AD_PLANS_FAILURE:
-      return Object.assign({}, state, {
+      };
+    case constants.GET_AD_PLANS_FAILURE:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case GET_AD_PLAN_BYID_REQUEST:
-      return Object.assign({}, state, {
+      };
+    case constants.DELETE_PLAN_REQUEST:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case GET_AD_PLAN_BYID_SUCCESS:
-      const _payload = action.payload;
-      _payload.launchDateStart = moment(_payload.launchDateStart);
-      _payload.launchDateEnd = moment(_payload.launchDateEnd);
-      return Object.assign({}, state, {
-        formData: _payload,
+      };
+    case constants.DELETE_PLAN_SUCCESS:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case GET_AD_PLAN_BYID_FAILURE:
-      return Object.assign({}, state, {
+      };
+    case constants.DELETE_PLAN_FAILURE:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case ADD_PLAN_REQUEST:
-      return Object.assign({}, state, {
+      };
+    case constants.LAUNCH_PLAN_REQUEST:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case ADD_PLAN_SUCCESS:
-      return Object.assign({}, state, {
+      };
+    case constants.LAUNCH_PLAN_SUCCESS:
+      return {
+        ...state,
+        isLoading: action.isLoading,
+        reLaunch: false
+      };
+    case constants.LAUNCH_PLAN_FAILURE:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case ADD_PLAN_FAILURE:
-      return Object.assign({}, state, {
+      };
+    case constants.QUERY_ALL_MODELTYPES_REQUEST:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case UPDATE_PLAN_REQUEST:
-      return Object.assign({}, state, {
-        isLoading: action.isLoading
-      });
-    case UPDATE_PLAN_SUCCESS:
-      return Object.assign({}, state, {
-        isLoading: action.isLoading
-      });
-    case UPDATE_PLAN_FAILURE:
-      return Object.assign({}, state, {
-        isLoading: action.isLoading
-      });
-    case DELETE_PLAN_REQUEST:
-      return Object.assign({}, state, {
-        isLoading: action.isLoading
-      });
-    case DELETE_PLAN_SUCCESS:
-      return Object.assign({}, state, {
-        isLoading: action.isLoading
-      });
-    case DELETE_PLAN_FAILURE:
-      return Object.assign({}, state, {
-        isLoading: action.isLoading
-      });
-    case QUERY_ALL_MODELTYPES_REQUEST:
-      return Object.assign({}, state, {
-        isLoading: action.isLoading
-      });
-    case QUERY_ALL_MODELTYPES_SUCCESS:
-      return Object.assign({}, state, {
+      };
+    case constants.QUERY_ALL_MODELTYPES_SUCCESS:
+      return {
+        ...state,
         modelTypes: action.payload,
         isLoading: action.isLoading
-      });
-    case QUERY_ALL_MODELTYPES_FAILURE:
-      return Object.assign({}, state, {
+      };
+    case constants.QUERY_ALL_MODELTYPES_FAILURE:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case SHOW_DELETE_PLAN:
-    case HIDE_DELETE_PLAN:
-      return Object.assign({}, state, {
+      };
+    case constants.SHOW_DELETE_PLAN:
+    case constants.HIDE_DELETE_PLAN:
+      return {
+        ...state,
         record: action.payload,
         shouldDeletePlanModalOpen: action.shouldOpen
-      });
-    case SET_FORM_DATA:
+      };
+    case constants.SET_FORM_DATA:
       const payload = action.payload;
       if (typeof payload === "object") {
         if (Object.keys(payload).length === 0) {
@@ -160,24 +125,27 @@ function adPlanReducer(state = initialState, action) {
           });
         }
       }
-      return Object.assign({}, state);
-    case GET_AD_METERIALS_REQUEST:
-      return Object.assign({}, state, {
+      return { ...state };
+    case constants.GET_AD_METERIALS_REQUEST:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case GET_AD_METERIALS_SUCCESS:
-      return Object.assign({}, state, {
+      };
+    case constants.GET_AD_METERIALS_SUCCESS:
+      return {
+        ...state,
         isLoading: action.isLoading,
         materialTypes: action.payload.creativeInfoList || []
-      });
-    case GET_AD_METERIALS_FAILURE:
-      return Object.assign({}, state, {
+      };
+    case constants.GET_AD_METERIALS_FAILURE:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case SET_CURRENT_PAGE:
+      };
+    case constants.SET_CURRENT_PAGE:
       return { ...state, currentPage: action.payload.currentPage };
-    case SET_EDIT_STATE:
-      return { ...state, isEdit: action.payload.isEdit };
+    case constants.SET_RELAUNCH:
+      return { ...state, reLaunch: action.payload.reLaunch };
     default:
       return state;
   }

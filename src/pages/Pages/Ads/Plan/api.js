@@ -17,17 +17,6 @@ export const getAdPlans = params => {
   });
 };
 
-export const getAdPlanInfo = params => {
-  return axios({
-    headers: {
-      token: getAuthority()
-    },
-    url: `${OS_API}/launchplan/queryDetail?${qs.stringify(params)}`,
-    method: "get",
-    data: params
-  });
-};
-
 export async function deletePlan(params) {
   return axios({
     headers: {
@@ -39,23 +28,12 @@ export async function deletePlan(params) {
   });
 }
 
-export async function addPlan(params) {
+export async function launchPlan(params) {
   return axios({
     headers: {
       token: getAuthority()
     },
-    url: `${OS_API}/launchplan/add`,
-    method: "post",
-    data: params
-  });
-}
-
-export async function updatePlan(params) {
-  return axios({
-    headers: {
-      token: getAuthority()
-    },
-    url: `${OS_API}/launchplan/modify`,
+    url: `${OS_API}/launchplan/launch`,
     method: "post",
     data: params
   });

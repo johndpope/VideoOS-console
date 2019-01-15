@@ -11,7 +11,7 @@ import {
   AppSidebarToggler
 } from "@coreui/react";
 import { getUserInfoLocal, getAuthority } from "utils/authority";
-import { userLogout, resetPasswordModalToggle, resetPassword } from "./actions";
+import * as actions from "./actions";
 import reducer from "./reducer";
 import PasswordReset from "./PasswordReset";
 
@@ -72,9 +72,7 @@ class DefaultHeader extends Component {
 }
 
 const mapDispatchToProps = {
-  userLogout,
-  resetPasswordModalToggle,
-  resetPassword
+  ...actions
 };
 
 const mapStateToProps = state => {

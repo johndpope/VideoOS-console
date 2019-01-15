@@ -9,30 +9,7 @@
  * case YOUR_ACTION_CONSTANT:
  *   return state.set('yourStateVariable', true);
  */
-import {
-  GET_IATYPE_REQUEST,
-  GET_IATYPE_SUCCESS,
-  GET_IATYPE_FAILURE,
-  SHOW_ADDTYPE_MODAL,
-  HIDDEN_ADDTYPE_MODAL,
-  SHOW_DELETETYPE_MODAL,
-  HIDE_DELETETYPE_MODAL,
-  ADD_TYPE_REQUEST,
-  ADD_TYPE_SUCCESS,
-  ADD_TYPE_FAILURE,
-  DELETE_TYPE_REQUEST,
-  DELETE_TYPE_SUCCESS,
-  DELETE_TYPE_FAILURE,
-  UPDATE_TYPE_REQUEST,
-  UPDATE_TYPE_SUCCESS,
-  UPDATE_TYPE_FAILURE,
-  GET_IATYPE_BYID_REQUEST,
-  GET_IATYPE_BYID_SUCCESS,
-  GET_IATYPE_BYID_FAILURE,
-  SET_FORM_DATA,
-  SET_FILE_IPT_STATE,
-  SET_CURRENT_PAGE
-} from "./constants";
+import * as constants from "./constants";
 
 // The initial state of the login
 const initialState = {
@@ -42,83 +19,100 @@ const initialState = {
 
 function iaTypeReducer(state = initialState, action) {
   switch (action.type) {
-    case GET_IATYPE_REQUEST:
-      return Object.assign({}, state, {
+    case constants.GET_IATYPE_REQUEST:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case GET_IATYPE_SUCCESS:
-      return Object.assign({}, state, {
+      };
+    case constants.GET_IATYPE_SUCCESS:
+      return {
+        ...state,
         isLoading: action.isLoading,
         typeResult: action.payload.interactionInfoList,
         total: action.payload.totalRecord
-      });
-    case GET_IATYPE_FAILURE:
-      return Object.assign({}, state, {
+      };
+    case constants.GET_IATYPE_FAILURE:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case GET_IATYPE_BYID_REQUEST:
-      return Object.assign({}, state, {
+      };
+    case constants.GET_IATYPE_BYID_REQUEST:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case GET_IATYPE_BYID_SUCCESS:
-      return Object.assign({}, state, {
+      };
+    case constants.GET_IATYPE_BYID_SUCCESS:
+      return {
+        ...state,
         isLoading: action.isLoading,
         configInfo: action.payload && action.payload.configInfo,
         fileName: action.payload && action.payload.fileName
-      });
-    case GET_IATYPE_BYID_FAILURE:
-      return Object.assign({}, state, {
+      };
+    case constants.GET_IATYPE_BYID_FAILURE:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case ADD_TYPE_REQUEST:
-      return Object.assign({}, state, {
+      };
+    case constants.ADD_TYPE_REQUEST:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case ADD_TYPE_SUCCESS:
-      return Object.assign({}, state, {
+      };
+    case constants.ADD_TYPE_SUCCESS:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case ADD_TYPE_FAILURE:
-      return Object.assign({}, state, {
+      };
+    case constants.ADD_TYPE_FAILURE:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case DELETE_TYPE_REQUEST:
-      return Object.assign({}, state, {
+      };
+    case constants.DELETE_TYPE_REQUEST:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case DELETE_TYPE_SUCCESS:
-      return Object.assign({}, state, {
+      };
+    case constants.DELETE_TYPE_SUCCESS:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case DELETE_TYPE_FAILURE:
-      return Object.assign({}, state, {
+      };
+    case constants.DELETE_TYPE_FAILURE:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case UPDATE_TYPE_REQUEST:
-      return Object.assign({}, state, {
+      };
+    case constants.UPDATE_TYPE_REQUEST:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case UPDATE_TYPE_SUCCESS:
-      return Object.assign({}, state, {
+      };
+    case constants.UPDATE_TYPE_SUCCESS:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case UPDATE_TYPE_FAILURE:
-      return Object.assign({}, state, {
+      };
+    case constants.UPDATE_TYPE_FAILURE:
+      return {
+        ...state,
         isLoading: action.isLoading
-      });
-    case SHOW_ADDTYPE_MODAL:
-    case HIDDEN_ADDTYPE_MODAL:
-      return Object.assign({}, state, {
+      };
+    case constants.SHOW_ADDTYPE_MODAL:
+    case constants.HIDDEN_ADDTYPE_MODAL:
+      return {
+        ...state,
         record: action.payload || {},
         shouldAddTypeModalOpen: action.shouldOpen
-      });
-    case SHOW_DELETETYPE_MODAL:
-    case HIDE_DELETETYPE_MODAL:
-      return Object.assign({}, state, {
+      };
+    case constants.SHOW_DELETETYPE_MODAL:
+    case constants.HIDE_DELETETYPE_MODAL:
+      return {
+        ...state,
         shouldDeleteTypeModalOpen: action.shouldOpen,
         record: action.payload || {}
-      });
-    case SET_FORM_DATA:
+      };
+    case constants.SET_FORM_DATA:
       const payload = action.payload;
       if (typeof payload === "object") {
         if (Object.keys(payload).length === 0) {
@@ -129,10 +123,10 @@ function iaTypeReducer(state = initialState, action) {
           });
         }
       }
-      return Object.assign({}, state);
-    case SET_FILE_IPT_STATE:
+      return { ...state };
+    case constants.SET_FILE_IPT_STATE:
       return { ...state, showFileIpt: action.payload.showFileIpt };
-    case SET_CURRENT_PAGE:
+    case constants.SET_CURRENT_PAGE:
       return { ...state, currentPage: action.payload.currentPage };
     default:
       return state;

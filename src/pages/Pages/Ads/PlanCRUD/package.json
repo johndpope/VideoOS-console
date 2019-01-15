@@ -1,0 +1,6 @@
+{
+  "name": "PlanCRUD",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./PlanCRUD.js"
+}

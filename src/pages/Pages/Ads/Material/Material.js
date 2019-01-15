@@ -1,41 +1,19 @@
 import React, { Component } from "react";
-import {
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle
-} from "reactstrap";
-import { Pagination } from "@icedesign/base";
+import { Pagination, Button } from "@icedesign/base";
 import IceContainer from "@icedesign/container";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { AUTH_KEYS } from "src/maps";
 import { getUserInfoLocal } from "utils/authority";
 import injectReducer from "utils/injectReducer";
-import {
-  getAdMaterials,
-  addMaterialToggle,
-  addMaterial,
-  updateMaterial,
-  deleteMaterial,
-  newMaterialDropDownToggle,
-  deleteMaterialModalToggle,
-  queryAllModelTypes,
-  addMaterialFile,
-  saveFormData,
-  setCurrentPage,
-  setSwitcher,
-  setMaterialSchema
-} from "./actions";
+import * as actions from "./actions";
 import reducer from "./reducer";
 import MaterialTable from "./components/Table";
-import AddMaterial from "./components/AddModal";
 import DeleteMaterial from "./components/DeleteModal";
 
 class AdMaterial extends Component {
   componentDidMount() {
-    const { queryAllModelTypes, getAdMaterials } = this.props;
-    queryAllModelTypes();
+    const { getAdMaterials } = this.props;
     getAdMaterials();
   }
 
@@ -50,40 +28,15 @@ class AdMaterial extends Component {
     const {
       adMaterial,
       addMaterialToggle,
-      addMaterial,
-      updateMaterial,
       deleteMaterial,
       newMaterialDropDownToggle,
       deleteMaterialModalToggle,
-      addMaterialFile,
-      saveFormData,
       getAdMaterials,
-      setCurrentPage,
-      setSwitcher,
-      setMaterialSchema
+      setCurrentPage
     } = this.props;
-    const modelTypes = adMaterial.modelTypes || [];
     const { authorList } = getUserInfoLocal();
     return (
       <div className="app">
-        <AddMaterial
-          toggle={addMaterialToggle}
-          materialSchema={adMaterial && adMaterial.materialSchema}
-          formData={adMaterial && adMaterial.formData}
-          shouldOpen={adMaterial && adMaterial.shouldAddMaterialOpen}
-          addMaterialFile={addMaterialFile}
-          addMaterial={addMaterial}
-          updateMaterial={updateMaterial}
-          adMaterial={adMaterial}
-          saveFormData={saveFormData}
-          creativeIdList={adMaterial && adMaterial.creativeIdList}
-          record={adMaterial && adMaterial.record}
-          currentPage={adMaterial && adMaterial.currentPage}
-          fileData={adMaterial && adMaterial.fileData}
-          setSwitcher={setSwitcher}
-          uiSchemaConf={adMaterial && adMaterial.uiSchemaConf}
-          setMaterialSchema={setMaterialSchema}
-        />
         <DeleteMaterial
           deleteMaterial={deleteMaterial}
           toggle={deleteMaterialModalToggle}
@@ -91,31 +44,8 @@ class AdMaterial extends Component {
           record={adMaterial && adMaterial.record}
           currentPage={adMaterial && adMaterial.currentPage}
         />
-        <IceContainer style={{ overflow: "visible" }}>
-          <Dropdown
-            isOpen={adMaterial && adMaterial.shouldNewMaterialDropDownOpen}
-            toggle={newMaterialDropDownToggle}
-          >
-            <DropdownToggle caret>新增素材</DropdownToggle>
-            <DropdownMenu>
-              {modelTypes &&
-                Array.isArray(modelTypes) &&
-                modelTypes.length > 0 &&
-                modelTypes.map((mt, idx) => (
-                  <DropdownItem
-                    key={idx}
-                    onClick={() => {
-                      addMaterialToggle({
-                        interactionTypeId: mt.interactionId,
-                        interactionTypeName: mt.interactionTypeName
-                      });
-                    }}
-                  >
-                    {mt.interactionTypeName}
-                  </DropdownItem>
-                ))}
-            </DropdownMenu>
-          </Dropdown>
+        <IceContainer>
+          <Button onClick={newMaterialDropDownToggle}>新增素材</Button>
         </IceContainer>
         <MaterialTable
           isLoading={adMaterial && adMaterial.isLoading}
@@ -155,19 +85,7 @@ class AdMaterial extends Component {
 }
 
 const mapDispatchToProps = {
-  newMaterialDropDownToggle,
-  deleteMaterialModalToggle,
-  addMaterialToggle,
-  queryAllModelTypes,
-  addMaterialFile,
-  addMaterial,
-  updateMaterial,
-  saveFormData,
-  getAdMaterials,
-  deleteMaterial,
-  setCurrentPage,
-  setSwitcher,
-  setMaterialSchema
+  ...actions
 };
 
 const mapStateToProps = state => {

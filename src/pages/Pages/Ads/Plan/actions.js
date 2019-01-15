@@ -16,79 +16,17 @@
  */
 
 import { Feedback } from "@icedesign/base";
+import { push } from "react-router-redux";
+import qs from "querystring";
 import * as api from "./api";
-import {
-  SHOW_ADD_PLAN,
-  HIDE_ADD_PLAN,
-  SHOW_DELETE_PLAN,
-  HIDE_DELETE_PLAN,
-  SHOW_NEW_PLAN_DROPDOWN,
-  HIDE_NEW_PLAN_DROPDOWN,
-  GET_AD_PLANS_REQUEST,
-  GET_AD_PLANS_SUCCESS,
-  GET_AD_PLANS_FAILURE,
-  GET_AD_PLAN_BYID_REQUEST,
-  GET_AD_PLAN_BYID_SUCCESS,
-  GET_AD_PLAN_BYID_FAILURE,
-  ADD_PLAN_REQUEST,
-  ADD_PLAN_SUCCESS,
-  ADD_PLAN_FAILURE,
-  UPDATE_PLAN_REQUEST,
-  UPDATE_PLAN_SUCCESS,
-  UPDATE_PLAN_FAILURE,
-  DELETE_PLAN_REQUEST,
-  DELETE_PLAN_SUCCESS,
-  DELETE_PLAN_FAILURE,
-  QUERY_ALL_MODELTYPES_REQUEST,
-  QUERY_ALL_MODELTYPES_SUCCESS,
-  QUERY_ALL_MODELTYPES_FAILURE,
-  SET_FORM_DATA,
-  GET_AD_METERIALS_REQUEST,
-  GET_AD_METERIALS_SUCCESS,
-  GET_AD_METERIALS_FAILURE,
-  // GET_PLAN_INFO_REQUEST,
-  // GET_PLAN_INFO_SUCCESS,
-  // GET_PLAN_INFO_FAILURE,
-  SET_CURRENT_PAGE,
-  SET_EDIT_STATE
-} from "./constants";
+import * as constants from "./constants";
 
-let newPlanDropDownSwitch = false;
-let addPlanSwitch = false;
 let deletePlanSwitch = false;
-
-const showNewPlanDropDown = () => {
-  return {
-    type: SHOW_NEW_PLAN_DROPDOWN,
-    shouldOpen: true
-  };
-};
-
-const hideNewPlanDropDown = () => {
-  return {
-    type: HIDE_NEW_PLAN_DROPDOWN,
-    shouldOpen: false
-  };
-};
-
-const showAddPlan = payload => {
-  return {
-    type: SHOW_ADD_PLAN,
-    shouldOpen: true,
-    payload
-  };
-};
-
-const hideAddPlan = () => {
-  return {
-    type: HIDE_ADD_PLAN,
-    shouldOpen: false
-  };
-};
+let launchPlanSwitch = false;
 
 const showDeletePlan = payload => {
   return {
-    type: SHOW_DELETE_PLAN,
+    type: constants.SHOW_DELETE_PLAN,
     shouldOpen: true,
     payload
   };
@@ -96,21 +34,36 @@ const showDeletePlan = payload => {
 
 const hideDeletePlan = () => {
   return {
-    type: HIDE_DELETE_PLAN,
+    type: constants.HIDE_DELETE_PLAN,
+    shouldOpen: false
+  };
+};
+
+const showLaunchPlan = payload => {
+  return {
+    type: constants.SHOW_LAUNCH_PLAN,
+    shouldOpen: true,
+    payload
+  };
+};
+
+const hideLaunchPlan = () => {
+  return {
+    type: constants.HIDE_LAUNCH_PLAN,
     shouldOpen: false
   };
 };
 
 const getAdPlansRequest = () => {
   return {
-    type: GET_AD_PLANS_REQUEST,
+    type: constants.GET_AD_PLANS_REQUEST,
     isLoading: true
   };
 };
 
 const getAdPlansSuccess = payload => {
   return {
-    type: GET_AD_PLANS_SUCCESS,
+    type: constants.GET_AD_PLANS_SUCCESS,
     isLoading: false,
     payload
   };
@@ -118,106 +71,63 @@ const getAdPlansSuccess = payload => {
 
 const getAdPlansFailure = () => {
   return {
-    type: GET_AD_PLANS_FAILURE,
-    isLoading: false
-  };
-};
-
-const getAdPlanByIdRequest = () => {
-  return {
-    type: GET_AD_PLAN_BYID_REQUEST,
-    isLoading: true
-  };
-};
-
-const getAdPlanByIdSuccess = payload => {
-  return {
-    type: GET_AD_PLAN_BYID_SUCCESS,
-    isLoading: false,
-    payload
-  };
-};
-
-const getAdPlanByIdFailure = () => {
-  return {
-    type: GET_AD_PLAN_BYID_FAILURE,
-    isLoading: false
-  };
-};
-
-const addPlanRequest = () => {
-  return {
-    type: ADD_PLAN_REQUEST,
-    isLoading: true
-  };
-};
-
-const addPlanSuccess = () => {
-  return {
-    type: ADD_PLAN_SUCCESS,
-    isLoading: false
-  };
-};
-
-const addPlanFailure = () => {
-  return {
-    type: ADD_PLAN_FAILURE,
-    isLoading: false
-  };
-};
-
-const updatePlanRequest = () => {
-  return {
-    type: UPDATE_PLAN_REQUEST,
-    isLoading: true
-  };
-};
-
-const updatePlanSuccess = () => {
-  return {
-    type: UPDATE_PLAN_SUCCESS,
-    isLoading: false
-  };
-};
-
-const updatePlanFailure = () => {
-  return {
-    type: UPDATE_PLAN_FAILURE,
+    type: constants.GET_AD_PLANS_FAILURE,
     isLoading: false
   };
 };
 
 const deletePlanRequest = () => {
   return {
-    type: DELETE_PLAN_REQUEST,
+    type: constants.DELETE_PLAN_REQUEST,
     isLoading: true
   };
 };
 
 const deletePlanSuccess = () => {
   return {
-    type: DELETE_PLAN_SUCCESS,
+    type: constants.DELETE_PLAN_SUCCESS,
     isLoading: false
   };
 };
 
 const deletePlanFailure = () => {
   return {
-    type: DELETE_PLAN_FAILURE,
+    type: constants.DELETE_PLAN_FAILURE,
+    isLoading: false
+  };
+};
+
+const launchPlanRequest = () => {
+  return {
+    type: constants.LAUNCH_PLAN_REQUEST,
+    isLoading: true
+  };
+};
+
+const launchPlanSuccess = () => {
+  return {
+    type: constants.LAUNCH_PLAN_SUCCESS,
+    isLoading: false
+  };
+};
+
+const launchPlanFailure = () => {
+  return {
+    type: constants.LAUNCH_PLAN_FAILURE,
     isLoading: false
   };
 };
 
 const queryAllModelTypesRequest = () => {
   return {
-    type: QUERY_ALL_MODELTYPES_REQUEST,
+    type: constants.QUERY_ALL_MODELTYPES_REQUEST,
     isLoading: true
   };
 };
 
 const queryAllModelTypesSuccess = payload => {
   return {
-    type: QUERY_ALL_MODELTYPES_SUCCESS,
+    type: constants.QUERY_ALL_MODELTYPES_SUCCESS,
     payload,
     isLoading: false
   };
@@ -225,21 +135,21 @@ const queryAllModelTypesSuccess = payload => {
 
 const queryAllModelTypesFailure = () => {
   return {
-    type: QUERY_ALL_MODELTYPES_FAILURE,
+    type: constants.QUERY_ALL_MODELTYPES_FAILURE,
     isLoading: false
   };
 };
 
 const getAdMaterialsRequest = () => {
   return {
-    type: GET_AD_METERIALS_REQUEST,
+    type: constants.GET_AD_METERIALS_REQUEST,
     isLoading: true
   };
 };
 
 const getAdMaterialsSuccess = payload => {
   return {
-    type: GET_AD_METERIALS_SUCCESS,
+    type: constants.GET_AD_METERIALS_SUCCESS,
     isLoading: false,
     payload
   };
@@ -247,7 +157,7 @@ const getAdMaterialsSuccess = payload => {
 
 const getAdMaterialsFailure = () => {
   return {
-    type: GET_AD_METERIALS_FAILURE,
+    type: constants.GET_AD_METERIALS_FAILURE,
     isLoading: false
   };
 };
@@ -288,88 +198,6 @@ export const getAdPlans = (
   };
 };
 
-export const addPlan = params => {
-  return async dispatch => {
-    dispatch(addPlanRequest());
-    try {
-      const currentPage = (params && params.currentPage) || 1;
-      delete params.currentPage;
-      const _params = { ...params };
-      if (_params.launchTimeType === "0" || _params.launchTimeType === "2") {
-        _params.launchDateStart = `${_params.launchDateStart.years()}-${
-          _params.launchDateStart.months() > 8
-            ? _params.launchDateStart.months() + 1
-            : "0" + (_params.launchDateStart.months() + 1)
-        }-${
-          _params.launchDateStart.date() > 9
-            ? _params.launchDateStart.date()
-            : "0" + _params.launchDateStart.date()
-        }`;
-        _params.launchDateEnd = `${_params.launchDateEnd.years()}-${
-          _params.launchDateEnd.months() > 8
-            ? _params.launchDateEnd.months() + 1
-            : "0" + (_params.launchDateEnd.months() + 1)
-        }-${
-          _params.launchDateEnd.date() > 9
-            ? _params.launchDateEnd.date()
-            : "0" + _params.launchDateEnd.date()
-        }`;
-      }
-
-      const response = await api.addPlan(_params);
-
-      if (response.status === 200 && response.data.resCode === "00") {
-        dispatch(addPlanSuccess(response.data));
-        dispatch(addPlanModalToggle());
-        dispatch(
-          getAdPlans({
-            currentPage,
-            pageSize: 20
-          })
-        );
-        Feedback.toast.show(response.data && response.data.resMsg);
-      } else {
-        dispatch(addPlanFailure(response.data));
-        Feedback.toast.error(response.data && response.data.resMsg);
-      }
-
-      return response.data;
-    } catch (error) {
-      dispatch(addPlanFailure());
-    }
-  };
-};
-
-export const updatePlan = params => {
-  return async dispatch => {
-    dispatch(updatePlanRequest());
-    try {
-      const currentPage = (params && params.currentPage) || 1;
-      delete params.currentPage;
-      const response = await api.updatePlan(params);
-
-      if (response.status === 200 && response.data.resCode === "00") {
-        dispatch(updatePlanSuccess(response.data));
-        dispatch(addPlanModalToggle());
-        dispatch(
-          getAdPlans({
-            currentPage,
-            pageSize: 20
-          })
-        );
-        Feedback.toast.show(response.data && response.data.resMsg);
-      } else {
-        dispatch(updatePlanFailure(response.data));
-        Feedback.toast.error(response.data && response.data.resMsg);
-      }
-
-      return response.data;
-    } catch (error) {
-      dispatch(updatePlanFailure());
-    }
-  };
-};
-
 export const deletePlan = params => {
   return async dispatch => {
     dispatch(deletePlanRequest());
@@ -404,26 +232,53 @@ export const deletePlan = params => {
   };
 };
 
+export const launchPlan = params => {
+  return async dispatch => {
+    dispatch(launchPlanRequest());
+    try {
+      const currentPage = (params && params.currentPage) || 1;
+      const launchTimeType = params && params.launchTimeType;
+      const interactionTypeId = params && params.interactionTypeId;
+      delete params.currentPage;
+      const response = await api.launchPlan(params);
+
+      if (response.status === 200 && response.data.resCode === "00") {
+        dispatch(launchPlanSuccess(response.data));
+        dispatch(launchPlanModalToggle());
+        dispatch(
+          getAdPlans({
+            currentPage,
+            pageSize: 20,
+            interactionTypeId,
+            launchTimeType
+          })
+        );
+        Feedback.toast.show(response.data && response.data.resMsg);
+      } else {
+        dispatch(launchPlanFailure(response.data));
+        Feedback.toast.error(response.data && response.data.resMsg);
+      }
+
+      return response.data;
+    } catch (error) {
+      dispatch(launchPlanFailure());
+    }
+  };
+};
+
 export const addPlanModalToggle = payload => {
   return dispatch => {
-    addPlanSwitch = !addPlanSwitch;
-    if (addPlanSwitch) {
-      if (payload && payload.opType) {
-        dispatch(
-          getAdPlanInfo({ launchPlanId: payload && payload.launchPlanId })
-        );
-      }
-      if (payload && payload.interactionTypeId) {
-        dispatch(
-          getAdMaterials({ interactionType: payload.interactionTypeId })
-        );
-      }
-      dispatch(setFormData(payload));
-      dispatch(showAddPlan(payload));
-    } else {
-      dispatch(setFormData({}));
-      dispatch(hideAddPlan());
-    }
+    dispatch(
+      push(
+        `/tf/plan/read?${qs.stringify({
+          launchPlanId: payload.launchPlanId,
+          opType: payload.opType,
+          interactionTypeName: payload.interactionTypeName
+            ? payload.interactionTypeName
+            : ""
+        })}`
+      )
+    );
   };
 };
 
@@ -438,14 +293,20 @@ export const deletePlanModalToggle = payload => {
   };
 };
 
+export const launchPlanModalToggle = payload => {
+  return dispatch => {
+    launchPlanSwitch = !launchPlanSwitch;
+    if (launchPlanSwitch) {
+      dispatch(showLaunchPlan(payload));
+    } else {
+      dispatch(hideLaunchPlan());
+    }
+  };
+};
+
 export const newPlanDropDownToggle = () => {
   return dispatch => {
-    newPlanDropDownSwitch = !newPlanDropDownSwitch;
-    if (newPlanDropDownSwitch) {
-      dispatch(showNewPlanDropDown());
-    } else {
-      dispatch(hideNewPlanDropDown());
-    }
+    dispatch(push(`/tf/plan/selT`));
   };
 };
 
@@ -475,7 +336,7 @@ export const queryAllModelTypes = params => {
 
 export const setFormData = payload => {
   return {
-    type: SET_FORM_DATA,
+    type: constants.SET_FORM_DATA,
     payload
   };
 };
@@ -500,36 +361,16 @@ export const getAdMaterials = params => {
   };
 };
 
-export const getAdPlanInfo = params => {
-  return async dispatch => {
-    dispatch(getAdPlanByIdRequest());
-    try {
-      const response = await api.getAdPlanInfo(params);
-
-      if (response.status === 200 && response.data.resCode === "00") {
-        dispatch(getAdPlanByIdSuccess(response.data));
-      } else {
-        dispatch(getAdPlanByIdFailure(response.data));
-        Feedback.toast.error(response.data && response.data.resMsg);
-      }
-
-      return response.data;
-    } catch (error) {
-      dispatch(getAdPlanByIdFailure(error));
-    }
-  };
-};
-
 export const setCurrentPage = payload => {
   return {
-    type: SET_CURRENT_PAGE,
+    type: constants.SET_CURRENT_PAGE,
     payload
   };
 };
 
-export const setEditState = payload => {
+export const setReLaunch = payload => {
   return {
-    type: SET_EDIT_STATE,
+    type: constants.SET_RELAUNCH,
     payload
   };
 };

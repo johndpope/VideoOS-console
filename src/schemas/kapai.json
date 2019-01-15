@@ -29,24 +29,12 @@
   },
   "title": "",
   "type": "object",
-  "required": [
-    "creativeName",
-    "interactionTypeId",
-    "interactionTemplateId",
-    "hotspotArray"
-  ],
+  "required": ["creativeName", "interactionTemplateId", "hotspotArray"],
   "properties": {
     "creativeName": {
       "title": "素材名称",
       "type": "string",
       "maxLength": 30
-    },
-    "interactionTypeId": {
-      "title": "所属应用",
-      "type": "integer",
-      "default": "请选择",
-      "enum": [],
-      "enumNames": []
     },
     "interactionTemplateId": {
       "title": "素材主题",
@@ -76,7 +64,7 @@
     "collect": {
       "type": "object",
       "title": "3.收集成功后续",
-      "required": ["imageUrl", "btnTitle", "linkType"],
+      "required": ["imageUrl", "btnTitle", "linkType", "content"],
       "properties": {
         "content": {
           "type": "string",
@@ -127,6 +115,11 @@
           "title": ""
         }
       }
+    },
+    "infoTrackLink": {
+      "type": "integer",
+      "title": "“领奖成功”按钮",
+      "default": 1
     }
   }
 }

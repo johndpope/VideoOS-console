@@ -1,23 +1,16 @@
 {
-  "key": "zhangcha",
+  "key": "zhongcha",
   "type": "object",
-  "required": [
-    "creativeName",
-    "interactionTypeId",
-    "interactionTemplateId",
-    "videoUrl"
-  ],
+  "required": ["creativeName", "interactionTemplateId", "videoUrl"],
   "properties": {
+    "SECTION": {
+      "title": "基础配置",
+      "type": "string"
+    },
     "creativeName": {
       "title": "素材名称",
       "type": "string",
       "maxLength": 30
-    },
-    "interactionTypeId": {
-      "title": "所属应用",
-      "type": "integer",
-      "enum": [],
-      "enumNames": []
     },
     "interactionTemplateId": {
       "title": "素材主题",
@@ -38,10 +31,6 @@
       "type": "boolean",
       "title": "广告关闭按钮是否可见",
       "default": true
-    },
-    "closeAfter": {
-      "type": "integer",
-      "title": "广告播放多久后可关闭"
     },
     "exposureLinks": {
       "type": "array",
@@ -71,6 +60,17 @@
     "priority": {
       "type": "integer",
       "default": 10
+    },
+    "dependencies": {
+      "isShowClose": {
+        "properties": {
+          "closeAfter": {
+            "type": "integer",
+            "title": "广告播放多久后可关闭"
+          }
+        },
+        "required": ["closeAfter"]
+      }
     }
   }
 }

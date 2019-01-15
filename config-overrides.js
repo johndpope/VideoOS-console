@@ -27,6 +27,7 @@ module.exports = function override(config) {
     utils: `${__dirname}/src/utils`,
     Pages: `${__dirname}/src/pages/Pages`,
     schemas: `${__dirname}/src/schemas`,
+    venders: `${__dirname}/src/venders`,
     src: `${__dirname}/src`
   };
 

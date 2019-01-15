@@ -69,7 +69,7 @@ export default class MaterialTable extends Component {
           <Table.Column title="新增时间" dataIndex="createDate" width={80} />
           <Table.Column title="素材名称" dataIndex="creativeName" width={120} />
           <Table.Column
-            title="素材类型"
+            title="素材应用"
             dataIndex="interactionName"
             width={120}
           />

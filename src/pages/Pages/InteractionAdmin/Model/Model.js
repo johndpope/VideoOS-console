@@ -7,22 +7,7 @@ import { compose } from "redux";
 import { AUTH_KEYS } from "src/maps";
 import { getUserInfoLocal } from "utils/authority";
 import injectReducer from "utils/injectReducer";
-import {
-  getIaModels,
-  addModelToggle,
-  addModel,
-  uploadModelFile,
-  queryAllModelTypes,
-  deleteModel,
-  deleteModelModalToggle,
-  updateModel,
-  setFormData,
-  downloadModelTemplateFile,
-  updateModelFile,
-  setCurrentPage,
-  setFileIptState,
-  setUploadModelFileInfo
-} from "./actions";
+import * as actions from "./actions";
 import reducer from "./reducer";
 import ModalTable from "./components/Table";
 import AddModel from "./components/AddModel";
@@ -178,20 +163,7 @@ class IAModel extends Component {
 }
 
 const mapDispatchToProps = {
-  getIaModels,
-  addModelToggle,
-  addModel,
-  uploadModelFile,
-  queryAllModelTypes,
-  deleteModel,
-  deleteModelModalToggle,
-  updateModel,
-  setFormData,
-  downloadModelTemplateFile,
-  updateModelFile,
-  setCurrentPage,
-  setFileIptState,
-  setUploadModelFileInfo
+  ...actions
 };
 
 const mapStateToProps = state => {

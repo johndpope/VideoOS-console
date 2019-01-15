@@ -10,29 +10,7 @@
  *   return state.set('yourStateVariable', true);
  */
 
-import {
-  GET_ACCOUNTS_REQUEST,
-  GET_ACCOUNTS_SUCCESS,
-  GET_ACCOUNTS_FAIL,
-  SHOW_ADDACCOUNT_MODAL,
-  HIDE_ADDACCOUNT_MODAL,
-  ADD_ACCOUNT_REQUEST,
-  ADD_ACCOUNT_SUCCESS,
-  ADD_ACCOUNT_FAIL,
-  UPDATE_ACCOUNT_REQUEST,
-  UPDATE_ACCOUNT_SUCCESS,
-  UPDATE_ACCOUNT_FAILURE,
-  DELETE_ACCOUNT_REQUEST,
-  DELETE_ACCOUNT_SUCCESS,
-  DELETE_ACCOUNT_FAILURE,
-  QUERY_ALL_ACCOUNTTYPES_REQUEST,
-  QUERY_ALL_ACCOUNTTYPES_SUCCESS,
-  QUERY_ALL_ACCOUNTTYPES_FAILURE,
-  SHOW_DELETEACCOUNT_MODAL,
-  HIDE_DELETEACCOUNT_MODAL,
-  SET_CURRENT_PAGE,
-  SET_FORM_DATA
-} from "./constants";
+import * as constants from "./constants";
 
 // The initial state of the account
 const initialState = {
@@ -41,85 +19,102 @@ const initialState = {
 
 function aaAccountReducer(state = initialState, action) {
   switch (action.type) {
-    case GET_ACCOUNTS_REQUEST:
-      return Object.assign({}, state, {
+    case constants.GET_ACCOUNTS_REQUEST:
+      return {
+        ...state,
         isLoading: true
-      });
-    case GET_ACCOUNTS_SUCCESS:
-      return Object.assign({}, state, {
+      };
+    case constants.GET_ACCOUNTS_SUCCESS:
+      return {
+        ...state,
         isLoading: false,
         accountResult: action.payload.userInfoList || [],
         total: action.payload.totalRecord
-      });
-    case GET_ACCOUNTS_FAIL:
-      return Object.assign({}, state, {
+      };
+    case constants.GET_ACCOUNTS_FAIL:
+      return {
+        ...state,
         isLoading: false
-      });
-    case ADD_ACCOUNT_REQUEST:
-      return Object.assign({}, state, {
+      };
+    case constants.ADD_ACCOUNT_REQUEST:
+      return {
+        ...state,
         isLoading: true
-      });
-    case ADD_ACCOUNT_SUCCESS:
-      return Object.assign({}, state, {
+      };
+    case constants.ADD_ACCOUNT_SUCCESS:
+      return {
+        ...state,
         isLoading: false
-      });
-    case ADD_ACCOUNT_FAIL:
-      return Object.assign({}, state, {
+      };
+    case constants.ADD_ACCOUNT_FAIL:
+      return {
+        ...state,
         addAccountResErr: action.payload.resMsg,
         isLoading: false
-      });
-    case UPDATE_ACCOUNT_REQUEST:
-      return Object.assign({}, state, {
+      };
+    case constants.UPDATE_ACCOUNT_REQUEST:
+      return {
+        ...state,
         isLoading: true
-      });
-    case UPDATE_ACCOUNT_SUCCESS:
-      return Object.assign({}, state, {
+      };
+    case constants.UPDATE_ACCOUNT_SUCCESS:
+      return {
+        ...state,
         isLoading: false
-      });
-    case UPDATE_ACCOUNT_FAILURE:
-      return Object.assign({}, state, {
+      };
+    case constants.UPDATE_ACCOUNT_FAILURE:
+      return {
+        ...state,
         isLoading: false
-      });
-    case DELETE_ACCOUNT_REQUEST:
-      return Object.assign({}, state, {
+      };
+    case constants.DELETE_ACCOUNT_REQUEST:
+      return {
+        ...state,
         isLoading: true
-      });
-    case DELETE_ACCOUNT_SUCCESS:
-      return Object.assign({}, state, {
+      };
+    case constants.DELETE_ACCOUNT_SUCCESS:
+      return {
+        ...state,
         isLoading: false
-      });
-    case DELETE_ACCOUNT_FAILURE:
-      return Object.assign({}, state, {
+      };
+    case constants.DELETE_ACCOUNT_FAILURE:
+      return {
+        ...state,
         isLoading: false
-      });
-    case QUERY_ALL_ACCOUNTTYPES_REQUEST:
-      return Object.assign({}, state, {
+      };
+    case constants.QUERY_ALL_ACCOUNTTYPES_REQUEST:
+      return {
+        ...state,
         isLoading: true
-      });
-    case QUERY_ALL_ACCOUNTTYPES_SUCCESS:
-      return Object.assign({}, state, {
+      };
+    case constants.QUERY_ALL_ACCOUNTTYPES_SUCCESS:
+      return {
+        ...state,
         roleTypes: action.payload,
         isLoading: false
-      });
-    case QUERY_ALL_ACCOUNTTYPES_FAILURE:
-      return Object.assign({}, state, {
+      };
+    case constants.QUERY_ALL_ACCOUNTTYPES_FAILURE:
+      return {
+        ...state,
         isLoading: false
-      });
-    case SHOW_ADDACCOUNT_MODAL:
-    case HIDE_ADDACCOUNT_MODAL:
-      return Object.assign({}, state, {
+      };
+    case constants.SHOW_ADDACCOUNT_MODAL:
+    case constants.HIDE_ADDACCOUNT_MODAL:
+      return {
+        ...state,
         record: action.payload,
         shouldAddAccountModalOpen: action.shouldOpen
-      });
-    case SHOW_DELETEACCOUNT_MODAL:
-    case HIDE_DELETEACCOUNT_MODAL:
-      return Object.assign({}, state, {
+      };
+    case constants.SHOW_DELETEACCOUNT_MODAL:
+    case constants.HIDE_DELETEACCOUNT_MODAL:
+      return {
+        ...state,
         record: { userId: (action.payload && action.payload.userId) || "" },
         shouldDeleteAccountModalOpen: action.shouldOpen
-      });
-    case SET_CURRENT_PAGE:
+      };
+    case constants.SET_CURRENT_PAGE:
       return { ...state, currentPage: action.payload.currentPage };
-    case SET_FORM_DATA:
+    case constants.SET_FORM_DATA:
       const payload = action.payload;
       if (typeof payload === "object") {
         if (Object.keys(payload).length === 0) {
@@ -130,7 +125,7 @@ function aaAccountReducer(state = initialState, action) {
           });
         }
       }
-      return Object.assign({}, state);
+      return { ...state };
     default:
       return state;
   }

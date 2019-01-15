@@ -16,7 +16,7 @@ import { FormBinderWrapper, FormBinder } from "@icedesign/form-binder";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import injectReducer from "utils/injectReducer";
-import { userLogin, passwordForgetTip, contactUsTip } from "./actions";
+import * as actions from "./actions";
 import reducer from "./reducer";
 
 class Login extends Component {
@@ -137,9 +137,7 @@ class Login extends Component {
 }
 
 const mapDispatchToProps = {
-  userLogin,
-  passwordForgetTip,
-  contactUsTip
+  ...actions
 };
 
 const mapStateToProps = state => {
