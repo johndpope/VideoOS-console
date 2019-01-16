@@ -1143,9 +1143,8 @@ class SelectTheme extends Component {
           Array.isArray(formData.infoTrackLink) &&
           formData.infoTrackLink.map((hstl, idx) => (
             <div>
-              <h5>{`${(formData && formData.interactionTypeName) || ""}热点${
-                idx !== 0 ? idx + 1 : ""
-              }`}</h5>
+              <h5>{`${(formData && formData.infoTrackLinkTitle) ||
+                "信息层"}热点${idx !== 0 ? idx + 1 : ""}`}</h5>
               <InputGroup className="mb-4">
                 <InputGroupAddon addonType="prepend">
                   <InputGroupText>曝光监控链接：</InputGroupText>

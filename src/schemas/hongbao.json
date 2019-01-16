@@ -7,6 +7,7 @@
     "imageUrl",
     "title",
     "infoTitle",
+    "infoWord",
     "infoImageUrl"
   ],
   "properties": {
@@ -50,13 +51,11 @@
     },
     "infoWord": {
       "type": "string",
-      "title": "红包口令",
-      "default": ""
+      "title": "红包口令"
     },
     "infoInstructions": {
       "type": "string",
       "title": "兑换说明",
-      "default": "",
       "maxLength": 50
     },
     "infoTrackLink": {
