@@ -689,14 +689,14 @@ export default class Cards extends Component {
         <div style={{ marginTop: "2rem" }}>信息层编辑</div>
         <div style={{ border: "1px solid #ccc", padding: "1rem" }}>
           <div className="array-item">
-            <Label>收集成功弹窗内容*</Label>
+            <Label>卡牌收集说明</Label>
             <textarea
               style={{
                 border: "1px solid rgb(204, 204, 204)",
                 borderRadius: "0.25rem",
                 width: "100%"
               }}
-              placeholder="请输入内容，非必填"
+              placeholder="卡牌收集说明"
               value={(collect && collect.content) || ""}
               maxLength={50}
               required
