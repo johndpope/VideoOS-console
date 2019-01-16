@@ -21,7 +21,9 @@ const DeletePlan = ({
         <Button
           type="primary"
           onClick={() => {
-            deletePlan({ ...record, ...params, currentPage });
+            let _record = { ...record };
+            delete _record.launchTimeType;
+            deletePlan({ ..._record, ...params, currentPage });
           }}
         >
           确认

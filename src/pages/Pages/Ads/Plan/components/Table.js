@@ -11,8 +11,7 @@ export default class PlanTable extends Component {
       readOnly,
       setReLaunch,
       setPlanResult,
-      dataSource,
-      currentPage
+      dataSource
     } = this.props;
     return (
       <div>
