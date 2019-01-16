@@ -355,9 +355,7 @@ class SelectTheme extends Component {
                 type="text"
                 placeholder="请输入视频/直播间的ID/URL"
                 disabled={isRead ? "disabled" : false}
-                defaultValue={
-                  isRead || isUpdate ? formData && formData.launchVideoId : ""
-                }
+                value={(formData && formData.launchVideoId) || ""}
                 onChange={e => {
                   setFormData({ launchVideoId: e.target.value });
                 }}
@@ -638,11 +636,7 @@ class SelectTheme extends Component {
                   <Input
                     type="tel"
                     disabled={isRead ? "disabled" : false}
-                    defaultValue={
-                      isRead || isUpdate
-                        ? formData && formData.launchLenTime
-                        : ""
-                    }
+                    value={(formData && formData.launchLenTime) || ""}
                     placeholder="请输入投放时长"
                     onChange={e => {
                       setFormData({ launchLenTime: e.target.value });
@@ -668,11 +662,7 @@ class SelectTheme extends Component {
                   <Input
                     type="tel"
                     disabled={isRead ? "disabled" : false}
-                    defaultValue={
-                      isRead || isUpdate
-                        ? formData && formData.launchLenTime
-                        : ""
-                    }
+                    value={(formData && formData.launchLenTime) || ""}
                     placeholder="请输入投放时长"
                     onChange={e => {
                       setFormData({ launchLenTime: e.target.value });
@@ -1046,11 +1036,7 @@ class SelectTheme extends Component {
                   <Input
                     type="tel"
                     disabled={isRead ? "disabled" : false}
-                    defaultValue={
-                      isRead || isUpdate
-                        ? formData && formData.launchLenTime
-                        : ""
-                    }
+                    value={(formData && formData.launchLenTime) || ""}
                     placeholder="请输入投放时长"
                     onChange={e => {
                       setFormData({ launchLenTime: e.target.value });
