@@ -290,25 +290,25 @@ export default class Bubbles extends Component {
                                 }
                               }}
                             />
-                            {errorSchema &&
-                              errorSchema.roles &&
-                              errorSchema.roles[idx] &&
-                              Object.keys(errorSchema.roles[idx]).map(
-                                key =>
-                                  key === "roleAvatar"
-                                    ? errorSchema.roles[
-                                        idx
-                                      ].roleAvatar.__errors.map((err, idx) => (
-                                        <li
-                                          key={idx}
-                                          style={{ color: "#f86c6b" }}
-                                        >
-                                          未上传角色图片
-                                        </li>
-                                      ))
-                                    : null
-                              )}
                           </div>
+                          {errorSchema &&
+                            errorSchema.roles &&
+                            errorSchema.roles[idx] &&
+                            Object.keys(errorSchema.roles[idx]).map(
+                              key =>
+                                key === "roleAvatar"
+                                  ? errorSchema.roles[
+                                      idx
+                                    ].roleAvatar.__errors.map((err, idx) => (
+                                      <li
+                                        key={idx}
+                                        style={{ color: "#f86c6b" }}
+                                      >
+                                        未上传角色图片
+                                      </li>
+                                    ))
+                                  : null
+                            )}
                         </div>
                       )}
                     </Col>
