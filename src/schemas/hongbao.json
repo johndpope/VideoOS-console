@@ -44,8 +44,7 @@
     "infoTitle": {
       "type": "string",
       "title": "红包标题",
-      "maxLength": 10,
-      "default": ""
+      "maxLength": 10
     },
     "infoImageUrl": {
       "type": "string",
