@@ -64,7 +64,6 @@ class MaterialCRUD extends Component {
       addMaterialFile,
       uiSchemaConf,
       saveFormData,
-      setMaterialSchema,
       updateMaterial,
       creativeIdList,
       addMaterial,
