@@ -245,7 +245,7 @@ export default class RedPacket extends Component {
               value={title}
               placeholder="请输入红包热点标题"
               onChange={this.onChange("title")}
-              maxLength={30}
+              maxLength={10}
               required
               readOnly={readonly}
             />
@@ -410,6 +410,7 @@ export default class RedPacket extends Component {
               readOnly={readonly}
               value={infoTitle}
               placeholder="请输入红包标题"
+              maxLength={10}
               onChange={e => {
                 infoTitle = e.target.value;
                 this.setState({ infoTitle }, () =>
@@ -459,6 +460,7 @@ export default class RedPacket extends Component {
               }}
               readOnly={readonly}
               value={infoInstructions}
+              maxLength={50}
               placeholder="请输入兑换说明"
               onChange={e => {
                 infoInstructions = e.target.value;
