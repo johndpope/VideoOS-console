@@ -229,7 +229,7 @@ export default class RedPacket extends Component {
                 )}
               </Col>
             </Row>
-            <p>图片尺寸为宽200PX*高75PX</p>
+            <p>图片尺寸为宽80PX*高90PX</p>
             {errorSchema &&
               errorSchema.imageUrl &&
               errorSchema.imageUrl.__errors &&
@@ -389,7 +389,7 @@ export default class RedPacket extends Component {
                         }}
                       />
                     </div>
-                    <p>图片尺寸为宽30PX*高30PX</p>
+                    <p>图片尺寸为宽60PX*高60PX</p>
                     {errorSchema &&
                       errorSchema.infoImageUrl &&
                       errorSchema.infoImageUrl.__errors &&
