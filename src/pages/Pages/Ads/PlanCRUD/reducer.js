@@ -94,6 +94,19 @@ function planCRUDReducer(state = initialState, action) {
         isLoading: true
       };
     case constants.QUERY_INTERACTION_INFO_SUCCESS:
+      const _interactionInfo =
+        (action &&
+          action.payload &&
+          action.payload.interactionInfo &&
+          JSON.parse(
+            action && action.payload && action.payload.interactionInfo
+          )) ||
+        {};
+      state.formData.infoTrackLinkTitle =
+        (_interactionInfo.properties &&
+          _interactionInfo.properties.infoTrackLink &&
+          _interactionInfo.properties.infoTrackLink.title) ||
+        "";
       return {
         ...state,
         monitorLinkInfo: action.payload,

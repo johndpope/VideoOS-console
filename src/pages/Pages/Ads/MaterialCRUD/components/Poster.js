@@ -65,7 +65,7 @@ export default class Poster extends Component {
       imageUrl,
       isShowAds = true,
       isShowClose = true,
-      exposureTrackLink,
+      linkUrl,
       creativeIdList = []
     } = this.state;
     const { creativeName, interactionTemplateId } = this.state;
@@ -264,11 +264,11 @@ export default class Poster extends Component {
             <Input
               type="url"
               readOnly={readonly}
-              value={exposureTrackLink}
+              value={linkUrl}
               placeholder="请输入链接"
               onChange={e => {
-                exposureTrackLink = e.target.value;
-                this.setState({ exposureTrackLink }, () =>
+                linkUrl = e.target.value;
+                this.setState({ linkUrl }, () =>
                   this.props.onChange(this.state)
                 );
               }}

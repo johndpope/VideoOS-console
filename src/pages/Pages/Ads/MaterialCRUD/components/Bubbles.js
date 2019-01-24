@@ -290,25 +290,25 @@ export default class Bubbles extends Component {
                                 }
                               }}
                             />
-                            {errorSchema &&
-                              errorSchema.roles &&
-                              errorSchema.roles[idx] &&
-                              Object.keys(errorSchema.roles[idx]).map(
-                                key =>
-                                  key === "roleAvatar"
-                                    ? errorSchema.roles[
-                                        idx
-                                      ].roleAvatar.__errors.map((err, idx) => (
-                                        <li
-                                          key={idx}
-                                          style={{ color: "#f86c6b" }}
-                                        >
-                                          未上传角色图片
-                                        </li>
-                                      ))
-                                    : null
-                              )}
                           </div>
+                          {errorSchema &&
+                            errorSchema.roles &&
+                            errorSchema.roles[idx] &&
+                            Object.keys(errorSchema.roles[idx]).map(
+                              key =>
+                                key === "roleAvatar"
+                                  ? errorSchema.roles[
+                                      idx
+                                    ].roleAvatar.__errors.map((err, idx) => (
+                                      <li
+                                        key={idx}
+                                        style={{ color: "#f86c6b" }}
+                                      >
+                                        未上传角色图片
+                                      </li>
+                                    ))
+                                  : null
+                            )}
                         </div>
                       )}
                     </Col>
@@ -788,84 +788,6 @@ export default class Bubbles extends Component {
                                     message.messageButtons = [
                                       {},
                                       { link: e.target.value }
-                                    ];
-                                  }
-                                  messages[idx] = message;
-                                  this.setState(
-                                    {
-                                      messages
-                                    },
-                                    () => this.props.onChange(this.state)
-                                  );
-                                }}
-                              />
-                            </Col>
-                          </Row>
-                          <Row style={{ marginBottom: "8px" }}>
-                            <Col>
-                              <Label style={{ fontWeight: "normal" }}>
-                                点击监控链接
-                              </Label>
-                              <Input
-                                type="url"
-                                value={
-                                  message &&
-                                  message.messageButtons &&
-                                  message.messageButtons[1] &&
-                                  message.messageButtons[1].clickTrackLink
-                                }
-                                readOnly={readonly}
-                                placeholder="请输入气泡点击监控链接"
-                                onChange={e => {
-                                  if (message.messageButtons) {
-                                    if (!message.messageButtons[1]) {
-                                      message.messageButtons[1] = {};
-                                    }
-                                    message.messageButtons[1].clickTrackLink =
-                                      e.target.value;
-                                  } else {
-                                    message.messageButtons = [
-                                      {},
-                                      { clickTrackLink: e.target.value }
-                                    ];
-                                  }
-                                  messages[idx] = message;
-                                  this.setState(
-                                    {
-                                      messages
-                                    },
-                                    () => this.props.onChange(this.state)
-                                  );
-                                }}
-                              />
-                            </Col>
-                          </Row>
-                          <Row style={{ marginBottom: "8px" }}>
-                            <Col>
-                              <Label style={{ fontWeight: "normal" }}>
-                                曝光监控链接
-                              </Label>
-                              <Input
-                                type="url"
-                                value={
-                                  message &&
-                                  message.messageButtons &&
-                                  message.messageButtons[1] &&
-                                  message.messageButtons[1].exposureTrackLink
-                                }
-                                readOnly={readonly}
-                                placeholder="请输入气泡曝光监控链接"
-                                onChange={e => {
-                                  if (message.messageButtons) {
-                                    if (!message.messageButtons[1]) {
-                                      message.messageButtons[1] = {};
-                                    }
-                                    message.messageButtons[1].exposureTrackLink =
-                                      e.target.value;
-                                  } else {
-                                    message.messageButtons = [
-                                      {},
-                                      { exposureTrackLink: e.target.value }
                                     ];
                                   }
                                   messages[idx] = message;

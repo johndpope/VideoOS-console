@@ -64,7 +64,6 @@ class MaterialCRUD extends Component {
       addMaterialFile,
       uiSchemaConf,
       saveFormData,
-      setMaterialSchema,
       updateMaterial,
       creativeIdList,
       addMaterial,
@@ -158,37 +157,6 @@ class MaterialCRUD extends Component {
                 }
                 return error;
               });
-            }}
-            onChange={({ formData }) => {
-              let _materialSchema = { ...materialSchema };
-              if (
-                formData.hasOwnProperty("isShowClose") &&
-                formData.hasOwnProperty("closeAfter")
-              ) {
-                if (formData.isShowClose) {
-                  if (
-                    JSON.stringify(_materialSchema.properties.closeAfter) !==
-                    JSON.stringify(materialSchema.properties.closeAfter)
-                  ) {
-                    _materialSchema.properties.closeAfter = {
-                      type: "integer",
-                      title: "广告播放多久后可关闭"
-                    };
-                    setMaterialSchema(_materialSchema);
-                  }
-                } else {
-                  if (
-                    _materialSchema &&
-                    _materialSchema.properties &&
-                    _materialSchema.properties.closeAfter
-                  ) {
-                    _materialSchema.properties.closeAfter = {};
-                    setMaterialSchema(_materialSchema);
-                  }
-                }
-              }
-
-              saveFormData(formData);
             }}
             onSubmit={({ formData }) => {
               let canSubmit = true;

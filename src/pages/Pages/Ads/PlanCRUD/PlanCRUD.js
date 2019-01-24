@@ -355,9 +355,7 @@ class SelectTheme extends Component {
                 type="text"
                 placeholder="请输入视频/直播间的ID/URL"
                 disabled={isRead ? "disabled" : false}
-                defaultValue={
-                  isRead || isUpdate ? formData && formData.launchVideoId : ""
-                }
+                value={(formData && formData.launchVideoId) || ""}
                 onChange={e => {
                   setFormData({ launchVideoId: e.target.value });
                 }}
@@ -638,11 +636,7 @@ class SelectTheme extends Component {
                   <Input
                     type="tel"
                     disabled={isRead ? "disabled" : false}
-                    defaultValue={
-                      isRead || isUpdate
-                        ? formData && formData.launchLenTime
-                        : ""
-                    }
+                    value={(formData && formData.launchLenTime) || ""}
                     placeholder="请输入投放时长"
                     onChange={e => {
                       setFormData({ launchLenTime: e.target.value });
@@ -668,11 +662,7 @@ class SelectTheme extends Component {
                   <Input
                     type="tel"
                     disabled={isRead ? "disabled" : false}
-                    defaultValue={
-                      isRead || isUpdate
-                        ? formData && formData.launchLenTime
-                        : ""
-                    }
+                    value={(formData && formData.launchLenTime) || ""}
                     placeholder="请输入投放时长"
                     onChange={e => {
                       setFormData({ launchLenTime: e.target.value });
@@ -1046,11 +1036,7 @@ class SelectTheme extends Component {
                   <Input
                     type="tel"
                     disabled={isRead ? "disabled" : false}
-                    defaultValue={
-                      isRead || isUpdate
-                        ? formData && formData.launchLenTime
-                        : ""
-                    }
+                    value={(formData && formData.launchLenTime) || ""}
                     placeholder="请输入投放时长"
                     onChange={e => {
                       setFormData({ launchLenTime: e.target.value });
@@ -1157,7 +1143,7 @@ class SelectTheme extends Component {
           Array.isArray(formData.infoTrackLink) &&
           formData.infoTrackLink.map((hstl, idx) => (
             <div>
-              <h5>{`${(formData && formData.interactionTypeName) || ""}热点${
+              <h5>{`${(formData && formData.infoTrackLinkTitle) || "信息层"}${
                 idx !== 0 ? idx + 1 : ""
               }`}</h5>
               <InputGroup className="mb-4">
@@ -1239,15 +1225,16 @@ class SelectTheme extends Component {
           <Fragment>
             <h4>数据监控（非必填）</h4>
             {(() => {
+              let mlis = [];
               for (
                 let i = 0;
                 i < (monitorLinkInfo && Number(monitorLinkInfo.hotspot));
                 i++
               ) {
-                return (
+                mlis.push(
                   <div>
                     <h5>{`${(formData && formData.interactionTypeName) ||
-                      ""}热点${i !== 0 ? i + 1 : ""}`}</h5>
+                      ""}热点${i !== 0 ? i + 1 : 1}`}</h5>
                     <InputGroup className="mb-4">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>曝光监控链接：</InputGroupText>
@@ -1324,6 +1311,7 @@ class SelectTheme extends Component {
                   </div>
                 );
               }
+              return mlis;
             })()}
             {(() => {
               if (

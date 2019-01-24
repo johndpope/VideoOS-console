@@ -54,12 +54,12 @@
     "collect": {
       "type": "object",
       "title": "3.收集成功后续",
-      "required": ["imageUrl", "btnTitle", "linkType", "content"],
+      "required": ["imageUrl", "btnTitle", "linkType"],
       "properties": {
         "content": {
           "type": "string",
           "maxLength": 50,
-          "title": "收集成功弹窗内容"
+          "title": "卡牌收集说明"
         },
         "imageUrl": {
           "type": "string",

@@ -229,7 +229,7 @@ export default class RedPacket extends Component {
                 )}
               </Col>
             </Row>
-            <p>图片尺寸为宽200PX*高75PX</p>
+            <p>图片尺寸为宽80PX*高90PX</p>
             {errorSchema &&
               errorSchema.imageUrl &&
               errorSchema.imageUrl.__errors &&
@@ -245,7 +245,7 @@ export default class RedPacket extends Component {
               value={title}
               placeholder="请输入红包热点标题"
               onChange={this.onChange("title")}
-              maxLength={30}
+              maxLength={10}
               required
               readOnly={readonly}
             />
@@ -389,7 +389,7 @@ export default class RedPacket extends Component {
                         }}
                       />
                     </div>
-                    <p>图片尺寸为宽30PX*高30PX</p>
+                    <p>图片尺寸为宽60PX*高60PX</p>
                     {errorSchema &&
                       errorSchema.infoImageUrl &&
                       errorSchema.infoImageUrl.__errors &&
@@ -410,6 +410,7 @@ export default class RedPacket extends Component {
               readOnly={readonly}
               value={infoTitle}
               placeholder="请输入红包标题"
+              maxLength={10}
               onChange={e => {
                 infoTitle = e.target.value;
                 this.setState({ infoTitle }, () =>
@@ -459,6 +460,7 @@ export default class RedPacket extends Component {
               }}
               readOnly={readonly}
               value={infoInstructions}
+              maxLength={50}
               placeholder="请输入兑换说明"
               onChange={e => {
                 infoInstructions = e.target.value;

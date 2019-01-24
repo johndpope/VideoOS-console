@@ -21,7 +21,9 @@ const LaunchPlan = ({
         <Button
           type="primary"
           onClick={() => {
-            launchPlan({ ...record, ...params, currentPage });
+            let _record = { ...record };
+            delete _record.launchTimeType;
+            launchPlan({ ..._record, ...params, currentPage });
           }}
         >
           确认

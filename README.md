@@ -158,7 +158,7 @@ jsonschema 的作用简明表述即将数据对象转化成表单描述对象。
         "name": {
           "type": "string"
         },
-        "gender: {
+        "gender": {
           "type": "boolean"
         },
         "age": {
@@ -217,7 +217,7 @@ jsonschema 的作用简明表述即将数据对象转化成表单描述对象。
          "name": {
            "type": "string"
          },
-         "gender: {
+         "gender": {
            "type": "boolean"
          },
          "age": {
