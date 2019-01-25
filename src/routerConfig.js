@@ -12,7 +12,7 @@ import SelectTheme from "Pages/Ads/SelectTheme/SelectTheme";
 import License from "Pages/License";
 import Log from "Pages/Log";
 import PlanCRUD from "./pages/Pages/Ads/PlanCRUD/PlanCRUD";
-
+import statis from "Pages/Ads/Statistics"; //数据统计
 const routerConfig = [
   {
     path: "/hd",
@@ -110,6 +110,11 @@ const routerConfig = [
     path: "/rz/log",
     name: "日志信息管理",
     component: Log
+  },
+  {
+    path: "/tf/statisticsg",
+    name: "数据统计",
+    component: statis
   }
 ];
 
