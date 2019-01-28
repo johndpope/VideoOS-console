@@ -28,7 +28,6 @@ const fieldsMap = {
 
 let opType;
 let qs;
-
 class MaterialCRUD extends Component {
   componentDidMount() {
     const {
@@ -157,6 +156,12 @@ class MaterialCRUD extends Component {
                 }
                 return error;
               });
+            }}
+            validate={(data, e) => {
+              if (data.title === "") {
+                e.title.addError("必填项");
+              }
+              return e;
             }}
             onSubmit={({ formData }) => {
               let canSubmit = true;
