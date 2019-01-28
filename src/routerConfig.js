@@ -112,7 +112,7 @@ const routerConfig = [
     component: Log
   },
   {
-    path: "/tf/statisticsg",
+    path: "/tf/statistics",
     name: "数据统计",
     component: statis
   }
