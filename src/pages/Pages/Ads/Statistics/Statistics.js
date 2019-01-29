@@ -1,14 +1,10 @@
 /* * @Author: zhouzhe  * @Date: 2019-01-25 15:29:43 */
 import React, { Component } from "react";
-import { DatePicker, Grid, Input, Icon } from "@icedesign/base";
-import {
-  ButtonDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  Tooltip
-} from "reactstrap";
+import { DatePicker, Grid, Input, Icon, Feedback } from "@icedesign/base";
+import { Tooltip } from "reactstrap";
 import utils from "src/utils/utils";
+import { getAllProgram, getStatistics } from "./api.js";
+import Select from "./Select.js";
 const { Row, Col } = Grid;
 const { RangePicker } = DatePicker;
 const { ONEDAY, ONEWEEK, ONEMONTH } = utils.timeConst;
@@ -26,16 +22,91 @@ const quickRanges = {
 class Statistics extends Component {
   constructor(props) {
     super(props);
-    this.toggle = this.toggle.bind(this);
     this.state = {
-      dropdownOpen: false,
       toolti1: false,
       toolti2: false,
-      dropSelect: "全部",
-      searData: ""
+      toolti3: false,
+      toolti4: false,
+      searData: "",
+      selectData: [],
+      chooseTime: [], //选中的时间
+      interactionId: "", //选中的小程序id
+      showData: {},
+      showAllList: [
+        {
+          name: "toolti2",
+          title: "视频数据",
+          explain: "仅统计含投放计划的视频数据",
+          list: [
+            {
+              title: "视频播放次数",
+              key: "showExposureCount"
+            }
+          ]
+        },
+        {
+          name: "toolti3",
+          title: "热点数据",
+          explain: "热点：投放到视频的互动/广告点位即为热点",
+          list: [
+            {
+              title: "热点曝光次数",
+              key: "hotspotShowExposureCount"
+            },
+            {
+              title: "可点击的热点曝光次数",
+              key: "hotspotClickExposureCount"
+            },
+            {
+              title: "热点点击位点击次数",
+              key: "hotspotClickEventCount"
+            },
+            {
+              title: "热点点击位点击率",
+              key: "hotspotClickRate"
+            }
+          ]
+        },
+        {
+          name: "toolti4",
+          title: "信息层数据",
+          explain: "信息层：由热点打开的交互层即为信息层",
+          list: [
+            {
+              title: "信息层曝光次数",
+              key: "infoShowExposureCount"
+            },
+            {
+              title: "信息层上的点击位曝光次数",
+              key: "infoClickExposureCount"
+            },
+            {
+              title: "信息层上的点击位点击次数",
+              key: "infoClickEventCount"
+            },
+            {
+              title: "信息层上的点击位点击率",
+              key: "infoClickRate"
+            }
+          ]
+        }
+      ]
     };
   }
+  async setSelectDom() {
+    let data = await getAllProgram();
+    let list = data.data.interactionInfoList;
+    console.log(list);
+    this.setState({
+      selectData: list
+    });
+  }
+  componentWillMount() {
+    this.setSelectDom();
+  }
   render() {
+    console.log(222);
+    let showList = this.setShowDom();
     return (
       <div
         style={{
@@ -52,7 +123,10 @@ class Statistics extends Component {
             align="center"
           />
           <Col span="20">
-            <RangePicker ranges={quickRanges} onChange={this.changeTime} />
+            <RangePicker
+              ranges={quickRanges}
+              onChange={this.changeTime.bind(this)}
+            />
             <Icon
               type="help"
               size="small"
@@ -80,23 +154,12 @@ class Statistics extends Component {
             align="center"
           />
           <Col span="20">
-            <ButtonDropdown
-              isOpen={this.state.dropdownOpen}
-              toggle={this.toggle}
-            >
-              <div className="dropBox">
-                <DropdownToggle color="" caret>
-                  {this.state.dropSelect}
-                </DropdownToggle>
-              </div>
-
-              <DropdownMenu>
-                <DropdownItem>Header</DropdownItem>
-                <DropdownItem>Action</DropdownItem>
-                <DropdownItem>Another Action</DropdownItem>
-                <DropdownItem>Ansother Action</DropdownItem>
-              </DropdownMenu>
-            </ButtonDropdown>
+            <Select
+              list={this.state.selectData}
+              name="全部"
+              event={this.selectClick.bind(this)}
+              keyName="interactionTypeName"
+            />
           </Col>
         </Row>
         <Row className="mb-3">
@@ -124,52 +187,90 @@ class Statistics extends Component {
             />
           </Col>
         </Row>
-        <Row className="mb-3">
+        {showList}
+      </div>
+    );
+  }
+  setShowDom() {
+    let domArr = [];
+    this.state.showAllList.forEach(v => {
+      let child = [];
+      for (let item of v.list) {
+        child.push(
+          <div className="dataShow" key={item.title}>
+            <h2>{this.state.showData[item.key] || 0}</h2>
+            <h2>{item.title}</h2>
+          </div>
+        );
+      }
+      domArr.push(
+        <Row className="mb-3" key={v.title}>
           <Col
-            span="3"
+            span="4"
             style={{
-              minWidth: "100px"
+              minWidth: "120px"
             }}
             align="center"
           >
             <h2 href="#" className="d-inline-block">
-              视频数据
+              {v.title}
             </h2>
             <Icon
               type="help"
               size="small"
               className="mx-1"
               href="#"
-              id="toolti2"
+              id={v.name}
             />
             <Tooltip
               placement="right"
-              isOpen={this.state.toolti2}
-              target="toolti2"
-              toggle={this.toolOpen.bind(this, "toolti2")}
+              isOpen={this.state[v.name]}
+              target={v.name}
+              toggle={this.toolOpen.bind(this, v.name)}
             >
-              仅统计含投放计划的视频数据
+              {v.explain}
             </Tooltip>
           </Col>
-          <Col span="20">
-            <div className="dataShow">
-              <h2>111</h2>
-              <h2>视频播放次数</h2>
-            </div>
-          </Col>
+          <Col span="20">{child}</Col>
         </Row>
-      </div>
-    );
+      );
+    });
+    return domArr;
   }
-  changeTime(val) {
-    console.log(val);
+  changeTime(...argus) {
+    this.setState({ chooseTime: argus[1] });
   }
   dropdowm(e) {
     console.log(e);
   }
-  searchClick() {
+  async searchClick() {
+    if (!this.checkData()) {
+      return false;
+    }
+    let time = this.state.chooseTime;
+    let obj = {
+      startDate: time[0],
+      endDate: time[1],
+      videoId: this.state.searData,
+      interactionId: this.state.interactionId
+    };
     //点击搜索
-    console.log(this);
+    let data = await getStatistics(obj);
+    if (data.data.resMsg === "处理成功") {
+      this.setState({
+        showData: data.data
+      });
+    } else {
+      Feedback.toast.error(data.data.resMsg);
+    }
+    console.log(data);
+  }
+  checkData() {
+    if (!this.state.chooseTime[0]) {
+      Feedback.toast.error("请选择时间");
+      return false;
+    }
+    return true;
   }
   searChange(v) {
     this.setState({ searData: v });
@@ -179,9 +280,10 @@ class Statistics extends Component {
     obj[str] = !this.state[str];
     this.setState(obj);
   }
-  toggle() {
+  selectClick(item) {
+    console.log(item);
     this.setState({
-      dropdownOpen: !this.state.dropdownOpen
+      interactionId: item.interactionId
     });
   }
 }
