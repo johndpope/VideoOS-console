@@ -1,0 +1,10 @@
+.dataShow {
+  width: 10rem;
+  text-align: center;
+  box-shadow: 1px 5px 25px #888888;
+}
+
+.dropBox {
+  display: inline-block;
+  background-color: #ffffff;
+}

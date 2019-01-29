@@ -37,9 +37,20 @@ class Statistics extends Component {
   }
   render() {
     return (
-      <div style={{ width: "100%" }}>
+      <div
+        style={{
+          width: "100%"
+        }}
+      >
         <Row className="mb-3">
-          <Col children="选择时间:" span="3" align="center" />
+          <Col
+            children="选择时间:"
+            span="3"
+            style={{
+              minWidth: "100px"
+            }}
+            align="center"
+          />
           <Col span="20">
             <RangePicker ranges={quickRanges} onChange={this.changeTime} />
             <Icon
@@ -60,13 +71,20 @@ class Statistics extends Component {
           </Col>
         </Row>
         <Row className="mb-3">
-          <Col children="选择小程序:" span="3" align="center" />
+          <Col
+            children="选择小程序:"
+            span="3"
+            style={{
+              minWidth: "100px"
+            }}
+            align="center"
+          />
           <Col span="20">
             <ButtonDropdown
               isOpen={this.state.dropdownOpen}
               toggle={this.toggle}
             >
-              <div style={{ backgroundColor: "#fff" }}>
+              <div className="dropBox">
                 <DropdownToggle color="" caret>
                   {this.state.dropSelect}
                 </DropdownToggle>
@@ -76,13 +94,20 @@ class Statistics extends Component {
                 <DropdownItem>Header</DropdownItem>
                 <DropdownItem>Action</DropdownItem>
                 <DropdownItem>Another Action</DropdownItem>
-                <DropdownItem>Another Action</DropdownItem>
+                <DropdownItem>Ansother Action</DropdownItem>
               </DropdownMenu>
             </ButtonDropdown>
           </Col>
         </Row>
         <Row className="mb-3">
-          <Col children="输入视频:" span="3" align="center" />
+          <Col
+            children="输入视频:"
+            span="3"
+            style={{
+              minWidth: "100px"
+            }}
+            align="center"
+          />
           <Col span="20">
             <Input
               addonAfter={
@@ -100,7 +125,13 @@ class Statistics extends Component {
           </Col>
         </Row>
         <Row className="mb-3">
-          <Col span="3" align="center">
+          <Col
+            span="3"
+            style={{
+              minWidth: "100px"
+            }}
+            align="center"
+          >
             <h2 href="#" className="d-inline-block">
               视频数据
             </h2>
@@ -117,23 +148,14 @@ class Statistics extends Component {
               target="toolti2"
               toggle={this.toolOpen.bind(this, "toolti2")}
             >
-              “今日”数据展示从今日0点至今日上个整点时刻的数据
+              仅统计含投放计划的视频数据
             </Tooltip>
           </Col>
           <Col span="20">
-            <Input
-              addonAfter={
-                <Icon
-                  type="search"
-                  size="xs"
-                  onClick={this.searchClick.bind(this)}
-                  style={{ cursor: "pointer" }}
-                />
-              }
-              placeholder="请输入视频链接"
-              value={this.state.searData}
-              onChange={this.searChange.bind(this)}
-            />
+            <div className="dataShow">
+              <h2>111</h2>
+              <h2>视频播放次数</h2>
+            </div>
           </Col>
         </Row>
       </div>
@@ -150,9 +172,7 @@ class Statistics extends Component {
     console.log(this);
   }
   searChange(v) {
-    this.setState({
-      searData: v
-    });
+    this.setState({ searData: v });
   }
   toolOpen(str) {
     let obj = {};
