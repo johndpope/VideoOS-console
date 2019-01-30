@@ -262,6 +262,7 @@ export default class Poster extends Component {
             <Input
               type="url"
               value={linkUrl}
+              readOnly={readonly}
               placeholder="请输入链接"
               onChange={e => {
                 linkUrl = e.target.value;

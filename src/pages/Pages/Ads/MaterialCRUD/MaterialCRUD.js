@@ -157,7 +157,6 @@ class MaterialCRUD extends Component {
               });
             }}
             validate={(data, e) => {
-              console.log(data);
               if (data.title === "") {
                 e.title.addError("必填项");
               }
