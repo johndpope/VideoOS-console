@@ -111,80 +111,82 @@ class Statistics extends Component {
           width: "100%"
         }}
       >
-        <Row className="mb-3">
-          <Col
-            children="选择时间:"
-            span="2"
-            style={{
-              minWidth: "100px"
-            }}
-            align="center"
-          />
-          <Col span="20">
-            <RangePicker
-              ranges={quickRanges}
-              onChange={this.changeTime.bind(this)}
+        <div className="container-box">
+          <Row className="mb-3">
+            <Col
+              children="选择时间:"
+              span="2"
+              style={{
+                minWidth: "100px"
+              }}
+              align="center"
             />
-            <Icon
-              type="help"
-              size="small"
-              className="mx-1"
-              href="#"
-              id="TooltipExample"
+            <Col span="20">
+              <RangePicker
+                ranges={quickRanges}
+                onChange={this.changeTime.bind(this)}
+              />
+              <Icon
+                type="help"
+                size="small"
+                className="mx-1"
+                href="#"
+                id="TooltipExample"
+              />
+              <Tooltip
+                placement="right"
+                isOpen={this.state.toolti1}
+                target="TooltipExample"
+                toggle={this.toolOpen.bind(this, "toolti1")}
+              >
+                “今日”数据展示从今日0点至今日上个整点时刻的数据
+              </Tooltip>
+            </Col>
+          </Row>
+          <Row className="mb-3">
+            <Col
+              children="选择小程序:"
+              span="2"
+              style={{
+                minWidth: "100px"
+              }}
+              align="center"
             />
-            <Tooltip
-              placement="right"
-              isOpen={this.state.toolti1}
-              target="TooltipExample"
-              toggle={this.toolOpen.bind(this, "toolti1")}
-            >
-              “今日”数据展示从今日0点至今日上个整点时刻的数据
-            </Tooltip>
-          </Col>
-        </Row>
-        <Row className="mb-3">
-          <Col
-            children="选择小程序:"
-            span="2"
-            style={{
-              minWidth: "100px"
-            }}
-            align="center"
-          />
-          <Col span="20">
-            <Select
-              list={this.state.selectData}
-              name="全部"
-              event={this.selectClick.bind(this)}
-              keyName="interactionTypeName"
+            <Col span="20">
+              <Select
+                list={this.state.selectData}
+                name="全部"
+                event={this.selectClick.bind(this)}
+                keyName="interactionTypeName"
+              />
+            </Col>
+          </Row>
+          <Row className="mb-3">
+            <Col
+              children="输入视频:"
+              span="2"
+              style={{
+                minWidth: "100px"
+              }}
+              align="center"
             />
-          </Col>
-        </Row>
-        <Row className="mb-3">
-          <Col
-            children="输入视频:"
-            span="2"
-            style={{
-              minWidth: "100px"
-            }}
-            align="center"
-          />
-          <Col span="20">
-            <Input
-              addonAfter={
-                <Icon
-                  type="search"
-                  size="xs"
-                  onClick={this.searchClick.bind(this)}
-                  style={{ cursor: "pointer" }}
-                />
-              }
-              placeholder="请输入视频链接"
-              value={this.state.searData}
-              onChange={this.searChange.bind(this)}
-            />
-          </Col>
-        </Row>
+            <Col span="20">
+              <Input
+                addonAfter={
+                  <Icon
+                    type="search"
+                    size="xs"
+                    onClick={this.searchClick.bind(this)}
+                    style={{ cursor: "pointer" }}
+                  />
+                }
+                placeholder="请输入视频链接"
+                value={this.state.searData}
+                onChange={this.searChange.bind(this)}
+              />
+            </Col>
+          </Row>
+        </div>
         {showList}
       </div>
     );
@@ -202,36 +204,38 @@ class Statistics extends Component {
         );
       }
       domArr.push(
-        <Row className="mb-3" key={v.title}>
-          <Col
-            span="3"
-            style={{
-              minWidth: "120px",
-              maxWidth: "130px"
-            }}
-            align="center"
-          >
-            <h2 href="#" className="d-inline-block">
-              {v.title}
-            </h2>
-            <Icon
-              type="help"
-              size="small"
-              className="mx-1"
-              href="#"
-              id={v.name}
-            />
-            <Tooltip
-              placement="right"
-              isOpen={this.state[v.name]}
-              target={v.name}
-              toggle={this.toolOpen.bind(this, v.name)}
+        <div className="container-box">
+          <Row className="mb-3" key={v.title}>
+            <Col
+              span="3"
+              style={{
+                minWidth: "120px",
+                maxWidth: "130px"
+              }}
+              align="center"
             >
-              {v.explain}
-            </Tooltip>
-          </Col>
-          <Col span="20">{child}</Col>
-        </Row>
+              <h2 href="#" className="d-inline-block">
+                {v.title}
+              </h2>
+              <Icon
+                type="help"
+                size="small"
+                className="mx-1"
+                href="#"
+                id={v.name}
+              />
+              <Tooltip
+                placement="right"
+                isOpen={this.state[v.name]}
+                target={v.name}
+                toggle={this.toolOpen.bind(this, v.name)}
+              >
+                {v.explain}
+              </Tooltip>
+            </Col>
+            <Col span="20">{child}</Col>
+          </Row>
+        </div>
       );
     });
     return domArr;
