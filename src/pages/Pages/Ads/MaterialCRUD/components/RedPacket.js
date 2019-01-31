@@ -57,7 +57,13 @@ export default class RedPacket extends Component {
     voteList.splice(idx, 1);
     this.setState({ voteList }, () => this.props.onChange(this.state));
   };
-
+  resetData(key) {
+    let obj = {};
+    if (this.state[key] === "") {
+      obj[key] = undefined;
+      this.setState(obj, () => this.props.onChange(this.state));
+    }
+  }
   render() {
     let { schema, errorSchema } = this.props;
     let {
@@ -73,7 +79,8 @@ export default class RedPacket extends Component {
       creativeIdList = []
     } = this.state;
     const { creativeName, interactionTemplateId } = this.state;
-
+    this.resetData("infoTitle");
+    this.resetData("infoWord");
     return (
       <Fragment>
         <div>基础配置</div>
@@ -407,12 +414,14 @@ export default class RedPacket extends Component {
             <Label>红包标题*</Label>
             <Input
               type="url"
-              readOnly={readonly}
+              // readOnly={readonly}
               value={infoTitle}
+              required
               placeholder="请输入红包标题"
               maxLength={10}
               onChange={e => {
                 infoTitle = e.target.value;
+                if (infoTitle === "") infoTitle = undefined;
                 this.setState({ infoTitle }, () =>
                   this.props.onChange(this.state)
                 );
@@ -433,9 +442,11 @@ export default class RedPacket extends Component {
               type="url"
               readOnly={readonly}
               value={infoWord}
+              required
               placeholder="请输入红包口令"
               onChange={e => {
                 infoWord = e.target.value;
+                if (infoWord === "") infoWord = undefined;
                 this.setState({ infoWord }, () =>
                   this.props.onChange(this.state)
                 );
