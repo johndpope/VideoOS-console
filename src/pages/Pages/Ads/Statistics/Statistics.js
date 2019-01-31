@@ -103,7 +103,6 @@ class Statistics extends Component {
     this.setSelectDom();
   }
   render() {
-    console.log(222);
     let showList = this.setShowDom();
     return (
       <div
@@ -242,9 +241,6 @@ class Statistics extends Component {
   }
   changeTime(...argus) {
     this.setState({ chooseTime: argus[1] });
-  }
-  dropdowm(e) {
-    console.log(e);
   }
   async searchClick() {
     if (!this.checkData()) {
