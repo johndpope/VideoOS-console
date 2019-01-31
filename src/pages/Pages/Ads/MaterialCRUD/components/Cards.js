@@ -699,7 +699,6 @@ export default class Cards extends Component {
               placeholder="卡牌收集说明"
               value={(collect && collect.content) || ""}
               maxLength={50}
-              required
               readOnly={readonly}
               onChange={e => {
                 collect.content = e.target.value;
