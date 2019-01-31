@@ -30,7 +30,6 @@
     },
     "linkUrl": {
       "type": "string",
-      "format": "uri",
       "title": "跳转外链链接"
     }
   }

@@ -57,7 +57,13 @@ export default class Votes extends Component {
     voteList.splice(idx, 1);
     this.setState({ voteList }, () => this.props.onChange(this.state));
   };
-
+  resetData(key) {
+    let obj = {};
+    if (this.state[key] === "") {
+      obj[key] = undefined;
+      this.setState(obj, () => this.props.onChange(this.state));
+    }
+  }
   render() {
     let { schema, errorSchema } = this.props;
     let {
@@ -74,7 +80,7 @@ export default class Votes extends Component {
       interactionTemplateId,
       isShowClose = true
     } = this.state;
-
+    this.resetData("voteTitle");
     return (
       <Fragment>
         <div>基础配置</div>
@@ -382,6 +388,7 @@ export default class Votes extends Component {
               placeholder="请输入投票弹窗标题"
               onChange={e => {
                 voteTitle = e.target.value;
+                if (voteTitle === "") voteTitle = undefined;
                 this.setState({ voteTitle }, () =>
                   this.props.onChange(this.state)
                 );
