@@ -844,6 +844,7 @@ export default class Cards extends Component {
               readOnly={readonly}
               onChange={e => {
                 collect.btnTitle = e.target.value;
+                if (collect.btnTitle === "") collect.btnTitle = null;
                 this.setState({ collect }, () =>
                   this.props.onChange(this.state)
                 );

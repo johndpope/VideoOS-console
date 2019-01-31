@@ -254,7 +254,7 @@ export default class Poster extends Component {
                 onChange={this.onChange("isShowClose")}
               />
               {"  "}
-              关闭按钮是否可见*
+              关闭按钮是否可见
             </Label>
           </div>
           <div className="array-item">

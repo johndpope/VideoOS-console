@@ -326,6 +326,7 @@ export default class Bubbles extends Component {
                           //   this.setState({ roleNameError: false });
                           // }
                           role.roleName = e.target.value;
+                          if (role.roleName === "") role.roleName = null;
                           roles[idx] = role;
                           this.setState({ roles }, () =>
                             this.props.onChange(this.state)

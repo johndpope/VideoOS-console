@@ -145,7 +145,7 @@ export default class Votes extends Component {
                 onChange={this.onChange("isShowClose")}
               />
               {"  "}
-              关闭按钮是否可见*
+              关闭按钮是否可见
             </Label>
           </div>
           <div>
@@ -543,6 +543,7 @@ export default class Votes extends Component {
                         placeholder="请输入投票对象名称"
                         onChange={e => {
                           vote.title = e.target.value;
+                          if (vote.title === "") vote.title = null;
                           voteList[idx] = vote;
                           this.setState({ voteList }, () =>
                             this.props.onChange(this.state)

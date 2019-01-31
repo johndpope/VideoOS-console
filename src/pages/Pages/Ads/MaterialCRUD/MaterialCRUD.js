@@ -157,6 +157,8 @@ class MaterialCRUD extends Component {
               });
             }}
             // validate={(data, e) => {
+            //   console.log(data);
+            //   console.log(e);
             //   if (data.title === "") {
             //     e.title.addError("必填项");
             //   }
@@ -350,6 +352,8 @@ class MaterialCRUD extends Component {
                           )
                         : 0
                     ]
+                }).then(() => {
+                  console.log(formData);
                 });
               }
             }}
