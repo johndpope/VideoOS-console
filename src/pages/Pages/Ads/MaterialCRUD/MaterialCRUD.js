@@ -352,6 +352,8 @@ class MaterialCRUD extends Component {
                           )
                         : 0
                     ]
+                }).then(() => {
+                  console.log(formData);
                 });
               }
             }}

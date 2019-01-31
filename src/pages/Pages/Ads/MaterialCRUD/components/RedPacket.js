@@ -34,6 +34,7 @@ export default class RedPacket extends Component {
       if (["interactionTemplateId"].includes(name)) {
         value = Number(value);
       }
+      if (value === "") value = undefined;
       this.setState(
         {
           [name]: value
@@ -81,6 +82,7 @@ export default class RedPacket extends Component {
     const { creativeName, interactionTemplateId } = this.state;
     this.resetData("infoTitle");
     this.resetData("infoWord");
+    this.resetData("title");
     return (
       <Fragment>
         <div>基础配置</div>
