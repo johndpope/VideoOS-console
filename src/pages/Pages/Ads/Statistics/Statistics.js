@@ -204,8 +204,8 @@ class Statistics extends Component {
         );
       }
       domArr.push(
-        <div className="container-box">
-          <Row className="mb-3" key={v.title}>
+        <div className="container-box" key={v.title}>
+          <Row className="mb-3">
             <Col
               span="3"
               style={{
