@@ -14,6 +14,7 @@ import {
  *  keyName:str//需要展示的键值
  * }
  */
+console.dir(DropdownMenu);
 class Selectc extends Component {
   constructor(props) {
     super(props);
@@ -45,8 +46,26 @@ class Selectc extends Component {
             {this.state.showStr || this.props.name}
           </DropdownToggle>
         </div>
-
-        <DropdownMenu>{domArr}</DropdownMenu>
+        <DropdownMenu
+          modifiers={{
+            setMaxHeight: {
+              enabled: true,
+              order: 890,
+              fn: data => {
+                return {
+                  ...data,
+                  styles: {
+                    ...data.styles,
+                    overflow: "auto",
+                    maxHeight: 300
+                  }
+                };
+              }
+            }
+          }}
+        >
+          {domArr}
+        </DropdownMenu>
       </ButtonDropdown>
     );
   }

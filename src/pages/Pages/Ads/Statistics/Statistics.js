@@ -97,9 +97,7 @@ class Statistics extends Component {
     let data = await getAllProgram();
     let list = data.data.interactionInfoList;
     console.log(list);
-    this.setState({
-      selectData: list
-    });
+    this.setState({ selectData: list });
   }
   componentWillMount() {
     this.setSelectDom();
@@ -116,7 +114,7 @@ class Statistics extends Component {
         <Row className="mb-3">
           <Col
             children="选择时间:"
-            span="3"
+            span="2"
             style={{
               minWidth: "100px"
             }}
@@ -147,7 +145,7 @@ class Statistics extends Component {
         <Row className="mb-3">
           <Col
             children="选择小程序:"
-            span="3"
+            span="2"
             style={{
               minWidth: "100px"
             }}
@@ -165,7 +163,7 @@ class Statistics extends Component {
         <Row className="mb-3">
           <Col
             children="输入视频:"
-            span="3"
+            span="2"
             style={{
               minWidth: "100px"
             }}
@@ -206,9 +204,10 @@ class Statistics extends Component {
       domArr.push(
         <Row className="mb-3" key={v.title}>
           <Col
-            span="4"
+            span="3"
             style={{
-              minWidth: "120px"
+              minWidth: "120px",
+              maxWidth: "130px"
             }}
             align="center"
           >
@@ -257,9 +256,7 @@ class Statistics extends Component {
     //点击搜索
     let data = await getStatistics(obj);
     if (data.data.resMsg === "处理成功") {
-      this.setState({
-        showData: data.data
-      });
+      this.setState({ showData: data.data });
     } else {
       Feedback.toast.error(data.data.resMsg);
     }
@@ -282,9 +279,7 @@ class Statistics extends Component {
   }
   selectClick(item) {
     console.log(item);
-    this.setState({
-      interactionId: item.interactionId
-    });
+    this.setState({ interactionId: item.interactionId });
   }
 }
 export default Statistics;
