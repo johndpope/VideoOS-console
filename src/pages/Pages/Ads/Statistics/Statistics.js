@@ -195,10 +195,18 @@ class Statistics extends Component {
     let domArr = [];
     this.state.showAllList.forEach(v => {
       let child = [];
+      let dataNum = this.state.showData;
       for (let item of v.list) {
+        let cade =
+          item.key === "infoClickRate" || item.key === "hotspotClickRate"
+            ? "%"
+            : "";
         child.push(
           <div className="dataShow" key={item.title}>
-            <h2>{this.state.showData[item.key] || 0}</h2>
+            <h2>
+              {dataNum[item.key] || 0}
+              {cade}
+            </h2>
             <h2>{item.title}</h2>
           </div>
         );
