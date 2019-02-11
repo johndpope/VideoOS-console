@@ -97,6 +97,7 @@ class Statistics extends Component {
     let data = await getAllProgram();
     let list = data.data.interactionInfoList;
     console.log(list);
+    list.unshift({ interactionId: "", interactionTypeName: "全部" });
     this.setState({ selectData: list });
   }
   componentWillMount() {
