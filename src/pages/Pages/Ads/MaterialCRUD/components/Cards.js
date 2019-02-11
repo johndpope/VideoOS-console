@@ -299,7 +299,7 @@ export default class Cards extends Component {
                   onChange={e => {
                     hotspotArray[0] = {
                       ...hotspotArray[0],
-                      title: e.target.value
+                      title: e.target.value || null
                     };
                     this.setState({ hotspotArray }, () =>
                       this.props.onChange(this.state)
