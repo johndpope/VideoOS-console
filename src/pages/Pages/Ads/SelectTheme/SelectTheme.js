@@ -42,7 +42,8 @@ class SelectTheme extends Component {
             display: "flex",
             flexDirection: "row",
             flexWrap: "wrap",
-            marginLeft: "-1rem"
+            marginLeft: "-1rem",
+            cursor: "pointer"
           }}
         >
           {selectThemeResult &&
