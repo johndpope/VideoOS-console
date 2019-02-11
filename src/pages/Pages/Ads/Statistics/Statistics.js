@@ -5,10 +5,11 @@ import { Tooltip } from "reactstrap";
 import utils from "src/utils/utils";
 import { getAllProgram, getStatistics } from "./api.js";
 import Select from "./Select.js";
+import moment from "moment";
+console.dir(moment);
 const { Row, Col } = Grid;
 const { RangePicker } = DatePicker;
 const { ONEDAY, ONEWEEK, ONEMONTH } = utils.timeConst;
-console.dir(Icon);
 const now = new Date();
 const last = now - ONEDAY;
 const week = now - ONEWEEK;
@@ -19,6 +20,7 @@ const quickRanges = {
   最近一周: [week, now],
   最近30天: [month, now]
 };
+let defTime = moment(now).format("YYYY-MM-DD");
 class Statistics extends Component {
   constructor(props) {
     super(props);
@@ -29,7 +31,7 @@ class Statistics extends Component {
       toolti4: false,
       searData: "",
       selectData: [],
-      chooseTime: [], //选中的时间
+      chooseTime: [defTime, defTime], //选中的时间
       interactionId: "", //选中的小程序id
       showData: {},
       showAllList: [
@@ -102,6 +104,7 @@ class Statistics extends Component {
   }
   componentWillMount() {
     this.setSelectDom();
+    this.searchClick();
   }
   render() {
     let showList = this.setShowDom();
@@ -124,6 +127,7 @@ class Statistics extends Component {
             <Col span="20">
               <RangePicker
                 ranges={quickRanges}
+                defaultValue={[now, now]}
                 onChange={this.changeTime.bind(this)}
               />
               <Icon
@@ -249,6 +253,7 @@ class Statistics extends Component {
     return domArr;
   }
   changeTime(...argus) {
+    console.log(argus);
     this.setState({ chooseTime: argus[1] });
   }
   async searchClick() {
