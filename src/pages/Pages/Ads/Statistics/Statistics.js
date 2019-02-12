@@ -38,7 +38,7 @@ class Statistics extends Component {
         {
           name: "toolti2",
           title: "视频数据",
-          explain: "仅统计含投放计划的视频数据",
+          // explain: "仅统计含投放计划的视频数据",
           list: [
             {
               title: "视频播放次数",
@@ -215,6 +215,27 @@ class Statistics extends Component {
           </div>
         );
       }
+      let tips = v.explain ? (
+        <span>
+          <Icon
+            type="help"
+            size="small"
+            className="mx-1"
+            href="#"
+            id={v.name}
+          />
+          <Tooltip
+            placement="right"
+            isOpen={this.state[v.name]}
+            target={v.name}
+            toggle={this.toolOpen.bind(this, v.name)}
+          >
+            {v.explain}
+          </Tooltip>
+        </span>
+      ) : (
+        ""
+      );
       domArr.push(
         <div className="container-box" key={v.title}>
           <Row className="mb-3">
@@ -229,21 +250,7 @@ class Statistics extends Component {
               <h2 href="#" className="d-inline-block">
                 {v.title}
               </h2>
-              <Icon
-                type="help"
-                size="small"
-                className="mx-1"
-                href="#"
-                id={v.name}
-              />
-              <Tooltip
-                placement="right"
-                isOpen={this.state[v.name]}
-                target={v.name}
-                toggle={this.toolOpen.bind(this, v.name)}
-              >
-                {v.explain}
-              </Tooltip>
+              {tips}
             </Col>
             <Col span="20">{child}</Col>
           </Row>

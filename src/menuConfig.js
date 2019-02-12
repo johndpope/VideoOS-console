@@ -65,14 +65,14 @@ const defaultMenuConfig = {
           name: "投放素材管理",
           path: "/tf/material",
           readOnly: true
-        },
-        {
-          id: 23,
-          name: "数据统计",
-          path: "/tf/statistics",
-          readOnly: true
         }
       ]
+    },
+    {
+      name: "数据统计",
+      path: "/tj",
+      icon: "icon-pie-chart",
+      external: true
     },
     {
       name: "license申请",
