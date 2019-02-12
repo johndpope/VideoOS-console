@@ -3,7 +3,6 @@ import { Label, Input, Row, Col } from "reactstrap";
 import { Feedback } from "@icedesign/base";
 
 import { addMaterialFile } from "../api";
-
 export default class Poster extends Component {
   constructor(props) {
     super(props);
@@ -69,7 +68,6 @@ export default class Poster extends Component {
       creativeIdList = []
     } = this.state;
     const { creativeName, interactionTemplateId } = this.state;
-
     return (
       <Fragment>
         <div>基础配置</div>
@@ -256,18 +254,19 @@ export default class Poster extends Component {
                 onChange={this.onChange("isShowClose")}
               />
               {"  "}
-              关闭按钮是否可见*
+              关闭按钮是否可见
             </Label>
           </div>
           <div className="array-item">
             <Label>跳转外链链接</Label>
             <Input
               type="url"
-              readOnly={readonly}
               value={linkUrl}
+              readOnly={readonly}
               placeholder="请输入链接"
               onChange={e => {
                 linkUrl = e.target.value;
+                if (linkUrl === "") linkUrl = undefined;
                 this.setState({ linkUrl }, () =>
                   this.props.onChange(this.state)
                 );

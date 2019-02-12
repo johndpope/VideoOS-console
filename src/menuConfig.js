@@ -69,6 +69,12 @@ const defaultMenuConfig = {
       ]
     },
     {
+      name: "数据统计",
+      path: "/tj",
+      icon: "icon-pie-chart",
+      external: true
+    },
+    {
       name: "license申请",
       path: "/zs",
       icon: "icon-map",

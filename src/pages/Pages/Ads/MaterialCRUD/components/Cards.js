@@ -299,7 +299,7 @@ export default class Cards extends Component {
                   onChange={e => {
                     hotspotArray[0] = {
                       ...hotspotArray[0],
-                      title: e.target.value
+                      title: e.target.value || null
                     };
                     this.setState({ hotspotArray }, () =>
                       this.props.onChange(this.state)
@@ -459,7 +459,7 @@ export default class Cards extends Component {
                   value={hotspotArray[1].title}
                   placeholder="请输入卡牌热点标题"
                   onChange={e => {
-                    hotspotArray[1].title = e.target.value;
+                    hotspotArray[1].title = e.target.value || null;
                     this.setState({ hotspotArray }, () =>
                       this.props.onChange(this.state)
                     );
@@ -631,7 +631,7 @@ export default class Cards extends Component {
                           maxLength={10}
                           placeholder="请输入卡牌热点标题"
                           onChange={e => {
-                            hsa.title = e.target.value;
+                            hsa.title = e.target.value || null;
                             this.setState({ hotspotArray }, () =>
                               this.props.onChange(this.state)
                             );
@@ -699,7 +699,6 @@ export default class Cards extends Component {
               placeholder="卡牌收集说明"
               value={(collect && collect.content) || ""}
               maxLength={50}
-              required
               readOnly={readonly}
               onChange={e => {
                 collect.content = e.target.value;
@@ -845,6 +844,7 @@ export default class Cards extends Component {
               readOnly={readonly}
               onChange={e => {
                 collect.btnTitle = e.target.value;
+                if (collect.btnTitle === "") collect.btnTitle = null;
                 this.setState({ collect }, () =>
                   this.props.onChange(this.state)
                 );

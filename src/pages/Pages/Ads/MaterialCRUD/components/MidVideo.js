@@ -23,7 +23,7 @@ export default class MidVideo extends Component {
 
   onChange = name => {
     return event => {
-      let { value } = event.target;
+      let { value } = event.target || undefined;
       const { isShowAds, isShowClose } = this.state;
       if (["isShowAds"].includes(name)) {
         value = !isShowAds;
@@ -296,7 +296,7 @@ export default class MidVideo extends Component {
               value={linkUrl}
               placeholder="请输入中插外链链接"
               onChange={e => {
-                linkUrl = e.target.value;
+                linkUrl = e.target.value || undefined;
                 this.setState({ linkUrl }, () =>
                   this.props.onChange(this.state)
                 );

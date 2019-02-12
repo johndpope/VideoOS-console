@@ -57,7 +57,13 @@ export default class Votes extends Component {
     voteList.splice(idx, 1);
     this.setState({ voteList }, () => this.props.onChange(this.state));
   };
-
+  resetData(key) {
+    let obj = {};
+    if (this.state[key] === "") {
+      obj[key] = undefined;
+      this.setState(obj, () => this.props.onChange(this.state));
+    }
+  }
   render() {
     let { schema, errorSchema } = this.props;
     let {
@@ -74,7 +80,7 @@ export default class Votes extends Component {
       interactionTemplateId,
       isShowClose = true
     } = this.state;
-
+    this.resetData("voteTitle");
     return (
       <Fragment>
         <div>基础配置</div>
@@ -139,7 +145,7 @@ export default class Votes extends Component {
                 onChange={this.onChange("isShowClose")}
               />
               {"  "}
-              关闭按钮是否可见*
+              关闭按钮是否可见
             </Label>
           </div>
           <div>
@@ -382,6 +388,7 @@ export default class Votes extends Component {
               placeholder="请输入投票弹窗标题"
               onChange={e => {
                 voteTitle = e.target.value;
+                if (voteTitle === "") voteTitle = undefined;
                 this.setState({ voteTitle }, () =>
                   this.props.onChange(this.state)
                 );
@@ -536,6 +543,7 @@ export default class Votes extends Component {
                         placeholder="请输入投票对象名称"
                         onChange={e => {
                           vote.title = e.target.value;
+                          if (vote.title === "") vote.title = null;
                           voteList[idx] = vote;
                           this.setState({ voteList }, () =>
                             this.props.onChange(this.state)

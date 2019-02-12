@@ -16,7 +16,6 @@ import Bubbles from "./components/Bubbles";
 import Votes from "./components/Votes";
 import Cards from "./components/Cards";
 import RedPacket from "./components/RedPacket";
-
 const fieldsMap = {
   yuntu: Poster,
   zhongcha: MidVideo,
@@ -25,10 +24,8 @@ const fieldsMap = {
   kapai: Cards,
   hongbao: RedPacket
 };
-
 let opType;
 let qs;
-
 class MaterialCRUD extends Component {
   componentDidMount() {
     const {
@@ -136,6 +133,7 @@ class MaterialCRUD extends Component {
                   error.message = msg;
                 }
                 if (error.name === "format") {
+                  Feedback.toast.error("链接url输入有误！");
                   error.message = "必选项";
                 }
                 if (error.name === "minItems") {
@@ -158,6 +156,14 @@ class MaterialCRUD extends Component {
                 return error;
               });
             }}
+            // validate={(data, e) => {
+            //   console.log(data);
+            //   console.log(e);
+            //   if (data.title === "") {
+            //     e.title.addError("必填项");
+            //   }
+            //   return e;
+            // }}
             onSubmit={({ formData }) => {
               let canSubmit = true;
               if (
@@ -346,6 +352,8 @@ class MaterialCRUD extends Component {
                           )
                         : 0
                     ]
+                }).then(() => {
+                  console.log(formData);
                 });
               }
             }}
