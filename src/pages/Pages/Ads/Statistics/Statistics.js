@@ -259,9 +259,10 @@ class Statistics extends Component {
     });
     return domArr;
   }
-  changeTime(...argus) {
+  async changeTime(...argus) {
     console.log(argus);
-    this.setState({ chooseTime: argus[1] });
+    await this.setState({ chooseTime: argus[1] });
+    this.searchClick();
   }
   async searchClick() {
     if (!this.checkData()) {
@@ -298,9 +299,9 @@ class Statistics extends Component {
     obj[str] = !this.state[str];
     this.setState(obj);
   }
-  selectClick(item) {
-    console.log(item);
-    this.setState({ interactionId: item.interactionId });
+  async selectClick(item) {
+    await this.setState({ interactionId: item.interactionId });
+    this.searchClick();
   }
 }
 export default Statistics;
