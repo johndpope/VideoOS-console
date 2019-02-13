@@ -1,0 +1,4 @@
+site_name: VideoOS console
+repo_url: https://github.com/VideoOS/VideoOS-console
+nav:
+  - "控制台部署": "index.md"
